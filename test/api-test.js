@@ -1,12 +1,13 @@
 var bem = require('..');
 var assert = require('assert');
+var util = require('util');
 
 describe('BEM.js compiler', function() {
-  function test(fn, data, expected) {
+  function test(fn, data, expected, options) {
     var body = fn.toString().replace(/^function\s*\(\)\s*{|}$/g, '');
     var fns = [
-      bem.compile(body, { optimize: false }),
-      bem.compile(body)
+      bem.compile(body, util._extend(options || {}, { optimize: false })),
+      bem.compile(body, options || {})
     ];
 
     fns.forEach(function(fn) {
@@ -34,5 +35,16 @@ describe('BEM.js compiler', function() {
       });
       block('b2').tag()('li');
     }, { block: 'b1' }, '<div class="b1"><li class="b2"></li></div>');
+  });
+
+  it('should work without ibem', function() {
+    test(function() {
+      block('b1')(function() {
+        return '<div class=b1>' + apply(this)('content') + '</div>'
+      });
+      block('b1').content()('ahhaha');
+    }, { block: 'b1' }, '<div class=b1>ahhaha</div>', {
+      ibem: false
+    });
   });
 });
