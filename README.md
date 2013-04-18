@@ -1,1 +1,1 @@
-# BEM.js
+# BEMHTML.js
