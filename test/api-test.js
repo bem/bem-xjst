@@ -22,7 +22,7 @@ describe('BEM.js compiler', function() {
         elem('e2').match(function() {
           return this.ctx.hooray();
         })(function() {
-          return apply(this)('mode', { 'a': 1 });
+          return apply('mode', { 'a': 1 });
         })
       );
     }, { block: 'b1', elem: 'e1' }, '<a class="b1__e1"></a>');
@@ -31,7 +31,7 @@ describe('BEM.js compiler', function() {
   it('should understand applyCtx', function() {
     test(function() {
       block('b1').content()(function() {
-        return applyCtx(this)({ block: 'b2' });
+        return applyCtx({ block: 'b2' });
       });
       block('b2').tag()('li');
     }, { block: 'b1' }, '<div class="b1"><li class="b2"></li></div>');
@@ -40,7 +40,7 @@ describe('BEM.js compiler', function() {
   it('should work without ibem', function() {
     test(function() {
       block('b1')(function() {
-        return '<div class=b1>' + apply(this)('content') + '</div>'
+        return '<div class=b1>' + apply('content') + '</div>'
       });
       block('b1').content()('ahhaha');
     }, { block: 'b1' }, '<div class=b1>ahhaha</div>', {
