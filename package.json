@@ -14,9 +14,10 @@
     "esprima": "~1.0.2",
     "ometajs": "~3.2.2",
     "uglify-js": "~2.3.2",
-    "xjst": "~0.6.0"
+    "xjst": "~0.6.1"
   },
   "devDependencies": {
-    "mocha": "~1.9.0"
+    "mocha": "~1.9.0",
+    "utile": "~0.2.0"
   }
 }

@@ -1,13 +1,13 @@
-# BEMHTML.js [![Build Status](https://secure.travis-ci.org/indutny/bemhtml.js.png)](http://travis-ci.org/indutny/bemhtml.js)
+# BEM-XJST [![Build Status](https://secure.travis-ci.org/bem/bem-xjst.png)](http://travis-ci.org/bem/bem-xjst)
 
 Compiler for a BEMHTML matching/template engine.
 
 ## Usage:
 
 ```javascript
-var bemhtml = require('bemhtml');
+var bem_xjst = require('bem-xjst');
 
-var template = bemhtml.compile('... your source code ...');
+var template = bem_xjst.compile('... your source code ...');
 
 template.apply.call({
   block: 'b-link',

@@ -1,13 +1,17 @@
 var bem = require('..');
 var assert = require('assert');
-var util = require('util');
+var utile = require('utile');
 
 describe('BEM.js compiler', function() {
   function test(fn, data, expected, options) {
-    var body = fn.toString().replace(/^function\s*\(\)\s*{|}$/g, '');
+    if (!options) options = {};
+
+    var body = (options.ibem !== false ? require('./fixtures/i-bem') : '') +
+               ';\n' +
+               fn.toString().replace(/^function\s*\(\)\s*{|}$/g, '');
     var fns = [
-      bem.compile(body, util._extend(options || {}, { optimize: false })),
-      bem.compile(body, options || {})
+      bem.compile(body, utile.mixin({}, options, { optimize: false })),
+      bem.compile(body, options)
     ];
 
     fns.forEach(function(fn) {
