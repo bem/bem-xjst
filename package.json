@@ -1,7 +1,6 @@
 {
-  "name": "bemhtml.js",
+  "name": "bem-xjst",
   "version": "0.0.1",
-  "description": "ERROR: No README.md file found!",
   "main": "lib/bemhtml.js",
   "scripts": {
     "test": "mocha --reporter spec test/*-test.js"
