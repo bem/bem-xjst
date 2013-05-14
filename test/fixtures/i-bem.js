@@ -1,6 +1,6 @@
 module.exports = function() {
 
-if (this.$override) (function() {
+oninit(function(exports) {
 
 var BEM_ = {},
     toString = Object.prototype.toString,
@@ -256,13 +256,13 @@ BEMContext.prototype.generateId = function generateId() {
 var oldApply = exports.apply;
 
 // Wrap xjst's apply and export our own
-this.$exports.apply = BEMContext.apply = function _apply() {
+exports.apply = BEMContext.apply = function _apply() {
     var ctx = new BEMContext(this, oldApply);
     ctx.apply();
     return ctx._buf.join('');
 };
 
-}).call(this); // this.$override
+}); // oninit
 
 match(this._mode === '')(
     match()(function() {
