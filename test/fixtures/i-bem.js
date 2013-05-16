@@ -1,6 +1,6 @@
 module.exports = function() {
 
-oninit(function(exports) {
+xjst$oninit(function(exports) {
 
 var BEM_ = {},
     toString = Object.prototype.toString,
@@ -262,7 +262,7 @@ exports.apply = BEMContext.apply = function _apply() {
     return ctx._buf.join('');
 };
 
-}); // oninit
+});
 
 match(this._mode === '')(
     match()(function() {
@@ -287,7 +287,7 @@ match(this._mode === '')(
         });
     }),
 
-    match(function() { return this._.isArray(this.ctx) })(function() {
+    match(this._.isArray(this.ctx))(function() {
         var v = this.ctx,
             l = v.length,
             i = 0,
@@ -315,7 +315,7 @@ match(this._mode === '')(
         this._listLength--;
     }),
 
-    match(function() { return this._.isSimple(this.ctx) })(function() {
+    match(this._.isSimple(this.ctx))(function() {
         this._listLength--;
 
         var ctx = this.ctx;
@@ -470,6 +470,6 @@ js()(undefined);
 jsAttr()(undefined);
 bem()(undefined);
 mix()(undefined);
-content()(function() { this.ctx.content });
+content()(this.ctx.content);
 
 }.toString().replace(/^function\s*\(\)\s*{|}$/g, ''); // module.exports
