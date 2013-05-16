@@ -51,4 +51,13 @@ describe('BEM.js compiler', function() {
       ibem: false
     });
   });
+
+  it('should understand mod()', function() {
+    test(function() {
+      match()('not ok');
+      block('b1').mod('a', 'b')('ok');
+    }, { block: 'b1', mods: { a: 'b' } }, 'ok', {
+      ibem: false
+    });
+  });
 });
