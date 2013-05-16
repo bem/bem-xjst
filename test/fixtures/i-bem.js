@@ -1,6 +1,6 @@
 module.exports = function() {
 
-xjst$oninit(function(exports) {
+oninit(function(exports) {
 
 var BEM_ = {},
     toString = Object.prototype.toString,
