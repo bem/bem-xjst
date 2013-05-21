@@ -1,0 +1,69 @@
+#!/usr/bin/env node
+var fs = require('fs');
+var q = require('q');
+var bem_xjst = require('../');
+
+require('coa').Cmd()
+    .name(process.argv[1])
+    .helpful()
+    .opt()
+        .name('version')
+        .title('Version')
+        .short('v')
+        .long('version')
+        .only()
+        .flag()
+        .act(function(opts) {
+            // return message as result of action
+            var package = require('fs').readFileSync(__dirname +
+                                                     '/../package.json');
+            return JSON.parse(package).version;
+        })
+        .end()
+    .opt()
+        .name('no-opt')
+        .title('Dev mode')
+        .short('d').long('dev-mode')
+        .flag()
+        .end()
+    .opt()
+        .name('input').title('Input file (default: stdin)')
+        .short('i').long('input')
+        .input()
+        .end()
+    .opt()
+        .name('output').title('Output file (default: stdout)')
+        .short('o').long('output')
+        .output()
+        .end()
+    .act(function(options) {
+      var input = [],
+      deferred = q.defer();
+
+      options.input.on('data', function(chunk) {
+        input.push(chunk);
+      });
+
+      options.input.once('end', function() {
+        finish(input.join(''));
+      });
+
+      options.input.resume();
+
+      function finish(source) {
+        var out = bem_xjst.generate(source, options);
+
+        options.output.write(out);
+
+        if (options.output === process.stdout) {
+          options.output.write('\n');
+        } else {
+          options.output.end();
+        }
+
+        deferred.resolve();
+      }
+
+      return deferred.promise;
+    })
+    .run();
