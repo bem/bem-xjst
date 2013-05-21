@@ -2,6 +2,9 @@
   "name": "bem-xjst",
   "version": "0.1.1",
   "main": "lib/bemhtml.js",
+  "bin": {
+    "bem-xjst": "bin/bem-xjst"
+  },
   "scripts": {
     "test": "mocha --reporter spec test/*-test.js"
   },
