@@ -26,9 +26,9 @@ describe('BEM.js cache', function() {
         });
       });
     }, { __$history: [] }, [
-      ['_mode', 'mode'],
-      ['x',1],
-      ['y','x.y',1]
+      [['_mode'], 'mode'],
+      [['x'],1],
+      [['y'],['x','y'],1]
     ], { ibem: false });
   });
 
