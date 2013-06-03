@@ -4,6 +4,9 @@ oninit(function(exports) {
 
 var BEM_ = {},
     toString = Object.prototype.toString,
+    isArray = Array.isArray || function(obj) {
+        return toString.call(obj) === "[object Array]";
+    },
     SHORT_TAGS = { // хэш для быстрого определения, является ли тэг коротким
         area : 1, base : 1, br : 1, col : 1, command : 1, embed : 1, hr : 1, img : 1,
         input : 1, keygen : 1, link : 1, meta : 1, param : 1, source : 1, wbr : 1 };
@@ -131,7 +134,7 @@ BEM.INTERNAL = {
                 if(!mods.hasOwnProperty(modName)) continue;
 
                 var modVal = mods[modName];
-                if (modVal === null) continue;
+                if (modVal == null) continue;
 
                 modVal = mods[modName] + '';
                 if (!modVal) continue;
@@ -186,7 +189,7 @@ var buildEscape = (function() {
 })();
 
 function BEMContext(context, apply_) {
-  this.ctx = typeof context === null ? '' : context;
+  this.ctx = context;
   this.apply = apply_;
   this._buf = [];
   this._ = this;
@@ -203,9 +206,7 @@ function BEMContext(context, apply_) {
   this.elemMods = undefined;
 };
 
-BEMContext.prototype.isArray = function isArray(obj) {
-    return toString.call(obj) === "[object Array]";
-};
+BEMContext.prototype.isArray = isArray;
 
 BEMContext.prototype.isSimple = function isSimple(obj) {
     var t = typeof obj;
@@ -226,7 +227,7 @@ BEMContext.prototype.extend = function extend(o1, o2) {
 
 BEMContext.prototype.identify = (function() {
     var cnt = 0,
-        id = BEM_.__id = (+new Date()),
+        id = (+new Date()),
         expando = '__' + id,
         get = function() { return 'uniq' + id + ++cnt; };
     return function(obj, onlyGet) {
@@ -253,18 +254,17 @@ BEMContext.prototype.generateId = function generateId() {
     return this.identify(this.ctx);
 };
 
-var oldApply = exports.apply;
-
 // Wrap xjst's apply and export our own
-exports.apply = BEMContext.apply = function _apply() {
-    var ctx = new BEMContext(this, oldApply);
+var oldApply = exports.apply;
+exports.apply = BEMContext.apply = function _apply(context) {
+    var ctx = new BEMContext(context || this, oldApply);
     ctx.apply();
     return ctx._buf.join('');
 };
-
-});
+}); // oninit
 
 match(this._mode === '')(
+
     match()(function() {
         var vBlock = this.ctx.block,
             vElem = this.ctx.elem,
@@ -273,7 +273,6 @@ match(this._mode === '')(
         this.ctx || (this.ctx = {});
 
         local('default', {
-            _links: this.ctx.links || this._links,
             block: vBlock || (vElem ? block : undefined),
             _currBlock: vBlock || vElem ? undefined : block,
             elem: this.ctx.elem,
@@ -287,7 +286,7 @@ match(this._mode === '')(
         });
     }),
 
-    match(this._.isArray(this.ctx))(function() {
+    match(function() { return this._.isArray(this.ctx) })(function() {
         var v = this.ctx,
             l = v.length,
             i = 0,
@@ -303,10 +302,8 @@ match(this._mode === '')(
 
         this._notNewList = true;
 
-        while(i < l) {
-            var newCtx = v[i++];
-            apply({ ctx: newCtx === null ? '' : newCtx });
-        }
+        while(i < l)
+            apply({ ctx: v[i++] });
 
         prevNotNewList || (this.position = prevPos);
     }),
@@ -315,12 +312,13 @@ match(this._mode === '')(
         this._listLength--;
     }),
 
-    match(this._.isSimple(this.ctx))(function() {
+    match(function() { return this._.isSimple(this.ctx) })(function() {
         this._listLength--;
 
         var ctx = this.ctx;
         (ctx && ctx !== true || ctx === 0) && this._buf.push(ctx);
     })
+
 );
 
 def()(function() {
@@ -393,10 +391,10 @@ def()(function() {
                         // Process nested mixes
                         if (hasItem && !visited[visitedKey(block, elem)]) {
                             visited[visitedKey(block, elem)] = true;
-                            var nestedMix = apply({
-                                    block: block,
-                                    elem: elem
-                                }, 'mix');
+                            var nestedMix = apply('mix', {
+                                block: block,
+                                elem: elem
+                            });
 
                             if (nestedMix) {
                                 for (var j = 0; j < nestedMix.length; j++) {
@@ -437,8 +435,8 @@ def()(function() {
         if(attrs) {
             var name; // TODO: разобраться с OmetaJS и YUI Compressor
             for(name in attrs) {
-              if (attrs[name] === undefined) continue;
-              buf.push(' ', name, '="', this._.attrEscape(attrs[name]), '"');
+                if (attrs[name] === undefined) continue;
+                buf.push(' ', name, '="', this._.attrEscape(attrs[name]), '"');
             }
         }
     }
@@ -470,6 +468,6 @@ js()(undefined);
 jsAttr()(undefined);
 bem()(undefined);
 mix()(undefined);
-content()(this.ctx.content);
+content()(function() { return this.ctx.content });
 
 }.toString().replace(/^function\s*\(\)\s*{|}$/g, ''); // module.exports
