@@ -41,6 +41,16 @@ describe('BEM.js compiler', function() {
     }, { block: 'b1' }, '<div class="b1"><li class="b2"></li></div>');
   });
 
+  it('should add !this.elem', function() {
+    test(function() {
+      block('b-bla')(
+        def()(function() {
+          applyCtx({ block: 'b-bla', elem: 'e' })
+        })
+      );
+    }, { block: 'b-bla' }, '<div class="b-bla__e"></div>');
+  });
+
   it('should work without ibem', function() {
     test(function() {
       block('b1')(function() {
