@@ -35,10 +35,10 @@ describe('BEM.js compiler', function() {
   it('should understand applyCtx', function() {
     test(function() {
       block('b1').content()(function() {
-        return applyCtx({ block: 'b2' });
+        return applyCtx({ block: 'b2' }, { 'ctx.flag': 'flag' });
       });
-      block('b2').tag()('li');
-    }, { block: 'b1' }, '<div class="b1"><li class="b2"></li></div>');
+      block('b2').tag()(this.ctx.flag);
+    }, { block: 'b1' }, '<div class="b1"><flag class="b2"></flag></div>');
   });
 
   it('should add !this.elem', function() {
