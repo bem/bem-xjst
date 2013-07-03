@@ -1,4 +1,4 @@
-# BEM-XJST [![Build Status](https://secure.travis-ci.org/bem/bem-xjst.png)](http://travis-ci.org/bem/bem-xjst)
+# BEM-XJST [![Build Status](https://secure.travis-ci.org/bem/bem-xjst.png)](http://travis-ci.org/bem/bem-xjst) [![NPM version](https://badge.fury.io/js/bem-xjst.png)](http://badge.fury.io/js/bem-xjst)
 
 [XJST](https://github.com/veged/xjst)-based compiler for a BEM-specific templates.
 
