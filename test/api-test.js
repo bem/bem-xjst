@@ -35,7 +35,7 @@ describe('BEM.js compiler', function() {
   it('should understand applyCtx', function() {
     test(function() {
       block('b1').content()(function() {
-        return applyCtx({ block: 'b2' }, { 'ctx.flag': 'flag' });
+        return applyCtx({ 'ctx.flag': 'flag' }, { block: 'b2' });
       });
       block('b2').tag()(this.ctx.flag);
     }, { block: 'b1' }, '<div class="b1"><flag class="b2"></flag></div>');
