@@ -61,6 +61,13 @@ describe('BEM.js compiler', function() {
     });
   });
 
+  it('should understand elemMatch()', function() {
+    test(function() {
+      match()('not ok');
+      block('b1').elemMatch(this.elem === 'x')('ok')
+    }, { block: 'b1', elem: 'x' }, 'ok', { ibem: false });
+  });
+
   it('should compile realworld templates', function() {
     test(function() {
       // i-jquery
