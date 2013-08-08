@@ -68,6 +68,21 @@ describe('BEM.js compiler', function() {
     }, { block: 'b1', elem: 'x' }, 'ok', { ibem: false });
   });
 
+  it('should not break on regression test#1', function() {
+    test(function() {
+      match()('ok');
+      match(function() {
+        return this["__$anflg681825457"] !== true
+      })(function() {
+        return local({ "__$anflg681825457": (true) })(function() {
+          return local({ "ctx": (5) })(function() {
+            return apply()
+          })
+        })
+      })
+    }, {}, 'ok', { ibem: false });
+  });
+
   it('should compile realworld templates', function() {
     test(function() {
       // i-jquery
