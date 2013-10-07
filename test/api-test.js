@@ -133,7 +133,7 @@ describe('BEM.js compiler', function() {
             }
           };
         }),
-        def()(function() {
+        def().match(function() { return !this.ctx._isBody })(function() {
           var ctx = this.ctx,
               dtype = apply('doctype'),
               xUA = apply('xUACompatible'),
@@ -168,7 +168,7 @@ describe('BEM.js compiler', function() {
                 }
               ];
 
-          applyCtx(buf);
+          local({ 'ctx._isBody': true })(applyCtx(buf));
         }),
         tag()('body'),
         mix().match(this.elem !== 'body')([{ elem: 'body' }]),
