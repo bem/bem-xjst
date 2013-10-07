@@ -61,6 +61,15 @@ describe('BEM.js compiler', function() {
     });
   });
 
+  it('should understand elemMod()', function() {
+    test(function() {
+      match()('not ok');
+      block('b1').elemMod('a', 'b')('ok');
+    }, { block: 'b1', elemMods: { a: 'b' } }, 'ok', {
+      ibem: false
+    });
+  });
+
   it('should understand elemMatch()', function() {
     test(function() {
       match()('not ok');
