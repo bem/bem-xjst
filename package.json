@@ -14,9 +14,9 @@
   "dependencies": {
     "estraverse": "~1.1.1",
     "esprima": "~1.0.2",
-    "ometajs": "~3.2.2",
+    "ometajs": "3.2.4",
     "uglify-js": "~2.3.2",
-    "xjst": "~1.0.0",
+    "xjst": "1.0.0",
     "coa": "~0.3.9",
     "q": "~0.9.3"
   },
