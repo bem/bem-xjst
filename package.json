@@ -1,6 +1,6 @@
 {
   "name": "bem-xjst",
-  "version": "0.4.0",
+  "version": "0.5.0",
   "main": "lib/bemhtml.js",
   "bin": {
     "bem-xjst": "bin/bem-xjst"
@@ -14,9 +14,9 @@
   "dependencies": {
     "estraverse": "~1.1.1",
     "esprima": "~1.0.2",
-    "ometajs": "3.2.4",
+    "ometajs": "~3.2.4",
     "uglify-js": "~2.3.2",
-    "xjst": "1.0.0",
+    "xjst": "~1.2.1",
     "coa": "~0.3.9",
     "q": "~0.9.3"
   },
