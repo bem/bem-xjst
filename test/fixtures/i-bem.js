@@ -322,8 +322,7 @@ match(this._mode === '')(
 );
 
 def()(function() {
-    var _this = this,
-        BEM_ = _this.BEM,
+    var BEM_ = this.BEM,
         v = this.ctx,
         buf = this._buf,
         tag;
@@ -372,14 +371,14 @@ def()(function() {
                     for (var i = 0; i < mix.length; i++) {
                         var mixItem = mix[i],
                             hasItem = mixItem.block || mixItem.elem,
-                            block = mixItem.block || mixItem._block || _this.block,
-                            elem = mixItem.elem || mixItem._elem || _this.elem;
+                            block = mixItem.block || mixItem._block || this.block,
+                            elem = mixItem.elem || mixItem._elem || this.elem;
 
                         hasItem && buf.push(' ');
                         BEM_.INTERNAL[hasItem? 'buildClasses' : 'buildModsClasses'](
                             block,
                             mixItem.elem || mixItem._elem ||
-                                (mixItem.block ? undefined : _this.elem),
+                                (mixItem.block ? undefined : this.elem),
                             mixItem.elemMods || mixItem.mods,
                             buf);
 

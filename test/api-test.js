@@ -41,57 +41,6 @@ describe('BEM.js compiler', function() {
     }, { block: 'b1' }, '<div class="b1"><flag class="b2"></flag></div>');
   });
 
-  it('should work without ibem', function() {
-    test(function() {
-      block('b1')(function() {
-        return '<div class=b1>' + apply('content') + '</div>'
-      });
-      block('b1').content()('ahhaha');
-    }, { block: 'b1' }, '<div class=b1>ahhaha</div>', {
-      ibem: false
-    });
-  });
-
-  it('should understand mod()', function() {
-    test(function() {
-      match()('not ok');
-      block('b1').mod('a', 'b')('ok');
-    }, { block: 'b1', mods: { a: 'b' } }, 'ok', {
-      ibem: false
-    });
-  });
-
-  it('should understand elemMod()', function() {
-    test(function() {
-      match()('not ok');
-      block('b1').elemMod('a', 'b')('ok');
-    }, { block: 'b1', elemMods: { a: 'b' } }, 'ok', {
-      ibem: false
-    });
-  });
-
-  it('should understand elemMatch()', function() {
-    test(function() {
-      match()('not ok');
-      block('b1').elemMatch(this.elem === 'x')('ok')
-    }, { block: 'b1', elem: 'x' }, 'ok', { ibem: false });
-  });
-
-  it('should not break on regression test#1', function() {
-    test(function() {
-      match()('ok');
-      match(function() {
-        return this["__$anflg681825457"] !== true
-      })(function() {
-        return local({ "__$anflg681825457": (true) })(function() {
-          return local({ "ctx": (5) })(function() {
-            return apply()
-          })
-        })
-      })
-    }, {}, 'ok', { ibem: false });
-  });
-
   it('should compile realworld templates', function() {
     test(function() {
       // i-jquery
