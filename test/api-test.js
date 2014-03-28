@@ -37,7 +37,9 @@ describe('BEM.js compiler', function() {
       block('b1').content()(function() {
         return applyCtx({ 'ctx.flag': 'flag' }, { block: 'b2' });
       });
-      block('b2').tag()(this.ctx.flag);
+      block('b2').tag()(function() {
+        return this.ctx.flag;
+      });
     }, { block: 'b1' }, '<div class="b1"><flag class="b2"></flag></div>');
   });
 
@@ -56,7 +58,8 @@ describe('BEM.js compiler', function() {
       block('i-ua')(
         tag()('script'),
         bem()(false),
-        content()([
+        content()(function() {
+          return [
             ';(function(d,e,c,r){',
                 'e=d.documentElement;',
                 'c="className";',
@@ -65,7 +68,8 @@ describe('BEM.js compiler', function() {
                 'if(d.compatMode!="CSS1Compat")',
                 'e[c]=e[c][r]("i-ua_css_standart","i-ua_css_quirks")',
             '})(document);'
-        ].join(''))
+          ].join('');
+        })
       );
 
       // b-page
@@ -120,7 +124,9 @@ describe('BEM.js compiler', function() {
           local({ 'ctx._isBody': true })(applyCtx(buf));
         }),
         tag()('body'),
-        mix().match(this.elem !== 'body')([{ elem: 'body' }]),
+        mix().match(this.elem !== 'body')(function() {
+          return [{ elem: 'body' }];
+        }),
         elem('root')(
           bem()(false),
           tag()('html'),
@@ -224,7 +230,9 @@ describe('BEM.js compiler', function() {
       block('b-link').match(this.mods && this.mods.pseudo, !this.elem)(
         tag()(function() { return this.ctx.url? 'a' : 'span' }),
         js()(true),
-        attrs().match(function() { return !this.ctx.url })({}),
+        attrs().match(function() { return !this.ctx.url })(function() {
+          return {};
+        }),
         content().match(function() {
           return !this.ctx._wrap
         }, function() {
