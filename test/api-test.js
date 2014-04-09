@@ -10,12 +10,11 @@ describe('BEM.js compiler', function() {
                ';\n' +
                fn.toString().replace(/^function\s*\(\)\s*{|}$/g, '');
     var fns = [
-      bem.compile(body, utile.mixin({}, options, { optimize: false })),
       bem.compile(body, options)
     ];
 
-    fns.forEach(function(fn) {
-      assert.equal(fn.apply.call(data || {}), expected);
+    fns.forEach(function(fn, i) {
+      assert.equal(fn.apply.call(data || {}), expected, i);
     });
   }
 
