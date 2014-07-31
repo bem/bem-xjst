@@ -1,16 +1,19 @@
-var bem = require('..');
+var bemxjst = require('..');
 var assert = require('assert');
 var utile = require('utile');
+var vm = require('vm');
+var ym = require('ym');
+var vow = require('vow');
 
-describe('BEM.js compiler', function() {
+describe('BEMHTML compiler', function() {
   function test(fn, data, expected, options) {
     if (!options) options = {};
 
-    var body = (options.ibem !== false ? require('./fixtures/i-bem') : '') +
+    var body = (options.baseTmpl !== false ? require('./fixtures/i-bem.bemhtml') : '') +
                ';\n' +
                fn.toString().replace(/^function\s*\(\)\s*{|}$/g, '');
     var fns = [
-      bem.compile(body, options)
+      bemxjst.compile(body, options)
     ];
 
     fns.forEach(function(fn, i) {
@@ -287,4 +290,65 @@ describe('BEM.js compiler', function() {
        'This pseudo link changes its color after click</span></a>' +
        '</body></html>');
   });
+});
+
+describe('BEMTREE compiler', function() {
+
+  var body = require('./fixtures/i-bem.bemtree') +
+              ';\n' +
+              "block('b1').content()({ elem: 'inner' })";
+  var data = { block: 'b1' };
+  var expected = '{"block":"b1","mods":{},"content":{"elem":"inner"}}';
+  var options = {
+    wrap : true,
+    exportName : 'BEMTREE',
+    modulesDeps : { vow : 'Vow' }
+  };
+  var tmpl = bemxjst.generate(body, options);
+
+  it('should export BEMTREE as node.js module', function(done) {
+    var tmpl = bemxjst.generate(body, options);
+    var ctx = { exports: exports, Vow: vow };
+
+    vm.runInNewContext(tmpl, ctx);
+
+    ctx.exports.BEMTREE
+      .apply({ block: 'b1' })
+      .then(function(bemjson) {
+        assert.equal(JSON.stringify(bemjson), expected);
+        done();
+      }).fail(done);
+  });
+
+  it('should export BEMTREE to global scope', function(done) {
+    var ctx = { Vow: vow };
+
+    vm.runInNewContext(tmpl, ctx);
+
+    ctx.BEMTREE
+      .apply({ block: 'b1' })
+      .then(function(bemjson) {
+        assert.equal(JSON.stringify(bemjson), expected);
+        done();
+      }).fail(done);
+  });
+
+  it('should get Vow as YModule', function(done) {
+    ym.define('vow', function(provide) { provide(vow); });
+
+    var ctx = { modules: ym };
+
+    vm.runInNewContext(tmpl, ctx);
+
+    ctx.modules.require(['BEMTREE'], function(BEMTREE) {
+      BEMTREE
+        .apply({ block: 'b1' })
+        .then(function(bemjson) {
+          assert.equal(JSON.stringify(bemjson), expected);
+          done();
+        }).fail(done);
+    });
+
+  });
+
 });
