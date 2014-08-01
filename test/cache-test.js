@@ -2,11 +2,11 @@ var bem = require('..');
 var assert = require('assert');
 var utile = require('utile');
 
-describe('BEM.js cache', function() {
+describe('bem-xjst cache', function() {
   function test(fn, data, expected, options) {
     if (!options) options = {};
 
-    var body = (options.ibem !== false ? require('./fixtures/i-bem') : '') +
+    var body = (options.baseTmpl !== false ? require('./fixtures/i-bem.bemhtml') : '') +
                ';\n' +
                fn.toString().replace(/^function\s*\(\)\s*{|}$/g, '');
     var fns = [
@@ -29,7 +29,7 @@ describe('BEM.js cache', function() {
       [['_mode'], 'mode'],
       [['x'],1],
       [['y'],['x','y'],1]
-    ], { ibem: false });
+    ], { baseTmpl: false });
   });
 
   it('should work without history', function() {
@@ -39,6 +39,6 @@ describe('BEM.js cache', function() {
           return 'ok';
         });
       });
-    }, {}, 'ok', { ibem: false });
+    }, {}, 'ok', { baseTmpl: false });
   });
 });
