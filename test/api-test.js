@@ -45,6 +45,31 @@ describe('BEMHTML compiler', function() {
     }, { block: 'b1' }, '<div class="b1"><flag class="b2"></flag></div>');
   });
 
+  it('should auto-insert !this.elem properly', function() {
+    test(function() {
+      block('b1').content()({
+        elem: 'e1'
+      });
+
+      block('b2').content()('b2');
+      block('b3').content()('b3');
+      block('b4').content()('b4');
+      block('b5').content()('b5');
+      block('b6').content()('b6');
+      block('b7').content()('b7');
+      block('b8').content()('b8');
+      block('b9').content()('b9');
+      block('b10').content()('b10');
+      block('b11').content()('b11');
+      block('b12').content()('b12');
+      block('b13').content()('b13');
+      block('b14').content()('b14');
+      block('b15').content()('b15');
+      block('b16').content()('b16');
+      block('b17').content()('b17');
+    }, { block: 'b1' }, '<div class="b1"><div class="b1__e1"></div></div>');
+  });
+
   it('should compile realworld templates', function() {
     test(function() {
       // i-jquery
