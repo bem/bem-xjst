@@ -70,6 +70,37 @@ describe('BEMHTML compiler', function() {
     }, { block: 'b1' }, '<div class="b1"><div class="b1__e1"></div></div>');
   });
 
+  it('should replace this.elem properly in hashmaps', function() {
+    test(function() {
+      block('b1')(
+          content()({
+              elem : 'e1',
+              content: 'b1'
+          }),
+          elem('e1')(
+              tag()('span')
+          )
+      );
+
+      block('b2').tag()('b2');
+      block('b3').tag()('b3');
+      block('b4').tag()('b4');
+      block('b5').tag()('b5');
+      block('b6').tag()('b6');
+      block('b7').tag()('b7');
+      block('b8').tag()('b8');
+      block('b9').tag()('b9');
+      block('b10').tag()('b10');
+      block('b11').tag()('b11');
+      block('b12').tag()('b12');
+      block('b13').tag()('b13');
+      block('b14').tag()('b14');
+      block('b15').tag()('b15');
+      block('b16').tag()('b16');
+      block('b17').tag()('b17');
+    }, { block: 'b1' }, '<div class="b1"><span class="b1__e1">b1</span></div>');
+  });
+
   it('should compile realworld templates', function() {
     test(function() {
       // i-jquery
