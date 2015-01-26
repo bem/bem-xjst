@@ -22,6 +22,23 @@ describe('BEMHTML compiler', function() {
     });
   }
 
+  function testDesugaring(fn, fnDesugared, options) {
+    if (!options) options = {};
+
+    var ibem = '';
+    if (options.baseTmpl !== false)
+      ibem = require('./fixtures/i-bem.bemhtml') + ';\n';
+
+    var bodies = [fn, fnDesugared].map(function (fn) {
+      return ibem + fn.toString().replace(/^function\s*\(\)\s*{|}$/g, '');
+    })
+
+    assert.notEqual(bodies[0], bodies[1]);
+
+    assert.equal(bemxjst.generate(bodies[0], options),
+                 bemxjst.generate(bodies[1], options));
+  }
+
   it('should compile example code', function() {
     test(function() {
       block('b1').tag()(
@@ -346,6 +363,50 @@ describe('BEMHTML compiler', function() {
        '<span class="b-link__inner">' +
        'This pseudo link changes its color after click</span></a>' +
        '</body></html>');
+  });
+
+  it('should desugar replace() mode', function () {
+    testDesugaring(function () {
+      block('b1').replace()(function() { return { block: 'b2' }; });
+      block('b2').replace()(function() { return { block: 'b3' }; });
+    }, function () {
+      block('b1').def()(function() { return applyCtx({ block: 'b2' }); });
+      block('b2').def()(function() { return applyCtx({ block: 'b3' }); });
+    })
+  });
+
+  it('should support replace() at runtime', function () {
+    test(function () {
+      block('b1').content()('ok');
+      block('b2').content()('replaced');
+      block('b1').replace()(function () { return { block: 'b2' }; });
+    }, { block: 'b1' }, '<div class="b2">replaced</div>')
+  })
+
+  it('should desugar extend() mode', function () {
+    testDesugaring(function () {
+      block('b1').extend()(function() { return { elem: 'e' }; });
+      block('b1').elem('e').extend()(function() {
+        return { "mods" : { "pseudo" : "yes" } };
+      });
+    }, function () {
+      block('b1').def()(function() {
+        return applyCtx(this.extend(this.ctx, { elem: 'e' }));
+      });
+      block('b1').elem('e').def()(function() {
+        return applyCtx(this.extend(this.ctx, {
+          "mods" : { "pseudo" : "yes" }
+        }));
+      });
+    })
+  });
+
+  it('should support extend() at runtime', function () {
+    test(function () {
+      block('b1').content()('ok');
+      block('b1').elem('e').content()('extended');
+      block('b1').extend()(function() { return {elem: 'e'}; });
+    }, {block: 'b1'}, '<div class="b1__e">extended</div>')
   });
 });
 
