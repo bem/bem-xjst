@@ -22,6 +22,19 @@ describe('BEMHTML compiler', function() {
     });
   }
 
+  function testDesugaring(fn, fnDesugared, options) {
+    if (!options) options = {};
+    var ibem = options.baseTmpl !== false ? require('./fixtures/i-bem.bemhtml') : '';
+    var bodies = [fn, fnDesugared].map(function (fn) {
+      return ibem + ';\n' + fn.toString().replace(/^function\s*\(\)\s*{|}$/g, '');
+    })
+
+    assert.notEqual(bodies[0], bodies[1]);
+    
+    assert.equal(bemxjst.generate(bodies[0], options),
+                 bemxjst.generate(bodies[1], options));
+  }
+  
   it('should compile example code', function() {
     test(function() {
       block('b1').tag()(
@@ -347,7 +360,26 @@ describe('BEMHTML compiler', function() {
        'This pseudo link changes its color after click</span></a>' +
        '</body></html>');
   });
+
+  it('should desugar replace() mode', function () {
+    testDesugaring(function () {
+      block('b1').replace()(function() { return {block: 'b2'}; });
+      block('b2').replace()(function() { return {block: 'b3'}; });
+    }, function () {
+      block('b1').def()(function() { applyCtx({block: 'b2'}) });
+      block('b2').def()(function() { applyCtx({block: 'b3'}) });
+    })
+  });
+
+  it('should support replace() at runtime', function () {
+    test(function () {
+      block('b1').content()('ok');
+      block('b2').content()('replaced');
+      block('b1').replace()(function () {return {block: 'b2'}});
+    }, {block: 'b1'}, '<div class="b2">replaced</div>')
+  })
 });
+ 
 
 describe('BEMTREE compiler', function() {
 
