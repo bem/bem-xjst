@@ -378,9 +378,26 @@ describe('BEMHTML compiler', function() {
       block('b1').replace()(function () {return {block: 'b2'}});
     }, {block: 'b1'}, '<div class="b2">replaced</div>')
   })
+
+  it('should desugar extend() mode', function () {
+    testDesugaring(function () {
+      block('b1').extend()(function() { return {elem: 'e'}; });
+      block('b1').elem('e').extend()(function() { return {"mods" : {"pseudo" : "yes"}}; });
+    }, function () {
+      block('b1').def()(function() { return applyCtx(this.extend(this.ctx, {elem: 'e'})) });
+      block('b1').elem('e').def()(function() { return applyCtx(this.extend(this.ctx, {"mods" : {"pseudo" : "yes"}})); });
+    })
+  });
+
+  it('should support extend() at runtime', function () {
+    test(function () {
+      block('b1').content()('ok');
+      block('b1').elem('e').content()('extended');
+      block('b1').extend()(function() { return {elem: 'e'}; });
+    }, {block: 'b1'}, '<div class="b1__e">extended</div>')
+  });
 });
  
-
 describe('BEMTREE compiler', function() {
 
   var body = require('./fixtures/i-bem.bemtree') +
