@@ -13,6 +13,7 @@ describe('BEMHTML compiler', function() {
                ';\n' +
                fn.toString().replace(/^function\s*\(\)\s*{|}$/g, '');
     var fns = [
+      bemxjst.compile(body, utile.mixin({}, options, { optimize: false })),
       bemxjst.compile(body, options)
     ];
 
