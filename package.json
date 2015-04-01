@@ -6,7 +6,7 @@
     "bem-xjst": "bin/bem-xjst"
   },
   "scripts": {
-    "test": "mocha --reporter spec test/*-test.js"
+    "test": "make && mocha --reporter spec test/*-test.js"
   },
   "repository": {
     "type": "git",
@@ -16,13 +16,10 @@
   "license": "MIT",
   "dependencies": {
     "coa": "~0.3.9",
-    "esprima": "~1.1.1",
-    "estraverse": "~1.5.0",
-    "q": "~0.9.3",
-    "uglify-js": "~2.3.2",
-    "xjst": "~1.5.0"
+    "q": "~0.9.3"
   },
   "devDependencies": {
+    "browserify": "^9.0.6",
     "mocha": "~1.21.3",
     "utile": "~0.2.0",
     "vow": "~0.4.5",
