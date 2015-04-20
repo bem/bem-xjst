@@ -32,7 +32,7 @@ describe('BEMHTML compiler', function() {
         elem('e2').match(function() {
           return this.ctx.hooray();
         })(function() {
-          return apply({ 'a': 1 });
+          return apply({ a: 1 });
         })
       );
     }, { block: 'b1', elem: 'e1' }, '<a class="b1__e1"></a>');
@@ -66,13 +66,13 @@ describe('BEMHTML compiler', function() {
   it('should replace this.elem properly in hashmaps', function() {
     test(function() {
       block('b1')(
-          content()({
-              elem : 'e1',
-              content: 'b1'
-          }),
-          elem('e1')(
-              tag()('span')
-          )
+        content()({
+          elem: 'e1',
+          content: 'b1'
+        }),
+        elem('e1')(
+          tag()('span')
+        )
       );
 
       block('b2').tag()('b2');
@@ -148,8 +148,8 @@ describe('BEMHTML compiler', function() {
     test(function() {
       block('b1').content()('ok');
       block('b1').elem('e').content()('extended');
-      block('b1').extend()(function() { return {elem: 'e'}; });
-    }, {block: 'b1'}, '<div class="b1__e">extended</div>')
+      block('b1').extend()(function() { return { elem: 'e' }; });
+    }, { block: 'b1' }, '<div class="b1__e">extended</div>')
   });
 
   it('should support custom matches', function () {
@@ -157,7 +157,7 @@ describe('BEMHTML compiler', function() {
       block('b1').content()('!');
       block('b1').match(function() { return this.ctx.test2; }).content()('ok');
       block('b1').match(function() { return this.ctx.test1; }).content()('!');
-    }, {block: 'b1', test2: true }, '<div class="b1">ok</div>')
+    }, { block: 'b1', test2: true }, '<div class="b1">ok</div>')
   });
 
   it('should support mod() match', function () {
