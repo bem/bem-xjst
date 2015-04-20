@@ -206,6 +206,23 @@ describe('BEMHTML compiler', function() {
     }, { block: 'b1' }, '<div class="b1">ok</div>');
   });
 
+  it('should order templates properly', function() {
+    test(function() {
+      block('page').elem('css')(
+        bem()(false),
+        tag()('style'),
+        match(function() { return this.ctx.url; })(
+          tag()('link'),
+          attrs()(function() {
+            return { rel: 'stylesheet', href: this.ctx.url };
+          })
+        )
+      );
+    }, {
+      block: 'page', elem: 'css', url: 'ohai'
+    }, '<link rel="stylesheet" href="ohai"/>');
+  });
+
   describe('attrs in BEMJSON', function() {
     it('should render with block', function () {
       test(function() {
