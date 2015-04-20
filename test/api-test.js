@@ -188,4 +188,16 @@ describe('BEMHTML compiler', function() {
       block: 'b1'
     }, '<div class="b1">ok</div>')
   });
+
+  it('should inherit block from the parent', function () {
+    test(function() {
+    }, {
+      block: 'b2',
+      content: [
+        { block: 'b1', content: { elem: 'e1' } },
+        { elem: 'e1' }
+      ]
+    }, '<div class="b2"><div class="b1"><div class="b1__e1"></div></div>' +
+       '<div class="b2__e1"></div></div>');
+  });
 });
