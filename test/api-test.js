@@ -257,5 +257,20 @@ describe('BEMHTML compiler', function() {
       ], '<div class="b1"><div class="b1__e1"><span><div class="b2">' +
          '</div></span></div></div>');
     });
+
+    it('should preserve block on next BEM entity', function () {
+      test(function() {
+      }, [
+        {
+          block: 'b1',
+          content: {
+            tag: 'span',
+            content: {
+              elem: 'e1'
+            }
+          }
+        }
+      ], '<div class="b1"><span><div class="b1__e1"></div></span></div>');
+    });
   });
 });
