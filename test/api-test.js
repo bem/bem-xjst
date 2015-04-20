@@ -199,6 +199,18 @@ describe('BEMHTML compiler', function() {
     ], '<div class="b1"></div>');
   });
 
+  describe('attrs in BEMJSON', function() {
+    it('should render with block', function () {
+      test(function() {
+      }, { block: 'b1', attrs: { a: 'b' } }, '<div class="b1" a="b"></div>');
+    });
+
+    it('should render with just tag', function () {
+      test(function() {
+      }, { tag: 'span', attrs: { a: 'b' } }, '<span a="b"></span>');
+    });
+  });
+
   describe('preserve/reset block/elem/mods', function() {
     it('should not preserve block on tag', function () {
       test(function() {
