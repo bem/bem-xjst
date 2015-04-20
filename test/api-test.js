@@ -189,18 +189,6 @@ describe('BEMHTML compiler', function() {
     }, '<div class="b1">ok</div>')
   });
 
-  it('should inherit block from the parent', function () {
-    test(function() {
-    }, {
-      block: 'b2',
-      content: [
-        { block: 'b1', content: { elem: 'e1' } },
-        { elem: 'e1' }
-      ]
-    }, '<div class="b2"><div class="b1"><div class="b1__e1"></div></div>' +
-       '<div class="b2__e1"></div></div>');
-  });
-
   it('should not render `undefined`', function () {
     test(function() {
     }, [
@@ -209,5 +197,53 @@ describe('BEMHTML compiler', function() {
       { block: 'b1' },
       undefined
     ], '<div class="b1"></div>');
+  });
+
+  describe('preserve/reset block/elem/mods', function() {
+    it('should not preserve block on tag', function () {
+      test(function() {
+      }, [
+        {
+          block: 'b1',
+          content: {
+            tag: 'span',
+            content: {
+              block: 'b2'
+            }
+          }
+        }
+      ], '<div class="b1"><span><div class="b2"></div></span></div>');
+    });
+
+    it('should inherit block from the parent, and reset it back', function () {
+      test(function() {
+      }, {
+        block: 'b2',
+        content: [
+          { block: 'b1', content: { elem: 'e1' } },
+          { elem: 'e1' }
+        ]
+      }, '<div class="b2"><div class="b1"><div class="b1__e1"></div></div>' +
+         '<div class="b2__e1"></div></div>');
+    });
+
+    it('should not preserve block/elem on tag', function () {
+      test(function() {
+      }, [
+        {
+          block: 'b1',
+          content: {
+            elem: 'e1',
+            content: {
+              tag: 'span',
+              content: {
+                block: 'b2'
+              }
+            }
+          }
+        }
+      ], '<div class="b1"><div class="b1__e1"><span><div class="b2">' +
+         '</div></span></div></div>');
+    });
   });
 });
