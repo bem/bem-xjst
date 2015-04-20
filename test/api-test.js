@@ -159,4 +159,22 @@ describe('BEMHTML compiler', function() {
       block('b1').match(function() { return this.ctx.test1; }).content()('!');
     }, {block: 'b1', test2: true }, '<div class="b1">ok</div>')
   });
+
+  it('should support mod() match', function () {
+    test(function() {
+      block('b1').content()('!');
+      block('b1').mod('key', 'val').content()('ok');
+    }, {
+      block: 'b1', mods: { key: 'val' }
+    }, '<div class="b1 b1_key_val">ok</div>')
+  });
+
+  it('should support elemMod() match', function () {
+    test(function() {
+      block('b1').content()('!');
+      block('b1').elemMod('key', 'val').content()('ok');
+    }, {
+      block: 'b1', elemMods: { key: 'val' }
+    }, '<div class="b1 b1_key_val">ok</div>')
+  });
 });
