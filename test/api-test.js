@@ -200,4 +200,14 @@ describe('BEMHTML compiler', function() {
     }, '<div class="b2"><div class="b1"><div class="b1__e1"></div></div>' +
        '<div class="b2__e1"></div></div>');
   });
+
+  it('should not render `undefined`', function () {
+    test(function() {
+    }, [
+      undefined,
+      undefined,
+      { block: 'b1' },
+      undefined
+    ], '<div class="b1"></div>');
+  });
 });
