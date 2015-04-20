@@ -6,7 +6,8 @@
     "bem-xjst": "bin/bem-xjst"
   },
   "scripts": {
-    "test": "make lint && mocha --reporter=spec test/*-test.js"
+    "prepublish": "make",
+    "test": "make && make lint && mocha --reporter=spec test/*-test.js"
   },
   "repository": {
     "type": "git",
