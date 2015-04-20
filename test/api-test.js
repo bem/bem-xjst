@@ -177,4 +177,15 @@ describe('BEMHTML compiler', function() {
       block: 'b1', elemMods: { key: 'val' }
     }, '<div class="b1 b1_key_val">ok</div>')
   });
+
+  it('should support custom modes', function () {
+    test(function() {
+      block('b1').mode('custom')('ok');
+      block('b1').content()(function() {
+        return apply('custom');
+      });
+    }, {
+      block: 'b1'
+    }, '<div class="b1">ok</div>')
+  });
 });
