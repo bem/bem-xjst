@@ -199,6 +199,13 @@ describe('BEMHTML compiler', function() {
     ], '<div class="b1"></div>');
   });
 
+  it('should group properly after elem', function() {
+    test(function() {
+      block('b1').content()('ok');
+      block('b1').elem('css').content()('!');
+    }, { block: 'b1' }, '<div class="b1">ok</div>');
+  });
+
   describe('attrs in BEMJSON', function() {
     it('should render with block', function () {
       test(function() {
