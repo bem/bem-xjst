@@ -82,6 +82,17 @@ describe('BEMHTML compiler/Runtime', function() {
     }, { block: 'b1' }, '<div class="b1">yes</div>');
   });
 
+  it('should support changing mods in runtime', function() {
+    test(function() {
+      block('b1').def()(function() {
+        this.mods.a = 'b';
+        return applyNext();
+      });
+    }, {
+      block: 'b1'
+    }, '<div class="b1 b1_a_b"></div>');
+  });
+
   describe('mix', function() {
     it('should avoid loops', function() {
       test(function() {
