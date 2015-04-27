@@ -14,6 +14,17 @@ describe('BEMHTML compiler/Runtime', function() {
     }, { block: 'b1', content: 'ohai' }, '<div class="b1">{%ohai%}</div>');
   });
 
+  it('should support applyNext({ ... })', function() {
+    test(function() {
+      block('b1').content()(function() {
+        return '%' + this.wtf + applyNext() + '%';
+      });
+      block('b1').content()(function() {
+        return '{' + applyNext({ wtf: 'no ' }) + '}';
+      });
+    }, { block: 'b1', content: 'ohai' }, '<div class="b1">{%no ohai%}</div>');
+  });
+
   it('should support local', function() {
     test(function() {
       block('b1').content()(function() {
