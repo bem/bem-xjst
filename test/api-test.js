@@ -223,6 +223,11 @@ describe('BEMHTML compiler', function() {
     }, '<link rel="stylesheet" href="ohai"/>');
   });
 
+  it('should render without tag', function() {
+    test(function() {
+    }, { tag: false, content: 'ok' }, 'ok');
+  });
+
   describe('attrs in BEMJSON', function() {
     it('should render with block', function () {
       test(function() {
