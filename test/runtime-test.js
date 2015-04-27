@@ -74,6 +74,14 @@ describe('BEMHTML compiler/Runtime', function() {
     }, { tag: false, content: 'ok' }, 'ok');
   });
 
+  it('should lazily define mods', function() {
+    test(function() {
+      block('b1').content()(function() {
+        return this.mods.a || 'yes';
+      });
+    }, { block: 'b1' }, '<div class="b1">yes</div>');
+  });
+
   describe('mix', function() {
     it('should avoid loops', function() {
       test(function() {
