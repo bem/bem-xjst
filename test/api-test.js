@@ -228,6 +228,16 @@ describe('BEMHTML compiler', function() {
     }, { tag: false, content: 'ok' }, 'ok');
   });
 
+  it('should support oninit', function() {
+    test(function() {
+      oninit(function(exports) {
+        exports.apply = function() {
+          return 'ok';
+        };
+      });
+    }, {}, 'ok');
+  });
+
   describe('mix', function() {
     it('should avoid loops', function() {
       test(function() {
