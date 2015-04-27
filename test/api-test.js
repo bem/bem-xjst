@@ -228,6 +228,49 @@ describe('BEMHTML compiler', function() {
     }, { tag: false, content: 'ok' }, 'ok');
   });
 
+  describe('mix', function() {
+    it('should avoid loops', function() {
+      test(function() {
+        block('b1')(
+          tag()('a'),
+          mix()([
+            { block: 'b2' }
+          ])
+        );
+        block('b2')(
+          tag()('b'),
+          mix()([
+            { mods: { modname: 'modval' } },
+            { block: 'b1' }
+          ])
+        );
+      }, { block: 'b1' }, '<a class="b1 b2 b2_modname_modval"></a>');
+    });
+
+    it('should support nested mix', function() {
+      test(function() {
+        block('b1')(
+          tag()('a'),
+          mix()([ { block: 'b2' }, { block: 'b3', elem: 'e3' } ])
+        );
+        block('b2')(
+          tag()('b'),
+          mix()([ { mods: { modname: 'modval' } } ])
+        );
+        block('b3')(
+          tag()('b'),
+          elem('e3').mix()([ { mods: { modname: 1 } } ])
+        );
+      }, {
+        block: 'b1',
+        mods: {
+          x: 10
+        }
+      }, '<a class="b1 b1_x_10 b2 b2_modname_modval b3__e3 b3__e3_modname_1">' +
+         '</a>');
+    });
+  });
+
   describe('position in Context', function() {
     test(function() {
       block('b1').content()(function() { return this.position; });
