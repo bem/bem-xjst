@@ -107,17 +107,19 @@ describe('BEMHTML compiler/Runtime', function() {
   });
 
   describe('position in Context', function() {
-    test(function() {
-      block('b1').content()(function() { return this.position; });
-    }, [
-      { block: 'b1' },
-      { block: 'b1' },
-      { block: 'b1' },
-      { block: 'b1' }
-    ], '<div class="b1">1</div>' +
-       '<div class="b1">2</div>' +
-       '<div class="b1">3</div>' +
-       '<div class="b1">4</div>');
+    it('should have proper this.position', function() {
+      test(function() {
+        block('b1').content()(function() { return this.position; });
+      }, [
+        { block: 'b1' },
+        { block: 'b1' },
+        { block: 'b1' },
+        { block: 'b1' }
+      ], '<div class="b1">1</div>' +
+         '<div class="b1">2</div>' +
+         '<div class="b1">3</div>' +
+         '<div class="b1">4</div>');
+    });
   });
 
   describe('attrs in BEMJSON', function() {

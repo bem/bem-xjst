@@ -17,6 +17,7 @@
   "license": "MIT",
   "dependencies": {
     "coa": "~0.3.9",
+    "inherits": "^2.0.1",
     "q": "~0.9.3"
   },
   "devDependencies": {

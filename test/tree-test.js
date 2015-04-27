@@ -155,4 +155,17 @@ describe('BEMHTML compiler/Tree', function() {
       });
     }, {}, 'ok');
   });
+
+  it('should support mixed direct/nested bodies', function() {
+    test(function() {
+      block('page')(
+        content()(
+          function() { return 'ok'; },
+          match(function() { return true; })(function() {
+            return applyNext();
+          })
+        )
+      );
+    }, { block: 'page' }, '<div class="page">ok</div>');
+  });
 });
