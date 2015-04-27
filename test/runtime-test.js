@@ -144,6 +144,16 @@ describe('BEMHTML compiler/Runtime', function() {
         block: 'b1'
       }, '<div class="b1 b2"></div>');
     });
+
+    it('should support mix in json', function() {
+      test(function() {
+        block('b1')(
+        );
+      }, {
+        block: 'b1',
+        mix: { block: 'b2' }
+      }, '<div class="b1 b2"></div>');
+    });
   });
 
   describe('position in Context', function() {
