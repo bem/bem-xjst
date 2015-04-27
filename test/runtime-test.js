@@ -123,6 +123,27 @@ describe('BEMHTML compiler/Runtime', function() {
       }, '<a class="b1 b1_x_10 b2 b2_modname_modval b3__e3 b3__e3_modname_1">' +
          '</a>');
     });
+
+    it('should check that mix do not overwrite jsParams', function() {
+      test(function() {
+        block('b1')(
+          js()(true),
+          mix()([ { block: 'b2' } ])
+        );
+      }, {
+        block: 'b1'
+      }, '<div class="b1 b2 i-bem" data-bem="{&quot;b1&quot;:{}}"></div>');
+    });
+
+    it('should support singular mix', function() {
+      test(function() {
+        block('b1')(
+          mix()({ block: 'b2' })
+        );
+      }, {
+        block: 'b1'
+      }, '<div class="b1 b2"></div>');
+    });
   });
 
   describe('position in Context', function() {
