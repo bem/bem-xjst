@@ -74,34 +74,76 @@ describe('BEMHTML compiler/Runtime', function() {
     }, { tag: false, content: 'ok' }, 'ok');
   });
 
-  it('should lazily define mods', function() {
+  it('should return undefined on failed match', function() {
     test(function() {
       block('b1').content()(function() {
-        return this.mods.a || 'yes';
+        return { elem: 'e1' };
       });
-    }, { block: 'b1' }, '<div class="b1">yes</div>');
+
+      block('b1').elem('e1').mod('a', 'b').tag('span');
+    }, { block: 'b1' }, '<div class="b1"><div class="b1__e1"></div></div>');
   });
 
-  it('should support changing mods in runtime', function() {
-    test(function() {
-      block('b1').def()(function() {
-        this.mods.a = 'b';
-        return applyNext();
-      });
-    }, {
-      block: 'b1'
-    }, '<div class="b1 b1_a_b"></div>');
-  });
+  describe('mods', function() {
+    it('should lazily define mods', function() {
+      test(function() {
+        block('b1').content()(function() {
+          return this.mods.a || 'yes';
+        });
+      }, { block: 'b1' }, '<div class="b1">yes</div>');
+    });
 
-  it('should inherit mods properly', function() {
-    test(function() {
-      block('b1').content()(function() {
-        return { elem: 'e1', tag: 'span' };
-      });
-    }, {
-      block: 'b1',
-      mods: { a: 'b' }
-    }, '<div class="b1 b1_a_b"><span class="b1__e1"></span></div>');
+    it('should support changing mods in runtime', function() {
+      test(function() {
+        block('b1').def()(function() {
+          this.mods.a = 'b';
+          return applyNext();
+        });
+      }, {
+        block: 'b1'
+      }, '<div class="b1 b1_a_b"></div>');
+    });
+
+    it('should inherit mods properly', function() {
+      test(function() {
+        block('b1').content()(function() {
+          return { elem: 'e1', tag: 'span' };
+        });
+      }, {
+        block: 'b1',
+        mods: { a: 'b' }
+      }, '<div class="b1 b1_a_b"><span class="b1__e1"></span></div>');
+    });
+
+    it('should match on changed mods', function() {
+      test(function() {
+        block('b1').content()(function() {
+          return { elem: 'e1' };
+        });
+
+        block('b1').elem('e1').mod('a', 'b').tag()('span');
+        block('b1').elem('e1').def()(function() {
+          return local({ 'mods.a': 'b' })(function() {
+            return applyNext();
+          });
+        });
+      }, {
+        block: 'b1'
+      }, '<div class="b1"><span class="b1__e1"></span></div>');
+    });
+
+    it('should propagate parent mods to matcher', function() {
+      test(function() {
+        block('b1').content()(function() {
+          return { elem: 'e1' };
+        });
+
+        block('b1').elem('e1').mod('a', 'b').tag()('span');
+      }, {
+        block: 'b1',
+        mods: { a: 'b' }
+      }, '<div class="b1 b1_a_b"><span class="b1__e1"></span></div>');
+    });
   });
 
   describe('mix', function() {
