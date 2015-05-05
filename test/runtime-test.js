@@ -93,6 +93,17 @@ describe('BEMHTML compiler/Runtime', function() {
     }, '<div class="b1 b1_a_b"></div>');
   });
 
+  it('should inherit mods properly', function() {
+    test(function() {
+      block('b1').content()(function() {
+        return { elem: 'e1', tag: 'span' };
+      });
+    }, {
+      block: 'b1',
+      mods: { a: 'b' }
+    }, '<div class="b1 b1_a_b"><span class="b1__e1"></span></div>');
+  });
+
   describe('mix', function() {
     it('should avoid loops', function() {
       test(function() {
