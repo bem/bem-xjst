@@ -84,6 +84,19 @@ describe('BEMHTML compiler/Runtime', function() {
     }, { block: 'b1' }, '<div class="b1"><div class="b1__e1"></div></div>');
   });
 
+  it('should support this.reapply()', function() {
+    test(function() {
+      block('b1').content()(function() {
+        this.wtf = 'fail';
+        return this.reapply({ block: 'b2' });
+      });
+
+      block('b2').content()(function() {
+        return this.wtf || 'ok';
+      });
+    }, { block: 'b1' }, '<div class="b1"><div class="b2">ok</div></div>');
+  });
+
   describe('mods', function() {
     it('should lazily define mods', function() {
       test(function() {
