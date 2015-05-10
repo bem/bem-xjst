@@ -3,36 +3,63 @@ var fixtures = require('./fixtures');
 var test = fixtures.test;
 
 describe('BEMHTML compiler/Runtime', function() {
-  it('should support applyNext()', function() {
-    test(function() {
-      block('b1').content()(function() {
-        return '%' + applyNext() + '%';
-      });
-      block('b1').content()(function() {
-        return '{' + applyNext() + '}';
-      });
-    }, { block: 'b1', content: 'ohai' }, '<div class="b1">{%ohai%}</div>');
-  });
-
-  it('should support applyNext({ ... })', function() {
-    test(function() {
-      block('b1').content()(function() {
-        return '%' + this.wtf + applyNext() + '%';
-      });
-      block('b1').content()(function() {
-        return '{' + applyNext({ wtf: 'no ' }) + '}';
-      });
-    }, { block: 'b1', content: 'ohai' }, '<div class="b1">{%no ohai%}</div>');
-  });
-
-  it('should support local', function() {
-    test(function() {
-      block('b1').content()(function() {
-        return local({ tmp: 'b2' })(function() {
-          return this.tmp;
+  describe('applyNext()', function() {
+    it('should support applyNext()', function() {
+      test(function() {
+        block('b1').content()(function() {
+          return '%' + applyNext() + '%';
         });
-      });
-    }, { block: 'b1' }, '<div class="b1">b2</div>');
+        block('b1').content()(function() {
+          return '{' + applyNext() + '}';
+        });
+      }, { block: 'b1', content: 'ohai' }, '<div class="b1">{%ohai%}</div>');
+    });
+
+    it('should support applyNext({ ... })', function() {
+      test(function() {
+        block('b1').content()(function() {
+          return '%' + this.wtf + applyNext() + '%';
+        });
+        block('b1').content()(function() {
+          return '{' + applyNext({ wtf: 'no ' }) + '}';
+        });
+      }, { block: 'b1', content: 'ohai' }, '<div class="b1">{%no ohai%}</div>');
+    });
+
+    it('should support local', function() {
+      test(function() {
+        block('b1').content()(function() {
+          return local({ tmp: 'b2' })(function() {
+            return this.tmp;
+          });
+        });
+      }, { block: 'b1' }, '<div class="b1">b2</div>');
+    });
+
+    it('should support visiting higher priority templates', function() {
+      test(function() {
+        block('b1').content()(function() {
+          return applyNext({ wtf: true });
+        });
+
+        block('b1').match(function() {
+          return this.wtf;
+        }).content()('ok');
+      }, { block: 'b1' }, '<div class="b1">ok</div>');
+    });
+
+    it('should support > 31 templates (because of the bit mask)', function() {
+      test(function() {
+        block('b1').content()(function() {
+          return 'ok';
+        });
+        for (var i = 0; i < 128; i++) {
+          block('b1').content()(function() {
+            return applyNext();
+          });
+        }
+      }, { block: 'b1' }, '<div class="b1">ok</div>');
+    });
   });
 
   it('should support applyCtx', function() {
