@@ -258,6 +258,18 @@ describe('BEMHTML compiler/Runtime', function() {
         mix: { block: 'b2' }
       }, '<div class="b1 b2"></div>');
     });
+
+    it('should reset elem', function() {
+      test(function() {
+        block('b1').elem('e1').mix()([
+          { block: 'b2' },
+          { block: 'b3' }
+        ]);
+      }, {
+        block: 'b1',
+        elem: 'e1'
+      }, '<div class="b1__e1 b2 b3"></div>');
+    });
   });
 
   describe('position in Context', function() {
