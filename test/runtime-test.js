@@ -62,17 +62,35 @@ describe('BEMHTML compiler/Runtime', function() {
     });
   });
 
-  it('should support applyCtx', function() {
-    test(function() {
-      block('b1').content()(function() {
-        return applyCtx([
-          { block: 'b2', content: 'omg' },
-          { block: 'b3', tag: 'br' }
-        ]);
-      });
-    }, {
-      block: 'b1'
-    }, '<div class="b1"><div class="b2">omg</div><br class="b3"/></div>');
+  describe('applyCtx()', function() {
+    it('should work with just context', function() {
+      test(function() {
+        block('b1').content()(function() {
+          return applyCtx([
+            { block: 'b2', content: 'omg' },
+            { block: 'b3', tag: 'br' }
+          ]);
+        });
+      }, {
+        block: 'b1'
+      }, '<div class="b1"><div class="b2">omg</div><br class="b3"/></div>');
+    });
+
+    it('should work with both context and changes', function() {
+      test(function() {
+        block('b2').content()(function() {
+          return this.wtf;
+        });
+
+        block('b1').content()(function() {
+          return applyCtx([
+            { block: 'b2' }
+          ], { wtf: 'ohai' });
+        });
+      }, {
+        block: 'b1'
+      }, '<div class="b1"><div class="b2">ohai</div></div>');
+    });
   });
 
   it('should support custom modes', function () {
