@@ -104,6 +104,14 @@ describe('BEMHTML compiler/Tree', function() {
         block('b1')(replace()(function () { return { block: 'b2' }; }));
       }, { block: 'b1' }, '<div class="b2">replaced</div>')
     });
+
+    it('should support inline argument', function () {
+      test(function() {
+        block('b1').content()('ok');
+        block('b2').content()('replaced');
+        block('b1').replace()({ block: 'b2' });
+      }, { block: 'b1' }, '<div class="b2">replaced</div>')
+    });
   });
 
   describe('extend()', function() {
@@ -128,6 +136,14 @@ describe('BEMHTML compiler/Tree', function() {
         block('b1').content()('ok');
         block('b1').elem('e').content()('extended');
         block('b1')(extend()(function() { return { elem: 'e' }; }));
+      }, { block: 'b1' }, '<div class="b1__e">extended</div>')
+    });
+
+    it('should support inline argument', function () {
+      test(function() {
+        block('b1').content()('ok');
+        block('b1').elem('e').content()('extended');
+        block('b1').extend()({ elem: 'e' });
       }, { block: 'b1' }, '<div class="b1__e">extended</div>')
     });
   });
