@@ -87,7 +87,7 @@ describe('BEMHTML compiler/Tree', function() {
         block('b2').content()('replaced');
         block('b1').replace()(function () { return { block: 'b2' }; });
       }, { block: 'b1' }, '<div class="b2">replaced</div>')
-    })
+    });
 
     it('should have proper `this`', function () {
       test(function() {
@@ -95,7 +95,15 @@ describe('BEMHTML compiler/Tree', function() {
         block('b2').content()('replaced');
         block('b1').replace()(function () { return { block: this.ctx.wtf }; });
       }, { block: 'b1', wtf: 'b2' }, '<div class="b2">replaced</div>')
-    })
+    });
+
+    it('should work as a singular function', function () {
+      test(function() {
+        block('b1').content()('ok');
+        block('b2').content()('replaced');
+        block('b1')(replace()(function () { return { block: 'b2' }; }));
+      }, { block: 'b1' }, '<div class="b2">replaced</div>')
+    });
   });
 
   describe('extend()', function() {
@@ -113,6 +121,14 @@ describe('BEMHTML compiler/Tree', function() {
         block('b1').elem('e').content()('extended');
         block('b1').extend()(function() { return { elem: this.ctx.wtf }; });
       }, { block: 'b1', wtf: 'e' }, '<div class="b1__e">extended</div>')
+    });
+
+    it('should work as a singular function', function () {
+      test(function() {
+        block('b1').content()('ok');
+        block('b1').elem('e').content()('extended');
+        block('b1')(extend()(function() { return { elem: 'e' }; }));
+      }, { block: 'b1' }, '<div class="b1__e">extended</div>')
     });
   });
 
