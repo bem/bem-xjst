@@ -408,6 +408,51 @@ describe('BEMHTML compiler', function() {
       block('b1').extend()(function() { return {elem: 'e'}; });
     }, {block: 'b1'}, '<div class="b1__e">extended</div>')
   });
+
+  it('should handle escaping this', function () {
+    test(function () {
+      block('b1').content()(function() {
+        var _this = this;
+        return _this.block;
+      });
+    }, {block: 'b1' }, '<div class="b1">b1</div>')
+  });
+
+  it('should handle escaping this in locals', function () {
+    test(function () {
+      block('b1').content()(function() {
+        return '-' + local({})(function() {
+          var _this = this;
+          return _this.block;
+        });
+      });
+    }, {block: 'b1' }, '<div class="b1">-b1</div>')
+  });
+
+  it('should handle escaping apply', function () {
+    test(function () {
+      block('b1').mode('custom')('ok');
+      block('b1').content()(function() {
+        return [ this ].map(function(ctx) {
+          return this.block + ':' +
+                 ctx.block + ':' +
+                 apply({ _mode: 'custom' });
+        }, this).join('');
+      });
+    }, {block: 'b1' }, '<div class="b1">b1:b1:ok</div>')
+  });
+
+  it('should handle escaping apply in local', function () {
+    test(function () {
+      block('b1').mode('custom')('ok');
+      block('b1').content()(function() {
+        return '' + local({})(function() {
+          return this.block + ':' +
+                 apply({ _mode: 'custom' });
+        });
+      });
+    }, {block: 'b1' }, '<div class="b1">b1:ok</div>')
+  });
 });
 
 describe('BEMTREE compiler', function() {
