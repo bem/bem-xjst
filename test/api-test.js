@@ -5,6 +5,11 @@ var vm = require('vm');
 var ym = require('ym');
 var vow = require('vow');
 
+var str = JSON.stringify;
+JSON.stringify = function(obj) {
+  return str.apply(this, arguments);
+};
+
 describe('BEMHTML compiler', function() {
   function test(fn, data, expected, options) {
     if (!options) options = {};
@@ -452,6 +457,48 @@ describe('BEMHTML compiler', function() {
         });
       });
     }, {block: 'b1' }, '<div class="b1">b1:ok</div>')
+  });
+
+  it('should replace global properties local body in hashmap', function () {
+    test(function () {
+      block('b32').content()('nope');
+      block('b31').content()('nope');
+      block('b30').content()('nope');
+      block('b29').content()('nope');
+      block('b28').content()('nope');
+      block('b27').content()('nope');
+      block('b26').content()('nope');
+      block('b25').content()('nope');
+      block('b24').content()('nope');
+      block('b23').content()('nope');
+      block('b22').content()('nope');
+      block('b21').content()('nope');
+      block('b20').content()('nope');
+      block('b19').content()('nope');
+      block('b18').content()('nope');
+      block('b17').content()('nope');
+      block('b16').content()('nope');
+      block('b15').content()('nope');
+      block('b14').content()('nope');
+      block('b13').content()('nope');
+      block('b12').content()('nope');
+      block('b11').content()('nope');
+      block('b10').content()('nope');
+      block('b9').content()('nope');
+      block('b8').content()('nope');
+      block('b7').content()('nope');
+      block('b6').content()('nope');
+      block('b5').content()('nope');
+      block('b4').content()('nope');
+      block('b3').content()('nope');
+      block('b2').content()('nope');
+
+      block('b1').content()(function() {
+        return apply({ elem: 'custom' });
+      });
+
+      content().elem('custom')('ok');
+    }, {block: 'b1' }, '<div class="b1">ok</div>')
   });
 });
 
