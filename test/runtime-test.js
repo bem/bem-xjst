@@ -390,10 +390,10 @@ describe('BEMHTML compiler/Runtime', function() {
       ], '<div class="b1"><span><div class="b1__e1"></div></span></div>');
     });
 
-    it('should support changing prototype of BEMHTMLContext', function () {
+    it('should support changing prototype of BEMContext', function () {
       test(function() {
         oninit(function(exports) {
-          exports.BEMHTMLContext.prototype.yes = 'hah';
+          exports.BEMContext.prototype.yes = 'hah';
         });
 
         block('b1').content()(function() {
