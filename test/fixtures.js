@@ -8,7 +8,6 @@ function test(fn, data, expected, options) {
 
   var body = fn.toString().replace(/^function\s*\(\)\s*{|}$/g, '');
   var fns = [
-    bemxjst.compile(body, utile.mixin({}, options, { optimize: false })),
     bemxjst.compile(body, options)
   ];
 

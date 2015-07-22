@@ -404,4 +404,24 @@ describe('BEMHTML compiler/Runtime', function() {
       }, '<div class="b1">hah</div>');
     });
   });
+
+  describe('wildcard block', function() {
+    it('should be called before the matched templates', function () {
+      test(function() {
+        block('b1').content()(function() {
+          return 'ok';
+        });
+        block('b2').content()(function() {
+          return 'yes';
+        });
+        block('*').content()(function() {
+          return '#' + applyNext() + '#';
+        });
+      }, [ {
+        block: 'b1'
+      }, {
+        block: 'b2'
+      } ], '<div class="b1">#ok#</div><div class="b2">#yes#</div>');
+    });
+  });
 });
