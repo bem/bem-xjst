@@ -1,4 +1,4 @@
-BROWSERIFY ?= ./node_modules/.bin/browserify
+BROWSERIFY ?= browserify
 JSCS ?= ./node_modules/.bin/jscs
 JSHINT ?= ./node_modules/.bin/jshint
 
