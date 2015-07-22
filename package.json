@@ -7,7 +7,6 @@
   },
   "scripts": {
     "prepublish": "make",
-    "postinstall": "make",
     "test": "make && make lint && mocha --reporter=spec test/*-test.js"
   },
   "repository": {
