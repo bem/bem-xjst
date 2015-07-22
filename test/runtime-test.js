@@ -277,6 +277,16 @@ describe('BEMHTML compiler/Runtime', function() {
       }, '<div class="b1 b2"></div>');
     });
 
+    it('should support `undefined` mix', function() {
+      test(function() {
+        block('b1')(
+          mix()(undefined)
+        );
+      }, {
+        block: 'b1'
+      }, '<div class="b1"></div>');
+    });
+
     it('should support mix in json', function() {
       test(function() {
         block('b1')(
