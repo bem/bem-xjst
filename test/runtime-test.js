@@ -1,5 +1,6 @@
 var assert = require('assert');
 var fixtures = require('./fixtures');
+var bemxjst = require('../');
 
 var test = fixtures.test;
 
@@ -566,6 +567,35 @@ describe('BEMHTML compiler/Runtime', function() {
       } ], '<div class="b1">#ok#</div>' +
            '<div class="b2">#yes#</div>' +
            '<div class="b3">#ya#</div>');
+    });
+  });
+
+  describe('adding templates at runtime', function() {
+    it('should work', function() {
+      var template = bemxjst.compile();
+
+      assert.equal(template.apply({ block: 'b1' }), '<div class="b1"></div>');
+
+      template.compile(function() {
+        block('b1').content()('ok');
+      });
+
+      assert.equal(template.apply({ block: 'b1' }), '<div class="b1">ok</div>');
+      assert.equal(template.apply({ block: 'b2' }), '<div class="b2"></div>');
+
+      template.compile(function() {
+        block('b2').content()('ok');
+      });
+
+      assert.equal(template.apply({ block: 'b1' }), '<div class="b1">ok</div>');
+      assert.equal(template.apply({ block: 'b2' }), '<div class="b2">ok</div>');
+
+      template.compile(function() {
+        block('b1').tag()('a');
+      });
+
+      assert.equal(template.apply({ block: 'b1' }), '<a class="b1">ok</a>');
+      assert.equal(template.apply({ block: 'b2' }), '<div class="b2">ok</div>');
     });
   });
 });

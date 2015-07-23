@@ -3,15 +3,10 @@ var assert = require('assert');
 var utile = require('utile');
 var vm = require('vm');
 
-function fn2str(fn) {
-  return fn.toString().replace(/^function\s*\(\)\s*{|}$/g, '');
-}
-
 function test(fn, data, expected, options) {
   if (!options) options = {};
 
-  var body = fn2str(fn);
-  var template = bemxjst.compile(body, options)
+  var template = bemxjst.compile(fn, options)
 
   if (options.flush) {
     template._buf = [];
