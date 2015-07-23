@@ -484,7 +484,12 @@ describe('BEMHTML compiler/Runtime', function() {
         block: 'b1'
       }, {
         block: 'b2'
-      } ], '<div class="b1">#ok#</div><div class="b2">#yes#</div>');
+      }, {
+        block: 'b3',
+        content: 'ya'
+      } ], '<div class="b1">#ok#</div>' +
+           '<div class="b2">#yes#</div>' +
+           '<div class="b3">#ya#</div>');
     });
   });
 });
