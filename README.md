@@ -43,6 +43,36 @@ Options:
   -o OUTPUT, --output=OUTPUT : Output file (default: stdout)
 ```
 
+## API
+
+### Compiler
+
+#### `.compile(string or function)`
+
+Compile input templates and return `templates` object.
+(See documentation below for its methods)
+
+#### `.generate(string or function)`
+
+Generate output JavaScript code that might be transferred and executed in
+browser to get the `templates` object.
+
+### templates
+
+#### `.apply(context)`
+
+Run compiled templates on specified input context. Return resulting HTML output.
+
+#### `.compile(string or function)`
+
+Add more BEM templates to the `templates` instance. Might be called in runtime
+to deliver more blocks declarations to the client.
+
+#### `.BEMContext`
+
+Constructor of the `this` object available in template bodies. Might be amended
+to expose some functionality to the templates, or to add [_flush][1] method.
+
 ### Benchmarks
 
 To run benchmarks:
@@ -67,4 +97,5 @@ See [wiki][0]
 Code and documentation copyright 2015 YANDEX LLC. Code released under the
 [Mozilla Public License 2.0](LICENSE.txt).
 
-[0]: wiki/Notable-changes-between-bem-xjst@1.x-and-bem-xjst@2.x
+[0]: https://github.com/bem/bem-xjst/wiki/Notable-changes-between-bem-xjst@1.x-and-bem-xjst@2.x
+[1]: https://github.com/bem/bem-xjst/wiki/Notable-changes-between-bem-xjst@1.x-and-bem-xjst@2.x#this_str-is-gone
