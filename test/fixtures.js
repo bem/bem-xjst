@@ -3,10 +3,14 @@ var assert = require('assert');
 var utile = require('utile');
 var vm = require('vm');
 
+function fn2str(fn) {
+  return fn.toString().replace(/^function\s*\(\)\s*{|}$/g, '');
+}
+
 function test(fn, data, expected, options) {
   if (!options) options = {};
 
-  var body = fn.toString().replace(/^function\s*\(\)\s*{|}$/g, '');
+  var body = fn2str(fn);
   var fns = [
     bemxjst.compile(body, options)
   ];
@@ -21,3 +25,11 @@ function test(fn, data, expected, options) {
   });
 }
 exports.test = test;
+
+function fail(fn, regexp) {
+  var body = fn2str(fn);
+  assert.throws(function() {
+    bemxjst.compile(body);
+  }, regexp);
+}
+exports.fail = fail;
