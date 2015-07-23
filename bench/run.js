@@ -7,7 +7,8 @@ var benchmark = require('benchmark');
 var argv = require('yargs')
     .describe('grep', 'filter templates to run')
     .describe('compare', 'compare with the previous bem-xjst version')
-    .describe('compile', 'compare compile time too')
+    .describe('compile', 'benchmark compile')
+    .describe('flush', 'benchmark _flush()')
     .describe('min-samples', 'minimum number of samples')
     .describe('max-time', 'maximum amount of time to wait')
     .help('h')
@@ -88,6 +89,24 @@ templates.forEach(function(template) {
       precompiled.apply(input);
     });
   });
+
+  if (argv.flush) {
+    both(function(version, xjst) {
+      var precompiled = xjst.compile(template.content, {
+        context: 'this'
+      });
+      var input = JSON.parse(template.input);
+
+      precompiled.BEMContext.prototype._flush = function _flush(str) {
+        return '';
+      };
+
+      // Rendering speed
+      suite.add('flush:' + template.name + ':' + version, function() {
+        precompiled.apply(input);
+      });
+    });
+  }
 });
 
 suite.on('cycle', function(event) {

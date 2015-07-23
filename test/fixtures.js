@@ -11,23 +11,21 @@ function test(fn, data, expected, options) {
   if (!options) options = {};
 
   var body = fn2str(fn);
-  var fns = [
-    bemxjst.compile(body, options)
-  ];
+  var template = bemxjst.compile(body, options)
 
   // Invoke multiple times
-  if (options.count !== undefined)
-    for (var i = 1; i < options.count; i++)
-      fns.push(fns[0]);
-
-  fns.forEach(function(fn, i) {
+  var count = options.count || 1;
+  for (var i = 0; i < count; i++) {
     try {
-      assert.equal(fn.apply.call(data || {}), expected, i);
+      assert.equal(template.apply.call(data || {}), expected, i);
     } catch (e) {
       console.error(e.stack);
       throw e;
     }
-  });
+  }
+
+  if (options.after)
+    options.after(template);
 }
 exports.test = test;
 

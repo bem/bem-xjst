@@ -1,3 +1,4 @@
+var assert = require('assert');
 var fixtures = require('./fixtures');
 
 var test = fixtures.test;
@@ -390,6 +391,46 @@ describe('BEMHTML compiler/Runtime', function() {
           block: 'b2'
         }
       }, '[3.[0.<div class="b1">][2.[1.<div class="b2">]</div>]</div>]');
+    });
+
+    it('should not flush custom def() bodies', function () {
+      test(function() {
+        oninit(function(exports) {
+          exports._buf = [];
+          exports.BEMContext.prototype._flush = function flush(str) {
+            if (str !== '')
+              exports._buf.push(str);
+            return '';
+          };
+        });
+
+        block('b2').def()(function() {
+          return 'before' + applyNext() + 'after';
+        });
+
+        block('*').tag()('a');
+      }, {
+        block: 'b1',
+        content: [ {
+          block: 'b2',
+          content: {
+            block: 'b3'
+          }
+        }, {
+          block: 'b4',
+          content: 'ending'
+        } ]
+      }, '', {
+        after: function after(template) {
+          assert.deepEqual(template._buf, [
+            '<a class="b1">',
+            'before<a class="b2"><a class="b3"></a></a>after',
+            '<a class="b4">',
+            'ending</a>',
+            '</a>'
+          ]);
+        }
+      });
     });
   });
 
