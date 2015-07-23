@@ -76,6 +76,13 @@ templates.forEach(function(template) {
     });
     var input = JSON.parse(template.input);
 
+    // Test that it does not crash
+    try {
+      precompiled.apply(input);
+    } catch (e) {
+      console.error(e.stack);
+    }
+
     // Rendering speed
     suite.add('render:' + template.name + ':' + version, function() {
       precompiled.apply(input);
