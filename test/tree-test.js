@@ -221,7 +221,7 @@ describe('BEMHTML compiler/Tree', function() {
     }, { block: 'page' }, '<div class="page">ok</div>');
   });
 
-  it('should support once', function() {
+  it('should support `.once()`', function() {
     test(function() {
       block('b1').content()(function() {
         return 'second';
@@ -236,5 +236,15 @@ describe('BEMHTML compiler/Tree', function() {
     } ], '<div class="b1">first</div><div class="b1">second</div>', {
       count: 5
     });
+  });
+
+  it('should support `.xjstOptions()`', function() {
+    test(function() {
+      block('b1').xjstOptions({ who: 'cares' }).content()(function() {
+        return 'ok';
+      });
+    }, {
+      block: 'b1'
+    }, '<div class="b1">ok</div>');
   });
 });
