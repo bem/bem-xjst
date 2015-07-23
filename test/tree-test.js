@@ -220,4 +220,21 @@ describe('BEMHTML compiler/Tree', function() {
       );
     }, { block: 'page' }, '<div class="page">ok</div>');
   });
+
+  it('should support once', function() {
+    test(function() {
+      block('b1').content()(function() {
+        return 'second';
+      });
+      block('b1').once().content()(function() {
+        return 'first';
+      });
+    }, [ {
+      block: 'b1'
+    }, {
+      block: 'b1'
+    } ], '<div class="b1">first</div><div class="b1">second</div>', {
+      count: 5
+    });
+  });
 });

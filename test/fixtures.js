@@ -15,6 +15,11 @@ function test(fn, data, expected, options) {
     bemxjst.compile(body, options)
   ];
 
+  // Invoke multiple times
+  if (options.count !== undefined)
+    for (var i = 1; i < options.count; i++)
+      fns.push(fns[0]);
+
   fns.forEach(function(fn, i) {
     try {
       assert.equal(fn.apply.call(data || {}), expected, i);

@@ -1,7 +1,7 @@
 /* begin: /Users/indutny/Code/bem/bem-components/libs/bem-core/common.blocks/page/page.bemhtml */
 block('page')(
 
-    def()(function() {
+    def().once()(function() {
         var ctx = this.ctx;
         this._nonceCsp = ctx.nonce;
 
