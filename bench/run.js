@@ -7,6 +7,7 @@ var benchmark = require('benchmark');
 var argv = require('yargs')
     .describe('grep', 'filter templates to run')
     .describe('compare', 'compare with the previous bem-xjst version')
+    .describe('compile', 'compare compile time too')
     .describe('min-samples', 'minimum number of samples')
     .describe('max-time', 'maximum amount of time to wait')
     .help('h')
@@ -58,14 +59,16 @@ function both(callback) {
 }
 
 templates.forEach(function(template) {
-  both(function(version, xjst) {
-    // Compilation speed benchmark
-    suite.add('compile:' + template.name + ':' + version, function() {
-      xjst.compile(template.content, {
-        context: 'this'
+  if (argv.compile) {
+    both(function(version, xjst) {
+      // Compilation speed benchmark
+      suite.add('compile:' + template.name + ':' + version, function() {
+        xjst.compile(template.content, {
+          context: 'this'
+        });
       });
     });
-  });
+  }
 
   both(function(version, xjst) {
     var precompiled = xjst.compile(template.content, {
