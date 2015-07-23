@@ -390,20 +390,11 @@ describe('BEMHTML compiler/Runtime', function() {
         content: {
           block: 'b2'
         }
-      }, '[3.[0.<div class="b1">][2.[1.<div class="b2">]</div>]</div>]');
+      }, '[4.[3.[0.<div class="b1">][2.[1.<div class="b2">]</div>]</div>]]');
     });
 
-    it('should not flush custom def() bodies', function () {
+    it('should not flush custom def() bodies', function() {
       test(function() {
-        oninit(function(exports) {
-          exports._buf = [];
-          exports.BEMContext.prototype._flush = function flush(str) {
-            if (str !== '')
-              exports._buf.push(str);
-            return '';
-          };
-        });
-
         block('b2').def()(function() {
           return 'before' + applyNext() + 'after';
         });
@@ -421,12 +412,56 @@ describe('BEMHTML compiler/Runtime', function() {
           content: 'ending'
         } ]
       }, '', {
+        flush: true,
         after: function after(template) {
           assert.deepEqual(template._buf, [
             '<a class="b1">',
             'before<a class="b2"><a class="b3"></a></a>after',
             '<a class="b4">',
             'ending</a>',
+            '</a>'
+          ]);
+        }
+      });
+    });
+
+    it('should still flush top level with def() override', function() {
+      test(function() {
+        block('b2').def()(function() {
+          return 'before' + applyNext() + 'after';
+        });
+
+        block('*').tag()('a');
+      }, {
+        block: 'b2',
+        content: {
+          block: 'b3'
+        }
+      }, '', {
+        flush: true,
+        after: function after(template) {
+          assert.deepEqual(template._buf, [
+            'before<a class="b2"><a class="b3"></a></a>after'
+          ]);
+        }
+      });
+    });
+
+    it('should not flush custom def() with `.xjstOptions({ flush: true })',
+       function () {
+      test(function() {
+        block('b2').def().xjstOptions({ flush: true })(function() {
+          return applyCtx({ block: 'b1' });
+        });
+
+        block('*').tag()('a');
+      }, {
+        block: 'b2'
+      }, '', {
+        flush: true,
+        after: function after(template) {
+          assert.deepEqual(template._buf, [
+            '<a class="b1">',
             '</a>'
           ]);
         }

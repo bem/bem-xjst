@@ -11,7 +11,7 @@
   "author": "",
   "license": "MIT",
   "dependencies": {
-    "bem-xjst": "git+ssh://github.com/bem/bem-xjst.git#038303a",
+    "bem-xjst": "git+ssh://github.com/bem/bem-xjst.git#41baa6a",
     "benchmark": "^1.0.0",
     "browserify": "^11.0.0",
     "microtime": "^1.4.2",

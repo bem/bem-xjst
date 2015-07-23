@@ -1,7 +1,7 @@
 /* begin: /Users/indutny/Code/bem/bem-components/libs/bem-core/common.blocks/page/page.bemhtml */
 block('page')(
 
-    def().once()(function() {
+    def().xjstOptions({ flush: true }).once()(function() {
         var ctx = this.ctx;
         this._nonceCsp = ctx.nonce;
 
