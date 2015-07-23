@@ -33,3 +33,14 @@ Options:
   -i INPUT, --input=INPUT : Input file (default: stdin)
   -o OUTPUT, --output=OUTPUT : Output file (default: stdout)
 ```
+
+### Benchmarks
+
+To run benchmarks:
+
+```bash
+cd benchmarks/
+npm install
+node run.js -h
+node run.js
+```
