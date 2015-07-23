@@ -339,6 +339,20 @@ describe('BEMHTML compiler/Runtime', function() {
       }, '<div class="b1">hah</div>');
     });
 
+    it('should put BEMContext to sharedContext too', function () {
+      test(function() {
+        oninit(function(exports, shared) {
+          shared.BEMContext.prototype.yes = 'hah';
+        });
+
+        block('b1').content()(function() {
+          return this.yes;
+        });
+      }, {
+        block: 'b1'
+      }, '<div class="b1">hah</div>');
+    });
+
     it('should support flushing', function () {
       test(function() {
         oninit(function(exports) {
