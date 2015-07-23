@@ -14,7 +14,7 @@
     "url": "git://github.com/bem/bem-xjst.git"
   },
   "author": "Fedor Indutny",
-  "license": "MIT",
+  "license": "MPL-2.0",
   "dependencies": {
     "coa": "~0.3.9",
     "inherits": "^2.0.1",
