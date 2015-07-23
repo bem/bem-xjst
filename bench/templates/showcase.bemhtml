@@ -1,0 +1,1184 @@
+/* begin: /Users/indutny/Code/bem/bem-components/libs/bem-core/common.blocks/page/page.bemhtml */
+block('page')(
+
+    def()(function() {
+        var ctx = this.ctx;
+        this._nonceCsp = ctx.nonce;
+
+        return applyCtx([
+            ctx.doctype || '<!DOCTYPE html>',
+            {
+                tag : 'html',
+                cls : 'ua_js_no',
+                content : [
+                    {
+                        elem : 'head',
+                        content : [
+                            { tag : 'meta', attrs : { charset : 'utf-8' } },
+                            ctx.uaCompatible === false? '' : {
+                                tag : 'meta',
+                                attrs: {
+                                    'http-equiv' : 'X-UA-Compatible',
+                                    content : ctx.uaCompatible || 'IE=edge'
+                                }
+                            },
+                            { tag : 'title', content : ctx.title },
+                            { block : 'ua', attrs : { nonce : ctx.nonce } },
+                            ctx.head,
+                            ctx.styles,
+                            ctx.favicon? { elem : 'favicon', url : ctx.favicon } : ''
+                        ]
+                    },
+                    ctx
+                ]
+            }
+        ]);
+    }),
+
+    tag()('body'),
+
+    content()(function() {
+        return [
+            applyNext(),
+            this.ctx.scripts
+        ];
+    }),
+
+    elem('head')(
+        bem()(false),
+        tag()('head')
+    ),
+
+    elem('meta')(
+        bem()(false),
+        tag()('meta')
+    ),
+
+    elem('link')(
+        bem()(false),
+        tag()('link')
+    ),
+
+    elem('favicon')(
+        bem()(false),
+        tag()('link'),
+        attrs()(function() { return { rel : 'shortcut icon', href : this.ctx.url }; })
+    )
+
+);
+
+/* end: /Users/indutny/Code/bem/bem-components/libs/bem-core/common.blocks/page/page.bemhtml */
+/* begin: /Users/indutny/Code/bem/bem-components/libs/bem-core/common.blocks/ua/ua.bemhtml */
+block('ua')(
+    tag()('script'),
+    bem()(false),
+    content()([
+        '(function(e,c){',
+            'e[c]=e[c].replace(/(ua_js_)no/g,"$1yes");',
+        '})(document.documentElement,"className");'
+    ])
+);
+
+/* end: /Users/indutny/Code/bem/bem-components/libs/bem-core/common.blocks/ua/ua.bemhtml */
+/* begin: /Users/indutny/Code/bem/bem-components/libs/bem-core/common.blocks/page/__css/page__css.bemhtml */
+block('page').elem('css')(
+    bem()(false),
+    tag()('style'),
+    match(function() { return this.ctx.url; })(
+        tag()('link'),
+        attrs()(function() { return { rel : 'stylesheet', href : this.ctx.url }; })
+    )
+);
+
+/* end: /Users/indutny/Code/bem/bem-components/libs/bem-core/common.blocks/page/__css/page__css.bemhtml */
+/* begin: /Users/indutny/Code/bem/bem-components/libs/bem-core/desktop.blocks/page/__css/page__css.bemhtml */
+block('page').elem('css')(
+    def()
+        .match(function() { return this.ctx.hasOwnProperty('ie'); })
+        .match(function() { return !this.ctx._ieCommented; })(
+            function() {
+                var ie = this.ctx.ie,
+                    hideRule = !ie?
+                        ['gt IE 9', '<!-->', '<!--'] :
+                        ie === '!IE'?
+                            [ie, '<!-->', '<!--'] :
+                            [ie, '', ''];
+
+                return local({ 'ctx._ieCommented': true })(function() {
+                  return applyCtx(
+                      {
+                          ctx : [
+                              '<!--[if ' + hideRule[0] + ']>' + hideRule[1],
+                              this.ctx,
+                              hideRule[2] + '<![endif]-->'
+                          ]
+                      }
+                  );
+                });
+            },
+            match(function() { return this.ctx.ie === true; })(function() {
+                var url = this.ctx.url;
+                return applyCtx([6, 7, 8, 9].map(function(v) {
+                    return { elem : 'css', url : url + '.ie' + v + '.css', ie : 'IE ' + v };
+                }));
+            }))
+);
+
+/* end: /Users/indutny/Code/bem/bem-components/libs/bem-core/desktop.blocks/page/__css/page__css.bemhtml */
+/* begin: /Users/indutny/Code/bem/bem-components/libs/bem-core/common.blocks/page/__js/page__js.bemhtml */
+block('page').elem('js')(
+    bem()(false),
+    tag()('script'),
+    attrs()(function() {
+        var attrs = {};
+        if(this.ctx.url) {
+            attrs.src = this.ctx.url;
+        } else if(this._nonceCsp) {
+            attrs.nonce = this._nonceCsp;
+        }
+
+        return attrs;
+    })
+);
+
+/* end: /Users/indutny/Code/bem/bem-components/libs/bem-core/common.blocks/page/__js/page__js.bemhtml */
+/* begin: /Users/indutny/Code/bem/bem-components/libs/bem-core/common.blocks/ua/__svg/ua__svg.bemhtml */
+block('ua').content()(function() {
+    return [
+        applyNext(),
+        '(function(d,n){',
+            'd.documentElement.className+=',
+            '" ua_svg_"+(d[n]&&d[n]("http://www.w3.org/2000/svg","svg").createSVGRect?"yes":"no");',
+        '})(document,"createElementNS");'
+    ];
+});
+
+/* end: /Users/indutny/Code/bem/bem-components/libs/bem-core/common.blocks/ua/__svg/ua__svg.bemhtml */
+/* begin: /Users/indutny/Code/bem/bem-components/libs/bem-core/desktop.blocks/page/__conditional-comment/page__conditional-comment.bemhtml */
+block('page').elem('conditional-comment')(
+    tag()(false),
+
+    content()(function() {
+        var ctx = this.ctx,
+            cond = ctx.condition
+                .replace('<', 'lt')
+                .replace('>', 'gt')
+                .replace('=', 'e'),
+            hasNegation = cond.indexOf('!') > -1,
+            includeOthers = ctx.msieOnly === false,
+            hasNegationOrIncludeOthers = hasNegation || includeOthers;
+
+        return [
+            '<!--[if ' + cond + ']>',
+            includeOthers? '<!' : '',
+            hasNegationOrIncludeOthers? '-->' : '',
+            applyNext(),
+            hasNegationOrIncludeOthers? '<!--' : '',
+            '<![endif]-->'
+        ];
+    })
+);
+
+/* end: /Users/indutny/Code/bem/bem-components/libs/bem-core/desktop.blocks/page/__conditional-comment/page__conditional-comment.bemhtml */
+/* begin: /Users/indutny/Code/bem/bem-components/test.blocks/table/table.bemhtml */
+block('table')(
+    tag()('table'),
+    elem('row').tag()('tr'),
+    elem('title').tag()('th'),
+    elem('cell').tag()('td')
+);
+
+/* end: /Users/indutny/Code/bem/bem-components/test.blocks/table/table.bemhtml */
+/* begin: /Users/indutny/Code/bem/bem-components/common.blocks/button/button.bemhtml */
+block('button')(
+    tag()(function() {
+        return this.ctx.tag || 'button';
+    }),
+
+    js()(true),
+
+    // NOTE: mix below is to satisfy interface of `control`
+    mix()({ elem : 'control' }),
+
+    attrs()(
+        // Common attributes
+        function() {
+            var ctx = this.ctx;
+
+            return {
+                role : 'button',
+                tabindex : ctx.tabIndex,
+                id : ctx.id,
+                title : ctx.title
+            };
+        },
+
+        // Attributes for button variant
+        match(function() { return !this.mods.type || this.mods.type === 'submit'; })(function() {
+            var ctx = this.ctx,
+                attrs = {
+                    type : this.mods.type || 'button',
+                    name : ctx.name,
+                    value : ctx.val
+                };
+
+            this.mods.disabled && (attrs.disabled = 'disabled');
+
+            return this.extend(applyNext(), attrs);
+        })
+    ),
+
+    content()(
+        function() {
+            var ctx = this.ctx,
+                content = [ctx.icon];
+            // NOTE: wasn't moved to separate template for optimization
+            'text' in ctx && content.push({ elem : 'text', content : ctx.text });
+            return content;
+        },
+        match(function() { return typeof this.ctx.content !== 'undefined'; })(function() {
+            return this.ctx.content;
+        })
+    )
+);
+
+/* end: /Users/indutny/Code/bem/bem-components/common.blocks/button/button.bemhtml */
+/* begin: /Users/indutny/Code/bem/bem-components/common.blocks/button/__text/button__text.bemhtml */
+block('button').elem('text').tag()('span');
+
+/* end: /Users/indutny/Code/bem/bem-components/common.blocks/button/__text/button__text.bemhtml */
+/* begin: /Users/indutny/Code/bem/bem-components/common.blocks/button/_focused/button_focused.bemhtml */
+block('button').mod('focused', true).js()(function() {
+    return this.extend(applyNext(), { live : false });
+});
+
+/* end: /Users/indutny/Code/bem/bem-components/common.blocks/button/_focused/button_focused.bemhtml */
+/* begin: /Users/indutny/Code/bem/bem-components/common.blocks/checkbox-group/checkbox-group.bemhtml */
+block('checkbox-group')(
+    tag()('span'),
+
+    js()(true),
+
+    mix()([{ block : 'control-group' }]),
+
+    content()(function() {
+        var mods = this.mods,
+            ctx = this.ctx,
+            val = ctx.val,
+            isValDef = typeof val !== 'undefined';
+
+        if(isValDef && !Array.isArray(val)) throw Error('checkbox-group: val must be an array');
+
+        return (ctx.options || []).map(function(option, i) {
+            return [
+                !!i && !mods.type && { tag : 'br' },
+                {
+                    block : 'checkbox',
+                    mods : {
+                        type : mods.type,
+                        theme : mods.theme,
+                        size : mods.size,
+                        checked : isValDef && val.indexOf(option.val) > -1,
+                        disabled : option.disabled || mods.disabled
+                    },
+                    name : ctx.name,
+                    val : option.val,
+                    text : option.text,
+                    title : option.title,
+                    icon : option.icon
+                }
+            ];
+        });
+    })
+);
+
+/* end: /Users/indutny/Code/bem/bem-components/common.blocks/checkbox-group/checkbox-group.bemhtml */
+/* begin: /Users/indutny/Code/bem/bem-components/common.blocks/checkbox/checkbox.bemhtml */
+block('checkbox')(
+    tag()('label'),
+
+    js()(true),
+
+    content()(function() {
+        var ctx = this.ctx,
+            mods = this.mods;
+
+        return [
+            {
+                elem : 'box',
+                content : {
+                    elem : 'control',
+                    checked : mods.checked,
+                    disabled : mods.disabled,
+                    name : ctx.name,
+                    val : ctx.val
+                }
+            },
+            ctx.text
+        ];
+    })
+);
+
+/* end: /Users/indutny/Code/bem/bem-components/common.blocks/checkbox/checkbox.bemhtml */
+/* begin: /Users/indutny/Code/bem/bem-components/common.blocks/checkbox/__box/checkbox__box.bemhtml */
+block('checkbox').elem('box').tag()('span');
+
+/* end: /Users/indutny/Code/bem/bem-components/common.blocks/checkbox/__box/checkbox__box.bemhtml */
+/* begin: /Users/indutny/Code/bem/bem-components/common.blocks/checkbox/__control/checkbox__control.bemhtml */
+block('checkbox').elem('control')(
+    tag()('input'),
+
+    attrs()(function() {
+        // NOTE: don't remove autocomplete attribute, otherwise js and DOM may be desynced
+        var attrs = { type : 'checkbox', autocomplete : 'off' },
+            ctx = this.ctx;
+
+        attrs.name = ctx.name;
+        attrs.value = ctx.val;
+        ctx.checked && (attrs.checked = 'checked');
+        ctx.disabled && (attrs.disabled = 'disabled');
+
+        return attrs;
+    })
+);
+
+/* end: /Users/indutny/Code/bem/bem-components/common.blocks/checkbox/__control/checkbox__control.bemhtml */
+/* begin: /Users/indutny/Code/bem/bem-components/common.blocks/input/input.bemhtml */
+block('input')(
+    tag()('span'),
+    js()(true),
+    def()(function() {
+        return applyNext({ _input : this.ctx });
+    }),
+    content()({ elem : 'box', content : { elem : 'control' } })
+);
+
+/* end: /Users/indutny/Code/bem/bem-components/common.blocks/input/input.bemhtml */
+/* begin: /Users/indutny/Code/bem/bem-components/common.blocks/input/__box/input__box.bemhtml */
+block('input').elem('box').tag()('span');
+
+/* end: /Users/indutny/Code/bem/bem-components/common.blocks/input/__box/input__box.bemhtml */
+/* begin: /Users/indutny/Code/bem/bem-components/common.blocks/input/__control/input__control.bemhtml */
+block('input').elem('control')(
+    tag()('input'),
+
+    attrs()(function() {
+        var input = this._input,
+            attrs = {
+                id : input.id,
+                name : input.name,
+                value : input.val,
+                maxlength : input.maxLength,
+                tabindex : input.tabIndex,
+                placeholder : input.placeholder
+            };
+
+        input.autocomplete === false && (attrs.autocomplete = 'off');
+        this.mods.disabled && (attrs.disabled = 'disabled');
+
+        return attrs;
+    })
+);
+
+/* end: /Users/indutny/Code/bem/bem-components/common.blocks/input/__control/input__control.bemhtml */
+/* begin: /Users/indutny/Code/bem/bem-components/common.blocks/input/_has-clear/input_has-clear.bemhtml */
+block('input').mod('has-clear', true).elem('box')
+    .content()(function() {
+        return [this.ctx.content, { elem : 'clear' }];
+    });
+
+/* end: /Users/indutny/Code/bem/bem-components/common.blocks/input/_has-clear/input_has-clear.bemhtml */
+/* begin: /Users/indutny/Code/bem/bem-components/common.blocks/input/__clear/input__clear.bemhtml */
+block('input').elem('clear').tag()('i');
+
+/* end: /Users/indutny/Code/bem/bem-components/common.blocks/input/__clear/input__clear.bemhtml */
+/* begin: /Users/indutny/Code/bem/bem-components/common.blocks/menu/menu.bemhtml */
+block('menu')(
+    def()(function() {
+        var ctx = this.ctx,
+            mods = this.mods,
+            firstItem,
+            checkedItems = [];
+
+        if(ctx.content) {
+            var isValDef = typeof ctx.val !== 'undefined',
+                containsVal = function(val) {
+                    return isValDef &&
+                        (mods.mode === 'check'?
+                            ctx.val.indexOf(val) > -1 :
+                            ctx.val === val);
+                },
+                iterateItems = function(content) {
+                    var i = 0, itemOrGroup;
+                    while(itemOrGroup = content[i++]) {
+                        if(itemOrGroup.block === 'menu-item') {
+                            firstItem || (firstItem = itemOrGroup);
+                            if(containsVal(itemOrGroup.val)) {
+                                (itemOrGroup.mods = itemOrGroup.mods || {}).checked = true;
+                                checkedItems.push(itemOrGroup);
+                            }
+                        } else { // menu__group
+                            iterateItems(itemOrGroup.content);
+                        }
+                    }
+                };
+
+            if(!this.isArray(ctx.content)) throw Error('menu: content must be an array of the menu items');
+
+            iterateItems(ctx.content);
+        }
+
+        this._firstItem = firstItem;
+        this._checkedItems = checkedItems;
+
+        return applyNext({
+            _menuMods : {
+                theme : mods.theme,
+                disabled : mods.disabled
+            }
+        });
+    }),
+    attrs()(function() {
+        var attrs = { role : 'menu' };
+        this.mods.disabled || (attrs.tabindex = 0);
+        return attrs;
+    }),
+    js()(true),
+    mix()([{ elem : 'control' }])
+);
+
+/* end: /Users/indutny/Code/bem/bem-components/common.blocks/menu/menu.bemhtml */
+/* begin: /Users/indutny/Code/bem/bem-components/common.blocks/menu-item/menu-item.bemhtml */
+block('menu-item')(
+    js()(function() {
+        return { val : this.ctx.val };
+    }),
+    attrs()({ role : 'menuitem' }),
+    match(function() { return this._menuMods; }).def()(function() {
+        var mods = this.mods;
+        mods.theme = mods.theme || this._menuMods.theme;
+        mods.disabled = mods.disabled || this._menuMods.disabled;
+        return applyNext();
+    })
+);
+
+/* end: /Users/indutny/Code/bem/bem-components/common.blocks/menu-item/menu-item.bemhtml */
+/* begin: /Users/indutny/Code/bem/bem-components/common.blocks/menu/_focused/menu_focused.bemhtml */
+block('menu').mod('focused', true).js()(function() {
+    return this.extend(applyNext(), { live : false });
+});
+
+/* end: /Users/indutny/Code/bem/bem-components/common.blocks/menu/_focused/menu_focused.bemhtml */
+/* begin: /Users/indutny/Code/bem/bem-components/common.blocks/menu/__group/menu__group.bemhtml */
+block('menu').elem('group')(
+    attrs()({ role : 'group' }),
+    match(function() { return typeof this.ctx.title !== 'undefined'; })(
+        attrs()(function() {
+            return this.extend(applyNext(), { 'aria-label' : this.ctx.title });
+        }),
+        content()(function() {
+            return [
+                { elem : 'group-title', content : this.ctx.title },
+                applyNext()
+            ];
+        })
+    )
+);
+
+/* end: /Users/indutny/Code/bem/bem-components/common.blocks/menu/__group/menu__group.bemhtml */
+/* begin: /Users/indutny/Code/bem/bem-components/common.blocks/menu/__group-title/menu__group-title.bemhtml */
+block('menu').elem('group-title').attrs()({ role : 'presentation' });
+
+/* end: /Users/indutny/Code/bem/bem-components/common.blocks/menu/__group-title/menu__group-title.bemhtml */
+/* begin: /Users/indutny/Code/bem/bem-components/common.blocks/menu/_mode/menu_mode_radio.bemhtml */
+block('menu')
+    .mod('mode', 'radio')
+    .match(function() {
+      return this._firstItem && this._checkedItems && !this._checkedItems.length;
+    })(
+        def()(function() {
+            (this._firstItem.mods = this._firstItem.mods || {}).checked = true;
+            return applyNext();
+        }));
+
+/* end: /Users/indutny/Code/bem/bem-components/common.blocks/menu/_mode/menu_mode_radio.bemhtml */
+/* begin: /Users/indutny/Code/bem/bem-components/common.blocks/select/select.bemhtml */
+block('select')(
+    def().match(function() {
+      return !this._select;
+    })(function() { // TODO: check BEM-XJST for proper applyNext
+        if(!this.mods.mode) throw Error('Can\'t build select without mode modifier');
+
+        var ctx = this.ctx,
+            isValDef = typeof ctx.val !== 'undefined',
+            isModeCheck = this.mods.mode === 'check',
+            firstOption, checkedOptions = [],
+            containsVal = function(val) {
+                return isValDef &&
+                    (isModeCheck?
+                        ctx.val.indexOf(val) > -1 :
+                        ctx.val === val);
+            },
+            iterateOptions = function(content) {
+                var i = 0, option;
+                while(option = content[i++]) {
+                    if(option.group) {
+                        iterateOptions(option.group);
+                    } else {
+                        firstOption || (firstOption = option);
+                        if(containsVal(option.val)) {
+                            option.checked = true;
+                            checkedOptions.push(option);
+                        }
+                    }
+                }
+            };
+
+        iterateOptions(ctx.options);
+
+        return applyNext({
+            _select : this.ctx,
+            _checkedOptions : checkedOptions,
+            _firstOption : firstOption
+        });
+    }),
+
+    js()(function() {
+        var ctx = this.ctx;
+        return {
+            name : ctx.name,
+            optionsMaxHeight : ctx.optionsMaxHeight
+        };
+    }),
+
+    content()(function() {
+        return [
+            { elem : 'button' },
+            {
+                block : 'popup',
+                mods : { target : 'anchor', theme : this.mods.theme, autoclosable : true },
+                directions : ['bottom-left', 'bottom-right', 'top-left', 'top-right'],
+                content : { block : this.block, mods : this.mods, elem : 'menu' }
+            }
+        ];
+    })
+);
+
+/* end: /Users/indutny/Code/bem/bem-components/common.blocks/select/select.bemhtml */
+/* begin: /Users/indutny/Code/bem/bem-components/common.blocks/select/_focused/select_focused.bemhtml */
+block('select').mod('focused', true).js()(function() {
+    return this.extend(applyNext(), { live : false });
+});
+
+/* end: /Users/indutny/Code/bem/bem-components/common.blocks/select/_focused/select_focused.bemhtml */
+/* begin: /Users/indutny/Code/bem/bem-components/common.blocks/select/__control/select__control.bemhtml */
+block('select').elem('control')(
+    tag()('input'),
+    attrs()(function() {
+        return {
+            type : 'hidden',
+            name : this._select.name,
+            value : this.ctx.val,
+            disabled : this.mods.disabled? 'disabled' : undefined
+        };
+    })
+);
+
+/* end: /Users/indutny/Code/bem/bem-components/common.blocks/select/__control/select__control.bemhtml */
+/* begin: /Users/indutny/Code/bem/bem-components/common.blocks/select/__button/select__button.bemhtml */
+block('select').elem('button')(
+    def()(function() {
+        var mods = this.mods;
+        return applyCtx({
+            block : 'button',
+            mix : { block : this.block, elem : this.elem },
+            mods : {
+                size : mods.size,
+                theme : mods.theme,
+                view : mods.view,
+                focused : mods.focused,
+                disabled : mods.disabled,
+                checked : mods.mode !== 'radio' && !!this._checkedOptions.length
+            },
+            id : this._select.id,
+            tabIndex : this._select.tabIndex,
+            content : [
+                apply('content'),
+                { block : 'icon', mix : { block : 'select', elem : 'tick' } }
+            ]
+        });
+    })
+);
+
+/* end: /Users/indutny/Code/bem/bem-components/common.blocks/select/__button/select__button.bemhtml */
+/* begin: /Users/indutny/Code/bem/bem-components/common.blocks/select/__menu/select__menu.bemhtml */
+block('select').elem('menu')(
+    def()(function() {
+        var mods = this.mods,
+            optionToMenuItem = function(option) {
+                var res = {
+                        block : 'menu-item',
+                        mods : { disabled : mods.disabled || option.disabled },
+                        val : option.val,
+                        js : { checkedText : option.checkedText },
+                        content : option.text
+                    };
+
+                if(option.icon) {
+                    res.js.text = option.text;
+                    res.content = [
+                        option.icon,
+                        res.content
+                    ];
+                }
+
+                return res;
+            };
+
+        return applyCtx({
+            block : 'menu',
+            mix : { block : this.block, elem : this.elem },
+            mods : {
+                size : mods.size,
+                theme : mods.theme,
+                disabled : mods.disabled,
+                mode : mods.mode
+            },
+            val : this._select.val,
+            attrs : { tabindex : undefined },
+            content : this._select.options.map(function(optionOrGroup) {
+                return optionOrGroup.group?
+                    {
+                        elem : 'group',
+                        mods : { 'has-title' : !!optionOrGroup.title },
+                        title : optionOrGroup.title,
+                        content : optionOrGroup.group.map(optionToMenuItem)
+                    } :
+                    optionToMenuItem(optionOrGroup);
+            })
+        });
+    })
+);
+
+/* end: /Users/indutny/Code/bem/bem-components/common.blocks/select/__menu/select__menu.bemhtml */
+/* begin: /Users/indutny/Code/bem/bem-components/common.blocks/popup/popup.bemhtml */
+block('popup')(
+    js()(function() {
+        var ctx = this.ctx;
+        return {
+            mainOffset : ctx.mainOffset,
+            secondaryOffset : ctx.secondaryOffset,
+            viewportOffset : ctx.viewportOffset,
+            directions : ctx.directions,
+            zIndexGroupLevel : ctx.zIndexGroupLevel
+        };
+    })
+);
+
+/* end: /Users/indutny/Code/bem/bem-components/common.blocks/popup/popup.bemhtml */
+/* begin: /Users/indutny/Code/bem/bem-components/common.blocks/select/_mode/select_mode_check.bemhtml */
+block('select').mod('mode', 'check')(
+    js()(function() {
+        return this.extend(applyNext(), { text : this.ctx.text });
+    }),
+
+    elem('button').content()(function() {
+        var checkedOptions = this._checkedOptions;
+        return [
+            {
+                elem : 'text',
+                content : checkedOptions.length === 1?
+                    checkedOptions[0].text :
+                    checkedOptions.reduce(function(res, option) {
+                        return res + (res? ', ' : '') + (option.checkedText || option.text);
+                    }, '') ||
+                        this._select.text
+            }
+            // TODO: with icons
+        ];
+    }),
+
+    match(function() { return this._checkedOptions[0]; }).content()(function() {
+        var res = this._checkedOptions.map(function(option) {
+            return {
+                elem : 'control',
+                val : option.val
+            };
+        });
+        res.push(applyNext());
+        return res;
+    })
+);
+
+/* end: /Users/indutny/Code/bem/bem-components/common.blocks/select/_mode/select_mode_check.bemhtml */
+/* begin: /Users/indutny/Code/bem/bem-components/common.blocks/icon/icon.bemhtml */
+block('icon')(
+    tag()('i'),
+    attrs()(function() {
+        var attrs = { 'aria-hidden' : 'true' },
+            url = this.ctx.url;
+        if(url) attrs.style = 'background-image:url(' + url + ')';
+        return attrs;
+    })
+);
+
+/* end: /Users/indutny/Code/bem/bem-components/common.blocks/icon/icon.bemhtml */
+/* begin: /Users/indutny/Code/bem/bem-components/common.blocks/radio-group/radio-group.bemhtml */
+block('radio-group')(
+    tag()('span'),
+
+    js()(true),
+
+    mix()([{ block : 'control-group' }]),
+
+    content()(function() {
+        var mods = this.mods,
+            ctx = this.ctx,
+            isValDef = typeof ctx.val !== 'undefined';
+
+        return (ctx.options || []).map(function(option, i) {
+            return [
+                !!i && !mods.type && { tag : 'br' },
+                {
+                    block : 'radio',
+                    mods : {
+                        type : mods.type,
+                        mode : mods.mode,
+                        theme : mods.theme,
+                        size : mods.size,
+                        checked : isValDef && ctx.val === option.val,
+                        disabled : option.disabled || mods.disabled
+                    },
+                    name : ctx.name,
+                    val : option.val,
+                    text : option.text,
+                    title : option.title,
+                    icon : option.icon
+                }
+            ];
+        });
+    })
+);
+
+/* end: /Users/indutny/Code/bem/bem-components/common.blocks/radio-group/radio-group.bemhtml */
+/* begin: /Users/indutny/Code/bem/bem-components/common.blocks/radio/radio.bemhtml */
+block('radio')(
+    tag()('label'),
+    js()(true),
+    content()(function() {
+        var ctx = this.ctx;
+        return [
+            {
+                elem : 'box',
+                content : {
+                    elem : 'control',
+                    checked : this.mods.checked,
+                    disabled : this.mods.disabled,
+                    name : ctx.name,
+                    val : ctx.val
+                }
+            },
+            ctx.text
+        ];
+    })
+);
+
+/* end: /Users/indutny/Code/bem/bem-components/common.blocks/radio/radio.bemhtml */
+/* begin: /Users/indutny/Code/bem/bem-components/common.blocks/radio/__box/radio__box.bemhtml */
+block('radio').elem('box').tag()('span');
+
+/* end: /Users/indutny/Code/bem/bem-components/common.blocks/radio/__box/radio__box.bemhtml */
+/* begin: /Users/indutny/Code/bem/bem-components/common.blocks/radio/__control/radio__control.bemhtml */
+block('radio').elem('control')(
+    tag()('input'),
+
+    attrs()(function() {
+        // NOTE: don't remove autocomplete attribute, otherwise js and DOM may be desynced
+        var ctx = this.ctx,
+            attrs = {
+                type : 'radio',
+                autocomplete : 'off',
+                name : ctx.name,
+                value : ctx.val
+            };
+
+        ctx.checked && (attrs.checked = 'checked');
+        ctx.disabled && (attrs.disabled = 'disabled');
+
+        return attrs;
+    })
+);
+
+/* end: /Users/indutny/Code/bem/bem-components/common.blocks/radio/__control/radio__control.bemhtml */
+/* begin: /Users/indutny/Code/bem/bem-components/common.blocks/radio/_type/radio_type_button.bemhtml */
+block('radio').mod('type', 'button')(
+    content()(function() {
+        var ctx = this.ctx,
+            mods = this.mods;
+
+        return [{
+            block : 'button',
+            mods : {
+                togglable : mods.mode === 'radio-check'?
+                    'check' :
+                    'radio',
+                checked : mods.checked,
+                disabled : mods.disabled,
+                theme : mods.theme,
+                size : mods.size
+            },
+            title : ctx.title,
+            content : [
+                ctx.icon,
+                typeof ctx.text !== 'undefined'?
+                    { elem : 'text', content : ctx.text } :
+                    ''
+            ]
+        }, {
+            block : 'radio',
+            elem : 'control',
+            checked : mods.checked,
+            disabled : mods.disabled,
+            name : ctx.name,
+            val : ctx.val
+        }];
+    })
+);
+
+/* end: /Users/indutny/Code/bem/bem-components/common.blocks/radio/_type/radio_type_button.bemhtml */
+/* begin: /Users/indutny/Code/bem/bem-components/common.blocks/spin/spin.bemhtml */
+block('spin')(
+    tag()('span')
+);
+
+/* end: /Users/indutny/Code/bem/bem-components/common.blocks/spin/spin.bemhtml */
+/* begin: /Users/indutny/Code/bem/bem-components/common.blocks/progressbar/progressbar.bemhtml */
+block('progressbar')(
+
+    js()(function(){
+        return { val : this.ctx.val };
+    }),
+
+    content()(
+        function() {
+            return {
+                elem : 'bar',
+                attrs : { style : 'width:' + this.ctx.val + '%' }
+            };
+        },
+        match(function() { return typeof this.ctx.content !== 'undefined'; })(function() {
+            return this.ctx.content;
+        })
+    )
+);
+
+/* end: /Users/indutny/Code/bem/bem-components/common.blocks/progressbar/progressbar.bemhtml */
+/* begin: /Users/indutny/Code/bem/bem-components/common.blocks/select/_mode/select_mode_radio-check.bemhtml */
+block('select').mod('mode', 'radio-check')(
+    js()(function() {
+        return this.extend(applyNext(), { text : this.ctx.text });
+    }),
+
+    elem('button').content()(function() {
+        return [
+            { elem : 'text', content : (this._checkedOptions[0] || this._select).text }
+            // TODO: with icons
+        ];
+    }),
+
+    match(function() { return this._checkedOptions[0]; })(
+        content()(function() {
+            return [
+                {
+                    elem : 'control',
+                    val : this._checkedOptions[0].val
+                },
+                applyNext()
+            ];
+        })
+    )
+);
+
+/* end: /Users/indutny/Code/bem/bem-components/common.blocks/select/_mode/select_mode_radio-check.bemhtml */
+/* begin: /Users/indutny/Code/bem/bem-components/libs/bem-core/common.blocks/i-bem/__i18n/_dummy/i-bem__i18n_dummy_yes.bemhtml */
+/*global oninit, BEM, exports */
+
+oninit(function() {
+    (function(global, bem_) {
+
+        if(bem_.I18N) {
+            return;
+        }
+
+        /** @global points to global context */
+        global.BEM = bem_;
+
+        /**
+        * `BEM.I18N` API stub
+        */
+        var i18n = global.BEM.I18N = function(keyset, key) {
+            return key;
+        };
+
+        i18n.keyset = function() { return i18n; };
+        i18n.key = function(key) { return key; };
+        i18n.lang = function() { return; };
+
+    })(this, typeof BEM === 'undefined'? {} : BEM);
+});
+
+/* end: /Users/indutny/Code/bem/bem-components/libs/bem-core/common.blocks/i-bem/__i18n/_dummy/i-bem__i18n_dummy_yes.bemhtml */
+/* begin: /Users/indutny/Code/bem/bem-components/libs/bem-core/common.blocks/i-bem/__i18n/i-bem__i18n.bemhtml */
+/* global exports, BEM */
+
+block('i-bem').elem('i18n').def()(function() {
+    if(!this.ctx) return '';
+
+    var ctx = this.ctx,
+        keyset = ctx.keyset,
+        key = ctx.key,
+        params = ctx.params || {};
+
+    if(!(keyset || key))
+        return '';
+
+    /**
+     * Consider `content` is a reserved param that contains
+     * valid bemjson data
+     */
+    if(typeof ctx.content === 'undefined' || ctx.content !== null) {
+        params.content = exports.apply(ctx.content);
+    }
+
+    this._buf.push(BEM.I18N(keyset, key, params));
+});
+
+/* end: /Users/indutny/Code/bem/bem-components/libs/bem-core/common.blocks/i-bem/__i18n/i-bem__i18n.bemhtml */
+/* begin: /Users/indutny/Code/bem/bem-components/common.blocks/attach/attach.bemhtml */
+block('attach')(
+    def()(function() { return applyNext({ _attach : this.ctx }); }),
+
+    tag()('span'),
+
+    js()(true),
+
+    content()(
+        function() {
+            var ctx = this.ctx,
+                button = ctx.button;
+
+            this.isSimple(button) && (button = {
+                block : 'button',
+                tag : 'span',
+                text : button
+            });
+
+            var attachMods = this.mods,
+                buttonMods = button.mods || (button.mods = {});
+            ['size', 'theme', 'disabled', 'focused'].forEach(function(mod) {
+                buttonMods[mod] || (buttonMods[mod] = attachMods[mod]);
+            });
+
+            return [
+                button,
+                {
+                    elem : 'no-file',
+                    content : this.ctx.noFileText
+                }
+            ];
+        }
+    )
+);
+
+/* end: /Users/indutny/Code/bem/bem-components/common.blocks/attach/attach.bemhtml */
+/* begin: /Users/indutny/Code/bem/bem-components/common.blocks/attach/__button/attach__button.bemhtml */
+block('button')
+    .match(function() { return this._attach; })(
+        tag()('span'),
+        content()(function() {
+            return [
+                { block : 'attach', elem : 'control' },
+                applyNext()
+            ];
+        })
+    );
+
+/* end: /Users/indutny/Code/bem/bem-components/common.blocks/attach/__button/attach__button.bemhtml */
+/* begin: /Users/indutny/Code/bem/bem-components/common.blocks/attach/__control/attach__control.bemhtml */
+block('attach').elem('control')(
+
+    tag()('input'),
+
+    attrs()(function() {
+        var attrs = { type : 'file' },
+            attach = this._attach;
+
+        // в js генерим html для attach__control без самого attach
+        if(attach) {
+            attrs.name = attach.name;
+            attach.mods && attach.mods.disabled && (attrs.disabled = 'disabled');
+            attach.tabIndex && (attrs.tabindex = attach.tabIndex);
+        }
+
+        return attrs;
+    })
+
+);
+
+/* end: /Users/indutny/Code/bem/bem-components/common.blocks/attach/__control/attach__control.bemhtml */
+/* begin: /Users/indutny/Code/bem/bem-components/common.blocks/attach/__no-file/attach__no-file.bemhtml */
+block('attach').elem('no-file').tag()('span');
+
+/* end: /Users/indutny/Code/bem/bem-components/common.blocks/attach/__no-file/attach__no-file.bemhtml */
+/* begin: /Users/indutny/Code/bem/bem-components/common.blocks/attach/__file/attach__file.bemhtml */
+block('attach').elem('file').tag()('span');
+
+/* end: /Users/indutny/Code/bem/bem-components/common.blocks/attach/__file/attach__file.bemhtml */
+/* begin: /Users/indutny/Code/bem/bem-components/common.blocks/attach/__text/attach__text.bemhtml */
+block('attach').elem('text').tag()('span');
+
+/* end: /Users/indutny/Code/bem/bem-components/common.blocks/attach/__text/attach__text.bemhtml */
+/* begin: /Users/indutny/Code/bem/bem-components/common.blocks/attach/__clear/attach__clear.bemhtml */
+block('attach').elem('clear').tag()('i');
+
+/* end: /Users/indutny/Code/bem/bem-components/common.blocks/attach/__clear/attach__clear.bemhtml */
+/* begin: /Users/indutny/Code/bem/bem-components/common.blocks/textarea/textarea.bemhtml */
+block('textarea')(
+    js()(true),
+    tag()('textarea'),
+
+    // NOTE: mix below is to satisfy interface of `control`
+    mix()({ elem : 'control' }),
+
+    attrs()(function() {
+        var ctx = this.ctx,
+            attrs = {
+                id : ctx.id,
+                name : ctx.name,
+                tabindex : ctx.tabIndex,
+                placeholder : ctx.placeholder
+            };
+
+        ctx.autocomplete === false && (attrs.autocomplete = 'off');
+        this.mods.disabled && (attrs.disabled = 'disabled');
+
+        return attrs;
+    }),
+    content()(function() {
+        return this.ctx.val;
+    })
+);
+
+/* end: /Users/indutny/Code/bem/bem-components/common.blocks/textarea/textarea.bemhtml */
+/* begin: /Users/indutny/Code/bem/bem-components/common.blocks/link/link.bemhtml */
+block('link')(
+    def()(function() {
+        var ctx = this.ctx;
+        typeof ctx.url === 'object' && // url could contain bemjson
+            (ctx.url = applyCtx(ctx.url));
+        return applyNext();
+    }),
+
+    tag()('a'),
+
+    js()(true),
+
+    // NOTE: mix below is to satisfy interface of `control`
+    mix()([{ elem : 'control' }]),
+
+    attrs()(function() {
+        var ctx = this.ctx,
+            attrs = {},
+            tabIndex;
+
+        if(!this.mods.disabled) {
+            if(ctx.url) {
+                attrs.href = ctx.url;
+                tabIndex = ctx.tabIndex;
+            } else {
+                tabIndex = ctx.tabIndex || 0;
+            }
+        }
+
+        typeof tabIndex === 'undefined' || (attrs.tabindex = tabIndex);
+
+        ctx.title && (attrs.title = ctx.title);
+        ctx.target && (attrs.target = ctx.target);
+
+        return attrs;
+    }),
+
+    mod('disabled', true)
+        .js()(function() {
+            return this.extend(applyNext(), { url : this.ctx.url });
+        })
+);
+
+/* end: /Users/indutny/Code/bem/bem-components/common.blocks/link/link.bemhtml */
+/* begin: /Users/indutny/Code/bem/bem-components/common.blocks/link/_pseudo/link_pseudo.bemhtml */
+block('link').mod('pseudo', true)(
+    tag().match(function() { return !this.ctx.url; })('span')
+);
+
+/* end: /Users/indutny/Code/bem/bem-components/common.blocks/link/_pseudo/link_pseudo.bemhtml */
+/* begin: /Users/indutny/Code/bem/bem-components/common.blocks/modal/modal.bemhtml */
+block('modal')(
+    js()(true),
+
+    mix()(function() {
+        return {
+            block : 'popup',
+            js : { zIndexGroupLevel : this.ctx.zIndexGroupLevel || 20 },
+            mods : { autoclosable : this.mods.autoclosable }
+        };
+    }),
+
+    content()(function() {
+        return {
+            elem : 'table',
+            content : {
+                elem : 'cell',
+                content : {
+                    elem : 'content',
+                    content : applyNext()
+                }
+            }
+        };
+    })
+);
+
+/* end: /Users/indutny/Code/bem/bem-components/common.blocks/modal/modal.bemhtml */
+/* begin: /Users/indutny/Code/bem/bem-components/common.blocks/checkbox/_type/checkbox_type_button.bemhtml */
+block('checkbox').mod('type', 'button')(
+    content()(function() {
+        var ctx = this.ctx,
+            mods = this.mods;
+
+        return [{
+            block : 'button',
+            mods : {
+                togglable : 'check',
+                checked : mods.checked,
+                disabled : mods.disabled,
+                theme : mods.theme,
+                size : mods.size
+            },
+            title : ctx.title,
+            content : [
+                ctx.icon,
+                typeof ctx.text !== 'undefined'?
+                    { elem : 'text', content : ctx.text } :
+                    ''
+            ]
+        }, {
+            block : 'checkbox',
+            elem : 'control',
+            checked : mods.checked,
+            disabled : mods.disabled,
+            name : ctx.name,
+            val : ctx.val
+        }];
+    })
+);
+
+/* end: /Users/indutny/Code/bem/bem-components/common.blocks/checkbox/_type/checkbox_type_button.bemhtml */

@@ -1,0 +1,8 @@
+module.exports = ({
+  block: 'b1',
+  content: [
+    {
+      block: 'b2'
+    }
+  ]
+});
