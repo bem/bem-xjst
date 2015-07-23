@@ -60,6 +60,29 @@ describe('BEMHTML compiler/Runtime', function() {
         }
       }, { block: 'b1' }, '<div class="b1">ok</div>');
     });
+
+    it('should support recursive applyNext() over block boundary', function() {
+      test(function() {
+        block('b1').tag()('a');
+        block('b1').bem()(false);
+        block('b1').def()(function() {
+          return '[' + applyNext() + ':' + applyNext() + ']';
+        });
+      }, {
+        block: 'b1',
+        content: {
+          block: 'b1',
+          content: {
+            block: 'b1',
+            content: 'ok'
+          }
+        }
+      }, '[<a>' +
+         '[<a>[<a>ok</a>:<a>ok</a>]</a>:<a>[<a>ok</a>:<a>ok</a>]</a>]' +
+         '</a>:<a>' +
+         '[<a>[<a>ok</a>:<a>ok</a>]</a>:<a>[<a>ok</a>:<a>ok</a>]</a>]' +
+         '</a>]');
+    });
   });
 
   describe('applyCtx()', function() {
