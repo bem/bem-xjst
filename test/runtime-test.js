@@ -613,4 +613,9 @@ describe('BEMHTML compiler/Runtime', function() {
       assert.equal(template.apply({ block: 'b2' }), '<div class="b2">ok</div>');
     });
   });
+
+  it('should work with empty input', function() {
+    test(function() {
+    }, '', '');
+  });
 });
