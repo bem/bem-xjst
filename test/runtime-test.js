@@ -348,6 +348,15 @@ describe('BEMHTML compiler/Runtime', function() {
         elem: 'e1'
       }, '<div class="b1__e1 b2 b3"></div>');
     });
+
+    it('should mix with block itself', function() {
+      test(function() {
+      }, {
+        block: 'b1',
+        elem: 'e1',
+        mix: { block: 'b1' }
+      }, '<div class="b1__e1 b1"></div>');
+    });
   });
 
   describe('Context', function() {
