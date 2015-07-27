@@ -21,7 +21,7 @@ function test(fn, data, expected, options) {
   var count = options.count || 1;
   for (var i = 0; i < count; i++) {
     try {
-      assert.equal(template.apply.call(data || {}), expected, i);
+      assert.equal(template.apply(data), expected, i);
     } catch (e) {
       console.error(e.stack);
       throw e;
