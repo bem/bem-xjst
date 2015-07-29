@@ -242,6 +242,59 @@ describe('BEMHTML compiler/Runtime', function() {
         mods: { a: 'b' }
       }, '<div class="b1 b1_a_b"><span class="b1__e1"></span></div>');
     });
+
+    it('should restore mods', function() {
+      test(function() {
+        block('b2').content()(function() {
+          return this.mods.a || 'yes';
+        });
+      }, {
+        block: 'b1',
+        mods: { a: 'b' },
+        content: {
+          block: 'b2'
+        }
+      }, '<div class="b1 b1_a_b"><div class="b2">yes</div></div>');
+    });
+  });
+
+  describe('elemMods', function() {
+    it('should lazily define elemMods', function() {
+      test(function() {
+        block('b1').content()(function() {
+          return this.elemMods.a || 'yes';
+        });
+      }, { block: 'b1' }, '<div class="b1">yes</div>');
+    });
+
+    it('should take elemMods from BEMJSON', function() {
+      test(function() {
+        block('b1').content()(function() {
+          return this.elemMods.a || 'no';
+        });
+      }, {
+        block: 'b1',
+        elemMods: {
+          a: 'yes'
+        }
+      }, '<div class="b1 b1_a_yes">yes</div>');
+    });
+
+    it('should restore elemMods', function() {
+      test(function() {
+        block('b2').content()(function() {
+          return this.elemMods.a || 'yes';
+        });
+      }, {
+        block: 'b1',
+        elemMods: {
+          a: 'yes'
+        },
+        content: {
+          block: 'b2'
+        }
+      }, '<div class="b1 b1_a_yes"><div class="b2">yes</div></div>');
+    });
   });
 
   describe('mix', function() {
