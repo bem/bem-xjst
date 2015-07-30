@@ -238,6 +238,25 @@ describe('BEMHTML compiler/Tree', function() {
     });
   });
 
+  it('should support `.wrap()`', function() {
+    test(function() {
+      block('b1').wrap().def()(function() {
+        return applyCtx({
+          block: 'wrap',
+          content: this.ctx
+        });
+      });
+    }, [ {
+      block: 'b1',
+      tag: 'a',
+      content: {
+        block: 'b1',
+        tag: 'a'
+      }
+    } ], '<div class="wrap"><a class="b1"><div class="wrap"><a class="b1">' +
+         '</a></div></a></div>');
+  });
+
   it('should support `.xjstOptions()`', function() {
     test(function() {
       block('b1').xjstOptions({ who: 'cares' }).content()(function() {
