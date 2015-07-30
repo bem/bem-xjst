@@ -348,26 +348,21 @@ describe('BEMHTML compiler', function() {
           "content": "This pseudo link changes its color after click"
         }
       ]
-    }, '<!DOCTYPE html><html class="i-ua_js_no i-ua_css_standart">' +
-       '<head><meta charset="utf-8"/>' +
-       '<meta http-equiv="X-UA-Compatible" content="IE=EmulateIE7, IE=edge"/>' +
-       '<title>Pseudo link</title>' +
-       '<script>;(function(d,e,c,r){e=d.documentElement;c="className";' +
-       'r="replace";e[c]=e[c][r]("i-ua_js_no","i-ua_js_yes");' +
-       'if(d.compatMode!="CSS1Compat")e[c]=e[c][r]' +
-       '("i-ua_css_standart","i-ua_css_quirks")})(document);</script>' +
-       '<link rel="stylesheet" href="example.css"/><!--[if lt IE 8]>' +
-       '<link rel="stylesheet" href="example.ie.css"/><![endif]-->' +
-       '<script src="//yandex.st/jquery/1.7.2/jquery.min.js"></script>' +
-       '<script src="example.js"></script>' +
-       '</head>' +
-       '<body class="b-page b-page__body">' +
-       '<a class="b-link b-link_pseudo_yes b-link_togcolor_yes ' +
-       'b-link_color_green i-bem" onclick="return {&quot;b-link&quot;:{}}" ' +
-       'href="#" target="_blank" title="Click me">' +
-       '<span class="b-link__inner">' +
-       'This pseudo link changes its color after click</span></a>' +
-       '</body></html>');
+    }, '<!DOCTYPE html><html class="i-ua_js_no i-ua_css_standart"><head>' +
+       '<meta charset="utf-8"/><meta http-equiv="X-UA-Compatible" conten' +
+       't="IE=EmulateIE7, IE=edge"/><title>Pseudo link</title><script>;(' +
+       'function(d,e,c,r){e=d.documentElement;c="className";r="replace";' +
+       'e[c]=e[c][r]("i-ua_js_no","i-ua_js_yes");if(d.compatMode!="CSS1C' +
+       'ompat")e[c]=e[c][r]("i-ua_css_standart","i-ua_css_quirks")})(doc' +
+       'ument);</script><link rel="stylesheet" href="example.css"/><!--[' +
+       'if lt IE 8]><link rel="stylesheet" href="example.ie.css"/><![end' +
+       'if]--><script src="//yandex.st/jquery/1.7.2/jquery.min.js"></scr' +
+       'ipt><script src="example.js"></script></head><body class="b-page' +
+       ' b-page__body"><a class="b-link b-link_pseudo_yes b-link_togcolo' +
+       'r_yes b-link_color_green i-bem" data-bem=\'{"b-link":{}}\' href=' +
+       '"#" target="_blank" title="Click me"><span class="b-link__inner"' +
+       '>This pseudo link changes its color after click</span></a></body' +
+       '></html>');
   });
 
   it('should desugar replace() mode', function () {
@@ -457,6 +452,33 @@ describe('BEMHTML compiler', function() {
         });
       });
     }, {block: 'b1' }, '<div class="b1">b1:ok</div>')
+  });
+
+  it('should support once()', function () {
+    test(function () {
+      block('b1').content()('second');
+      block('b1').once().content()('first');
+    }, [
+      { block: 'b1' },
+      { block: 'b1' }
+    ], '<div class="b1">first</div><div class="b1">second</div>');
+  });
+
+  it('should support wrap()', function () {
+    test(function () {
+      block('b1').wrap().def()(function() {
+        return applyCtx({
+          block: 'wrap',
+          content: this.ctx
+        });
+      });
+    }, {
+      block: 'b1',
+      content: {
+        block: 'b1'
+      }
+    }, '<div class="wrap"><div class="b1"><div class="wrap"><div class="b1">' +
+       '</div></div></div></div>');
   });
 
   it('should replace global properties local body in hashmap', function () {
