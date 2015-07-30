@@ -20,7 +20,7 @@
     "estraverse": "~1.5.0",
     "q": "~0.9.3",
     "uglify-js": "~2.3.2",
-    "xjst": "1.5.3"
+    "xjst": "1.5.4"
   },
   "devDependencies": {
     "mocha": "^2.2.5",
