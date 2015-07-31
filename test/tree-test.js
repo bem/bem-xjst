@@ -260,11 +260,11 @@ describe('BEMHTML compiler/Tree', function() {
 
   it('should support `.wrap()`', function() {
     test(function() {
-      block('b1').wrap().def()(function() {
-        return applyCtx({
+      block('b1').wrap()(function() {
+        return {
           block: 'wrap',
           content: this.ctx
-        });
+        }
       });
     }, [ {
       block: 'b1',
