@@ -23,7 +23,12 @@ describe('BEMHTML compiler', function() {
     ];
 
     fns.forEach(function(fn, i) {
-      assert.equal(fn.apply.call(data || {}), expected, i);
+      try {
+        debugger;
+        assert.equal(fn.apply.call(data || {}), expected, i);
+      } catch (e) {
+        throw e;
+      }
     });
   }
 
@@ -479,6 +484,22 @@ describe('BEMHTML compiler', function() {
       }
     }, '<div class="wrap"><div class="b1"><div class="wrap"><div class="b1">' +
        '</div></div></div></div>');
+  });
+
+  it('should not fail on wrap() with other modes', function() {
+    test(function() {
+      block('b1')(
+        tag()('span'), // can be any other mode
+        wrap()(function() {
+          return {
+            elem: 'wrap',
+            content: this.ctx
+          };
+        })
+      );
+    }, {
+        block: 'b1'
+    }, '<div class="b1__wrap"><span class="b1"></span></div>');
   });
 
   it('should replace global properties local body in hashmap', function () {
