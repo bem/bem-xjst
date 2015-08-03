@@ -256,6 +256,19 @@ describe('BEMHTML compiler/Runtime', function() {
         }
       }, '<div class="b1 b1_a_b"><div class="b2">yes</div></div>');
     });
+
+    it('should lazily override mods without propagating them', function() {
+      test(function() {
+        block('b1').def()(function() {
+          return applyNext({ 'mods.a': 'yes' });
+        });
+      }, {
+        block: 'b1',
+        content: {
+          block: 'b2'
+        }
+      }, '<div class="b1 b1_a_yes"><div class="b2"></div></div>');
+    });
   });
 
   describe('elemMods', function() {
