@@ -423,6 +423,15 @@ describe('BEMHTML compiler/Runtime', function() {
         mix: { block: 'b1' }
       }, '<div class="b1__e1 b1"></div>');
     });
+
+    it('should not propagate parent elem to JS params', function() {
+      test(function() {
+      }, {
+        block: 'b1',
+        elem: 'e1',
+        mix: { block: 'b2', js: true }
+      }, '<div class="b1__e1 b2 i-bem" data-bem="{&quot;b2&quot;:{}}"></div>');
+    });
   });
 
   describe('Context', function() {
