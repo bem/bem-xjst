@@ -680,4 +680,14 @@ describe('BEMHTML compiler/Runtime', function() {
     test(function() {
     }, '', '');
   });
+
+  it('should work with null input', function() {
+    test(function() {
+    }, null, '');
+  });
+
+  it('should work with 0 input', function() {
+    test(function() {
+    }, 0, '0');
+  });
 });
