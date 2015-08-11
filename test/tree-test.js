@@ -277,6 +277,25 @@ describe('BEMHTML compiler/Tree', function() {
          '</a></div></a></div>');
   });
 
+  it('should support predicates after `wrap()`', function() {
+    test(function() {
+      block('b1')(
+        wrap().match(function() {
+          return this.ctx.key;
+        })(function() {
+          return {
+            block: 'wrap',
+            content: this.ctx
+          }
+        })
+      );
+    }, [ {
+      block: 'b1',
+      tag: 'a',
+      key: 'val'
+    } ], '<div class="wrap"><a class="b1"></a></div>');
+  });
+
   it('should support `.xjstOptions()`', function() {
     test(function() {
       block('b1').xjstOptions({ who: 'cares' }).content()(function() {
