@@ -17,7 +17,7 @@ describe('BEMHTML compiler/Runtime', function() {
       }, { block: 'b1', content: 'ohai' }, '<div class="b1">{%ohai%}</div>');
     });
 
-    it('should support applyNext({ ... })', function() {
+    it('should support applyNext({ ... }) with changes', function() {
       test(function() {
         block('b1').content()(function() {
           return '%' + this.wtf + applyNext() + '%';
@@ -666,6 +666,33 @@ describe('BEMHTML compiler/Runtime', function() {
       } ], '<div class="b1">#ok#</div>' +
            '<div class="b2">#yes#</div>' +
            '<div class="b3">#ya#</div>');
+    });
+  });
+
+  describe('wildcard elem', function() {
+    it('should be called before the matched templates', function () {
+      test(function() {
+        block('b1').content()(function() {
+          return 'block';
+        });
+        block('b1').elem('a').content()(function() {
+          return 'block-a';
+        });
+        block('b1').elem('*').content()(function() {
+          return '%' + applyNext() + '%';
+        });
+      }, [ {
+        block: 'b1'
+      }, {
+        block: 'b1',
+        elem: 'a'
+      }, {
+        block: 'b3',
+        elem: 'b',
+        content: 'ok'
+      } ], '<div class="b1">block</div>' +
+           '<div class="b1__a">%block-a%</div>' +
+           '<div class="b3__b">%ok%</div>');
     });
   });
 
