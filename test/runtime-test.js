@@ -739,4 +739,22 @@ describe('BEMHTML compiler/Runtime', function() {
     test(function() {
     }, 0, '0');
   });
+
+  describe('naming', function() {
+    it('should support custom naming', function() {
+      test(function() {
+      }, {
+        block: 'b1',
+        elem: 'e1',
+        mods: {
+          a: 'b'
+        }
+      }, '<div class="b1__e1 b1__e1--a--b"></div>', {
+        naming: {
+          elem: '__',
+          mod: '--'
+        }
+      });
+    });
+  });
 });
