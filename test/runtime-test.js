@@ -154,7 +154,7 @@ describe('BEMHTML compiler/Runtime', function() {
     ], '<div class="b1"></div>');
   });
 
-  it('should properly save context while render plain html items', function () {
+  it('should properly save context while render plain html items', function() {
     test(function() {
     }, {
       block: 'aaa',
@@ -171,10 +171,15 @@ describe('BEMHTML compiler/Runtime', function() {
           elem: 'xxx2'
         }
       ]
-    }, '<div class="aaa"><div class="aaa__xxx1"><div class="bbb__yyy1"><h1>h 1</h1></div></div><div class="aaa__xxx2"></div></div>');
+    }, '<div class="aaa">' +
+           '<div class="aaa__xxx1">' +
+               '<div class="bbb__yyy1">' +
+                   '<h1>h 1</h1>' +
+               '</div>' +
+           '</div>' +
+           '<div class="aaa__xxx2"></div>' +
+       '</div>');
   });
-
-
 
   it('should render without tag', function() {
     test(function() {
