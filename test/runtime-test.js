@@ -594,6 +594,37 @@ describe('BEMHTML compiler/Runtime', function() {
         }
       });
     });
+
+    it('should support `.getLast()`', function() {
+      test(function() {
+        block('b1')(
+          match(function() { return this.isLast(); })
+          .mix()({ elemMods: { position: 'last' } })
+        );
+      }, [
+        {
+          tag: 'table',
+          content: {
+            block: 'b1',
+            tag: 'tr',
+            content: [
+              { content: '', tag: 'td' },
+              { content: '', tag: 'td' }
+            ]
+          }
+        },
+        {
+          block: 'b1',
+          content: 'first'
+        },
+        {
+          block: 'b1',
+          content: 'last'
+        }
+      ], '<table><tr class="b1"><td></td><td></td></tr></table>' +
+         '<div class="b1">first</div>' +
+         '<div class="b1 b1_position_last">last</div>');
+    });
   });
 
   describe('attrs in BEMJSON', function() {
