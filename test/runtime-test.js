@@ -387,7 +387,7 @@ describe('BEMHTML compiler/Runtime', function() {
         );
       }, {
         block: 'b1'
-      }, '<div class="b1 b2 i-bem" data-bem="{&quot;b1&quot;:{}}"></div>');
+      }, '<div class="b1 b2 i-bem" data-bem=\'{"b1":{}}\'></div>');
     });
 
     it('should support singular mix', function() {
@@ -457,7 +457,7 @@ describe('BEMHTML compiler/Runtime', function() {
         block: 'b1',
         elem: 'e1',
         mix: { block: 'b2', js: true }
-      }, '<div class="b1__e1 b2 i-bem" data-bem="{&quot;b2&quot;:{}}"></div>');
+      }, '<div class="b1__e1 b2 i-bem" data-bem=\'{"b2":{}}\'></div>');
     });
   });
 
