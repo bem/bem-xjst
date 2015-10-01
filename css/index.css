@@ -1,0 +1,101 @@
+html, body {
+    margin: 0;
+    height: 100%;
+}
+body {
+    font: 15px/20px sans-serif;
+    background: #666;
+    background: linear-gradient(to bottom, #999, #666);
+}
+
+h1 {
+    margin: 0;
+    font-size: 30px;
+    font-weight: normal;
+    line-height: 35px;
+    text-shadow: 0 1px rgba(255,255,255,0.3);
+    display: inline-block;
+}
+h1 a {
+    color: #036 !important;
+    text-decoration: none;
+}
+body .version {
+    font-size: 44%;
+    line-height: 1;
+    vertical-align: top;
+}
+h2 {
+    margin: 0;
+    font-size: 14px;
+    line-height: 20px;
+    font-weight: normal;
+    text-shadow: 0 1px rgba(255,255,255,0.2);
+}
+.abs {
+    position: absolute !important;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+}
+.layout {
+    top: 10px;
+    right: 10px;
+    bottom: 10px;
+    left: 10px;
+}
+.header {
+    height: 50px;
+    text-align: center;
+}
+.editors {
+    top: 50px;
+    bottom: 30%;
+}
+.data {
+    margin-right: 5px;
+    right: 50%;
+}
+.tmpl {
+    margin-left: 5px;
+    left: 50%;
+}
+.result {
+    margin-top: 10px;
+    top: 70%;
+}
+.code {
+    top: 20px;
+
+    border-top: 1px solid rgba(0,0,0,0.9);
+    border-right: 1px solid rgba(255,255,255,0.6);
+    border-bottom: 1px solid rgba(255,255,255,0.6);
+    border-left: 1px solid rgba(0,0,0,0.9);
+}
+.code, .code pre {
+    font-size: 13px;
+    font-family: Monaco, Menlo, 'Ubuntu Mono', Consolas, source-code-pro, monospace;
+    line-height: normal;
+}
+textarea.code {
+    background: #000;
+    color: #dedede;
+    padding: 4px 0 4px 49px;
+    margin: 0;
+    width: 100%;
+    box-sizing: border-box;
+}
+.invalid {
+    box-shadow: 0 0 4px 1px red;
+}
+.forkme {
+    position: absolute;
+    right: 0;
+    top: 0;
+    z-index: 1000;
+    border: 0;
+}
+.CodeMirror {
+    height: 100%;
+}
