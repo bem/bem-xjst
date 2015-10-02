@@ -1,14 +1,16 @@
 function XJSTController($scope) {
     $scope.compiledHtml = function() {
         $scope.error = '';
-        var res, json;
+        var res, json, exports = {};
         try {
             json = eval('(' + $scope.data.inputBemjson + ')');
         } catch (e) {
             return 'BEMJSON parse error:\n' + e.stack;
         }
+        var api = new BEMHTML({});
         try {
-            exports.compile($scope.data.inputMatchers);
+            api.compile($scope.data.inputMatchers);
+            api.exportApply(exports);
         } catch (e) {
             return 'Matchers parse error:\n' + e.stack;
         }
