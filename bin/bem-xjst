@@ -21,12 +21,6 @@ require('coa').Cmd()
         })
         .end()
     .opt()
-        .name('no-opt')
-        .title('Dev mode')
-        .short('d').long('dev-mode')
-        .flag()
-        .end()
-    .opt()
         .name('input').title('Input file (default: stdin)')
         .short('i').long('input')
         .input()
@@ -35,6 +29,11 @@ require('coa').Cmd()
         .name('output').title('Output file (default: stdout)')
         .short('o').long('output')
         .output()
+        .end()
+    .opt()
+        .name('engine').title('Engine name (default: bemhtml, supported: bemhtml | bemtree)')
+        .short('e').long('engine')
+        .def('bemhtml')
         .end()
     .act(function(options) {
       var input = [],
@@ -51,7 +50,7 @@ require('coa').Cmd()
       options.input.resume();
 
       function finish(source) {
-        var out = bem_xjst.generate(source, {
+        var out = bem_xjst[options.engine]().generate(source, {
           'no-opt': options['no-opt']
         });
 
