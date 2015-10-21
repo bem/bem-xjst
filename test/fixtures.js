@@ -34,9 +34,8 @@ function test(fn, data, expected, options) {
 exports.test = test;
 
 function fail(fn, regexp) {
-  var body = fn2str(fn);
   assert.throws(function() {
-    bemxjst.compile(body);
+    bemxjst.compile(fn);
   }, regexp);
 }
 exports.fail = fail;
