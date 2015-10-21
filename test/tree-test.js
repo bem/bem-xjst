@@ -1,6 +1,7 @@
 var fixtures = require('./fixtures');
 
 var test = fixtures.test;
+var fail = fixtures.fail;
 
 describe('BEMHTML compiler/Tree', function() {
   it('should compile example code', function() {
@@ -304,5 +305,11 @@ describe('BEMHTML compiler/Tree', function() {
     }, {
       block: 'b1'
     }, '<div class="b1">ok</div>');
+  });
+
+  it('should verify match() argument', function() {
+    fail(function() {
+      block('b1').match('123')('123');
+    }, /Wrong.*match.*argument/);
   });
 });

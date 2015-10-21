@@ -51,7 +51,9 @@ require('coa').Cmd()
       options.input.resume();
 
       function finish(source) {
-        var out = bem_xjst.generate(source, options);
+        var out = bem_xjst.generate(source, {
+          'no-opt': options['no-opt']
+        });
 
         options.output.write(out);
 

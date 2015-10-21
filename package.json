@@ -19,6 +19,7 @@
   "dependencies": {
     "coa": "~0.3.9",
     "inherits": "^2.0.1",
+    "minimalistic-assert": "^1.0.0",
     "q": "~0.9.3"
   },
   "devDependencies": {
