@@ -1,4 +1,4 @@
-var BEMXJST_VERSION = '4.2.4';
+var BEMXJST_VERSION = require('../../package.json').version;
 
 module.exports = {
     block: 'page',

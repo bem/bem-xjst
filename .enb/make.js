@@ -13,7 +13,7 @@ var techs = {
         browserJs: require('enb-js/techs/browser-js'),
         // bemhtml
         bemhtml: require('enb-bemxjst/techs/bemhtml'),
-        bemhtmlRuntime: require('./techs/bemhtml-runtime'),
+        bemxjst: require('./techs/bemxjst'),
         htmlFromBemjson: require('enb-bemxjst/techs/bemjson-to-html')
     },
     enbBemTechs = require('enb-bem-techs'),
@@ -47,7 +47,7 @@ module.exports = function(config) {
                 sourceSuffixes: ['bemhtml', 'bemhtml.js']
             }],
 
-            [techs.bemhtmlRuntime, {
+            [techs.bemxjst, {
                 target: '?.browser.bemhtml.js',
                 sourceSuffixes: ['bemhtml.js']
             }],
