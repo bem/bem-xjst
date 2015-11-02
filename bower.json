@@ -1,0 +1,14 @@
+{
+  "name": "bemhtml-playground",
+  "version": "1.0.0",
+  "description": "BEMHTML playground",
+  "bugs": "https://github.com/sbmaxx/bemhtml-demo/issues",
+  "ignore": [
+    ".bem/cache",
+    "node_modules",
+    "libs"
+  ],
+  "dependencies": {
+    "bem-components": "2.3.0"
+  }
+}
