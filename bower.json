@@ -2,13 +2,13 @@
   "name": "bemhtml-playground",
   "version": "1.0.0",
   "description": "BEMHTML playground",
-  "bugs": "https://github.com/sbmaxx/bemhtml-demo/issues",
+  "bugs": "https://github.com/bem/bem-xjst/issues",
   "ignore": [
-    ".bem/cache",
+    ".enb/tmp",
     "node_modules",
     "libs"
   ],
   "dependencies": {
-    "bem-components": "2.3.0"
+    "bem-core": "2.7.0"
   }
 }

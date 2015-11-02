@@ -1,13 +1,11 @@
 {
   "author": "Fedor Indutny",
-  "name": "bemhtml-playground",
-  "version": "1.0.0",
+  "license": "MPL-2.0",
+  "name": "bem-xjst",
+  "version": "4.2.5",
   "repository": {
     "type": "git",
     "url": "git://github.com/bem/bem-xjst.git"
-  },
-  "engines": {
-    "node": ">=0.10"
   },
   "dependencies": {
     "bem": "^0.10.0",
@@ -22,6 +20,5 @@
   "scripts": {
     "start": "enb server",
     "build": "YENV=production enb make; cp desktop.bundles/index/_* .; cp desktop.bundles/index/index.html ."
-  },
-  "private": true
+  }
 }

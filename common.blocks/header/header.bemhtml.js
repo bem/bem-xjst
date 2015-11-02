@@ -4,16 +4,16 @@ block('header')(
         return [
             {
                 block: 'link',
-                mix: [{ block: 'header', elem: 'link' }],
-                url: "https://github.com/bem/bem-xjst/",
+                mix: { block: 'header', elem: 'link' },
+                url: 'https://github.com/bem/bem-xjst/',
                 content: 'BEM-XJST'
             },
             '&nbsp;',
             {
                 block: 'link',
-                mix: [{ block: 'header', elem: 'link' }],
-                url: "https://github.com/bem/bem-xjst/releases/",
-                content: '4.2.4'
+                mix: { block: 'header', elem: 'link' },
+                url: 'https://github.com/bem/bem-xjst/releases/',
+                content: this.ctx.version
             },
             ' online demo'
         ];

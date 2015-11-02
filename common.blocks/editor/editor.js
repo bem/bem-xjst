@@ -1,9 +1,9 @@
 modules.define('editor', ['i-bem__dom'], function(provide, BEMDOM) {
 
     provide(BEMDOM.decl('editor', {
-        onSetMod : {
-            'js' : {
-                'inited' : function() {
+        onSetMod: {
+            js: {
+                inited: function() {
 
                     var editor = ace.edit(this.elem('textarea').get(0));
 
@@ -24,16 +24,16 @@ modules.define('editor', ['i-bem__dom'], function(provide, BEMDOM) {
                 }
             }
         },
-        getDefaultParams : function() {
+        getDefaultParams: function() {
             return {
                 fontSize: '14px',
                 mode: 'ace/mode/javascript'
             };
         },
-        getValue : function() {
+        getValue: function() {
             return this._editor.getSession().getValue();
         },
-        setValue : function(value) {
+        setValue: function(value) {
             this._editor.getSession().setValue(value);
             return this;
         }

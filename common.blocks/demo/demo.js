@@ -1,19 +1,9 @@
 modules.define('demo', ['i-bem__dom', 'pretty', 'functions__debounce'], function(provide, BEMDOM, pretty, debounce) {
 
-    var CURRENT_VERSION = '4.2.5';
-
-    function notEval(str) {
-        try {
-            return (new Function('return ' + str))();
-        } catch(e) {
-            return e;
-        }
-    }
-
     provide(BEMDOM.decl('demo', {
-        onSetMod : {
-            'js' : {
-                'inited' : function() {
+        onSetMod: {
+            js: {
+                inited: function() {
 
                     this._bemhtml = this.findBlockOn('bemhtml', 'editor');
                     this._bemjson = this.findBlockOn('bemjson', 'editor');
@@ -36,17 +26,17 @@ modules.define('demo', ['i-bem__dom', 'pretty', 'functions__debounce'], function
                 }
             }
         },
-        _onChange : function() {
+        _onChange: function() {
             this._render();
             this._save();
         },
-        _getBEMHTML : function() {
+        _getBEMHTML: function() {
             return this._bemhtml.getValue();
         },
-        _getBEMJSON : function() {
+        _getBEMJSON: function() {
             return this._bemjson.getValue();
         },
-        _render : function() {
+        _render: function() {
 
             try {
 
@@ -61,7 +51,7 @@ modules.define('demo', ['i-bem__dom', 'pretty', 'functions__debounce'], function
                 return;
             }
 
-            var BEMJSON = notEval(this._getBEMJSON());
+            var BEMJSON = safeEval(this._getBEMJSON());
 
             if (BEMJSON instanceof Error) {
                 this._html.setValue('BEMJSON error: ' + BEMJSON.message + '\n' + BEMJSON.stack);
@@ -71,16 +61,16 @@ modules.define('demo', ['i-bem__dom', 'pretty', 'functions__debounce'], function
             this._html.setValue(pretty(bemhtml.apply(BEMJSON)));
 
         },
-        _save : function() {
+        _save: function() {
             store.set('playground', {
-                version: CURRENT_VERSION,
+                version: this.params.version,
                 bemhtml: this._getBEMHTML(),
                 bemjson: this._getBEMJSON()
             });
         },
-        _load : function() {
+        _load: function() {
             var data = store.get('playground');
-            if (!data || data.version !== CURRENT_VERSION) {
+            if (!data || data.version !== this.params.version) {
                 return false;
             }
             if (data.bemhtml) {
@@ -92,5 +82,13 @@ modules.define('demo', ['i-bem__dom', 'pretty', 'functions__debounce'], function
             return !!(data.bemhtm || data.bemjson)
         }
     }, {}));
+
+    function safeEval(str) {
+        try {
+            return (new Function('return ' + str))();
+        } catch(e) {
+            return e;
+        }
+    }
 
 });
