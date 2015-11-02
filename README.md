@@ -3,7 +3,7 @@ https://bem.github.io/bem-xjst/
 
 #### Установка
 ```bash
-git clone https://github.com/sbmaxx/bem-xjst --depth=1 -b gh-pages
+git clone https://github.com/bem/bem-xjst --depth=1 -b gh-pages
 cd bem-xjst
 npm install
 ```
