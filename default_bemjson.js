@@ -1,6 +1,9 @@
-'BEM-XJST'.split('').map(function(char) {
-    return {
-        block: 'char',
-        char: char
-    };
+({
+    block: 'button',
+    name: 'name',
+    icon: {
+        block: 'icon',
+        url: 'arrow.svg'
+    },
+    text: 'submit'
 });

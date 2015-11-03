@@ -10,7 +10,6 @@ var package = require('../../package.json'),
 module.exports = {
     block: 'page',
     title: 'BEM-XJST ' + BEMXJST_VERSION + ' online demo',
-    favicon: '/favicon.ico',
     head: [
         { elem: 'meta', attrs: { name: 'viewport', content: 'width=device-width, initial-scale=1' } },
         { elem: 'css', url: 'xindex.css' }
@@ -20,7 +19,6 @@ module.exports = {
         { elem: 'js', url: 'xindex.browser.bemhtml.js' },
         { elem: 'js', url: 'https://cdnjs.cloudflare.com/ajax/libs/ace/1.2.2/ace.js' }
     ],
-    mods: { theme: 'islands' },
     content: [
             {
             elem: 'header',
@@ -32,7 +30,7 @@ module.exports = {
         {
             block: 'demo',
             js: {
-                version: BEMXJST_VERSION + '_1' // инвалидация дефолтных значений
+                version: BEMXJST_VERSION + '_2' // инвалидация дефолтных значений
             },
             mods: { state: 'loading' },
             content: [
@@ -44,12 +42,12 @@ module.exports = {
                             content: [
                                 {
                                     block: 'editor',
-                                    mix: [{ block: 'demo', elem: 'bemjson' }],
+                                    mix: { block: 'demo', elem: 'bemjson' },
                                     code: defaults.bemjson
                                 },
                                 {
                                     block: 'editor',
-                                    mix: [{ block: 'demo', elem: 'bemhtml' }],
+                                    mix: { block: 'demo', elem: 'bemhtml' },
                                     code: defaults.bemhtml
                                 }
                             ]
@@ -64,7 +62,7 @@ module.exports = {
                                     mode: 'ace/mode/html',
                                     showGutter: false
                                 },
-                                mix: [{ block: 'demo', elem: 'html' }],
+                                mix: { block: 'demo', elem: 'html' },
                                 code: ''
                             }
                         }
@@ -76,7 +74,7 @@ module.exports = {
                         elem: 'spinner',
                         content: {
                             block: 'spin',
-                            mods: { theme: 'islands', size: 'm', visible: true }
+                            mods: { visible: true }
                         }
                     }
                 }
