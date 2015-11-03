@@ -1,5 +1,10 @@
 {
   "author": "Fedor Indutny",
+  "contributors": [{
+    "name": "Roman Rozhdestvenskiy",
+    "email": "sbmaxx@gmail.com",
+    "url": "https://rozhdestvenskiy/"
+  }],
   "license": "MPL-2.0",
   "name": "bem-xjst",
   "version": "4.2.6",
