@@ -13,11 +13,11 @@ module.exports = {
     favicon: '/favicon.ico',
     head: [
         { elem: 'meta', attrs: { name: 'viewport', content: 'width=device-width, initial-scale=1' } },
-        { elem: 'css', url: '_index.css' }
+        { elem: 'css', url: 'xindex.css' }
     ],
     scripts: [
-        { elem: 'js', url: '_index.js' },
-        { elem: 'js', url: '_index.browser.bemhtml.js' },
+        { elem: 'js', url: 'xindex.js' },
+        { elem: 'js', url: 'xindex.browser.bemhtml.js' },
         { elem: 'js', url: 'https://cdnjs.cloudflare.com/ajax/libs/ace/1.2.2/ace.js' }
     ],
     mods: { theme: 'islands' },

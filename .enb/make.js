@@ -61,11 +61,11 @@ module.exports = function(config) {
             }],
 
             // borschik
-            [techs.borschik, { sourceTarget: '?.js', destTarget: '_?.js', freeze: true, minify: isProd }],
-            [techs.borschik, { sourceTarget: '?.browser.bemhtml.js', destTarget: '_?.browser.bemhtml.js', freeze: true, minify: isProd }],
-            [techs.borschik, { sourceTarget: '?.css', destTarget: '_?.css', freeze: true, minify: isProd }]
+            [techs.borschik, { sourceTarget: '?.js', destTarget: 'x?.js', freeze: true, minify: isProd }],
+            [techs.borschik, { sourceTarget: '?.browser.bemhtml.js', destTarget: 'x?.browser.bemhtml.js', freeze: true, minify: isProd }],
+            [techs.borschik, { sourceTarget: '?.css', destTarget: 'x?.css', freeze: true, minify: isProd }]
         ]);
 
-        nodeConfig.addTargets(['?.html', '_?.browser.bemhtml.js', '_?.css', '_?.js']);
+        nodeConfig.addTargets(['?.html', 'x?.browser.bemhtml.js', 'x?.css', 'x?.js']);
     });
 };
