@@ -61,7 +61,8 @@ module.exports = {
                                 js: {
                                     readOnly: true,
                                     showInvisibles: true,
-                                    mode: 'ace/mode/html'
+                                    mode: 'ace/mode/html',
+                                    showGutter: false
                                 },
                                 mix: [{ block: 'demo', elem: 'html' }],
                                 code: ''
