@@ -1,6 +1,11 @@
 var package = require('../../package.json'),
     BEMXJST_VERSION = package.version,
-    GITHUB_URL = package.repository.url;
+    GITHUB_URL = package.repository.url,
+    fs = require('fs'),
+    defaults = {
+        bemhtml: fs.readFileSync('default_bemhtml.js', 'utf8'),
+        bemjson: fs.readFileSync('default_bemjson.js', 'utf8')
+    };
 
 module.exports = {
     block: 'page',
@@ -27,7 +32,7 @@ module.exports = {
         {
             block: 'demo',
             js: {
-                version: BEMXJST_VERSION
+                version: BEMXJST_VERSION + '_1' // инвалидация дефолтных значений
             },
             mods: { state: 'loading' },
             content: [
@@ -40,24 +45,12 @@ module.exports = {
                                 {
                                     block: 'editor',
                                     mix: [{ block: 'demo', elem: 'bemjson' }],
-                                    code: [
-                                        '{',
-                                        '    block: \'button\',',
-                                        '    text: \'button\'',
-                                        '}'
-                                    ].join('\n')
+                                    code: defaults.bemjson
                                 },
                                 {
                                     block: 'editor',
                                     mix: [{ block: 'demo', elem: 'bemhtml' }],
-                                    code: [
-                                        'block(\'button\')(',
-                                        '    tag()(\'button\'),',
-                                        '    content()(function() {',
-                                        '        return { elem: \'text\', content: this.ctx.text };',
-                                        '    })',
-                                        ')'
-                                    ].join('\n')
+                                    code: defaults.bemhtml
                                 }
                             ]
                         },

@@ -58,7 +58,9 @@ modules.define('demo', ['i-bem__dom', 'pretty', 'functions__debounce'], function
                 return;
             }
 
-            this._html.setValue(pretty(bemhtml.apply(BEMJSON)));
+            this._html.setValue(pretty(bemhtml.apply(BEMJSON), {
+                max_char: 1000
+            }));
 
         },
         _save: function() {

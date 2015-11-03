@@ -21,6 +21,6 @@
   "scripts": {
     "start": "enb server",
     "postinstall": "bower install",
-    "build": "YENV=production enb make; cp desktop.bundles/index/_* .; cp desktop.bundles/index/index.html ."
+    "build": "YENV=production enb make --no-cache; cp desktop.bundles/index/_* .; cp desktop.bundles/index/index.html ."
   }
 }
