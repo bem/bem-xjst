@@ -1,4 +1,6 @@
-var BEMXJST_VERSION = require('../../package.json').version;
+var package = require('../../package.json'),
+    BEMXJST_VERSION = package.version,
+    GITHUB_URL = package.repository.url;
 
 module.exports = {
     block: 'page',
@@ -85,6 +87,11 @@ module.exports = {
                     }
                 }
             ]
+        },
+        {
+            block: 'github-fork-ribbon',
+            url: GITHUB_URL,
+            text: 'Fork me on GitHub'
         }
     ]
 };
