@@ -1,0 +1,31 @@
+{
+  "author": "Fedor Indutny",
+  "contributors": [{
+    "name": "Roman Rozhdestvenskiy",
+    "email": "sbmaxx@gmail.com",
+    "url": "https://rozhdestvenskiy/"
+  }],
+  "license": "MPL-2.0",
+  "name": "bem-xjst",
+  "version": "4.2.6",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/bem/bem-xjst.git"
+  },
+  "dependencies": {
+    "bem": "^0.10.0",
+    "bem-xjst": "^4.2.6",
+    "bower": "^1.6.5",
+    "enb": "^1.0.1",
+    "enb-bem-techs": "^2.0.1",
+    "enb-bemxjst": "^4.0.0",
+    "enb-borschik": "^2.1.0",
+    "enb-js": "^1.1.0",
+    "enb-stylus": "^2.1.0"
+  },
+  "scripts": {
+    "start": "enb server",
+    "postinstall": "bower install",
+    "build": "YENV=production enb make --no-cache; cp desktop.bundles/index/_* .; cp desktop.bundles/index/index.html ."
+  }
+}

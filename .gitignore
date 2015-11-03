@@ -1,2 +1,11 @@
-/node_modules/
+libs/
+node_modules/
+.DS_Store
+.idea
+.project
 npm-debug.log
+
+# bem
+.enb/tmp/
+*bundles*/*/*.*
+!*bundles*/*/*.bemjson.js

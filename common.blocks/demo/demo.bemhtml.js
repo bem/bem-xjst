@@ -1,0 +1,3 @@
+block('demo')(
+    js()(true)
+);

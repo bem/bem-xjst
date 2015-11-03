@@ -1,0 +1,86 @@
+.demo
+{
+    position: absolute;
+    top: 70px;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    background: #fff;
+
+    $bottom = 40%
+
+    &__top
+    {
+        position: absolute;
+        top: 0;
+        left: 0;
+        bottom: $bottom;
+        right: 0;
+    }
+    &__bottom
+    {
+        position: absolute;
+        top: 100% - $bottom;
+        left: 0;
+        bottom: 0;
+        right: 0;
+        margin-top: 10px;
+    }
+    &__bemjson
+    {
+        margin-right: 5px;
+        position: absolute;
+        top: 0;
+        left: 0;
+        bottom: 0;
+        right: 50%;
+    }
+    &__bemhtml
+    {
+        margin-left: 5px;
+        position: absolute;
+        top: 0;
+        left: 50%;
+        bottom: 0;
+        right: 0;
+    }
+    &__paranja
+    {
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        background: #fbf1d3;
+        opacity: 0;
+    }
+    &__spinner
+    {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        right: 0;
+        bottom: 0;
+        width: 28px;
+        height: 28px;
+        margin: -14px 0 0 -14px;
+    }
+    &__content,
+    &__paranja
+    {
+        transition: opacity 0.3s;
+    }
+    &_state_loading &__content
+    {
+        opacity: 0;
+    }
+    &_state_loading &__paranja
+    {
+        opacity: 1;
+    }
+    &_state_loaded &__paranja
+    {
+        display: none;
+    }
+
+}

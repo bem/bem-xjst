@@ -1,0 +1,14 @@
+{
+  "name": "bemhtml-playground",
+  "version": "1.0.0",
+  "description": "BEMHTML playground",
+  "bugs": "https://github.com/bem/bem-xjst/issues",
+  "ignore": [
+    ".enb/tmp",
+    "node_modules",
+    "libs"
+  ],
+  "dependencies": {
+    "bem-core": "2.7.0"
+  }
+}

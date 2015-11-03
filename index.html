@@ -1,101 +1,14 @@
-<!DOCTYPE html>
-<html ng-app>
-    <head>
-        <meta http-equiv="content-type" content="text/html; charset=utf8"/>
-        <title>BEM-XJST online demo</title>
-        <link href="css/cm.css" type="text/css" rel="stylesheet" />
-        <link href="css/index.css" type="text/css" rel="stylesheet" />
-    </head>
-    <body>
-        <a href="https://github.com/bem/bem-xjst/"><img class="forkme" src="img/forkme.png" alt="Fork me on GitHub"></a>
-        <div class="layout abs" id="cnt" ng-controller="XJSTController">
-            <div class="header abs">
-                <h1><a href="https://github.com/bem/bem-xjst/">BEM-XJST</a><a class="version" href="https://github.com/bem/bem-xjst/releases/">4.2.4</a> online demo</h1>
-            </div>
-            <div class="editors abs">
-                <div class="data abs">
-                    <h2 class="title">Data</h2>
-                    <textarea class="code abs" id="input-bemjson" ng-model="data.inputBemjson"></textarea>
-                </div>
-                <div class="tmpl abs">
-                    <h2 class="title">Templates</h2>
-                    <textarea class="code abs" id="input-matchers" ng-model="data.inputMatchers"></textarea>
-                </div>
-            </div>
-            <div class="result abs">
-                <h2 class="title">Result</h2>
-                <textarea class="code abs" id="result-html">{{compiledHtml()}}</textarea>
-            </div>
-        </div>
-        <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.23/angular.min.js"></script>
-        <script>var exports = {}</script>
-        <script src="js/bundle.js"></script>
-        <script src="js/index.js"></script>
-        <script src="js/jshint.js"></script>
-        <script src="js/codemirror.js"></script>
-        <script>
-            function replaceTextarea(textArea, vn) {
-                var div = document.createElement('div');
-                div.className = 'abs code';
-                textArea.parentNode.insertBefore(div, textArea);
-                textArea.style.display = 'none';
-                var cm = CodeMirror(div,
-                    {
-                        value: textArea.value,
-                        mode: 'javascript',
-                        theme: 'twilight',
-                        indentUnit: 4,
-                        indentWithTabs: false,
-                        lineNumbers: true,
-                        styleActiveLine: true,
-                        autoCloseBrackets: true,
-                        matchBrackets: true,
-                        gutters: ["CodeMirror-lint-markers"],
-                        lintWith: vn === 'inputMatchers' ? CodeMirror.javascriptValidator : undefined,
-                        extraKeys: {
-                          Tab: function(cm) {
-                            var spaces = Array(cm.getOption("indentUnit") + 1).join(" ");
-                            cm.replaceSelection(spaces, "end", "+input");
-                          }
-                        }
-                    }
-                );
-                var scope = angular.element(document.getElementById('cnt')).scope();
-                var timer = null;
-                cm.on('change', function() {
-                    if (timer) {
-                        window.clearTimeout(timer);
-                    }
-                    timer = window.setTimeout(function(){
-                        scope.data[vn] = cm.doc.getValue();
-                        var res = document.getElementById('result-html');
-                        res.value = scope.compiledHtml();
-                        res.onchange();
-                    }, 300);
-                });
-            }
-            function replaceOutput(textArea) {
-                var div = document.createElement('div');
-                div.className = 'abs code';
-                textArea.parentNode.insertBefore(div, textArea);
-                textArea.style.display = 'none';
-                var cm = CodeMirror(div,
-                    {
-                        value: textArea.value,
-                        mode: 'htmlmixed',
-                        theme: 'twilight',
-                        readOnly: true
-                    }
-                );
-                textArea.onchange = function() {
-                    cm.doc.setValue(textArea.value);
-                };
-            }
-            window.setTimeout(function() {
-                replaceTextarea(document.getElementById('input-bemjson'), 'inputBemjson');
-                replaceTextarea(document.getElementById('input-matchers'), 'inputMatchers');
-                replaceOutput(document.getElementById('result-html'));
-            }, 0);
-        </script>
-    </body>
-</html>
+<!DOCTYPE html><html class="ua_js_no"><head><meta charset="utf-8"/><meta http-equiv="X-UA-Compatible" content="IE=edge"/><title>BEM-XJST 4.2.6 online demo</title><script>(function(e,c){e[c]=e[c].replace(/(ua_js_)no/g,"$1yes");})(document.documentElement,"className");</script><meta name="viewport" content="width=device-width, initial-scale=1"/><link rel="stylesheet" href="_index.css"/><link rel="shortcut icon" href="/favicon.ico"/></head><body class="page page_theme_islands"><div class="page__header"><h1 class="header"><a class="link header__link" href="https://github.com/bem/bem-xjst/">BEM-XJST</a>&nbsp;<a class="link header__link" href="https://github.com/bem/bem-xjst/releases/">4.2.6</a> online demo</h1></div><div class="demo demo_state_loading i-bem" data-bem='{"demo":{"version":"4.2.6_1"}}'><div class="demo__content"><div class="demo__top"><div class="editor demo__bemjson i-bem" data-bem='{"editor":{}}'><div class="editor__textarea">'BEM-XJST'.split('').map(function(char) {
+    return {
+        block: 'char',
+        char: char
+    };
+});</div></div><div class="editor demo__bemhtml i-bem" data-bem='{"editor":{}}'><div class="editor__textarea">block('char')(
+    content()(function() {
+        return [
+            this.position,
+            ' — ',
+            this.ctx.char
+        ];
+    })
+);</div></div></div><div class="demo__bottom"><div class="editor demo__html i-bem" data-bem='{"editor":{"readOnly":true,"showInvisibles":true,"mode":"ace/mode/html","showGutter":false}}'><div class="editor__textarea"></div></div></div></div><div class="demo__paranja"><div class="demo__spinner"><div class="spin spin_theme_islands spin_size_m spin_visible"></div></div></div></div><div class="github-fork-ribbon"><div class="github-fork-ribbon__ribbon"><a class="link github-fork-ribbon__link" href="https://github.com/bem/bem-xjst.git">Fork me on GitHub</a></div></div><script src="_index.js"></script><script src="_index.browser.bemhtml.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.2.2/ace.js"></script></body></html>
