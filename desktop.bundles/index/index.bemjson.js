@@ -20,11 +20,24 @@ module.exports = {
         { elem: 'js', url: 'https://cdnjs.cloudflare.com/ajax/libs/ace/1.2.2/ace.js' }
     ],
     content: [
-            {
+        {
             elem: 'header',
             content: {
                 block: 'header',
-                version: BEMXJST_VERSION
+                content: [
+                    {
+                        elem: 'link',
+                        url: 'https://github.com/bem/bem-xjst/',
+                        content: 'BEM-XJST'
+                    },
+                    ' ',
+                    {
+                        elem: 'link',
+                        url: 'https://github.com/bem/bem-xjst/releases/',
+                        content: BEMXJST_VERSION
+                    },
+                    ' online demo'
+                ]
             }
         },
         {
