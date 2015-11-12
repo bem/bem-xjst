@@ -919,5 +919,4 @@ describe('BEMHTML compiler/Runtime', function() {
       });
     });
   });
-
 });
