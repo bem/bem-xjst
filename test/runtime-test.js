@@ -882,11 +882,11 @@ describe('BEMHTML compiler/Runtime', function() {
 
   describe('Match', function() {
     var bemjson = {
-      "block": "b1",
-      "mods": {
-        "foo": "bar"
+      block: 'b1',
+      mods: {
+        foo: 'bar'
       },
-      "prop": true
+      prop: true
     };
 
     var template;
