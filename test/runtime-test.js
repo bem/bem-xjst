@@ -880,4 +880,43 @@ describe('BEMHTML compiler/Runtime', function() {
     });
   });
 
+  describe('Match', function() {
+    var bemjson = {
+      block: 'b1',
+      mods: {
+        foo: 'bar'
+      },
+      prop: true
+    };
+
+    var template;
+
+    beforeEach(function() {
+      template = bemxjst.compile(function() {
+        block('b1').tag()('span');
+        block('b1').mod('foo', 'bar')(
+          attrs()(function() {
+            var attrs = applyNext();
+            attrs.foo = 'bar';
+            return attrs;
+          })
+        );
+      });
+    });
+
+    it('should throw error with one apply', function() {
+      assert.throws(function() {
+        template.apply(bemjson);
+      });
+    });
+
+    it('should throw errors with many applies', function() {
+      assert.throws(function() {
+        template.apply(bemjson);
+      });
+      assert.throws(function() {
+        template.apply(bemjson);
+      });
+    });
+  });
 });
