@@ -4,10 +4,25 @@ var utile = require('utile');
 var vm = require('vm');
 
 module.exports = function(engine) {
+
+  /**
+   * test helper
+   *
+   * @param {?Function} fn - matchers
+   * @param {BEMJSON} data - incoming bemjson
+   * @param {String} expected - expected resulting html
+   * @param {?Object} options - compiler options
+   */
   function test(fn, data, expected, options) {
+    if (typeof fn !== 'function') {
+      options = expected;
+      expected = data;
+      data = fn;
+      fn = function() {};
+    }
     if (!options) options = {};
 
-    var template = bemxjst[engine].compile(fn, options);
+    var template = compile(fn, options);
 
     if (options.flush) {
       template._buf = [];
@@ -39,8 +54,17 @@ module.exports = function(engine) {
     }, regexp);
   }
 
+  function compile(fn, options) {
+    if (typeof fn !== 'function') {
+      options = fn;
+      fn = function() {};
+    }
+    return bemxjst[engine].compile(fn, options || {});
+  }
+
   return {
     test: test,
-    fail: fail
+    fail: fail,
+    compile: compile
   };
 }
