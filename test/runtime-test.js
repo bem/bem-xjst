@@ -209,6 +209,16 @@ describe('BEMHTML compiler/Runtime', function() {
     }, { block: 'b1' }, '<div class="b1"><div class="b2">ok</div></div>');
   });
 
+  it('should support objects as attrs values', function() {
+    test(function() {
+      block('b1').attrs()(function() {
+        return { prop1: { block: 'b2' } };
+      });
+
+      block('b2').replace()('hello');
+    }, { block: 'b1' }, '<div class="b1" prop1="hello"></div>');
+  });
+
   describe('mods', function() {
     it('should lazily define mods', function() {
       test(function() {
