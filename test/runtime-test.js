@@ -192,7 +192,7 @@ describe('BEMHTML compiler/Runtime', function() {
         return { elem: 'e1' };
       });
 
-      block('b1').elem('e1').mod('a', 'b').tag('span');
+      block('b1').elem('e1').mod('a', 'b').tag()('span');
     }, { block: 'b1' }, '<div class="b1"><div class="b1__e1"></div></div>');
   });
 
@@ -917,6 +917,112 @@ describe('BEMHTML compiler/Runtime', function() {
     it('should throw error with one apply', function() {
       assert.throws(function() {
         template.apply(bemjson);
+      });
+    });
+
+    it('should throw error when args passed to def mode', function() {
+      assert.throws(function() {
+        bemxjst.compile(function() {
+          block('b1').def('blah');
+        });
+      });
+    });
+
+    it('should throw error when args passed to attrs mode', function() {
+      assert.throws(function() {
+        bemxjst.compile(function() {
+          block('b1').attrs('blah');
+        });
+      });
+    });
+
+    it('should throw error when args passed to cls mode', function() {
+      assert.throws(function() {
+        bemxjst.compile(function() {
+          block('b1').cls('blah');
+        });
+      });
+    });
+
+    it('should throw error when args passed to js mode', function() {
+      assert.throws(function() {
+        bemxjst.compile(function() {
+          block('b1').js('blah');
+        });
+      });
+    });
+
+    it('should throw error when args passed to jsAttr mode', function() {
+      assert.throws(function() {
+        bemxjst.compile(function() {
+          block('b1').jsAttr('blah');
+        });
+      });
+    });
+
+    it('should throw error when args passed to bem mode', function() {
+      assert.throws(function() {
+        bemxjst.compile(function() {
+          block('b1').bem('blah');
+        });
+      });
+    });
+
+    it('should throw error when args passed to replace mode', function() {
+      assert.throws(function() {
+        bemxjst.compile(function() {
+          block('b1').replace('blah');
+        });
+      });
+    });
+
+    it('should throw error when args passed to extend mode', function() {
+      assert.throws(function() {
+        bemxjst.compile(function() {
+          block('b1').extend('blah');
+        });
+      });
+    });
+
+    it('should throw error when args passed to wrap mode', function() {
+      assert.throws(function() {
+        bemxjst.compile(function() {
+          block('b1').wrap('blah');
+        });
+      });
+    });
+
+    it('should throw error when args passed to once mode', function() {
+      assert.throws(function() {
+        bemxjst.compile(function() {
+          block('b1').once('blah');
+        });
+      });
+    });
+
+    it('should throw error when args passed to content mode', function() {
+      assert.throws(function() {
+        bemxjst.compile(function() {
+          block('b1').content('blah');
+        });
+      });
+    });
+
+    it('should throw error when args passed to mix mode', function() {
+      assert.throws(function() {
+        bemxjst.compile(function() {
+          block('b1').mix([
+            { block: 'b2' }
+          ]);
+        });
+      });
+    });
+
+    it('should throw error when args passed to tag mode', function() {
+      assert.throws(function() {
+        bemxjst.compile(function() {
+          block('b1').tag('span');
+        });
       });
     });
 
