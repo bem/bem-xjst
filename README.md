@@ -4,6 +4,8 @@
 
 A clever compiler for BEM-specific templates with JavaScript syntax.
 
+[Online demo](https://bem.github.io/bem-xjst/).
+
 ## Installation
 
 Install it by [npm](https://npmjs.org): `npm install bem-xjst`.
