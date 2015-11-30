@@ -2,6 +2,8 @@
 
 Компилятор БЭМ-специфичных шаблонов, основанный на [XJST](https://github.com/veged/xjst).
 
+[Онлайн-демо](https://bem.github.io/bem-xjst/).
+
 ## Установка
 
 Устанавливается с помощью [npm](https://npmjs.org): `npm install bem`.
