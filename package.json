@@ -5,7 +5,6 @@
     "bem-xjst": "bin/bem-xjst"
   },
   "scripts": {
-    "bundle": "echo \"var fs = require('fs'), bemhtml = require('bem-xjst').bemhtml; fs.writeFileSync('bundle.js', bemhtml.generate(''));\" | node",
     "prepublish": "npm run make",
     "make-bemhtml": "browserify --standalone bemhtml lib/bemhtml/index.js -o lib/bemhtml/bundle.js",
     "make-bemtree": "browserify --standalone bemtree lib/bemtree/index.js -o lib/bemtree/bundle.js",
