@@ -1,4 +1,4 @@
-var fixtures = require('./fixtures');
+var fixtures = require('../fixtures')('bemhtml');
 
 var test = fixtures.test;
 var fail = fixtures.fail;

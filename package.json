@@ -1,14 +1,20 @@
 {
   "name": "bem-xjst",
   "version": "4.2.7",
-  "main": "lib/bemhtml.js",
   "bin": {
     "bem-xjst": "bin/bem-xjst"
   },
   "scripts": {
-    "prepublish": "make",
-    "bundle": "echo \"var fs = require('fs'), xjst = require('bem-xjst'); fs.writeFileSync('bundle.js', xjst.generate(''));\" | node",
-    "test": "make && make lint && mocha --reporter=spec test/*-test.js"
+    "bundle": "echo \"var fs = require('fs'), bemhtml = require('bem-xjst').bemhtml; fs.writeFileSync('bundle.js', bemhtml.generate(''));\" | node",
+    "prepublish": "npm run make",
+    "make-bemhtml": "browserify --standalone bemhtml lib/bemhtml/index.js -o lib/bemhtml/bundle.js",
+    "make-bemtree": "browserify --standalone bemtree lib/bemtree/index.js -o lib/bemtree/bundle.js",
+    "make": "npm run make-bemhtml && npm run make-bemtree",
+    "clean": "rm lib/bem{html,tree}/bundle.js",
+    "lint": "jscs `ls lib/*.js lib/**/*.js test/*/*.js test/*.js | grep -v bundle` && jshint `ls lib/*.js lib/**/*.js | grep -v bundle`",
+    "test-bemhtml": "mocha --reporter=spec test/bemhtml/*-test.js",
+    "test-bemtree": "mocha --reporter=spec test/bemtree/*-test.js",
+    "test": "npm run make && npm run lint && npm run test-bemhtml && npm run test-bemtree"
   },
   "repository": {
     "type": "git",

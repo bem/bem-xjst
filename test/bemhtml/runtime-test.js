@@ -1,6 +1,6 @@
 var assert = require('assert');
-var fixtures = require('./fixtures');
-var bemxjst = require('../');
+var fixtures = require('../fixtures')('bemhtml');
+var bemxjst = require('../../').bemhtml;
 
 var test = fixtures.test;
 
@@ -338,12 +338,12 @@ describe('BEMHTML compiler/Runtime', function() {
       }, {
         block: 'b1',
         elemMods: {
-          a: 'yes'
+          a: 'no'
         },
         content: {
           block: 'b2'
         }
-      }, '<div class="b1 b1_a_yes"><div class="b2">yes</div></div>');
+      }, '<div class="b1 b1_a_no"><div class="b2">yes</div></div>');
     });
   });
 
@@ -478,11 +478,17 @@ describe('BEMHTML compiler/Runtime', function() {
       }, [
         { block: 'b1' },
         { block: 'b1' },
+        '',
         { block: 'b1' },
+        {
+          tag: 'div',
+          content: 'blah'
+        },
         { block: 'b1' }
       ], '<div class="b1">1</div>' +
          '<div class="b1">2</div>' +
          '<div class="b1">3</div>' +
+         '<div>blah</div>' +
          '<div class="b1">4</div>');
     });
 
