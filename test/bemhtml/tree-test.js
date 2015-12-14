@@ -169,10 +169,10 @@ describe('BEMHTML compiler/Tree', function() {
   it('should support elemMod() match', function () {
     test(function() {
       block('b1').content()('!');
-      block('b1').elemMod('key', 'val').content()('ok');
+      block('b1').elem('e1').elemMod('key', 'val').content()('ok');
     }, {
-      block: 'b1', elemMods: { key: 'val' }
-    }, '<div class="b1 b1_key_val">ok</div>')
+      block: 'b1', elem: 'e1', elemMods: { key: 'val' }
+    }, '<div class="b1__e1 b1__e1_key_val">ok</div>')
   });
 
   it('should group properly after elem', function() {
