@@ -656,6 +656,19 @@ describe('BEMTREE compiler/Runtime', function() {
     });
   });
 
+  it('should render true as true', function () {
+    test(function() {
+    }, [
+      true,
+      { block: 'b1', content: true },
+      [ { elem: 'e1', content: true }, true ]
+    ], [
+      true,
+      { block: 'b1', content: true },
+      [ { elem: 'e1', content: true }, true ]
+    ]);
+  });
+
   it('should work with empty input', function() {
     test(function() {
     }, '', '');
