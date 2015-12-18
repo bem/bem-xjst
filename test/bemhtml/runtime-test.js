@@ -371,6 +371,17 @@ describe('BEMHTML compiler/Runtime', function() {
       }, '<div class="b1"><div class="b1__e1"></div></div>');
     });
 
+    it('should not treat mods as elemMods even if block exist', function() {
+      test(function() {}, {
+        block: 'b1',
+        content: {
+          block: 'b1',
+          elem: 'e1',
+          mods: { m1: 'v1' }
+        }
+      }, '<div class="b1"><div class="b1__e1"></div></div>');
+    });
+
     it('should not treat mods as elemMods in mixes', function() {
       test(function() {}, {
         block: 'b1',
@@ -380,6 +391,20 @@ describe('BEMHTML compiler/Runtime', function() {
         }
       }, '<div class="b1 b1__e1"></div>');
     });
+
+    it('should support changing elemMods in runtime', function() {
+      test(function() {
+        block('b1').elem('e1').def()(function() {
+          this.elemMods.a = 'b';
+          console.log(this.elemMods);
+          return applyNext();
+        });
+      }, {
+        block: 'b1',
+        elem: 'e1'
+      }, '<div class="b1__e1 b1__e1_a_b"></div>');
+    });
+
   });
 
   describe('mix', function() {
@@ -908,7 +933,7 @@ describe('BEMHTML compiler/Runtime', function() {
         {
           block: 'b1',
           elem: 'e1',
-          mods: {
+          elemMods: {
             a: 'b'
           }
         },
