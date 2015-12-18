@@ -50,7 +50,7 @@ require('coa').Cmd()
       options.input.resume();
 
       function finish(source) {
-        var out = bem_xjst[options.engine]().generate(source, {
+        var out = bem_xjst[options.engine].generate(source, {
           'no-opt': options['no-opt']
         });
 
