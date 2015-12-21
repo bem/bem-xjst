@@ -3,6 +3,8 @@ var assert = require('assert');
 var utile = require('utile');
 var vm = require('vm');
 
+require('chai').should();
+
 module.exports = function(engine) {
 
   /**

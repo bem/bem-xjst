@@ -1,7 +1,6 @@
 var fixtures = require('../fixtures')('bemhtml');
 // var bemxjst = require('../../').bemhtml;
 var compile = fixtures.compile;
-require('chai').should();
 
 describe('.tag()', function() {
   it('should return html tag', function() {
@@ -43,17 +42,17 @@ describe('.tag()', function() {
       .should.equal('<button class="button"></button>');
   });
 
-  it('should override later declarations with force flag', function() {
+  xit('should override later declarations with force flag', function() {
     compile(function() {
       block('button').tag()('input');
-      block('button').tag()('button');
+      block('button').tag()('button', true);
     }).apply({ block: 'button' })
       .should.equal('<input class="button"/>');
   });
 
-  it('should override user declarations with force flag', function() {
+  xit('should override user declarations with force flag', function() {
     compile(function() {
-      block('button').tag()('button');
+      block('button').tag()('button', true);
     }).apply({ block: 'button', tag: 'a' })
       .should.equal('<button class="button"></button>');
   });
