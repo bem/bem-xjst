@@ -312,4 +312,22 @@ describe('BEMHTML compiler/Tree', function() {
       block('b1').match('123')('123');
     }, /Wrong.*match.*argument/);
   });
+
+  it('should execute matches in right order', function() {
+    test(function() {
+      block('bla')(
+        tag()('span'),
+        // this.ctx.d is undefined
+        match(function() { return this.ctx.d; })(
+          tag()('a'),
+          attrs()(match(function() { return this.ctx.d.a; })(function() {
+            // this will throw error
+            return { f: 1 };
+          }))
+        )
+      );
+    }, {
+      block: 'bla'
+    }, '<span class="bla"></span>');
+  });
 });
