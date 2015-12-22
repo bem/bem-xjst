@@ -154,6 +154,17 @@ describe('BEMHTML compiler/Runtime', function() {
     ], '<div class="b1"></div>');
   });
 
+  it('should assume elem=\'\' is a falsey value', function () {
+    test(function() {
+      block('b1').elem('e1').def()(function() {
+        return applyCtx(this.extend(this.ctx, {
+          block: 'b2',
+          elem: ''
+        }));
+      });
+    }, { block: 'b1' }, '<div class="b1"></div>');
+  });
+
   it('should properly save context while render plain html items', function() {
     test(function() {
     }, {
