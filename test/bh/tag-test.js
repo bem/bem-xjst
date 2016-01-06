@@ -45,14 +45,14 @@ describe('.tag()', function() {
   xit('should override later declarations with force flag', function() {
     compile(function() {
       block('button').tag()('input');
-      block('button').tag()('button', true);
+      block('button').force().tag()('button');
     }).apply({ block: 'button' })
       .should.equal('<input class="button"/>');
   });
 
   xit('should override user declarations with force flag', function() {
     compile(function() {
-      block('button').tag()('button', true);
+      block('button').force().tag()('button');
     }).apply({ block: 'button', tag: 'a' })
       .should.equal('<button class="button"></button>');
   });
