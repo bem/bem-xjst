@@ -1,7 +1,7 @@
 var fixtures = require('../fixtures')('bemhtml');
 var compile = fixtures.compile;
 
-describe('ctx.mods()', function() {
+describe('.mods()', function() {
   var tmpls;
   beforeEach(function() {
     tmpls = compile(function() {

@@ -8,7 +8,7 @@ describe('.tag()', function() {
       block('btn').def()(function() {
         return this.ctx.tag;
       });
-    }).apply({block: 'btn', tag: 'button'})
+    }).apply({ block: 'btn', tag: 'button' })
       .should.equal('button');
   });
 
