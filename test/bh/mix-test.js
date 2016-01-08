@@ -16,28 +16,32 @@ describe('mix()(×)', function() {
     compile(function() {
       block('button').mix()({ block: 'mix' })
     })
-      .apply({ block: 'button' }).should.equal('<div class="button mix"></div>');
+      .apply({ block: 'button' })
+      .should.equal('<div class="button mix"></div>');
   });
 
   it('should set single mix as function', function() {
     compile(function() {
       block('button').mix()(function() { return { block: 'mix' }; });
     })
-      .apply({ block: 'button' }).should.equal('<div class="button mix"></div>');
+      .apply({ block: 'button' })
+      .should.equal('<div class="button mix"></div>');
   });
 
   it('should set array mix', function() {
     compile(function() {
       block('button').mix()([ { block: 'mix' } ]);
     })
-      .apply({ block: 'button' }).should.equal('<div class="button mix"></div>');
+      .apply({ block: 'button' })
+      .should.equal('<div class="button mix"></div>');
   });
 
   it('should set array mix as function', function() {
     compile(function() {
       block('button').mix()(function() { return [ { block: 'mix' } ]; });
     })
-      .apply({ block: 'button' }).should.equal('<div class="button mix"></div>');
+      .apply({ block: 'button' })
+      .should.equal('<div class="button mix"></div>');
   });
 
   xit('should extend user single mix', function() {
@@ -45,7 +49,7 @@ describe('mix()(×)', function() {
       block('button').mix()({ block: 'mix2' });
     })
       .apply({ block: 'button', mix: { block: 'mix1' } })
-        .should.equal('<div class="button mix1 mix2"></div>');
+      .should.equal('<div class="button mix1 mix2"></div>');
   });
 
   xit('should extend user array mix', function() {
@@ -55,7 +59,7 @@ describe('mix()(×)', function() {
       );
     })
       .apply({ block: 'button', mix: [ { block: 'user-mix' } ] })
-        .should.equal('<div class="button user-mix mix"></div>');
+      .should.equal('<div class="button user-mix mix"></div>');
   });
 
   xit('should extend later declarations', function() {
@@ -80,7 +84,8 @@ describe('mix()(×)', function() {
         mix()({ block: 'mix1' })
       );
     })
-      .apply({ block: 'button' }).should.equal('<div class="button mix2"></div>');
+      .apply({ block: 'button' })
+      .should.equal('<div class="button mix2"></div>');
   });
 
   xit('should override user declarations with force flag', function() {
@@ -88,22 +93,23 @@ describe('mix()(×)', function() {
       block('button').force().mix()({ block: 'mix' });
     })
       .apply({ block: 'button', mix: { block: 'user-mix' } })
-        .should.equal('<div class="button mix"></div>');
+      .should.equal('<div class="button mix"></div>');
   });
 
   xit('should inherit block name', function() {
     compile(function() {
       block('button')(
         mix()([
-            { mods: { disabled: true } },
-            { elem: 'input', mods: { active: true } },
-            { block: 'clearfix' }
+          { mods: { disabled: true } },
+          { elem: 'input', mods: { active: true } },
+          { block: 'clearfix' }
         ])
       );
     })
       .apply({ block: 'button' })
       .should.equal(
-        '<div class="button button_disabled button__input button__input_active clearfix"></div>'
+        '<div class="button button_disabled button__input' +
+        ' button__input_active clearfix"></div>'
       );
   });
 
@@ -119,7 +125,8 @@ describe('mix()(×)', function() {
     })
       .apply({ block: 'button', elem: 'control' })
       .should.equal(
-        '<div class="button__control button__control_disabled button__input button__input_active clearfix"></div>'
+        '<div class="button__control button__control_disabled button__input' +
+        ' button__input_active clearfix"></div>'
       );
   });
 });

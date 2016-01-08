@@ -24,7 +24,8 @@ describe('.mods()', function() {
   });
 
   xit('should return elem mods', function() {
-    tmpls.apply({ block: 'button', elem: 'control', elemMods: { type: 'button' } })
+    tmpls.apply({ block: 'button', elem: 'control',
+        elemMods: { type: 'button' } })
       .should.equal('{"type":"button"}');
   });
 
@@ -40,7 +41,8 @@ describe('.mods()', function() {
       );
     })
       .apply({ block: 'button' })
-      .should.equal('<div class="button button_type_button button_disabled"></div>');
+      .should.equal('<div class="button button_type_button button_disabled">' +
+        '</div>');
   });
 
   xit('should not override user mods', function() {

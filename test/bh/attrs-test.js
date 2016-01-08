@@ -63,7 +63,8 @@ describe('attrs()(×)', function() {
         attrs()({ type: 'button' })
       );
     })
-      .apply({ block: 'button' }).should.equal('<div class="button" type="button" tabindex="0"></div>');
+      .apply({ block: 'button' })
+      .should.equal('<div class="button" type="button" tabindex="0"></div>');
   });
 
   xit('should override later declarations with force flag', function() {
@@ -75,7 +76,8 @@ describe('attrs()(×)', function() {
         attrs()({ type: 'button', tabindex: 0 })
       )
     })
-      .apply({ block: 'button' }).should.equal('<div class="button" type="control" tabindex="0"></div>');
+      .apply({ block: 'button' })
+      .should.equal('<div class="button" type="control" tabindex="0"></div>');
   });
 
   xit('should override user declarations with force flag', function() {
@@ -94,6 +96,7 @@ describe('attrs()(×)', function() {
           disabled: 'disabled',
           name: 'button'
         }
-      }).should.equal('<div class="button" type="button" name="button"></div>');
+      })
+      .should.equal('<div class="button" type="button" name="button"></div>');
   });
 });

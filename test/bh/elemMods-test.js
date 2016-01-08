@@ -6,27 +6,36 @@ describe('elem(×).elemMod(×)', function() {
     compile(function() {
       block('button').elem('inner').elemMod('valid', true).tag()('span');
     })
-      .apply({ block: 'button', content: { elem: 'inner', elemMods: { valid: true } } })
+      .apply({ block: 'button', content: { elem: 'inner',
+        elemMods: { valid: true } } })
       .should.equal(
-        '<div class="button"><span class="button__inner button__inner_valid"></span></div>'
+        '<div class="button">' +
+          '<span class="button__inner button__inner_valid"></span>' +
+        '</div>'
       );
   });
   it('should match and process string elemMods', function() {
     compile(function() {
       block('button').elem('inner').elemMod('valid', 'yes').tag()('span');
     })
-      .apply({ block: 'button', content: { elem: 'inner', elemMods: { valid: 'yes' } } })
+      .apply({ block: 'button', content: { elem: 'inner',
+        elemMods: { valid: 'yes' } } })
       .should.equal(
-        '<div class="button"><span class="button__inner button__inner_valid_yes"></span></div>'
+        '<div class="button">' +
+          '<span class="button__inner button__inner_valid_yes"></span>' +
+        '</div>'
       );
   });
   it('should not match string values of boolean elemMods', function() {
     compile(function() {
       block('button').elem('inner').elemMod('valid', true).tag()('span');
     })
-      .apply({ block: 'button', content: { elem: 'inner', elemMods: { valid: 'valid' } } })
+      .apply({ block: 'button', content: { elem: 'inner',
+        elemMods: { valid: 'valid' } } })
       .should.equal(
-        '<div class="button"><div class="button__inner button__inner_valid_valid"></div></div>'
+        '<div class="button">' +
+          '<div class="button__inner button__inner_valid_valid"></div>' +
+        '</div>'
       );
   });
 });

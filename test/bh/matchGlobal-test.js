@@ -34,6 +34,7 @@ describe('.block(*)', function() {
         return applyNext() + '2';
       });
     })
-      .apply({ block: 'button', cls: 'foo' }).should.equal('<div class="button foo12"></div>');
+      .apply({ block: 'button', cls: 'foo' })
+      .should.equal('<div class="button foo12"></div>');
   });
 });

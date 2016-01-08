@@ -26,7 +26,8 @@ describe('.applyNext()', function() {
     })
       .apply({ block: 'button', elem: 'control', elemMods: { disabled: true } })
       .should.equal(
-        '<span class="button__control button__control_disabled button__control_type_span"></span>'
+        '<span class="button__control button__control_disabled' +
+        ' button__control_type_span"></span>'
       );
   });
 
@@ -108,7 +109,8 @@ describe('.applyNext()', function() {
         return this.foo + this.bar + this.lol;
       });
     })
-      .apply({ block: 'select', mods: { disabled: true }, content: { elem: 'control' } })
+      .apply({ block: 'select', mods: { disabled: true },
+        content: { elem: 'control' } })
       .should.match(/666/);
   });
 

@@ -58,7 +58,8 @@ describe('.isFirst() / .isLast()', function() {
       .apply({ block: 'button', content: { elem: 'inner' } })
       .should.equal(
         '<div class="button">' +
-        '<div class="button__inner button__inner_first_yes button__inner_last_yes"></div>' +
+        '<div class="button__inner button__inner_first_yes' +
+          ' button__inner_last_yes"></div>' +
         '</div>'
       );
   });
