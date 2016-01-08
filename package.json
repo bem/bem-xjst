@@ -11,7 +11,7 @@
     "make": "npm run make-bemhtml && npm run make-bemtree",
     "clean": "rm -f lib/bem{html,tree}/bundle.js",
     "lint": "jscs `ls lib/*.js lib/**/*.js test/*/*.js test/*.js | grep -v bundle` && jshint `ls lib/*.js lib/**/*.js | grep -v bundle`",
-    "test-bemhtml": "mocha --reporter=spec test/bemhtml/*-test.js",
+    "test-bemhtml": "mocha --reporter=spec test/bemhtml/*-test.js test/bh/*-test.js",
     "test-bemtree": "mocha --reporter=spec test/bemtree/*-test.js",
     "test": "npm run make && npm run lint && npm run test-bemhtml && npm run test-bemtree"
   },
