@@ -789,6 +789,20 @@ describe('BEMHTML compiler/Runtime', function() {
     });
   });
 
+  describe('elem', function() {
+    it('should ignore empty string as modName values', function() {
+      test(function() {
+      }, { block: 'a', mods: { '': 'b' } },
+      '<div class="a"></div>');
+    });
+
+    it('should ignore empty string as elemModName values', function() {
+      test(function() {
+      }, { block: 'a', elem: 'b', elemMods: { '': 'c' } },
+      '<div class="a__b"></div>');
+    });
+  });
+
   describe('wildcard elem', function() {
     it('should be called before the matched templates', function () {
       test(function() {
