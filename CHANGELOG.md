@@ -1,5 +1,35 @@
 # BEM-XJST Changelog
 
+## 2016-01-19, [v4.3.2](https://github.com/bem/bem-xjst/compare/v4.3.1...v4.3.2), @miripiruni
+From this moment we have intelligible changelog. Hooray!
+
+`elem === ''` means no elem. Example:
+```js
+// BEMJSON:
+{ block: 'b2', elem: '' }
+// Result:
+'<div class="b2"></div>'
+```
+
+Now BEM-XJST will ignore empty string as modName and elemModName. Example:
+```js
+// BEMJSON:
+{ block: 'a', mods: { '': 'b' } }
+// Result:
+'<div class="a"></div>'
+
+// BEMJSON:
+{ block: 'a', elem: 'b', elemMods: { '': 'c' } }
+// Result:
+'<div class="a__b"></div>'
+```
+
+Commits:
+* [[`41604e3567`](https://github.com/bem/bem-xjst/commit/41604e3567)] - Port of 6c427cc (#152): class-builder: `elem === ''` means no elem (miripiruni)
+* [[`62763e6b16`](https://github.com/bem/bem-xjst/commit/62763e6b16)] - Port of 0872a8b (#164): should ignore empty string as modName and elemModName (miripiruni)
+* [[`e11506e010`](https://github.com/bem/bem-xjst/commit/e11506e010)] - CHANGELOG.md added (miripiruni)
+* [[`74055c9e23`](https://github.com/bem/bem-xjst/commit/74055c9e23)] - **travis**: Run tests on node 4 (Vladimir Grinenko)
+
 ## 2015-12-23, [v4.3.1](https://github.com/bem/bem-xjst/compare/v4.3.0...v4.3.1), @miripiruni
 Order of execution `match`es was changed. Example:
 
