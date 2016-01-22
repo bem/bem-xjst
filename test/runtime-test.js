@@ -480,6 +480,14 @@ describe('BEMHTML compiler/Runtime', function() {
         mix: { block: 'b2', js: true }
       }, '<div class="b1__e1 b2 i-bem" data-bem=\'{"b2":{}}\'></div>');
     });
+
+    it('should skip mix items if falsy', function() {
+      test(function() {
+      }, {
+        block: 'b1',
+        mix: [ null, '', false, undefined, 0, { block: 'b2' } ]
+      }, '<div class="b1 b2"></div>');
+    });
   });
 
   describe('Context', function() {
