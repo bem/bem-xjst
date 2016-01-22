@@ -481,6 +481,14 @@ describe('BEMHTML compiler/Runtime', function() {
       }, '<div class="b1 b2 i-bem" data-bem=\'{"b1":{}}\'></div>');
     });
 
+    it('should skip mix items if falsy', function() {
+      test(function() {
+      }, {
+        block: 'b1',
+        mix: [ null, '', false, undefined, 0, { block: 'b2' } ]
+      }, '<div class="b1 b2"></div>');
+    });
+
     it('should support singular mix', function() {
       test(function() {
         block('b1')(
