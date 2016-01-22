@@ -718,6 +718,41 @@ describe('BEMHTML compiler/Runtime', function() {
       test(function() {
       }, { tag: 'span', attrs: { a: 'b' } }, '<span a="b"></span>');
     });
+
+    it('should properly render undefined as attrs value', function () {
+      test(function() {
+      }, { attrs: { name: undefined } },
+      '<div></div>');
+    });
+
+    it('should properly render zero as attrs value', function () {
+      test(function() {
+      }, { attrs: { test: 0 } },
+      '<div test="0"></div>');
+    });
+
+    it('should properly render empty string as attrs value', function () {
+      test(function() {
+      }, { attrs: { test: '' } },
+      '<div test=""></div>');
+    });
+
+    it('should properly render false as attrs value', function () {
+      test(function() {
+      }, { attrs: { disabled: false } },
+      '<div></div>');
+    });
+
+    it('should properly render true as attrs value', function () {
+      test(function() {
+      }, { attrs: { disabled: true } },
+      '<div disabled></div>');
+    });
+
+    it('should properly render null as attrs value', function () {
+      test(function() {
+      }, { attrs: { value: null } }, '<div></div>');
+    });
   });
 
   describe('preserve/reset block/elem/mods', function() {
