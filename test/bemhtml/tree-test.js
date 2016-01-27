@@ -175,6 +175,51 @@ describe('BEMHTML compiler/Tree', function() {
     }, '<div class="b1__e1 b1__e1_key_val">ok</div>')
   });
 
+  it('should support elemMatch() match', function() {
+    test(function() {
+      block('b1').elemMatch(function() {
+        return this.elem === 'e1' || this.elem === 'e2';
+      }).tag()('b');
+    }, [
+      { block: 'b1', elem: 'e1' },
+      { block: 'b1', elem: 'e2' },
+      { block: 'b1', elem: 'e3' }
+    ], '<b class="b1__e1"></b><b class="b1__e2"></b><div class="b1__e3"></div>')
+  });
+
+  it('priority of elemMatch and elem is determined by templates order',
+    function() {
+    test(function() {
+      block('b1').def()(
+         elem('e')('elem'),
+         elemMatch(function() { return this.elem === 'e'; })('elemMatch')
+      );
+      block('b2').def()(
+         elemMatch(function() { return this.elem === 'e'; })('elemMatch'),
+         elem('e')('elem')
+      );
+    }, [ { block: 'b1', elem: 'e' }, ' ', { block: 'b2', elem: 'e' } ],
+    'elem elemMatch')
+  });
+
+  it('priority of elem(\'*\') and elem(\'e\') is determined by ' +
+    'templates order', function() {
+    test(function() {
+      block('b1').content()(
+        elem('*').match(function() { return this.elem === 'e'; })('wildcard'),
+        elem('e')('elem')
+      );
+      block('b2').content()(
+        elem('e')('elem'),
+        elem('*').match(function() { return this.elem === 'e'; })('wildcard')
+      );
+    }, [
+      { block: 'b1', elem: 'e', tag: false },
+      ' ',
+      { block: 'b2', elem: 'e', tag: false }
+    ], 'elem wildcard');
+  });
+
   it('should group properly after elem', function() {
     test(function() {
       block('b1').content()('ok');
