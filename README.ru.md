@@ -9,22 +9,43 @@
 
 ## Установка
 
-Устанавливается с помощью [npm](https://npmjs.org): `npm install bem`.
+Устанавливается с помощью [npm](https://npmjs.org): `npm install bem-xjst`.
 
 ## Использование
 
-### В качестве js-модуля
+### В качестве node.js модуля
 
 ```js
-var BEM_XJST = require('bem-xjst'),
-    template = BEM_XJST.compile('... your source code ...');
+var bemxjst = require('bem-xjst');
+var bemhtml = bemxjst.bemhtml;
 
-template.apply(/* ... your input data here ... */);
+// Add templates
+bemhtml.compile(function() {
+  block('b').content()('yay');
+});
+
+// Apply templates to data context in BEMJSON format and get result as HTML string
+bemhtml.apply({ block: 'b' });
+// Result: <div class="b">yay</div>
 ```
 
-### В виде программы
+```js
+var bemxjst = require('bem-xjst');
+var bemtree = bemxjst.bemtree;
 
+// Add templates
+bemtree.compile(function() {
+  block('b').content()('yay');
+});
+
+// Apply templates to data context in BEMJSON format and get result as BEMJSON
+bemtree.apply({ block: 'b' });
+// Result: { block: 'b1', content: 'yay' }
 ```
+
+### В виде CLI-утилиты
+
+```bash
 $ bem-xjst --help
 
 Usage:
@@ -34,7 +55,98 @@ Usage:
 Options:
   -h, --help : Help
   -v, --version : Version
-  -d, --dev-mode : Dev mode
+  -e, --engine : Engine name (default: bemhtml, supported: bemhtml | bemtree)
   -i INPUT, --input=INPUT : Input file (default: stdin)
   -o OUTPUT, --output=OUTPUT : Output file (default: stdout)
 ```
+
+## API
+
+### Compiler
+
+#### `.compile(string or function)`
+
+Компилирует шаблоны и возвращает объект `templates`.
+(Смотри документацию его методов ниже).
+
+#### `.generate(string or function)`
+
+Генерирует JS-код, который может быть передан и выполнен в браузере для
+получения объекта `templates`.
+
+### templates
+
+#### `.apply(context)`
+
+Применяет скомпилированные шаблоны к переданному BEMJSON в аргументе context.
+В зависимости от `engine` возвращает BEMJSON или HTML.
+
+#### `.compile(string or function)`
+
+Добавляет шаблоны к экземпляру `templates`. Может быть вызван в рантайме.
+
+```js
+var bemxjst = require('bem-xjst');
+var templates = bemxjst.bemhtml.compile(function() {
+    block('b').tag()('a');
+  });
+
+templates.apply({ block: 'b' });
+// Return '<a class="b"></a>'
+
+templates.compile(function() {
+  block('b').content()('Hi, folks!');
+});
+
+templates.apply({ block: 'b' });
+// Return '<a class="b">Hi, folks!</a>'
+```
+
+#### `.BEMContext`
+
+Конструктор `this` доступного в теле шаблонов. Может быть расширен для
+предоставления дополнительной функциональности в шаблонах.
+
+```js
+var bemxjst = require('bem-xjst');
+var templates = bemxjst.bemhtml.compile('');
+
+templates.BEMContext.prototype.myField = 'opa';
+
+templates.compile(function() {
+  block('b').content()(function() {
+    return this.myField;
+  });
+});
+
+templates.apply({ block: 'b' });
+// Return '<div class="b">opa</div>'
+```
+
+### Тесты на производительность
+
+Чтобы запустить тесты:
+
+```bash
+cd bench/
+npm install
+node run.js -h
+node run.js
+```
+
+Тесты на производительность могут быть запущены с параметром `--compare`
+для отслеживания регрессий и сравнения с предыдущей версией BEM-XJST. Не забудьте
+ убедиться, что в `benchmarks/package.json` указан правильный hash коммита
+ `bem-xjst`.
+
+### Миграция с v1.x
+
+Смотри [wiki][0] (English)
+
+#### Лицензия
+
+Права на код и документацию принадлежат 2016 YANDEX LLC.
+[Mozilla Public License 2.0](LICENSE.txt).
+
+[0]: https://github.com/bem/bem-xjst/wiki/Notable-changes-between-bem-xjst@1.x-and-bem-xjst@2.x
+[1]: https://github.com/bem/bem-xjst/wiki/Notable-changes-between-bem-xjst@1.x-and-bem-xjst@2.x#this_str-is-gone

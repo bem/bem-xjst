@@ -1,5 +1,100 @@
 # BEM-XJST Changelog
 
+# 2016-01-29, [v5.0.0](https://github.com/bem/bem-xjst/compare/v4.3.3...v5.0.0), @miripiruni
+**BEMHTML breaking changes**: behavior mods and elemMods BEMJSON fields are changed. 
+
+BEM-XJST now should not treat mods as elemMods if block exist.
+```js
+// BEMJSON
+{
+  block: 'b',
+  elem: 'e',
+  mods: { m: 'v' } // will be ignored because of elem
+}
+
+// Result with v4.3.3
+'v class="b__e b__e_m_v"></div>'
+
+// Result with v5.0.0
+'<div class="b1__e1"></div>'
+```
+
+BEM-XJST should not treat elemMods as mods.
+```js
+// BEMJSON
+{
+  block: 'b1',
+  elemMods: { m1: 'v1' }
+}
+
+// Result with v4.3.3
+'<div class="b1 b1_m1_v1"></div>'
+
+// Result with v5.0.0
+'<div class="b1"></div>'
+```
+
+**BEM-XJST breaking changes**: BEM-XJST now supports two template engines — BEMHTML for getting HTML output and BEMTREE for getting BEMJSON. By default BEM-XJST will use BEMHTML engine.
+Usage example:
+
+```js
+var bemxjst = require('bem-xjst');
+var bemhtml = bemxjst.bemhtml;
+
+// Add templates
+bemhtml.compile(function() {
+  block('b').content()('yay');
+});
+
+// Apply templates to data context in BEMJSON format and get result as HTML string
+bemhtml.apply({ block: 'b' });
+// Result: <div class="b">yay</div>
+```
+
+```js
+var bemxjst = require('bem-xjst');
+var bemtree = bemxjst.bemtree;
+
+// Add templates
+bemtree.compile(function() {
+  block('b').content()('yay');
+});
+
+// Apply templates to data context in BEMJSON format and get result as BEMJSON
+bemtree.apply({ block: 'b' });
+// Result: { block: 'b1', content: 'yay' }
+```
+
+
+Now supports changing elemMods in runtime. Example:
+```js
+// Template
+block('b1').elem('e1').def()(function() {
+  this.elemMods.a = 'b';
+  return applyNext();
+});
+// BEMJSON
+{ block: 'b1', elem: 'e1' }
+// Result:
+'<div class="b1__e1 b1__e1_a_b"</div>'
+```
+
+BEMTREE will return Boolean as is. Example:
+```js
+// Input BEMJSON
+[
+  true,
+  { block: 'b1', content: true },
+  [ { elem: 'e1', content: true }, true ]
+]
+// Output BEMJSON
+[
+  true,
+  { block: 'b1', content: true },
+  [ { elem: 'e1', content: true }, true ]
+]
+```
+
 ## 2016-01-22, [v4.3.3](https://github.com/bem/bem-xjst/compare/v4.3.2...v4.3.3), @miripiruni
 Should properly render attr values:
 ```js

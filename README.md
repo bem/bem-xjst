@@ -16,22 +16,36 @@ Install it by [npm](https://npmjs.org): `npm install bem-xjst`.
 ### As a node.js module
 
 ```js
-var bem = require('bem-xjst');
-var template = bem.compile('... your source code ...');
+var bemxjst = require('bem-xjst');
+var bemhtml = bemxjst.bemhtml;
 
-template.apply(/* ... your input data here ... */);
-
-// Or even better:
-
-template = bem.compile(function() {
-  block('b1').content()('yay');
+// Add templates
+bemhtml.compile(function() {
+  block('b').content()('yay');
 });
-template.apply({ block: 'b1' });
+
+// Apply templates to data context in BEMJSON format and get result as HTML string
+bemhtml.apply({ block: 'b' });
+// Result: <div class="b">yay</div>
+```
+
+```js
+var bemxjst = require('bem-xjst');
+var bemtree = bemxjst.bemtree;
+
+// Add templates
+bemtree.compile(function() {
+  block('b').content()('yay');
+});
+
+// Apply templates to data context in BEMJSON format and get result as BEMJSON
+bemtree.apply({ block: 'b' });
+// Result: { block: 'b1', content: 'yay' }
 ```
 
 ### As a CLI tool
 
-```
+```bash
 $ bem-xjst --help
 
 Usage:
@@ -41,7 +55,7 @@ Usage:
 Options:
   -h, --help : Help
   -v, --version : Version
-  -d, --dev-mode : Dev mode
+  -e, --engine : Engine name (default: bemhtml, supported: bemhtml | bemtree)
   -i INPUT, --input=INPUT : Input file (default: stdin)
   -o OUTPUT, --output=OUTPUT : Output file (default: stdout)
 ```
@@ -71,17 +85,50 @@ Run compiled templates on specified input context. Return resulting HTML output.
 Add more BEM templates to the `templates` instance. Might be called in runtime
 to deliver more blocks declarations to the client.
 
+```js
+var bemxjst = require('bem-xjst');
+var templates = bemxjst.bemhtml.compile(function() {
+    block('b').tag()('a');
+  });
+
+templates.apply({ block: 'b' });
+// Return '<a class="b"></a>'
+
+templates.compile(function() {
+  block('b').content()('Hi, folks!');
+});
+
+templates.apply({ block: 'b' });
+// Return '<a class="b">Hi, folks!</a>'
+```
+
 #### `.BEMContext`
 
 Constructor of the `this` object available in template bodies. Might be amended
 to expose some functionality to the templates, or to add [_flush][1] method.
+
+```js
+var bemxjst = require('bem-xjst');
+var templates = bemxjst.bemhtml.compile('');
+
+templates.BEMContext.prototype.myField = 'opa';
+
+templates.compile(function() {
+  block('b').content()(function() {
+    return this.myField;
+  });
+});
+
+templates.apply({ block: 'b' });
+// Return '<div class="b">opa</div>'
+```
 
 ### Benchmarks
 
 To run benchmarks:
 
 ```bash
-cd benchmarks/
+cd bench/
 npm install
 node run.js -h
 node run.js
@@ -97,7 +144,7 @@ See [wiki][0]
 
 #### License
 
-Code and documentation copyright 2015 YANDEX LLC. Code released under the
+Code and documentation copyright 2016 YANDEX LLC. Code released under the
 [Mozilla Public License 2.0](LICENSE.txt).
 
 [0]: https://github.com/bem/bem-xjst/wiki/Notable-changes-between-bem-xjst@1.x-and-bem-xjst@2.x
