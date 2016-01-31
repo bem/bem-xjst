@@ -134,8 +134,8 @@ node run.js -h
 node run.js
 ```
 
-Benchmarks could be run in `--compare` mode to verify abscence of regressionfccd9d4s
-in comparison to previous bem-xjst verison. Make sure that the
+Benchmarks could be run in `--compare` mode to verify absence of regression
+in comparison to previous bem-xjst version. Make sure that the
 `benchmarks/package.json` has the right git hash of `bem-xjst` before running!
 
 ### Changes from v1.x version
