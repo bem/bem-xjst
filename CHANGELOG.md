@@ -1,24 +1,6 @@
 # BEM-XJST Changelog
 
-## 2016-01-22, [v4.3.3](https://github.com/bem/bem-xjst/compare/v4.3.2...v4.3.3), @miripiruni
-Should properly render attr values:
-```js
-// BEMJSON
-{
-    tag: 'input',
-    attrs: {
-        name: undefined, // will not render at all
-        value: null,     // will not render
-        disabled: false, // will not render too
-        disabled: true,  // will render as attr without value: disabled
-        value: 0,        // will render as you expect: value="0"
-        placeholder: ''  // will render as is: placeholder=""
-    }
-}
-// Result:
-'<input disabled value="0" placeholder=""/>'
-```
-
+## 2016-02-01, [v4.3.4](https://github.com/bem/bem-xjst/compare/v4.3.2...v4.3.4), @miripiruni
 Skip mix item if falsy:
 
 ```js
@@ -33,7 +15,6 @@ Skip mix item if falsy:
 
 
 Commits:
-* [[`a48aeab5a6`](https://github.com/bem/bem-xjst/commit/a48aeab5a6)] - **BEMHTML**: should properly render attr values (miripiruni)
 * [[`e8e468dce7`](https://github.com/bem/bem-xjst/commit/e8e468dce7)] - **BEMHTML**: skip mix item if falsy (miripiruni)
 
 ## 2016-01-19, [v4.3.2](https://github.com/bem/bem-xjst/compare/v4.3.1...v4.3.2), @miripiruni
