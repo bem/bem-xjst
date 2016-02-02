@@ -20,12 +20,12 @@ var bemxjst = require('bem-xjst');
 var bemhtml = bemxjst.bemhtml;
 
 // Add templates
-bemhtml.compile(function() {
+var templates = bemhtml.compile(function() {
   block('b').content()('yay');
 });
 
 // Apply templates to data context in BEMJSON format and get result as HTML string
-bemhtml.apply({ block: 'b' });
+templates.apply({ block: 'b' });
 // Result: <div class="b">yay</div>
 ```
 
@@ -34,12 +34,12 @@ var bemxjst = require('bem-xjst');
 var bemtree = bemxjst.bemtree;
 
 // Add templates
-bemtree.compile(function() {
+var templates = bemtree.compile(function() {
   block('b').content()('yay');
 });
 
 // Apply templates to data context in BEMJSON format and get result as BEMJSON
-bemtree.apply({ block: 'b' });
+templates.apply({ block: 'b' });
 // Result: { block: 'b1', content: 'yay' }
 ```
 
