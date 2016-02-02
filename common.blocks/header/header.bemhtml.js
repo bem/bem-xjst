@@ -1,5 +1,5 @@
 block('header')(
-    tag()('h1'),
+    elem('title').tag()('h1'),
     elem('link').replace()(function() {
         return {
             block: 'link',

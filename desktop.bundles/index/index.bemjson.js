@@ -21,24 +21,32 @@ module.exports = {
     ],
     content: [
         {
-            elem: 'header',
-            content: {
-                block: 'header',
-                content: [
-                    {
-                        elem: 'link',
-                        url: 'https://github.com/bem/bem-xjst/',
-                        content: 'BEM-XJST'
-                    },
-                    ' ',
-                    {
-                        elem: 'link',
-                        url: 'https://github.com/bem/bem-xjst/releases/',
-                        content: BEMXJST_VERSION
-                    },
-                    ' online demo'
-                ]
-            }
+            block: 'header',
+            mix: { block: 'page', elem: 'header' },
+            content: [
+                {
+                    elem: 'title',
+                    content: [
+                        {
+                            elem: 'link',
+                            url: 'https://github.com/bem/bem-xjst/',
+                            content: 'BEM-XJST'
+                        },
+                        ' Online Demo'
+                    ]
+                },
+                {
+                    elem: 'misc',
+                    content: [
+                        {
+                            block: 'link',
+                            url: 'https://github.com/bem/bem-xjst/releases/',
+                            target: '_blank',
+                            content: 'Changelog'
+                        }
+                    ]
+                }
+            ]
         },
         {
             block: 'demo',
