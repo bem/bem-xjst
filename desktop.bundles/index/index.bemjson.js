@@ -92,11 +92,6 @@ module.exports = {
                     }
                 }
             ]
-        },
-        {
-            block: 'github-fork-ribbon',
-            url: GITHUB_URL,
-            text: 'Fork me on GitHub'
         }
     ]
 };
