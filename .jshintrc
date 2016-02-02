@@ -27,6 +27,9 @@
                                 //   "double" : require double quotes
     "undef"         : true,     // true: Require all non-global variables to be declared (prevents global leaks)
     "unused"        : true,     // true: Require all defined variables be used
+    "predef"        : [ "block", "apply", "applyNext", "applyCtx", "tag",
+    "attrs", "bem", "cls", "content", "js", "match", "mix", "mod", "tag",
+    "elem", "local", "wrap", "extend", "oninit", "replace" ],
     "strict"        : false,    // true: Requires all functions run in ES5 Strict Mode
     "maxparams"     : false,    // {int} Max number of formal params allowed per function
     "maxdepth"      : 3,        // {int} Max depth of nested blocks (within functions)
@@ -84,6 +87,7 @@
 
     // Custom Globals
     "globals"       : {
-        "module": true
-    }        // additional predefined global variables
+        "module": true,
+        "test": true
+    }
 }

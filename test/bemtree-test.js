@@ -1,10 +1,9 @@
 var assert = require('assert');
-var fixtures = require('../fixtures')('bemtree');
-var bemxjst = require('../../').bemtree;
-
+var fixtures = require('./fixtures')('bemtree');
+var bemxjst = require('../index').bemtree;
 var test = fixtures.test;
 
-describe('BEMTREE compiler/Runtime', function() {
+describe('BEMTREE engine tests', function() {
   describe('applyNext()', function() {
     it('should support applyNext()', function() {
       test(function() {
@@ -60,6 +59,7 @@ describe('BEMTREE compiler/Runtime', function() {
           return 'ok';
         });
         for (var i = 0; i < 128; i++) {
+          /* jshint loopfunc:true */
           block('b1').content()(function() {
             return applyNext();
           });
@@ -153,7 +153,7 @@ describe('BEMTREE compiler/Runtime', function() {
       }, {
         block: 'b1',
         content: 'ok'
-      })
+      });
     });
 
     it('should support custom modes with changes', function () {
@@ -169,7 +169,7 @@ describe('BEMTREE compiler/Runtime', function() {
       }, {
         block: 'b1',
         content: 'ok'
-      })
+      });
     });
 
   });
@@ -258,25 +258,25 @@ describe('BEMTREE compiler/Runtime', function() {
     });
   });
 
-  // TODO: fixme
-  // it('should support this.reapply()', function() {
-  //   test(function() {
-  //     block('b1').content()(function() {
-  //       this.wtf = 'fail';
-  //       return this.reapply({ block: 'b2' });
-  //     });
+  // TODO: https://github.com/bem/bem-xjst/issues/189
+  xit('should support this.reapply()', function() {
+    test(function() {
+      block('b1').content()(function() {
+        this.wtf = 'fail';
+        return this.reapply({ block: 'b2' });
+      });
 
-  //     block('b2').content()(function() {
-  //       return this.wtf || 'ok';
-  //     });
-  //   }, { block: 'b1' }, {
-  //     block: 'b1',
-  //     content: {
-  //       block: 'b2',
-  //       content: 'ok'
-  //     }
-  //   });
-  // });
+      block('b2').content()(function() {
+        return this.wtf || 'ok';
+      });
+    }, { block: 'b1' }, {
+      block: 'b1',
+      content: {
+        block: 'b2',
+        content: 'ok'
+      }
+    });
+  });
 
   describe('mods', function() {
     it('should lazily define mods', function() {
@@ -385,7 +385,7 @@ describe('BEMTREE compiler/Runtime', function() {
           ];
         });
 
-        block('b2').mod('a', 'yes').content()('no!')
+        block('b2').mod('a', 'yes').content()('no!');
       }, {
         block: 'b1',
         content: {
@@ -435,183 +435,6 @@ describe('BEMTREE compiler/Runtime', function() {
       }, { block: 'b1', elemMods: { a: 'no' }, content: {
         block: 'b2', content: 'yes' }
       });
-    });
-  });
-
-  describe('Context', function() {
-    it('should have proper this.position', function() {
-      test(function() {
-        block('b1').content()(function() {
-          return applyNext() + ' == ' + this.position;
-        });
-      }, [
-        { block: 'b1', content: 1 },
-        { block: 'b1', content: 2 },
-        '',
-        { block: 'b1', content: 3 },
-        {
-          customField: 'qqq'
-        },
-        { block: 'b1', content: 4 }
-      ], [
-        { block: 'b1', content: '1 == 1' },
-        { block: 'b1', content: '2 == 2' },
-        '',
-        { block: 'b1', content: '3 == 3' },
-        {
-          customField: 'qqq'
-        },
-        { block: 'b1', content: '4 == 4' }
-      ]);
-    });
-
-    it('should support `.getLast()`', function() {
-      test(function() {
-        block('b1')(
-          match(function() { return this.isLast(); })
-          .content()('last')
-        );
-      }, [
-        {
-          tag: 'table',
-          content: {
-            block: 'b1',
-            content: [
-              { content: 1 },
-              { content: 2 }
-            ]
-          }
-        },
-        {
-          block: 'b1',
-          content: 'first'
-        },
-        {
-          block: 'b1'
-        }
-      ], [
-        {
-          tag: 'table',
-          content: {
-            block: 'b1',
-            content: [
-              { content: 1 },
-              { content: 2 }
-            ]
-          }
-        },
-        {
-          block: 'b1',
-          content: 'first'
-        },
-        {
-          block: 'b1',
-          content: 'last'
-        }
-      ]);
-    });
-
-    it('should support changing prototype of BEMContext', function () {
-      test(function() {
-        oninit(function(exports) {
-          exports.BEMContext.prototype.yes = 'hah';
-        });
-
-        block('b1').content()(function() {
-          return this.yes;
-        });
-      }, { block: 'b1' }, { block: 'b1', content: 'hah' });
-    });
-
-    it('should put BEMContext to sharedContext too', function () {
-      test(function() {
-        oninit(function(exports, shared) {
-          shared.BEMContext.prototype.yes = 'hah';
-        });
-
-        block('b1').content()(function() {
-          return this.yes;
-        });
-      }, { block: 'b1' }, { block: 'b1', content: 'hah' });
-    });
-  });
-
-  describe('wildcard block', function() {
-    it('should be called before the matched templates', function () {
-      test(function() {
-        block('b1').content()(function() {
-          return 'ok';
-        });
-        block('b2').content()(function() {
-          return 'yes';
-        });
-        block('*').content()(function() {
-          return '#' + applyNext() + '#';
-        });
-      }, [
-        { block: 'b1' },
-        { block: 'b2' },
-        {
-          block: 'b3',
-          content: 'ya'
-        }
-      ], [
-        {
-          block: 'b1',
-          content: '#ok#'
-        },
-        {
-          block: 'b2',
-          content: '#yes#'
-        },
-        {
-          block: 'b3',
-          content: '#ya#'
-        }
-      ]);
-    });
-  });
-
-  describe('wildcard elem', function() {
-    it('should be called before the matched templates', function () {
-      test(function() {
-        block('b1').content()(function() {
-          return 'block';
-        });
-        block('b1').elem('a').content()(function() {
-          return 'block-a';
-        });
-        block('b1').elem('*').content()(function() {
-          return '%' + applyNext() + '%';
-        });
-      }, [
-        { block: 'b1' },
-        {
-          block: 'b1',
-          elem: 'a'
-        },
-        {
-          block: 'b3',
-          elem: 'b',
-          content: 'ok'
-        }
-      ],
-      [
-        {
-          block: 'b1',
-          content: 'block'
-        },
-        {
-          block: 'b1',
-          elem: 'a',
-          content: '%block-a%'
-        },
-        {
-          block: 'b3',
-          elem: 'b',
-          content: '%ok%'
-        }
-      ]);
     });
   });
 
@@ -700,53 +523,5 @@ describe('BEMTREE compiler/Runtime', function() {
     ], [
       null, '', undefined, { block: 'b1' }, undefined, 0
     ]);
-  });
-
-  it('should throw error when args passed to def mode', function() {
-    assert.throws(function() {
-      bemxjst.compile(function() {
-        block('b1').def('blah');
-      });
-    });
-  });
-
-  it('should throw error when args passed to replace mode', function() {
-    assert.throws(function() {
-      bemxjst.compile(function() {
-        block('b1').replace('blah');
-      });
-    });
-  });
-
-  it('should throw error when args passed to extend mode', function() {
-    assert.throws(function() {
-      bemxjst.compile(function() {
-        block('b1').extend('blah');
-      });
-    });
-  });
-
-  it('should throw error when args passed to wrap mode', function() {
-    assert.throws(function() {
-      bemxjst.compile(function() {
-        block('b1').wrap('blah');
-      });
-    });
-  });
-
-  it('should throw error when args passed to once mode', function() {
-    assert.throws(function() {
-      bemxjst.compile(function() {
-        block('b1').once('blah');
-      });
-    });
-  });
-
-  it('should throw error when args passed to content mode', function() {
-    assert.throws(function() {
-      bemxjst.compile(function() {
-        block('b1').content('blah');
-      });
-    });
   });
 });

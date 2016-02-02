@@ -10,10 +10,9 @@
     "make-bemtree": "browserify --standalone bemtree lib/bemtree/index.js -o lib/bemtree/bundle.js",
     "make": "npm run make-bemhtml && npm run make-bemtree",
     "clean": "rm -f lib/bem{html,tree}/bundle.js",
-    "lint": "jscs `ls lib/*.js lib/**/*.js test/*/*.js test/*.js | grep -v bundle` && jshint `ls lib/*.js lib/**/*.js | grep -v bundle`",
-    "test-bemhtml": "mocha --reporter=spec test/bemhtml/*-test.js",
-    "test-bemtree": "mocha --reporter=spec test/bemtree/*-test.js",
-    "test": "npm run make && npm run lint && npm run test-bemhtml && npm run test-bemtree"
+    "lint": "jscs `ls lib/*.js lib/**/*.js test/*.js | grep -v bundle` && jshint `ls lib/*.js lib/**/*.js test/*.js | grep -v bundle`",
+    "mocha-test": "mocha --reporter=spec test/*-test.js",
+    "test": "npm run make && npm run lint && npm run mocha-test"
   },
   "repository": {
     "type": "git",
@@ -31,7 +30,7 @@
     "browserify": "^9.0.6",
     "jscs": "^1.12.0",
     "jshint": "^2.7.0",
-    "mocha": "~1.21.3",
-    "utile": "~0.2.0"
+    "mocha": "2.4.5",
+    "chai": "3.5.0"
   }
 }
