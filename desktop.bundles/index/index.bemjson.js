@@ -40,6 +40,14 @@ module.exports = {
                     elem: 'misc',
                     content: [
                         {
+                            block: 'version-selector',
+                            mods: { state: 'loading' },
+                            versions: [
+                                { name: '4.3.3', hash: '78e08d58d285dd3529f3f39e53da3194df886e8b' },
+                                { name: '4.3.1', hash: 'eb84226926d737bcdf406824ea1d1585912397cc' }
+                            ]
+                        },
+                        {
                             block: 'link',
                             url: 'https://github.com/bem/bem-xjst/releases/',
                             target: '_blank',
