@@ -9,7 +9,7 @@ var package = require('../../package.json'),
 
 module.exports = {
     block: 'page',
-    title: 'BEM-XJST ' + BEMXJST_VERSION + ' online demo',
+    title: 'BEM-XJST ' + BEMXJST_VERSION + ' Demo',
     head: [
         { elem: 'meta', attrs: { name: 'viewport', content: 'width=device-width, initial-scale=1' } },
         { elem: 'css', url: 'xindex.css' }
@@ -33,7 +33,7 @@ module.exports = {
                             url: 'https://github.com/bem/bem-xjst/',
                             content: 'BEM-XJST'
                         },
-                        ' Online Demo'
+                        ' Demo'
                     ]
                 },
                 {
