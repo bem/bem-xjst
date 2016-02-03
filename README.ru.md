@@ -45,6 +45,9 @@ templates.apply({ block: 'b' });
 
 ### В виде CLI-утилиты
 
+CLI может быть использован для создания бандлов. Смотри [Compiler
+generate](#generatestring-or-function).
+
 ```bash
 $ bem-xjst --help
 
@@ -56,8 +59,8 @@ Options:
   -h, --help : Help
   -v, --version : Version
   -e, --engine : Engine name (default: bemhtml, supported: bemhtml | bemtree)
-  -i INPUT, --input=INPUT : Input file (default: stdin)
-  -o OUTPUT, --output=OUTPUT : Output file (default: stdout)
+  -i INPUT, --input=INPUT : File with user templates (default: stdin)
+  -o OUTPUT, --output=OUTPUT : Output bundle file (default: stdout)
 ```
 
 ## API
