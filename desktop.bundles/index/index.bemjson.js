@@ -17,7 +17,8 @@ module.exports = {
     scripts: [
         { elem: 'js', url: 'xindex.js' },
         { elem: 'js', url: 'xindex.browser.bemhtml.js' },
-        { elem: 'js', url: 'https://cdnjs.cloudflare.com/ajax/libs/ace/1.2.2/ace.js' }
+        { elem: 'js', url: 'https://cdnjs.cloudflare.com/ajax/libs/ace/1.2.2/ace.js' },
+        { elem: 'js', url: 'https://apis.google.com/js/client.js' }
     ],
     content: [
         {
@@ -43,6 +44,11 @@ module.exports = {
                             url: 'https://github.com/bem/bem-xjst/releases/',
                             target: '_blank',
                             content: 'Changelog'
+                        },
+                        {
+                            block: 'share',
+                            url: '/',
+                            content: 'Share link'
                         }
                     ]
                 }
