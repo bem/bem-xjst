@@ -1165,4 +1165,44 @@ describe('BEMHTML compiler/Runtime', function() {
       });
     });
   });
+
+  describe('Content escaping', function() {
+    it('should escape content if escapeContent option flag is set', function() {
+      test(function() {
+        oninit(function(exports) {
+          exports.BEMContext.prototype.escapeContent = true;
+        });
+      }, { block: 'b', content: '<script>' },
+      '<div class="b">&lt;script&gt;</div>');
+    });
+
+    it('shouldn’t escape content if escapeContent option flag is set to false',
+      function() {
+      test(function() {
+        oninit(function(exports) {
+          exports.BEMContext.prototype.escapeContent = false;
+        });
+      }, { block: 'b', content: '<script>' },
+      '<div class="b"><script></div>');
+    });
+
+    it('should expect html', function() {
+      test(function() {
+      }, { html: '<unescaped>' },
+      '<unescaped>');
+    });
+
+    it('should ignore other props if html exists', function() {
+      test(function() {
+      }, { block: 'b', html: '<unescaped>', content: 'useless' },
+      '<unescaped>');
+    });
+
+    it('should expect non simple value in html', function() {
+      test(function() {
+      }, [ { html: [ '<danger>' ] },
+        { html: { toString: function () { return '<lol>'; } } } ],
+      '<danger><lol>');
+    });
+  });
 });
