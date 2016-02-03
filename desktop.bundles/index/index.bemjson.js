@@ -43,6 +43,7 @@ module.exports = {
                             block: 'version-selector',
                             mods: { state: 'loading' },
                             versions: [
+                                { name: '4.3.4', hash: 'c9356910da4497be35db09e2786e7a6d3996aac4' },
                                 { name: '4.3.3', hash: '78e08d58d285dd3529f3f39e53da3194df886e8b' },
                                 { name: '4.3.1', hash: 'eb84226926d737bcdf406824ea1d1585912397cc' }
                             ]

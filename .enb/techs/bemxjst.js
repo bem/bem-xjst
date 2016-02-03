@@ -1,9 +1,10 @@
-var bemxjst = require('bem-xjst').generate;
+var bemhtml = require('bem-xjst').bemhtml;
+var bundle = bemhtml.generate();
 
 module.exports = require('enb/lib/build-flow').create()
     .name('bemxjst')
     .target('target', '?.bemxjst.js')
     .builder(function() {
-        return bemxjst('').replace('api.exportApply(exports);', '');
+        return bundle.replace('api.exportApply(exports);', '');
     })
     .createTech();
