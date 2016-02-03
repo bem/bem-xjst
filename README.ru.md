@@ -126,7 +126,7 @@ templates.apply({ block: 'b' });
 // Return '<div class="b">opa</div>'
 ```
 
-### Тесты на производительность
+## Тесты на производительность
 
 Чтобы запустить тесты:
 
@@ -142,13 +142,13 @@ node run.js
  убедиться, что в `benchmarks/package.json` указан правильный hash коммита
  `bem-xjst`.
 
-### Документация (на английском)
+## Документация (на английском)
 
  * [Описания релизов](https://github.com/bem/bem-xjst/releases)
  * [Гайд по миграции с 4.x на 5.x](https://github.com/bem/bem-xjst/wiki/Migration-guide-from-4.x-to-5.x)
  * [Основные изменения с v1.x](https://github.com/bem/bem-xjst/wiki/Notable-changes-between-bem-xjst@1.x-and-bem-xjst@2.x)
 
-#### Лицензия
+## Лицензия
 
 Права на код и документацию принадлежат 2016 YANDEX LLC.
 [Mozilla Public License 2.0](LICENSE.txt).

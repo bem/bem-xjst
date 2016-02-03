@@ -125,7 +125,7 @@ templates.apply({ block: 'b' });
 // Return '<div class="b">opa</div>'
 ```
 
-### Benchmarks
+## Benchmarks
 
 To run benchmarks:
 
@@ -140,13 +140,13 @@ Benchmarks could be run in `--compare` mode to verify absence of regression
 in comparison to previous bem-xjst version. Make sure that the
 `benchmarks/package.json` has the right git hash of `bem-xjst` before running!
 
-### Documentation
+## Documentation
 
  * [Releases notes](https://github.com/bem/bem-xjst/releases)
  * [Migration guide from 4.x to 5.x](https://github.com/bem/bem-xjst/wiki/Migration-guide-from-4.x-to-5.x)
  * [Changes from v1.x version](https://github.com/bem/bem-xjst/wiki/Notable-changes-between-bem-xjst@1.x-and-bem-xjst@2.x)
 
-#### License
+## License
 
 Code and documentation copyright 2016 YANDEX LLC. Code released under the
 [Mozilla Public License 2.0](LICENSE.txt).
