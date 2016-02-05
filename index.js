@@ -16,5 +16,6 @@ function getEngine(engineName) {
 
 module.exports = {
   get bemtree() { return getEngine('bemtree'); },
-  get bemhtml() { return getEngine('bemhtml'); }
+  get bemhtml() { return getEngine('bemhtml'); },
+  get vidom() { return getEngine('vidom'); }
 };
