@@ -308,7 +308,7 @@ var html = templates.apply(bemjson));
 
 ## <a name="methods"></a>Методы для управления шаблонизацией
 
-В теле шаблонов доступны методы `local`, `apply`, `applyNext` и `applyCtx`. Подробнее о них читайте в следующей секции про runtime.
+В теле шаблонов доступны методы `apply`, `applyNext` и `applyCtx`. Подробнее о них читайте в следующей секции про runtime.
 ***
 
 Читать далее: [runtime](7-runtime.md)
