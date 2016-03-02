@@ -225,7 +225,6 @@ block('link')(
 * [js](#js)
 * [bem](#bem)
 * [cls](#cls)
-* [once](#once)
 * [replace](#replace)
 * [wrap](#wrap)
 * [Пользовательские режимы](#%D0%9F%D0%BE%D0%BB%D1%8C%D0%B7%D0%BE%D0%B2%D0%B0%D1%82%D0%B5%D0%BB%D1%8C%D1%81%D0%BA%D0%B8%D0%B5-%D0%BC%D0%BE%D0%B4%D1%8B)
@@ -317,47 +316,6 @@ cls()(value)
 
 
 ### Режимы-хелперы
-
-#### `once`
-Для одноразового применения шаблонов. Если шаблон выполнился один раз, то он больше не будет применён в рамках одного вызова [apply](7-runtime.md#apply). Пример:
-
-```js
-// BEMJSON
-[ { block: 'b' }, { block: 'b' }, { block: 'b' } ]
-```
-Шаблоны:
-```js
-block('a').once().def()('a');
-block('b').replace()(function(){
-    return { block: 'a' };
-});
-```
-
-Результат шаблонизации BEMHTML:
-```html
-a
-<div class="a"></div>
-<div class="a"></div>
-```
-
-`this.reapply(BEMJSON)` сбрасывает поведение `once`. Пример:
-
-```js
-// BEMJSON
-[ { block: 'b' }, { block: 'b' }, { block: 'b' }, { block: 'a' } ]
-```
-Шаблоны:
-```js
-block('a').once().def()('a');
-block('b').replace()(function() {
-    return this.reapply({ block: 'a' });
-});
-```
-
-Результат шаблонизации BEMHTML:
-```html
-aaaa
-```
 
 #### `replace`
 Для подмены текущего узла (сматчились на узел, а рендерим произвольную сущность). Пример:
