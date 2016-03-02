@@ -227,7 +227,6 @@ block('input').content()(function() {
 ```
 
 ### Другие хелперы
-* `this.isArray({*} arg)` Проверяет, является ли `arg` массивом.
 * `this.isSimple({*} arg)` Проверяет, является ли `arg` примитивным JavaScript-типом.
 * `this.isShortTag({String} tagName)` Проверяет, является ли `tagName` тегом, не требующим закрывающего элемента.
 
