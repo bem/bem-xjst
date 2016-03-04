@@ -20,7 +20,7 @@
  */
 block(name)
 ```
-В качестве blockName можно использовать [`'*'`](https://github.com/bem/bem-xjst/blob/master/docs/ru/7-runtime.md#wildcard).
+В качестве name можно использовать [`'*'`](https://github.com/bem/bem-xjst/blob/master/docs/ru/7-runtime.md#wildcard).
 
 Каждый шаблон должен содержать подпредикат имени блока, иначе шаблонизатор бросит ошибку: `BEMHTML error: block('…') not found in one of the templates`.
 
@@ -48,7 +48,7 @@ block('link')
  */
 elem(name)
 ```
-Проверка элемента. В качестве elemName можно использовать [`'*'`](https://github.com/bem/bem-xjst/blob/master/docs/ru/7-runtime.md#wildcard).
+Проверка элемента. В качестве name можно использовать [`'*'`](https://github.com/bem/bem-xjst/blob/master/docs/ru/7-runtime.md#wildcard).
 
 
 ### mod
@@ -61,7 +61,7 @@ mod(modName, modVal)
 ```
 Проверка значения модификатора блока.
 
-на узел применятся шаблоны: как на блок, так и на соответствующие модификаторы:
+На узел применятся шаблоны: как на блок, так и на соответствующие модификаторы:
 Пример:
 ```js
 { block: 'page', mods: { type: 'index' } }
@@ -87,7 +87,7 @@ elemMod(elemModName, elemModVal)
 ```
 Проверка значения модификатора элемента.
 
-на узел применятся шаблоны: как на элемент, так и на соответствующие модификаторы:
+На узел применятся шаблоны: как на элемент, так и на соответствующие модификаторы:
 Пример:
 ```js
 { block: 'page', elem: 'content', mods: { type: 'index' } }
