@@ -55,8 +55,8 @@ block('page').match(function() {
 ```js
 block('link').attr()(function() {
     return {
-        id: this.ctx.url,
-        name: this.ctx.url
+        id: this.ctx.name,
+        name: this.ctx.name
     };
 });
 ```
