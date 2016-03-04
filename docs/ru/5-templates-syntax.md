@@ -90,12 +90,12 @@ elemMod(elemModName, elemModVal)
 На узел применятся шаблоны: как на элемент, так и на соответствующие модификаторы:
 Пример:
 ```js
-{ block: 'page', elem: 'content', mods: { type: 'index' } }
+{ block: 'page', elem: 'content', elemMods: { type: 'index' } }
 ```
 Шаблоны:
 ```js
 block('page').elem('content').tag()('body');
-block('page').elem('content').mod('type', 'index').mix()({ block: 'mixed' });
+block('page').elem('content').elemMod('type', 'index').mix()({ block: 'mixed' });
 ```
 Оба шаблона будут применены. Результат будет:
 ```html
