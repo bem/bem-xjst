@@ -35,12 +35,23 @@ describe('Modes tag', function() {
     '<button class="button"></button>');
   });
 
-  it('should not override user tag', function() {
+  it('should override user tag', function() {
     test(function() {
       block('button').tag()('button');
     },
     { block: 'button', tag: 'a' },
-    '<a class="button"></a>');
+    '<button class="button"></button>');
+  });
+
+  it('user can choose between tag in bemjson ' +
+    'and custom value in templates', function() {
+    test(function() {
+      block('b').tag()(function() {
+        return this.ctx.tag || 'strong';
+      });
+    },
+    [ { block: 'b', tag: 'em' }, { block: 'b' } ],
+    '<em class="b"></em><strong class="b"></strong>');
   });
 
   it('should not override later declarations', function() {
