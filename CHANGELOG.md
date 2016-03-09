@@ -1,5 +1,370 @@
 # BEM-XJST Changelog
 
+# 2016-03-09, [v6.0.0](https://github.com/bem/bem-xjst/compare/v5.1.0...v6.0.0), @miripiruni
+
+## Deprecated API
+
+— once()
+— this.isArray() (use Array.isArray)
+— local()
+
+## Breaking changes: tag template should override tag in BEMJSON
+
+Example. Template:
+
+```js
+block('button').tag()('button');
+```
+Data:
+```js
+{ block: 'button', tag: 'a' }
+```
+
+5.x result:
+```html
+<a class="button"></a>
+```
+
+6.x result:
+```html
+<button class="button"></button>
+```
+
+## User can choose between tag in bemjson and custom value in templates.
+
+```js
+block('b').tag()(function() {
+    return this.ctx.tag || 'strong';
+});
+```
+Data:
+```js
+[ { block: 'b', tag: 'em' }, { block: 'b' } ]
+```
+
+6.x result: 
+```html
+<em class="b"></em><strong class="b"></strong>
+```
+
+# 2016-03-09, [v5.1.0](https://github.com/bem/bem-xjst/compare/v5.0.0...v5.1.0), @miripiruni
+
+Related: https://github.com/bem/bem-core/pull/805
+
++15 test cases
+–1 bug
+
+
+## Fixed (degradation)
+
+### 1. bemhtml should duplicate block class if mix several block with mods to elem in the same block.
+
+Because block class must have for mix block with mods to block elem.
+
+Example:
+```js
+({
+    block: 'b',
+    content: {
+        elem: 'e',
+        mix: [
+            { block: 'b', mods: { m1: 'v1' } },
+            { block: 'b', mods: { m2: 'v2' } }
+        ]
+    }
+});
+```
+
+4.3.4 result:
+```html
+<div class="b"><div class="b__e b b_m1_v1 b b_m2_v2"></div></div>
+```
+[demo](http://bem.github.io/bem-xjst/?bemhtml=&bemjson=(%7B%0A%20%20%20%20block%3A%20%27b%27%2C%0A%20%20%20%20content%3A%20%7B%0A%20%20%20%20%20%20%20%20elem%3A%20%27e%27%2C%0A%20%20%20%20%20%20%20%20mix%3A%20%5B%0A%20%20%20%20%20%20%20%20%20%20%20%20%7B%20block%3A%20%27b%27%2C%20mods%3A%20%7B%20m1%3A%20%27v1%27%20%7D%20%7D%2C%0A%20%20%20%20%20%20%20%20%20%20%20%20%7B%20block%3A%20%27b%27%2C%20mods%3A%20%7B%20m2%3A%20%27v2%27%20%7D%20%7D%0A%20%20%20%20%20%20%20%20%5D%0A%20%20%20%20%7D%0A%7D)%3B)
+
+5.0.0 result:
+```html
+<div class="b"><div class="b__e b b"></div></div>
+```
+[demo](http://miripiruni.github.io/bem-xjst/?bemhtml=&bemjson=(%7B%0A%20%20%20%20block%3A%20%27b%27%2C%0A%20%20%20%20content%3A%20%7B%0A%20%20%20%20%20%20%20%20elem%3A%20%27e%27%2C%0A%20%20%20%20%20%20%20%20mix%3A%20%5B%0A%20%20%20%20%20%20%20%20%20%20%20%20%7B%20block%3A%20%27b%27%2C%20mods%3A%20%7B%20m1%3A%20%27v1%27%20%7D%20%7D%2C%0A%20%20%20%20%20%20%20%20%20%20%20%20%7B%20block%3A%20%27b%27%2C%20mods%3A%20%7B%20m2%3A%20%27v2%27%20%7D%20%7D%0A%20%20%20%20%20%20%20%20%5D%0A%20%20%20%20%7D%0A%7D));
+
+5.1.0 result:
+```html
+<div class="b"><div class="b__e b b_m1_v1 b b_m2_v2"></div></div>
+```
+
+## Improved
+
+### 2. bemhtml should not duplicate block class if mix is the same block with mods.
+
+```js
+({
+    block: 'b',
+    mix: [
+        { block: 'b', mods: { m1: 'v1' } },
+        { block: 'b', mods: { m2: 'v2' } }
+    ]
+});
+```
+
+4.3.4 result:
+```html
+<div class="b b b_m1_v1 b b_m2_v2"></div>
+```
+
+[demo](http://bem.github.io/bem-xjst/?bemhtml=&bemjson=(%7B%0A%20%20%20%20block%3A%20%27b%27%2C%0A%20%20%20%20mix%3A%20%5B%0A%20%20%20%20%20%20%20%20%7B%20block%3A%20%27b%27%2C%20mods%3A%20%7B%20m1%3A%20%27v1%27%20%7D%20%7D%2C%0A%20%20%20%20%20%20%20%20%7B%20block%3A%20%27b%27%2C%20mods%3A%20%7B%20m2%3A%20%27v2%27%20%7D%20%7D%0A%20%20%20%20%5D%0A%7D)%3B)
+
+5.0.0 result:
+```html
+<div class="b b b_m1_v1 b b_m2_v2"></div>
+```
+
+[demo](http://miripiruni.github.io/bem-xjst/?bemhtml=&bemjson=(%7B%0A%20%20%20%20block%3A%20%27b%27%2C%0A%20%20%20%20mix%3A%20%5B%0A%20%20%20%20%20%20%20%20%7B%20block%3A%20%27b%27%2C%20mods%3A%20%7B%20m1%3A%20%27v1%27%20%7D%20%7D%2C%0A%20%20%20%20%20%20%20%20%7B%20block%3A%20%27b%27%2C%20mods%3A%20%7B%20m2%3A%20%27v2%27%20%7D%20%7D%0A%20%20%20%20%5D%0A%7D)%3B)
+
+
+5.1.0 result:
+```html
+<div class="b b_m1_v1 b_m2_v2"></div>
+```
+
+
+### 3. bemhtml should not duplicate elem class if mix is the same elem.
+
+Weird case, but for completeness why not to check it
+
+```js
+({
+    block: 'b',
+    elem: 'e',
+    mix: { elem: 'e' }
+});
+```
+
+4.3.4 result:
+```html
+<div class="b__e b__e"></div>
+```
+
+[demo](http://bem.github.io/bem-xjst/?bemhtml=&bemjson=(%7B%0A%20%20%20%20block%3A%20%27b%27%2C%0A%20%20%20%20elem%3A%20%27e%27%2C%0A%20%20%20%20mix%3A%20%7B%20elem%3A%20%27e%27%20%7D%0A%7D)%3B)
+
+5.0.0 result:
+```html
+<div class="b__e b__e"></div>
+```
+
+[demo](http://miripiruni.github.io/bem-xjst/?bemhtml=&bemjson=(%7B%0A%20%20%20%20block%3A%20%27b%27%2C%0A%20%20%20%20elem%3A%20%27e%27%2C%0A%20%20%20%20mix%3A%20%7B%20elem%3A%20%27e%27%20%7D%0A%7D)%3B)
+
+5.1.0 result:
+```html
+<div class="b__e"></div>
+```
+
+### 4. bemhtml should not duplicate elem class if mix is the same block elem.
+
+Weird case, but for completeness why not to check it.
+
+```js
+({
+    block: 'b',
+    elem: 'e',
+    mix: { block: 'b', elem: 'e' }
+});
+```
+
+4.3.4 result:
+```html
+<div class="b__e b__e"></div>
+```
+
+[demo](http://bem.github.io/bem-xjst/?bemhtml=&bemjson=(%7B%0A%20%20%20%20block%3A%20%27b%27%2C%0A%20%20%20%20elem%3A%20%27e%27%2C%0A%20%20%20%20mix%3A%20%7B%20block%3A%20%27b%27%2C%20elem%3A%20%27e%27%20%7D%0A%7D)%3B)
+
+
+5.0.0 result:
+```html
+<div class="b__e b__e"></div>
+```
+
+[demo](http://miripiruni.github.io/bem-xjst/?bemhtml=&bemjson=(%7B%0A%20%20%20%20block%3A%20%27b%27%2C%0A%20%20%20%20elem%3A%20%27e%27%2C%0A%20%20%20%20mix%3A%20%7B%20block%3A%20%27b%27%2C%20elem%3A%20%27e%27%20%7D%0A%7D)%3B)
+
+5.1.0 result:
+```html
+<div class="b__e"></div>
+```
+
+### 5. bemhtml should not duplicate elem class if mix the same elem to elem in block.
+
+Weird case, but for completeness why not to check it.
+
+```js
+({
+    block: 'b',
+    content: {
+        elem: 'e',
+        mix: { elem: 'e' }
+    }
+});
+```
+
+4.3.4 result:
+```html
+<div class="b"><div class="b__e b__e"></div></div>
+```
+
+[demo](http://bem.github.io/bem-xjst/?bemhtml=&bemjson=(%7B%0A%20%20%20%20block%3A%20%27b%27%2C%0A%20%20%20%20content%3A%20%7B%0A%20%20%20%20%20%20%20%20elem%3A%20%27e%27%2C%0A%20%20%20%20%20%20%20%20mix%3A%20%7B%20elem%3A%20%27e%27%20%7D%0A%20%20%20%20%7D%0A%7D)%3B)
+
+5.0.0 result:
+```html
+<div class="b"><div class="b__e b__e"></div></div>
+```
+
+[demo](http://miripiruni.github.io/bem-xjst/?bemhtml=&bemjson=(%7B%0A%20%20%20%20block%3A%20%27b%27%2C%0A%20%20%20%20content%3A%20%7B%0A%20%20%20%20%20%20%20%20elem%3A%20%27e%27%2C%0A%20%20%20%20%20%20%20%20mix%3A%20%7B%20elem%3A%20%27e%27%20%7D%0A%20%20%20%20%7D%0A%7D)%3B)
+
+5.1.0 result:
+```html
+<div class="b"><div class="b__e"></div></div>
+```
+
+
+
+### 6. bemhtml should not duplicate elem class if mix is the same block elem with elemMods.
+
+```js
+({
+    block: 'b',
+    elem: 'e',
+    mix: { elem: 'e', elemMods: { modname: 'modval' } }
+});
+```
+
+4.3.4 result:
+```html
+<div class="b__e b__e b__e_modname_modval"></div>
+```
+
+[demo](http://bem.github.io/bem-xjst/?bemhtml=&bemjson=(%7B%0A%20%20%20%20block%3A%20%27b%27%2C%0A%20%20%20%20elem%3A%20%27e%27%2C%0A%20%20%20%20mix%3A%20%7B%20elem%3A%20%27e%27%2C%20elemMods%3A%20%7B%20modname%3A%20%27modval%27%20%7D%20%7D%0A%7D)%3B)
+
+5.0.0 result:
+```html
+<div class="b__e b__e b__e_modname_modval"></div>
+```
+
+[demo](http://miripiruni.github.io/bem-xjst/?bemhtml=&bemjson=(%7B%0A%20%20%20%20block%3A%20%27b%27%2C%0A%20%20%20%20elem%3A%20%27e%27%2C%0A%20%20%20%20mix%3A%20%7B%20elem%3A%20%27e%27%2C%20elemMods%3A%20%7B%20modname%3A%20%27modval%27%20%7D%20%7D%0A%7D)%3B)
+
+5.1.0 result:
+```html
+<div class="b__e b__e_modname_modval"></div>
+```
+
+### 7. bemhtml should not duplicate block elem elemMods class
+
+```js
+({
+    block: 'b',
+    elem: 'e',
+    mix: { block: 'b', elem: 'e', elemMods: { modname: 'modval' } }
+});
+```
+
+4.3.4 result:
+```html
+<div class="b__e b__e b__e_modname_modval"></div>
+```
+
+[demo](http://bem.github.io/bem-xjst/?bemhtml=&bemjson=(%7B%0A%20%20%20%20block%3A%20%27b%27%2C%0A%20%20%20%20elem%3A%20%27e%27%2C%0A%20%20%20%20mix%3A%20%7B%20block%3A%20%27b%27%2C%20elem%3A%20%27e%27%2C%20elemMods%3A%20%7B%20modname%3A%20%27modval%27%20%7D%20%7D%0A%7D)%3B)
+
+5.0.0 result:
+```html
+<div class="b__e b__e b__e_modname_modval"></div>
+```
+
+[demo](http://miripiruni.github.io/bem-xjst/?bemhtml=&bemjson=(%7B%0A%20%20%20%20block%3A%20%27b%27%2C%0A%20%20%20%20elem%3A%20%27e%27%2C%0A%20%20%20%20mix%3A%20%7B%20block%3A%20%27b%27%2C%20elem%3A%20%27e%27%2C%20elemMods%3A%20%7B%20modname%3A%20%27modval%27%20%7D%20%7D%0A%7D)%3B)
+
+5.1.0 result:
+```html
+<div class="b__e b__e_modname_modval"></div>
+```
+
+
+## “Who cares” cases (zero cost but enjoyable)
+
+Weird cases, but for completeness why not to check it.
+
+### 8. bemhtml should duplicate block mods class if mix is the same block with mods.
+
+But who cares? It’s pretty rare case.
+To fix this we need to compare each key/value pairs. It’s too expensive.
+I believe that developers should not want to do this.
+
+```js
+({
+    block: 'b',
+    mods: { m: 'v' },
+    mix: { block: 'b', mods: { m: 'v' } }
+});
+```
+
+4.3.4 result:
+```html
+<div class="b b_m_v b b_m_v"></div>
+```
+
+[demo](http://bem.github.io/bem-xjst/?bemhtml=&bemjson=(%7B%0A%20%20%20%20block%3A%20%27b%27%2C%0A%20%20%20%20mods%3A%20%7B%20m%3A%20%27v%27%20%7D%2C%0A%20%20%20%20mix%3A%20%7B%20block%3A%20%27b%27%2C%20mods%3A%20%7B%20m%3A%20%27v%27%20%7D%20%7D%0A%7D)%3B)
+
+5.0.0 result:
+```html
+<div class="b b_m_v b b_m_v"></div>
+```
+
+[demo](http://miripiruni.github.io/bem-xjst/?bemhtml=&bemjson=(%7B%0A%20%20%20%20block%3A%20%27b%27%2C%0A%20%20%20%20mods%3A%20%7B%20m%3A%20%27v%27%20%7D%2C%0A%20%20%20%20mix%3A%20%7B%20block%3A%20%27b%27%2C%20mods%3A%20%7B%20m%3A%20%27v%27%20%7D%20%7D%0A%7D)%3B)
+
+5.1.0 result:
+```html
+<div class="b b_m_v b_m_v"></div>
+```
+
+
+### 9. bemhtml should duplicate elem elemMod class
+
+```js
+({
+    block: 'b',
+    content: {
+        elem: 'e',
+        elemMods: { modname: 'modval' },
+        mix: { elem: 'e', elemMods: { modname: 'modval' } }
+    }
+});
+```
+
+But who cares? It’s pretty rare case.
+To fix this we need to compare each key/value pairs. It’s too expensive.
+I believe that developers should not want to do this.
+
+4.3.4 result:
+```html
+<div class="b">
+    <div class="b__e b__e_modname_modval b__e b__e_modname_modval"></div>
+</div>
+```
+
+[demo](http://bem.github.io/bem-xjst/?bemhtml=&bemjson=(%7B%0A%20%20%20%20block%3A%20%27b%27%2C%0A%20%20%20%20content%3A%20%7B%0A%20%20%20%20%20%20%20%20elem%3A%20%27e%27%2C%0A%20%20%20%20%20%20%20%20elemMods%3A%20%7B%20modname%3A%20%27modval%27%20%7D%2C%0A%20%20%20%20%20%20%20%20mix%3A%20%7B%20elem%3A%20%27e%27%2C%20elemMods%3A%20%7B%20modname%3A%20%27modval%27%20%7D%20%7D%0A%20%20%20%20%7D%0A%7D)%3B)
+
+5.0.0 result:
+```html
+<div class="b">
+    <div class="b__e b__e_modname_modval b__e b__e_modname_modval"></div>
+</div>
+```
+
+[demo](http://miripiruni.github.io/bem-xjst/?bemhtml=&bemjson=(%7B%0A%20%20%20%20block%3A%20%27b%27%2C%0A%20%20%20%20content%3A%20%7B%0A%20%20%20%20%20%20%20%20elem%3A%20%27e%27%2C%0A%20%20%20%20%20%20%20%20elemMods%3A%20%7B%20modname%3A%20%27modval%27%20%7D%2C%0A%20%20%20%20%20%20%20%20mix%3A%20%7B%20elem%3A%20%27e%27%2C%20elemMods%3A%20%7B%20modname%3A%20%27modval%27%20%7D%20%7D%0A%20%20%20%20%7D%0A%7D)%3B)
+
+5.1.0 result:
+```html
+<div class="b">
+    <div class="b__e b__e_modname_modval b__e_modname_modval"></div>
+</div>
+```
+
+
 # 2016-01-29, [v5.0.0](https://github.com/bem/bem-xjst/compare/v4.3.3...v5.0.0), @miripiruni
 **BEMHTML breaking changes**: behavior mods and elemMods BEMJSON fields are changed. 
 
