@@ -4,9 +4,9 @@
 
 ## Deprecated API
 
-— once()
-— this.isArray() (use Array.isArray)
-— local()
+ * once()
+ * this.isArray() (use Array.isArray)
+ * local()
 
 ## Breaking changes: tag template should override tag in BEMJSON
 
