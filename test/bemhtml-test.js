@@ -104,4 +104,15 @@ describe('BEMHTML engine tests', function() {
       block: 'b1'
     }, '<div class="b1">ok</div>');
   });
+
+  describe('omit optional', function() {
+    it('closing tags', function() {
+      test(function() {
+        block('b1')(
+          tag()('li'),
+          content()('ok')
+        );
+      }, { block: 'b1' }, '<li class="b1">ok');
+    });
+  });
 });

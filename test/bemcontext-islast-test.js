@@ -28,7 +28,7 @@ describe('BEMContext this.isLast()', function() {
         block: 'b1',
         content: 'last'
       }
-    ], '<table><tr class="b1"><td></td><td></td></tr></table>' +
+    ], '<table><tr class="b1"><td><td></table>' +
       '<div class="b1">first</div>' +
       '<div class="b1 b1_position_last">last</div>');
   });
