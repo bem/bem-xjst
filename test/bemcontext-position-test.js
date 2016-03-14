@@ -4,75 +4,89 @@ var test = fixtures.test;
 describe('BEMContext this.position', function() {
   it('should have proper this.position', function() {
     test(function() {
-      block('b1').content()(function() { return this.position; });
+      block('b').content()(function() { return this.position; });
     }, [
-      { block: 'b1' },
-      { block: 'b1' },
-      '',
-      { block: 'b1' },
-      {
-        tag: 'div',
-        content: 'blah'
-      },
-      { block: 'b1' }
-    ], '<div class="b1">1</div>' +
-      '<div class="b1">2</div>' +
-      '<div class="b1">3</div>' +
-      '<div>blah</div>' +
-      '<div class="b1">4</div>');
+      { block: 'b' },
+      { block: 'b' },
+      { block: 'b' }
+    ], '<div class="b">1</div>' +
+      '<div class="b">2</div>' +
+      '<div class="b">3</div>');
   });
 
-  it('should calc position', function() {
+  it('should not count not bem entities', function() {
     test(function() {
-      block('button').elem('inner').def()(function() {
+      block('b').content()(function() { return this.position; });
+    }, [
+      { block: 'b' },
+      42,
+      { block: 'b' },
+      'string',
+      { block: 'b' },
+      null,
+      { block: 'b' },
+      {},
+      { block: 'b' }
+    ], '<div class="b">1</div>' +
+      '42' +
+      '<div class="b">2</div>' +
+      'string' +
+      '<div class="b">3</div>' +
+      '<div class="b">4</div>' +
+      '<div></div>' +
+      '<div class="b">5</div>');
+  });
+
+  it('should calc position for nested elements', function() {
+    test(function() {
+      block('menu').elem('item').def()(function() {
         this.elemMods.pos = this.position;
         return applyNext();
       });
     },
     {
-      block: 'button',
-      content: [ { elem: 'inner' }, { elem: 'inner' }, { elem: 'inner' } ]
+      block: 'menu',
+      content: [ { elem: 'item' }, { elem: 'item' }, { elem: 'item' } ]
     },
-    '<div class="button">' +
-    '<div class="button__inner button__inner_pos_1"></div>' +
-    '<div class="button__inner button__inner_pos_2"></div>' +
-    '<div class="button__inner button__inner_pos_3"></div>' +
+    '<div class="menu">' +
+    '<div class="menu__item menu__item_pos_1"></div>' +
+    '<div class="menu__item menu__item_pos_2"></div>' +
+    '<div class="menu__item menu__item_pos_3"></div>' +
     '</div>');
   });
 
   it('should calc position with array mess', function() {
     test(function() {
-      block('button').elem('inner').def()(function() {
+      block('menu').elem('item').def()(function() {
         this.elemMods.pos = this.position;
         return applyNext();
       });
     },
     {
-      block: 'button',
+      block: 'menu',
       content: [
-        [ { elem: 'inner' } ],
-        [ { elem: 'inner' }, [ { elem: 'inner' } ] ]
+        [ { elem: 'item' } ],
+        [ { elem: 'item' }, [ { elem: 'item' } ] ]
       ]
     },
-    '<div class="button">' +
-    '<div class="button__inner button__inner_pos_1"></div>' +
-    '<div class="button__inner button__inner_pos_2"></div>' +
-    '<div class="button__inner button__inner_pos_3"></div>' +
+    '<div class="menu">' +
+    '<div class="menu__item menu__item_pos_1"></div>' +
+    '<div class="menu__item menu__item_pos_2"></div>' +
+    '<div class="menu__item menu__item_pos_3"></div>' +
     '</div>');
   });
 
   it('should calc position for single block', function() {
     test(function() {
-      block('b').content()(function() {
+      block('single').content()(function() {
         return this.position;
       });
     },
-    [ { block: 'b' } ],
-    '<div class="b">1</div>');
+    { block: 'single' },
+    '<div class="single">1</div>');
   });
 
-  // TODO: FIX ME https://github.com/bem/bem-xjst/issues/174
-  xit('should calc position for single block', function() {
+  it('should calc position for single nested block', function() {
     test(function() {
       block('b').content()(function() {
         return this.position;
@@ -82,8 +96,7 @@ describe('BEMContext this.position', function() {
     '<div class="wrap"><div class="b">1</div></div>');
   });
 
-  // TODO: FIX ME https://github.com/bem/bem-xjst/issues/174
-  xit('should calc position for single element', function() {
+  it('should calc position for single element', function() {
     test(function() {
       block('b').elem('e').content()(function() {
         return this.position;
@@ -91,5 +104,15 @@ describe('BEMContext this.position', function() {
     },
     { block: 'b', content: { elem: 'e' } },
     '<div class="b"><div class="b__e">1</div></div>');
+  });
+
+  it('should calc position for nested blocks', function() {
+    test(function() {
+      block('*').cls()(function() {
+        return this.position;
+      });
+    },
+    { block: 'a1', content: { block: 'a2', content: { block: 'a3' } } },
+    '<div class="a1 1"><div class="a2 1"><div class="a3 1"></div></div></div>');
   });
 });
