@@ -43,8 +43,8 @@ if (argv.grep) {
 }
 
 var xjst = {
-  next: require('../'),
-  prev: require('bem-xjst')
+  next: require('../').bemhtml,
+  prev: require('bem-xjst').bemhtml
 };
 
 util._extend(benchmark.options, {
