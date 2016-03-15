@@ -139,4 +139,15 @@ describe('Modes mix', function() {
       block: 'b1'
     }, '<div class="b1"></div>');
   });
+
+  it('should support mixing namesake elements of different blocks', function() {
+    test(function() {
+      block('b1').elem('elem')(
+        mix()({ block: 'b2', elem: 'elem' })
+      );
+    }, {
+      block: 'b1',
+      elem: 'elem'
+    }, '<div class="b1__elem b2__elem"></div>');
+  });
 });
