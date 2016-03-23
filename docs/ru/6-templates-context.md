@@ -53,7 +53,7 @@ block('page').match(function() {
 ```
 
 ```js
-block('link').attr()(function() {
+block('company').attr()(function() {
     return {
         id: this.ctx.name,
         name: this.ctx.name
