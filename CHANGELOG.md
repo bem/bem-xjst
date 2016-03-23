@@ -1,5 +1,35 @@
 # BEM-XJST Changelog
 
+# 2016-03-24, [v6.0.1](https://github.com/bem/bem-xjst/compare/v6.0.0...v6.0.1), @miripiruni
+
+## Fix rendering mixes for namesake elems
+
+Should support mixing namesake elements of different blocks
+
+Example. Template:
+
+```js
+block('b1').elem('elem')(
+    mix()({ block: 'b2', elem: 'elem' })
+);
+```
+
+v6.0.0 result (bug):
+```js
+<div class="b1__elem"></div>
+```
+
+v6.0.1 result (fixed):
+```js
+<div class="b1__elem b2__elem"></div>
+```
+
+* [[`82374951eb`](https://github.com/bem/bem-xjst/commit/82374951eb)] - **Docs**: Update 6-templates-context.md (Alexander Savin)
+* [[`63e49b26bc`](https://github.com/bem/bem-xjst/commit/63e49b26bc)] - **BEMHTML**: fix rendering mixes for namesake elems (Alexey Yaroshevich)
+* [[`7eedcf83a4`](https://github.com/bem/bem-xjst/commit/7eedcf83a4)] - **Bench**: fix bem-xjst api (miripiruni)
+* [[`059ce55493`](https://github.com/bem/bem-xjst/commit/059ce55493)] - **Docs**: Fix markdown (Slava Oliyanchuk)
+* [[`4ed98646c0`](https://github.com/bem/bem-xjst/commit/4ed98646c0)] - **Docs**: changelog updated (miripiruni)
+
 # 2016-03-09, [v6.0.0](https://github.com/bem/bem-xjst/compare/v5.1.0...v6.0.0), @miripiruni
 
 ## Deprecated API
