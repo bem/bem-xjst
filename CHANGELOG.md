@@ -1,5 +1,16 @@
 # BEM-XJST Changelog
 
+# 2016-03-24, [v6.1.0](https://github.com/bem/bem-xjst/compare/v6.0.0...v6.1.0), @miripiruni
+
+## Pass BEMContext instance as argument to template body
+
+Now you can write arrow functions in templates:
+```js
+block('arrow').match((_, json) => json._myFlag).tag()('strong');
+```
+
+* [[`154a447662`](https://github.com/bem/bem-xjst/commit/154a447662)] - Merge pull request #200 from bem/feature/es6-adoption (Slava Oliyanchuk)
+
 # 2016-03-24, [v6.0.1](https://github.com/bem/bem-xjst/compare/v6.0.0...v6.0.1), @miripiruni
 
 ## Fix rendering mixes for namesake elems
