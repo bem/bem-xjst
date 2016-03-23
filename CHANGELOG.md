@@ -1,5 +1,29 @@
 # BEM-XJST Changelog
 
+# 2016-03-24, [v5.1.1](https://github.com/bem/bem-xjst/compare/v5.1.0...v5.1.1), @miripiruni
+
+## Fix rendering mixes for namesake elems
+
+Should support mixing namesake elements of different blocks
+
+Example. Template:
+
+```js
+block('b1').elem('elem')(
+    mix()({ block: 'b2', elem: 'elem' })
+);
+```
+
+v5.1.0 result (bug):
+```js
+<div class="b1__elem"></div>
+```
+
+v5.1.1 result (fixed):
+```js
+<div class="b1__elem b2__elem"></div>
+```
+
 # 2016-01-29, [v5.0.0](https://github.com/bem/bem-xjst/compare/v4.3.3...v5.0.0), @miripiruni
 **BEMHTML breaking changes**: behavior mods and elemMods BEMJSON fields are changed. 
 
