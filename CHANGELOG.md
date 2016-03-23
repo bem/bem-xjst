@@ -1,5 +1,36 @@
 # BEM-XJST Changelog
 
+# 2016-03-24, [v6.1.1](https://github.com/bem/bem-xjst/compare/v6.1.0...v6.1.1), @miripiruni
+
+Fix for calc position. Example:
+
+```js
+// BEMJSON
+{
+    block: 'wrap',
+    content: { block: 'inner' }
+}
+```
+
+```js
+//Template
+block('*').cls()(function() {
+    return this.position;
+});
+```
+
+v6.1.0 result (bug):
+```html
+<div class="wrap 1"><div class="inner 2"></div></div>
+```
+
+v6.1.1 result (fixed):
+```html
+<div class="wrap 1"><div class="inner 1"></div></div>
+```
+
+* [[`1cb9d149b7`](https://github.com/bem/bem-xjst/commit/1cb9d149b7)] - Merge pull request #216 from bem/issue_174 (Slava Oliyanchuk)
+
 # 2016-03-24, [v6.1.0](https://github.com/bem/bem-xjst/compare/v6.0.0...v6.1.0), @miripiruni
 
 ## Pass BEMContext instance as argument to template body
