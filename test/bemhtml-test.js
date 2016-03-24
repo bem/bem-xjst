@@ -1,5 +1,6 @@
 var fixtures = require('./fixtures')('bemhtml');
 var test = fixtures.test;
+var compile = fixtures.compile;
 
 describe('BEMHTML engine tests', function() {
   it('should compile example code', function() {
@@ -103,5 +104,19 @@ describe('BEMHTML engine tests', function() {
     }, {
       block: 'b1'
     }, '<div class="b1">ok</div>');
+  });
+
+  describe('xhtml option', function() {
+    it('should close short tags by default', function() {
+      compile('')
+        .apply({ tag: 'br' })
+        .should.equal('<br/>');
+    });
+
+    it('should not close short tags with xhtml: false', function() {
+      compile(function() {}, { xhtml: false })
+        .apply({ block: 'b', tag: 'br' })
+        .should.equal('<br class="b">');
+    });
   });
 });
