@@ -1,5 +1,32 @@
 # BEM-XJST Changelog
 
+# 2016-03-24, [v6.2.0](https://github.com/bem/bem-xjst/compare/v6.1.1...v6.2.0), @miripiruni
+
+New `xhtml` option. Default value is `true`. But in nex major version we invert it.
+
+`xhtml` option allow you to ommit closing slash in void HTML elements (only have a start tag).
+
+Example for v6.2.0:
+
+```js
+ var bemxjst = require('bem-xjst');
+ var templates = bemxjst.bemhtml.compile(function() {
+     // In this example we didn’t add templates
+     // bem-xjst will render by default
+     }, {
+         // Turn off XHTML
+         xhtml: false
+     });
+
+ var bemjson = { tag: 'br' };
+ var html = templates.apply(bemjson);
+ ```
+
+Result:
+ ```html
+ <br>
+ ```
+
 # 2016-03-24, [v6.1.1](https://github.com/bem/bem-xjst/compare/v6.1.0...v6.1.1), @miripiruni
 
 Fix for calc position. Example:
