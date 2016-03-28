@@ -5,7 +5,7 @@
 
 A clever compiler for BEM-specific templates with JavaScript syntax.
 
-[Online demo](https://bem.github.io/bem-xjst/).
+[Online demo](https://bem.github.io/bem-xjst/). Twitter account: [@bemxjst](https://twitter.com/bemxjst)
 
 ## Installation
 
