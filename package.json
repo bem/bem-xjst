@@ -11,6 +11,7 @@
   },
   "scripts": {
     "prepublish": "npm run make",
+    "preversion": "bash scripts/update-authors.sh && git add AUTHORS && git commit -m \"update AUTHORS\" || true",
     "make-bemhtml": "browserify --standalone bemhtml lib/bemhtml/index.js -o lib/bemhtml/bundle.js",
     "make-bemtree": "browserify --standalone bemtree lib/bemtree/index.js -o lib/bemtree/bundle.js",
     "make": "npm run make-bemhtml && npm run make-bemtree",
@@ -44,17 +45,6 @@
   "author": "Fedor Indutny <fedor@indutny.com>",
   "maintainers": [
     "Vyacheslav Oliyanchuk <miripiruni@gmail.com>"
-  ],
-  "contributors": [
-      "Vladimir Grinenko <i@tadatuta.com>",
-      "Sergey Berezhnoy <veged@ya.ru>",
-      "Alexej Yaroshevich <zxqfox@gmail.com>",
-      "Roman Rozhdestvenskiy <sbmaxx@gmail.com>",
-      "Andrew Abramov <mail@blond.im>",
-      "Mikhail Troshev <mishanga@yandex-team.ru>",
-      "Sergey Belov <peimei@ya.ru>",
-      "Alexander Savin <box.for.postman@gmail.com>",
-      "Vladilen Kozin <vladilen.kozin@gmail.com>"
   ],
   "directories": {
     "bin": "./bin",
