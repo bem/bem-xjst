@@ -5,7 +5,7 @@
 
 Компилятор БЭМ-специфичных шаблонов, основанный на [XJST](https://github.com/veged/xjst).
 
-[Онлайн-демо](https://bem.github.io/bem-xjst/).
+[Онлайн-демо](https://bem.github.io/bem-xjst/). Твиттер акаунт: [@bemxjst](https://twitter.com/bemxjst)
 
 ## Установка
 
