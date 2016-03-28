@@ -71,5 +71,8 @@
     "CHANGELOG.md",
     "README.md",
     "README.ru.md"
-  ]
+  ],
+  "engines": {
+      "node": ">=0.10"
+  }
 }
