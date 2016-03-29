@@ -17,30 +17,38 @@
 
 ```js
 var bemxjst = require('bem-xjst');
+// Используем движок рендеринга bemhtml, чтобы получать HTML
 var bemhtml = bemxjst.bemhtml;
 
-// Add templates
+// Добавляем шаблоны
 var templates = bemhtml.compile(function() {
   block('b').content()('yay');
 });
 
-// Apply templates to data context in BEMJSON format and get result as HTML string
-templates.apply({ block: 'b' });
-// Result: <div class="b">yay</div>
+// Формируем входные данные в формате BEMJSON 
+var bemjson = { block: 'b' };
+
+// Применяем шаблоны к входным данным, чтобы получить HTML
+templates.apply();
+// Результат: <div class="b">yay</div>
 ```
 
 ```js
 var bemxjst = require('bem-xjst');
+// Используем движок рендеринга bemtree, чтобы получать BEMJSON
 var bemtree = bemxjst.bemtree;
 
-// Add templates
+// Добавляем шаблоны
 var templates = bemtree.compile(function() {
   block('b').content()('yay');
 });
 
-// Apply templates to data context in BEMJSON format and get result as BEMJSON
+// Формируем входные данные в формате BEMJSON 
+var bemjson = { block: 'b' };
+
+// Применяем шаблоны к входным данным, чтобы получить BEMJSON
 templates.apply({ block: 'b' });
-// Result: { block: 'b1', content: 'yay' }
+// Результат: { block: 'b1', content: 'yay' }
 ```
 
 ### В виде CLI-утилиты
@@ -95,14 +103,14 @@ var templates = bemxjst.bemhtml.compile(function() {
   });
 
 templates.apply({ block: 'b' });
-// Return '<a class="b"></a>'
+// Результат '<a class="b"></a>'
 
 templates.compile(function() {
   block('b').content()('Hi, folks!');
 });
 
 templates.apply({ block: 'b' });
-// Return '<a class="b">Hi, folks!</a>'
+// Результат '<a class="b">Hi, folks!</a>'
 ```
 
 #### `.BEMContext`
@@ -123,7 +131,7 @@ templates.compile(function() {
 });
 
 templates.apply({ block: 'b' });
-// Return '<div class="b">opa</div>'
+// Результат '<div class="b">opa</div>'
 ```
 
 ## Тесты на производительность
