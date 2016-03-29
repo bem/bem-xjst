@@ -6,7 +6,6 @@ modules.define('version-selector', [ 'i-bem__dom', 'querystring' ], function(pro
                 inited: function() {
 
                     var d = document;
-                    var w = window;
                     var selector = this.params;
                     var transport;
                     var URL = 'https://rawgit.com/miripiruni/bem-xjst/';
@@ -14,7 +13,7 @@ modules.define('version-selector', [ 'i-bem__dom', 'querystring' ], function(pro
                     var TRANSPORT_ID = 'transport';
                     var select = d.getElementsByClassName('version-selector')[0];
 
-                    w.onpopstate = function(event) {
+                    window.onpopstate = function(event) {
                         var ver = encodeURIComponent(qs.parse(location.href).bemxjst_version || '');
                         var select = d.getElementsByClassName('version-selector')[0];
 
@@ -44,16 +43,37 @@ modules.define('version-selector', [ 'i-bem__dom', 'querystring' ], function(pro
                                 }
 
                                 return ret;
+                            },
+                            freeze = function() {
+                                transport && d.getElementById(TRANSPORT_ID).remove();
+                                var demo = document.getElementsByClassName('demo')[0];
+                                demo.classList.remove('demo_state_loaded');
+                                demo.classList.add('demo_state_loading');
+                            },
+                            unfreeze = function() {
+                                var demo = document.getElementsByClassName('demo')[0];
+                                demo.classList.remove('demo_state_loading');
+                                demo.classList.add('demo_state_loaded');
                             };
 
-                        transport && d.getElementById(TRANSPORT_ID).remove();
+                        freeze();
+
                         transport = d.createElement('script');
                         transport.id = TRANSPORT_ID;
                         transport.src = URL + val + FILE;
                         d.body.appendChild(transport);
 
+                        transport.onload = function() {
+                            unfreeze();
+                        };
+
+                        transport.onerror = function() {
+                            console.error('Unable to load ' + this.src);
+                            unfreeze();
+                        };
+
                         var params = parseParams(location.search.replace('?', ''));
-                        params.bemxjst_version = val;
+                        // TODO (miripiruni): params.version = this.selectedOptions[0].innerText;
                         params.toString = function() {
                             var params = this;
 
@@ -65,7 +85,6 @@ modules.define('version-selector', [ 'i-bem__dom', 'querystring' ], function(pro
                         };
 
                         history.pushState({}, d.title, location.pathname + '?' + params.toString());
-
                     };
 
                 }
