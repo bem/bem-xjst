@@ -41,6 +41,7 @@ module.exports = {
                     content: [
                         {
                             block: 'version-selector',
+                            mix: { block: 'header', elem: 'item' },
                             mods: { state: 'loading' },
                             versions: [
                                 { name: '5.0.0', hash: '56efa7b910025064083f9a0468e5d60907e57b5e' },
@@ -51,12 +52,21 @@ module.exports = {
                         },
                         {
                             block: 'link',
+                            mix: { block: 'header', elem: 'item' },
+                            url: 'https://github.com/bem/bem-xjst/tree/master/docs/ru',
+                            target: '_blank',
+                            content: 'Documentation'
+                        },
+                        {
+                            block: 'link',
+                            mix: { block: 'header', elem: 'item' },
                             url: 'https://github.com/bem/bem-xjst/releases/',
                             target: '_blank',
                             content: 'Changelog'
                         },
                         {
                             block: 'share',
+                            mix: { block: 'header', elem: 'item' },
                             url: '/',
                             content: 'Share link'
                         }
