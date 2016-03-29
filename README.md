@@ -1,9 +1,9 @@
 # BEM-XJST
 
+Declarative template engine for the browser and server.
+
 [![NPM version](http://img.shields.io/npm/v/bem-xjst.svg?style=flat)](http://www.npmjs.org/package/bem-xjst)
 [![Build Status](http://img.shields.io/travis/bem/bem-xjst/master.svg)](https://travis-ci.org/bem/bem-xjst)
-
-A clever compiler for BEM-specific templates with JavaScript syntax.
 
 [Online demo](https://bem.github.io/bem-xjst/). Twitter account: [@bemxjst](https://twitter.com/bemxjst)
 
