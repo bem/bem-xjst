@@ -1,0 +1,18 @@
+{
+  "name": "simple-page",
+  "version": "1.0.0",
+  "description": "bem-xjst example: simple page",
+  "main": "index.js",
+  "keywords": [
+    "BEMTREE",
+    "BEMHTML",
+    "BEMJSON",
+    "template engine",
+    "bem-xjst example"
+  ],
+  "author": "Slava Oliyanchuk <miripiruni@gmail.com> (http://miripiruni.org/)",
+  "license": "MIT",
+  "dependencies": {
+    "bem-xjst": "^6.4.0"
+  }
+}
