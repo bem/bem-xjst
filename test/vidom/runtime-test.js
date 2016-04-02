@@ -5,6 +5,16 @@ var bemxjst = require('../../').vidom;
 var test = fixtures.test;
 
 describe('VIDOM compiler/Runtime', function() {
+
+  xit('should apply("content")', function() {
+    test(function() {
+      block('b1').def()(function() {
+        return applyCtx([ apply('content'), this.ctx.tag ])
+      });
+    }, { block: 'b1', tag: '1', content: 'hahaha' },
+      [ 'div', null, [ 'span', null, 'hahaha' ], [ 'span', null, '1' ] ]);
+  });
+
   it('should render children with different types', function() {
     test(function() {
       block('b1')(

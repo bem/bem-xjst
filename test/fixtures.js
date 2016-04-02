@@ -49,7 +49,10 @@ module.exports = function(engine) {
     var count = options.count || 1;
     for (var i = 0; i < count; i++) {
       try {
-        assert.deepEqual(template.apply(data), expected, i);
+          var res = template.apply(data);
+          console.log('exp', JSON.stringify(expected));
+          console.log('act', JSON.stringify(res));
+        assert.deepEqual(res, expected, i);
       } catch (e) {
         console.error(e.stack);
         throw e;
