@@ -34,7 +34,6 @@
   "homepage": "https://github.com/bem/bem-xjst",
   "license": "MPL-2.0",
   "dependencies": {
-    "bem-naming": "^0.5.1",
     "coa": "~0.3.9",
     "inherits": "^2.0.1",
     "minimalistic-assert": "^1.0.0",
