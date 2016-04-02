@@ -231,18 +231,6 @@ describe('VIDOM compiler/Tree', function() {
     [ 'link', { rel: 'stylesheet', href: 'ohai' } ]);
   });
 
-  it('should support oninit', function() {
-    test(function() {
-      oninit(function(exports) {
-        exports.apply = function() {
-          return 'ok';
-        };
-      });
-    },
-    {},
-    'ok');
-  });
-
   it('should support mixed direct/nested bodies', function() {
     test(function() {
       block('page')(
