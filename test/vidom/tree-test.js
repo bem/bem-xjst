@@ -45,7 +45,7 @@ describe('VIDOM compiler/Tree', function() {
     { block: 'b1' },
     [ 'div', { className: 'b1' },
       [ 'div', { className: 'b1__e1' } ]
-    ]);
+     ]);
   });
 
   it('should replace this.elem properly in hashmaps', function() {
@@ -80,7 +80,7 @@ describe('VIDOM compiler/Tree', function() {
     { block: 'b1' },
     [ 'div', { className: 'b1' },
       [ 'span', { className: 'b1__e1' }, 'b1' ]
-    ]);
+     ]);
   });
 
   it('should support block without mode()', function() {
@@ -270,8 +270,10 @@ describe('VIDOM compiler/Tree', function() {
     [
       { block: 'b1' },
       { block: 'b1' }
-    ],
-    [ 'div', null, [ 'div', { className: 'b1' }, 'first'], ['div', { className: 'b1' }, 'second' ]],
+     ],
+    [ 'div', null,
+      [ 'div', { className: 'b1' }, 'first' ],
+      [ 'div', { className: 'b1' }, 'second' ] ],
     { count: 5 });
   });
 
@@ -289,8 +291,10 @@ describe('VIDOM compiler/Tree', function() {
     [
       { block: 'b1', early: true },
       { block: 'b1' }
-    ],
-    ['div', null, ['div', { className: 'b1' }, 'second'], ['div', { className: 'b1' }, 'first']],
+     ],
+    [ 'div', null,
+      [ 'div', { className: 'b1' }, 'second' ],
+      [ 'div', { className: 'b1' }, 'first' ] ],
     { count: 5 });
   });
 
@@ -312,14 +316,14 @@ describe('VIDOM compiler/Tree', function() {
           tag: 'a'
         }
       }
-    ],
+     ],
     [ 'div', { className: 'wrap' },
       [ 'a', { className: 'b1' },
          [ 'div', { className: 'wrap' },
            [ 'a', { className: 'b1' } ]
-         ]
-      ]
-    ]
+          ]
+       ]
+     ]
     );
   });
 
@@ -342,10 +346,10 @@ describe('VIDOM compiler/Tree', function() {
         tag: 'a',
         key: 'val'
       }
-    ],
+     ],
     [ 'div', { className: 'wrap' },
       [ 'a', { className: 'b1' } ]
-    ]);
+     ]);
   });
 
   it('should support `.xjstOptions()`', function() {
@@ -385,8 +389,8 @@ describe('VIDOM compiler/Tree', function() {
   it('should transform array of strings to string', function() {
     test(function() {
       block('a')(
-        content()(function(){
-          return ['hi', ' there'];
+        content()(function() {
+          return [ 'hi', ' there' ];
         })
       );
     },

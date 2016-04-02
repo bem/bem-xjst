@@ -18,7 +18,7 @@
     "mocha-test": "mocha --reporter=spec test/*-test.js",
     "make": "npm run make-bemhtml && npm run make-bemtree && npm run make-vidom",
     "clean": "rm -f lib/bem{html,tree}/bundle.js lib/vidom/bundle.js",
-    "lint": "jscs `ls lib/*.js lib/**/*.js test/*.js | grep -v bundle` && jshint `ls lib/*.js lib/**/*.js test/*.js | grep -v bundle`",
+    "lint": "jscs `ls lib/*.js lib/**/*.js test/**/*.js | grep -v bundle` && jshint `ls lib/*.js lib/**/*.js test/*.js | grep -v bundle`",
     "test-bemhtml": "mocha --reporter=spec test/bemhtml/*-test.js",
     "test-bemtree": "mocha --reporter=spec test/bemtree/*-test.js",
     "test-vidom": "mocha --reporter=spec test/vidom/*-test.js",

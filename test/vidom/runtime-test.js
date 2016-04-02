@@ -14,23 +14,23 @@ describe('VIDOM compiler/Runtime', function() {
             { elem: 'e1', content: 's' },
             's2',
             { elem: 'e2', content: 's' }
-          ];
+           ];
         })
       );
     },
-    { block: 'b1'},
-    ['div', { className: 'b1' },
+    { block: 'b1' },
+    [ 'div', { className: 'b1' },
       's1',
-      ['div', { className: 'b1__e1' }, 's'],
+      [ 'div', { className: 'b1__e1' }, 's' ],
       's2',
-      ['div', { className: 'b1__e2' }, 's']]
+      [ 'div', { className: 'b1__e2' }, 's' ] ]
     )
   });
 
   it('should wrap text into container', function() {
     test(function() {},
-      ['str1', 'str2'],
-      ['div', null, ['span', null, 'str1'], ['span', null, 'str2']]);
+      [ 'str1', 'str2' ],
+      [ 'div', null, [ 'span', null, 'str1' ], [ 'span', null, 'str2' ] ]);
   });
 
   describe('applyNext()', function() {
@@ -107,7 +107,7 @@ describe('VIDOM compiler/Runtime', function() {
         block('b1').tag()('a');
         block('b1').bem()(false);
         block('b1').def()(function() {
-          return '[' + applyNext() + ':' + applyNext() + ']';
+          return '[ ' + applyNext() + ':' + applyNext() + ' ]';
         });
       },
       {
@@ -121,11 +121,11 @@ describe('VIDOM compiler/Runtime', function() {
         }
       },
       // @awinogradov 17.02.2016 - wtf?
-      '[<a>' +
-        '[<a>[<a>ok</a>:<a>ok</a>]</a>:<a>[<a>ok</a>:<a>ok</a>]</a>]' +
+      '[ <a>' +
+        '[ <a>[<a>ok</a>:<a>ok</a> ]</a>:<a>[<a>ok</a>:<a>ok</a>]</a>]' +
           '</a>:<a>' +
-        '[<a>[<a>ok</a>:<a>ok</a>]</a>:<a>[<a>ok</a>:<a>ok</a>]</a>]' +
-      '</a>]');
+        '[ <a>[<a>ok</a>:<a>ok</a> ]</a>:<a>[<a>ok</a>:<a>ok</a>]</a>]' +
+      '</a> ]');
     });
   });
 
@@ -136,14 +136,14 @@ describe('VIDOM compiler/Runtime', function() {
           return applyCtx([
             { block: 'b2', content: 'omg' },
             { block: 'b3', tag: 'br' }
-          ]);
+           ]);
         });
       },
       { block: 'b1' },
       [ 'div', { className: 'b1' },
         [ 'div', { className: 'b2' }, 'omg' ],
         [ 'br', { className: 'b3' } ]
-      ]);
+       ]);
     });
 
     it('should work with both context and changes', function() {
@@ -155,13 +155,13 @@ describe('VIDOM compiler/Runtime', function() {
         block('b1').content()(function() {
           return applyCtx([
             { block: 'b2' }
-          ], { wtf: 'ohai' });
+           ], { wtf: 'ohai' });
         });
       },
       { block: 'b1' },
       [ 'div', { className: 'b1' },
         [ 'div', { className: 'b2' }, 'ohai' ]
-      ]);
+       ]);
     });
   });
 
@@ -199,7 +199,7 @@ describe('VIDOM compiler/Runtime', function() {
       undefined,
       { block: 'b1' },
       undefined
-    ],
+     ],
     [ 'div', { className: 'b1' } ]);
   });
 
@@ -254,16 +254,16 @@ describe('VIDOM compiler/Runtime', function() {
         {
           elem: 'xxx2'
         }
-      ]
+       ]
     },
     [ 'div', { className: 'aaa' },
       [ 'div', { className: 'aaa__xxx1' },
         [ 'div', { className: 'bbb__yyy1' },
           [ 'h1', null, 'h 1' ]
-        ]
-      ],
+         ]
+       ],
       [ 'div', { className: 'aaa__xxx2' } ]
-    ]);
+     ]);
   });
 
   it('should return undefined on failed match', function() {
@@ -277,7 +277,7 @@ describe('VIDOM compiler/Runtime', function() {
     { block: 'b1' },
     [ 'div', { className: 'b1' },
       [ 'div', { className: 'b1__e1' } ]
-    ]);
+     ]);
   });
 
   it('should support this.reapply()', function() {
@@ -290,7 +290,8 @@ describe('VIDOM compiler/Runtime', function() {
       block('b2').content()(function() {
         return this.wtf || 'ok';
       });
-    }, { block: 'b1' }, ['div', { className: 'b1' }, ['div', { className: 'b2' }, 'ok']]);
+    }, { block: 'b1' },
+      [ 'div', { className: 'b1' }, [ 'div', { className: 'b2' }, 'ok' ] ]);
   });
 
   it('should support objects as attrs values', function() {
@@ -300,7 +301,7 @@ describe('VIDOM compiler/Runtime', function() {
       });
 
       block('b2').replace()('hello');
-    }, { block: 'b1' }, ['div', { className: 'b1', prop1: 'hello' }]);
+    }, { block: 'b1' }, [ 'div', { className: 'b1', prop1: 'hello' } ]);
   });
 
   describe('mods', function() {
@@ -309,7 +310,7 @@ describe('VIDOM compiler/Runtime', function() {
         block('b1').content()(function() {
           return this.mods.a || 'yes';
         });
-      }, { block: 'b1' }, ['div', { className: 'b1' }, 'yes']);
+      }, { block: 'b1' }, [ 'div', { className: 'b1' }, 'yes' ]);
     });
 
     it('should support changing mods in runtime', function() {
@@ -320,7 +321,7 @@ describe('VIDOM compiler/Runtime', function() {
         });
       }, {
         block: 'b1'
-      }, ['div', { className: 'b1 b1_a_b' }]);
+      }, [ 'div', { className: 'b1 b1_a_b' } ]);
     });
 
     it('should inherit mods properly', function() {
@@ -331,7 +332,8 @@ describe('VIDOM compiler/Runtime', function() {
       }, {
         block: 'b1',
         mods: { a: 'b' }
-      }, ['div', { className: 'b1 b1_a_b' }, ['span', { className: 'b1__e1' }]]);
+      }, [ 'div', { className: 'b1 b1_a_b' },
+        [ 'span', { className: 'b1__e1' } ] ]);
     });
 
     it('should match on changed mods', function() {
@@ -348,7 +350,7 @@ describe('VIDOM compiler/Runtime', function() {
         });
       }, {
         block: 'b1'
-      }, ['div', { className: 'b1' }, ['span', { className: 'b1__e1' }]]);
+      }, [ 'div', { className: 'b1' }, [ 'span', { className: 'b1__e1' } ] ]);
     });
 
     it('should propagate parent mods to matcher', function() {
@@ -361,7 +363,8 @@ describe('VIDOM compiler/Runtime', function() {
       }, {
         block: 'b1',
         mods: { a: 'b' }
-      }, ['div', { className: 'b1 b1_a_b' }, ['span', { className: 'b1__e1' }]]);
+      }, [ 'div', { className: 'b1 b1_a_b' },
+        [ 'span', { className: 'b1__e1' } ] ]);
     });
 
     it('should restore mods', function() {
@@ -375,7 +378,8 @@ describe('VIDOM compiler/Runtime', function() {
         content: {
           block: 'b2'
         }
-      }, ['div', { className: 'b1 b1_a_b' }, ['div', { className: 'b2' }, 'yes']]);
+      }, [ 'div', { className: 'b1 b1_a_b' },
+        [ 'div', { className: 'b2' }, 'yes' ] ]);
     });
 
     it('should lazily override mods without propagating them', function() {
@@ -388,14 +392,15 @@ describe('VIDOM compiler/Runtime', function() {
         content: {
           block: 'b2'
         }
-      }, ['div', { className: 'b1 b1_a_yes' }, ['div', { className: 'b2' }]]);
+      }, [ 'div', { className: 'b1 b1_a_yes' },
+        [ 'div', { className: 'b2' } ] ]);
     });
 
     it('should not treat elemMods as mods', function() {
       test(function() {}, {
         block: 'b1',
         elemMods: { m1: 'v1' }
-      }, ['div', { className: 'b1' }]);
+      }, [ 'div', { className: 'b1' } ]);
     });
   });
 
@@ -406,7 +411,8 @@ describe('VIDOM compiler/Runtime', function() {
             return this.elemMods.a || 'yes';
           });
         }, { block: 'b1', content: { elem: 'e1' } },
-        ['div', { className: 'b1' }, ['div', { className: 'b1__e1'}, 'yes']]);
+        [ 'div', { className: 'b1' },
+          [ 'div', { className: 'b1__e1' }, 'yes' ] ]);
     });
 
     it('should take elemMods from BEMJSON', function() {
@@ -420,7 +426,8 @@ describe('VIDOM compiler/Runtime', function() {
           elem: 'e1',
           elemMods: { a: 'yes' }
         }
-      }, ['div', { className: 'b1' }, ['div', { className: 'b1__e1 b1__e1_a_yes' }, 'yes']]);
+      }, [ 'div', { className: 'b1' },
+        [ 'div', { className: 'b1__e1 b1__e1_a_yes' }, 'yes' ] ]);
     });
 
     it('should restore elemMods', function() {
@@ -441,7 +448,9 @@ describe('VIDOM compiler/Runtime', function() {
           }
         }
 
-      }, ['div', { className: 'b1' }, ['div', { className: 'b1__e1 b1__e1_a_no' }, ['div', { className: 'b2__e1' }, 'yes']]]);
+      }, [ 'div', { className: 'b1' },
+        [ 'div', { className: 'b1__e1 b1__e1_a_no' },
+          [ 'div', { className: 'b2__e1' }, 'yes' ] ] ]);
     });
 
     it('should not treat mods as elemMods', function() {
@@ -451,7 +460,7 @@ describe('VIDOM compiler/Runtime', function() {
           elem: 'e1',
           mods: { m1: 'v1' }
         }
-      }, ['div', { className: 'b1' }, ['div', { className: 'b1__e1' }]]);
+      }, [ 'div', { className: 'b1' }, [ 'div', { className: 'b1__e1' } ] ]);
     });
 
     it('should not treat mods as elemMods even if block exist', function() {
@@ -462,7 +471,7 @@ describe('VIDOM compiler/Runtime', function() {
           elem: 'e1',
           mods: { m1: 'v1' }
         }
-      }, ['div', { className: 'b1' }, ['div', { className: 'b1__e1' }]]);
+      }, [ 'div', { className: 'b1' }, [ 'div', { className: 'b1__e1' } ] ]);
     });
 
     it('should not treat mods as elemMods in mixes', function() {
@@ -472,7 +481,7 @@ describe('VIDOM compiler/Runtime', function() {
           elem: 'e1',
           mods: { m1: 'v1' }
         }
-      }, ['div', { className: 'b1 b1__e1' }]);
+      }, [ 'div', { className: 'b1 b1__e1' } ]);
     });
 
     it('should support changing elemMods in runtime', function() {
@@ -484,7 +493,7 @@ describe('VIDOM compiler/Runtime', function() {
       }, {
         block: 'b1',
         elem: 'e1'
-      }, ['div', { className: 'b1__e1 b1__e1_a_b' }]);
+      }, [ 'div', { className: 'b1__e1 b1__e1_a_b' } ]);
     });
   });
 
@@ -495,16 +504,16 @@ describe('VIDOM compiler/Runtime', function() {
           tag()('a'),
           mix()([
             { block: 'b2' }
-          ])
+           ])
         );
         block('b2')(
           tag()('b'),
           mix()([
             { mods: { modname: 'modval' } },
             { block: 'b1' }
-          ])
+           ])
         );
-      }, { block: 'b1' }, ['a', { className: 'b1 b2 b2_modname_modval' }]);
+      }, { block: 'b1' }, [ 'a', { className: 'b1 b2 b2_modname_modval' } ]);
     });
 
     it('should support nested mix', function() {
@@ -526,7 +535,9 @@ describe('VIDOM compiler/Runtime', function() {
         mods: {
           x: 10
         }
-      }, ['a', { className: 'b1 b1_x_10 b2 b2_modname_modval b3__e3 b3__e3_modname_1' }]);
+      }, [ 'a', {
+        className:
+          'b1 b1_x_10 b2 b2_modname_modval b3__e3 b3__e3_modname_1' } ]);
     });
 
     it('should skip mix items if falsy', function() {
@@ -534,7 +545,7 @@ describe('VIDOM compiler/Runtime', function() {
       }, {
         block: 'b1',
         mix: [ null, '', false, undefined, 0, { block: 'b2' } ]
-      }, ['div', { className: 'b1 b2' }]);
+      }, [ 'div', { className: 'b1 b2' } ]);
     });
 
     it('should support singular mix', function() {
@@ -544,7 +555,7 @@ describe('VIDOM compiler/Runtime', function() {
         );
       }, {
         block: 'b1'
-      }, ['div', { className: 'b1 b2' }]);
+      }, [ 'div', { className: 'b1 b2' } ]);
     });
 
     it('should support string mix', function() {
@@ -554,7 +565,7 @@ describe('VIDOM compiler/Runtime', function() {
         );
       }, {
         block: 'b1'
-      }, ['div', { className: 'b1 b2' }]);
+      }, [ 'div', { className: 'b1 b2' } ]);
     });
 
     it('should support `undefined` mix', function() {
@@ -564,7 +575,7 @@ describe('VIDOM compiler/Runtime', function() {
         );
       }, {
         block: 'b1'
-      }, ['div', { className: 'b1' }]);
+      }, [ 'div', { className: 'b1' } ]);
     });
 
     it('should support mix in json', function() {
@@ -574,7 +585,7 @@ describe('VIDOM compiler/Runtime', function() {
       }, {
         block: 'b1',
         mix: { block: 'b2' }
-      }, ['div', { className: 'b1 b2' }]);
+      }, [ 'div', { className: 'b1 b2' } ]);
     });
 
     it('should reset elem', function() {
@@ -582,11 +593,11 @@ describe('VIDOM compiler/Runtime', function() {
         block('b1').elem('e1').mix()([
           { block: 'b2' },
           { block: 'b3' }
-        ]);
+         ]);
       }, {
         block: 'b1',
         elem: 'e1'
-      }, ['div', { className: 'b1__e1 b2 b3' }]);
+      }, [ 'div', { className: 'b1__e1 b2 b3' } ]);
     });
 
     it('should mix with block itself', function() {
@@ -595,7 +606,7 @@ describe('VIDOM compiler/Runtime', function() {
         block: 'b1',
         elem: 'e1',
         mix: { block: 'b1' }
-      }, ['div', { className: 'b1__e1 b1' }]);
+      }, [ 'div', { className: 'b1__e1 b1' } ]);
     });
   });
 
@@ -613,12 +624,12 @@ describe('VIDOM compiler/Runtime', function() {
           content: 'blah'
         },
         { block: 'b1' }
-      ], ['div', null ,
-        ['div', { className:'b1' }, '1'],
-        ['div', { className:'b1' }, '2'],
-        ['div', { className:'b1' }, '3'],
-        ['div', null, 'blah'],
-        ['div', { className:'b1' }, '4']]);
+       ], [ 'div', null ,
+        [ 'div', { className: 'b1' }, '1' ],
+        [ 'div', { className: 'b1' }, '2' ],
+        [ 'div', { className: 'b1' }, '3' ],
+        [ 'div', null, 'blah' ],
+        [ 'div', { className: 'b1' }, '4' ] ]);
     });
 
     it('should support changing prototype of BEMContext', function () {
@@ -632,7 +643,7 @@ describe('VIDOM compiler/Runtime', function() {
         });
       }, {
         block: 'b1'
-      }, ['div', { className:'b1' }, 'hah']);
+      }, [ 'div', { className: 'b1' }, 'hah' ]);
     });
 
     it('should put BEMContext to sharedContext too', function () {
@@ -646,7 +657,7 @@ describe('VIDOM compiler/Runtime', function() {
         });
       }, {
         block: 'b1'
-      }, ['div', { className: 'b1' }, 'hah']);
+      }, [ 'div', { className: 'b1' }, 'hah' ]);
     });
 
     it('should support `.getLast()`', function() {
@@ -664,7 +675,7 @@ describe('VIDOM compiler/Runtime', function() {
             content: [
               { content: '', tag: 'td' },
               { content: '', tag: 'td' }
-            ]
+             ]
           }
         },
         {
@@ -675,16 +686,16 @@ describe('VIDOM compiler/Runtime', function() {
           block: 'b1',
           content: 'last'
         }
-      ], ['div', null,
-          ['table', null,
-            ['tr', {className:'b1'},
-              ['td', null],
-              ['td', null]
-            ]
-          ],
-          ['div', {className: 'b1'}, 'first'],
-          ['div', {className: 'b1 b1_position_last'}, 'last']
-        ]);
+       ], [ 'div', null,
+          [ 'table', null,
+            [ 'tr', { className: 'b1' },
+              [ 'td', null ],
+              [ 'td', null ]
+             ]
+           ],
+          [ 'div', { className: 'b1' }, 'first' ],
+          [ 'div', { className: 'b1 b1_position_last' }, 'last' ]
+         ]);
     });
 
     describe('generateId', function() {
@@ -717,7 +728,7 @@ describe('VIDOM compiler/Runtime', function() {
         var sep = '❄';
         var arr = template.apply([ { block: 'b1' }, sep, { block: 'b1' } ]);
 
-        assert.notEqual(arr[0], arr[1]);
+        assert.notEqual(arr[ 0 ], arr[1]);
       });
 
       it('should be equal for same ctx', function() {
@@ -734,7 +745,7 @@ describe('VIDOM compiler/Runtime', function() {
         var str = template.apply({ block: 'b2' });
         var arr = str.split(sep);
 
-        assert.equal(arr[0], arr[1]);
+        assert.equal(arr[ 0 ], arr[1]);
       });
     });
   });
@@ -743,50 +754,50 @@ describe('VIDOM compiler/Runtime', function() {
     it('should render with block', function () {
       test(function() {},
         { block: 'b1', attrs: { a: 'b' } },
-        ['div', { className: 'b1', a: 'b' }]);
+        [ 'div', { className: 'b1', a: 'b' } ]);
     });
 
     it('should render with just tag', function () {
       test(function() {},
         { tag: 'span', attrs: { a: 'b' } },
-        ['span', { a: 'b' }]);
+        [ 'span', { a: 'b' } ]);
     });
 
     it('should properly render undefined as attrs value', function () {
       test(function() {},
         { attrs: { name: undefined } },
-        ['div', null]);
+        [ 'div', null ]);
     });
 
     it('should properly render zero as attrs value', function () {
       test(function() {},
         { attrs: { test: 0 } },
-        ['div', { test: '0' }]);
+        [ 'div', { test: '0' } ]);
     });
 
     it('should properly render empty string as attrs value', function () {
       test(function() {},
         { attrs: { test: '' } },
-        ['div', { test: '' }]);
+        [ 'div', { test: '' } ]);
     });
 
     it('should properly render false as attrs value', function () {
       test(
         function() {},
         { attrs: { disabled: false } },
-        ['div', null]);
+        [ 'div', null ]);
     });
 
     it('should properly render true as attrs value', function () {
       test(function() {},
         { attrs: { disabled: true } },
-        ['div', { disabled: 'true' }]);
+        [ 'div', { disabled: 'true' } ]);
     });
 
     it('should properly render null as attrs value', function () {
       test(function() {},
         { attrs: { value: null } },
-        ['div', null]);
+        [ 'div', null ]);
     });
   });
 
@@ -803,7 +814,8 @@ describe('VIDOM compiler/Runtime', function() {
             }
           }
         }
-      ], ['div', { className: 'b1' }, ['span', null, ['div', { className:'b2' }]]]);
+       ], [ 'div', { className: 'b1' },
+        [ 'span', null, [ 'div', { className: 'b2' } ] ] ]);
     });
 
     it('should inherit block from the parent, and reset it back', function () {
@@ -813,11 +825,11 @@ describe('VIDOM compiler/Runtime', function() {
         content: [
           { block: 'b1', content: { elem: 'e1' } },
           { elem: 'e1' }
-        ]
-      }, ['div', { className:'b2' },
-          ['div',{ className:'b1' },
-            ['div', { className:'b1__e1' }]],
-          ['div', { className:'b2__e1'}]]);
+         ]
+      }, [ 'div', { className: 'b2' },
+          [ 'div', { className: 'b1' },
+            [ 'div', { className: 'b1__e1' } ] ],
+          [ 'div', { className: 'b2__e1' } ] ]);
     });
 
     it('should not preserve block/elem on tag', function () {
@@ -835,10 +847,10 @@ describe('VIDOM compiler/Runtime', function() {
             }
           }
         }
-      ], ['div', { className: 'b1' },
-          ['div', { className: 'b1__e1' },
-            ['span', null,
-              ['div', { className: 'b2'}]]]]);
+       ], [ 'div', { className: 'b1' },
+          [ 'div', { className: 'b1__e1' },
+            [ 'span', null,
+              [ 'div', { className: 'b2' } ] ] ] ]);
     });
 
     it('should preserve block on next BEM entity', function () {
@@ -853,9 +865,9 @@ describe('VIDOM compiler/Runtime', function() {
             }
           }
         }
-      ], ['div', { className: 'b1' },
-          ['span', null,
-            ['div', { className: 'b1__e1'}]]]);
+       ], [ 'div', { className: 'b1' },
+          [ 'span', null,
+            [ 'div', { className: 'b1__e1' } ] ] ]);
     });
   });
 
@@ -878,10 +890,10 @@ describe('VIDOM compiler/Runtime', function() {
       }, {
         block: 'b3',
         content: 'ya'
-      } ], ['div', null,
-            ['div', { className:'b1' }, '#ok#'],
-            ['div', { className:'b2' }, '#yes#'],
-            ['div', { className:'b3' }, '#ya#']]);
+      } ], [ 'div', null,
+            [ 'div', { className: 'b1' }, '#ok#' ],
+            [ 'div', { className: 'b2' }, '#yes#' ],
+            [ 'div', { className: 'b3' }, '#ya#' ] ]);
     });
   });
 
@@ -906,10 +918,10 @@ describe('VIDOM compiler/Runtime', function() {
         block: 'b3',
         elem: 'b',
         content: 'ok'
-      } ], ['div', null,
-            ['div', { className:'b1' }, 'block'],
-            ['div', { className:'b1__a' }, '%block-a%'],
-            ['div', { className:'b3__b' }, '%ok%']]);
+      } ], [ 'div', null,
+            [ 'div', { className: 'b1' }, 'block' ],
+            [ 'div', { className: 'b1__a' }, '%block-a%' ],
+            [ 'div', { className: 'b3__b' }, '%ok%' ] ]);
     });
   });
 
@@ -917,28 +929,35 @@ describe('VIDOM compiler/Runtime', function() {
     it('should work', function() {
       var template = bemxjst.compile();
 
-      assert.deepEqual(template.apply({ block: 'b1' }), ['div', { className: 'b1' }]);
+      assert.deepEqual(template.apply(
+        { block: 'b1' }), [ 'div', { className: 'b1' } ]);
 
       template.compile(function() {
         block('b1').content()('ok');
       });
 
-      assert.deepEqual(template.apply({ block: 'b1' }), ['div', { className: 'b1' }, 'ok']);
-      assert.deepEqual(template.apply({ block: 'b2' }), ['div', { className: 'b2' }]);
+      assert.deepEqual(template.apply(
+        { block: 'b1' }), [ 'div', { className: 'b1' }, 'ok' ]);
+      assert.deepEqual(template.apply(
+        { block: 'b2' }), [ 'div', { className: 'b2' } ]);
 
       template.compile(function() {
         block('b2').content()('ok');
       });
 
-      assert.deepEqual(template.apply({ block: 'b1' }), ['div', { className: 'b1' }, 'ok']);
-      assert.deepEqual(template.apply({ block: 'b2' }), ['div', { className: 'b2' }, 'ok']);
+      assert.deepEqual(template.apply(
+        { block: 'b1' }), [ 'div', { className: 'b1' }, 'ok' ]);
+      assert.deepEqual(template.apply(
+        { block: 'b2' }), [ 'div', { className: 'b2' }, 'ok' ]);
 
       template.compile(function() {
         block('b1').tag()('a');
       });
 
-      assert.deepEqual(template.apply({ block: 'b1' }), ['a', { className: 'b1' }, 'ok']);
-      assert.deepEqual(template.apply({ block: 'b2' }), ['div', { className: 'b2' }, 'ok']);
+      assert.deepEqual(template.apply(
+        { block: 'b1' }), [ 'a', { className: 'b1' }, 'ok' ]);
+      assert.deepEqual(template.apply(
+        { block: 'b2' }), [ 'div', { className: 'b2' }, 'ok' ]);
     });
   });
 
@@ -954,14 +973,13 @@ describe('VIDOM compiler/Runtime', function() {
 
   it('should work with 0 input', function() {
     test(function() {
-    }, 0, ['span', null, '0']);
+    }, 0, [ 'span', null, '0' ]);
   });
 
   describe('naming', function() {
     it('should support custom naming', function() {
-      test(function() {
-      }, [
-        {
+      test(function() {},
+        [ {
           block: 'b1',
           elem: 'e1',
           elemMods: {
@@ -976,16 +994,17 @@ describe('VIDOM compiler/Runtime', function() {
           block: 'b1',
           mix: { elem: 'e2' }
         }
-      ], ['div', null,
-          ['div', { className:'b1$$e1 b1$$e1@@a@@b' }],
-          ['div', { className:'b1$$e1' }],
-          ['div', { className:'b1 b1$$e2' }]],
+       ], [ 'div', null,
+          [ 'div', { className: 'b1$$e1 b1$$e1@@a@@b' } ],
+          [ 'div', { className: 'b1$$e1' } ],
+          [ 'div', { className: 'b1 b1$$e2' } ] ],
         {
           naming: {
-          elem: '$$',
-          mod: '@@'
+            elem: '$$',
+            mod: '@@'
+          }
         }
-      });
+      );
     });
   });
 
@@ -1112,7 +1131,7 @@ describe('VIDOM compiler/Runtime', function() {
         bemxjst.compile(function() {
           block('b1').mix([
             { block: 'b2' }
-          ]);
+           ]);
         });
       });
     });
