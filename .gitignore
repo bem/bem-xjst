@@ -1,4 +1,3 @@
-.idea
 lib/bem*/bundle.js
 lib/vidom/bundle.js
 /node_modules/

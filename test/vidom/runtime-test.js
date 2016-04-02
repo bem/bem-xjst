@@ -6,6 +6,17 @@ var test = fixtures.test;
 
 describe('VIDOM compiler/Runtime', function() {
 
+
+  it('should render content as array', function() {
+    test(function() {},
+      { tag: 'section', content: [
+        { block: 'b1' },
+        { block: 'b2' }
+      ] }, [ 'section', null,
+        [ 'div', { className: 'b1' } ],
+        [ 'div', { className: 'b2' } ] ]);
+  });
+
   xit('should apply("content")', function() {
     test(function() {
       block('b1').def()(function() {
