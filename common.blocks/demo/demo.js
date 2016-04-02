@@ -1,4 +1,4 @@
-modules.define('demo', ['i-bem__dom', 'pretty', 'functions__debounce'], function(provide, BEMDOM, pretty, debounce) {
+modules.define('demo', [ 'i-bem__dom', 'pretty', 'functions__debounce' ], function(provide, BEMDOM, pretty, debounce) {
 
     provide(BEMDOM.decl('demo', {
         onSetMod: {
@@ -16,7 +16,6 @@ modules.define('demo', ['i-bem__dom', 'pretty', 'functions__debounce'], function
 
                     this._load() || this._render();
 
-                    this.findBlockInside('spin').delMod('visible');
                     this.delMod('state');
 
                     setTimeout(function() {

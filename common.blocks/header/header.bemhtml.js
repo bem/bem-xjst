@@ -1,10 +1,11 @@
 block('header')(
-    tag()('h1'),
-    elem('link').def()(function() {
-        return applyCtx({
+    elem('title').tag()('h1'),
+    elem('item').tag()('span'),
+    elem('link').replace()(function() {
+        return {
             block: 'link',
             url: this.ctx.url,
             content: this.ctx.content
-        });
+        };
     })
 );

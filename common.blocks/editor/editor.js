@@ -7,7 +7,7 @@ modules.define('editor', ['i-bem__dom'], function(provide, BEMDOM) {
 
                     var editor = ace.edit(this.elem('textarea').get(0));
 
-                    editor.setTheme('ace/theme/solarized_light');
+                    editor.setTheme('ace/theme/xcode');
                     editor.setShowInvisibles(this.params.showInvisibles);
                     editor.setReadOnly(this.params.readOnly);
                     editor.setFontSize(this.params.fontSize);
