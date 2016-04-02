@@ -6,6 +6,20 @@ var test = fixtures.test;
 
 describe('VIDOM compiler/Runtime', function() {
 
+  it('should not render ReactElement', function() {
+    test(function() {},
+      {
+        block: 'b1',
+        content: [
+          { $$typeof: 'xxx' },
+          { block: 'b2' },
+          { $$typeof: 'yyy' }
+        ]
+      }, [ 'div', { className: 'b1' },
+          { $$typeof: 'xxx' },
+          [ 'div', { className: 'b2' } ],
+          { $$typeof: 'yyy' } ]);
+  });
 
   it('should render content as array', function() {
     test(function() {},
