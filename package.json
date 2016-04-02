@@ -4,7 +4,7 @@
   "description": "Declarative Template Engine for the browser and server",
   "keywords": [
     "template", "templates", "templating", "views", "bem-xjst",
-    "html", "bem", "template engine"
+    "html", "bem", "template engine", "BEMHTML", "BEMTREE"
   ],
   "bin": {
     "bem-xjst": "bin/bem-xjst"
