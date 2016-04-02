@@ -55,6 +55,13 @@ module.exports = {
                             ]
                         },
                         {
+                            elem: 'item',
+                            content: [
+                                'Engine:',
+                                'BEMHTML' // TODO: engine select
+                            ].join(' ')
+                        },
+                        {
                             block: 'link',
                             mix: { block: 'header', elem: 'item' },
                             url: 'https://github.com/bem/bem-xjst/tree/master/docs/ru',
