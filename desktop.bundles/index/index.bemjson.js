@@ -57,10 +57,16 @@ module.exports = {
                         },
                         {
                             elem: 'item',
-                            content: [
-                                'Engine:',
-                                'BEMHTML' // TODO: engine select
-                            ].join(' ')
+                            content: 'Engine:',
+                        },
+                        {
+                            block: 'engine-selector',
+                            mix: { block: 'header', elem: 'item' },
+                            mods: { state: 'loading' },
+                            versions: [
+                                { name: 'BEMHTML', value: 'bemhtml' },
+                                { name: 'VIDOM', value: 'vidom' }
+                            ]
                         },
                         {
                             block: 'link',

@@ -5,6 +5,18 @@ modules.define('demo', [ 'i-bem__dom', 'pretty', 'functions__debounce' ], functi
             js: {
                 inited: function() {
 
+                    this._page = this.findBlockOutside('page');
+                    this._engineSelector = this._page.findBlockInside('engine-selector');
+                    this._$engineSelector = this._engineSelector.domElem;
+
+                    var _this = this;
+                    this.params.engine = this._$engineSelector.find('option:selected').val();
+                    this._$engineSelector.on('change', function() {
+                        _this.params.engine = _this._$engineSelector.find('option:selected').val();
+                        _this._render();
+                    });
+
+
                     this._bemhtml = this.findBlockOn('bemhtml', 'editor');
                     this._bemjson = this.findBlockOn('bemjson', 'editor');
                     this._html = this.findBlockOn('html', 'editor');
@@ -25,6 +37,7 @@ modules.define('demo', [ 'i-bem__dom', 'pretty', 'functions__debounce' ], functi
                 }
             }
         },
+        
         _onChange: function() {
             this._render();
             this._save();
@@ -37,9 +50,11 @@ modules.define('demo', [ 'i-bem__dom', 'pretty', 'functions__debounce' ], functi
         },
         _render: function() {
             try {
-                var api = new vidom({}),
-                    bemhtml = {};
+                var bemhtml = {};
 
+                var api = (this.params.engine === 'vidom')
+                    ? new vidom({})
+                    : new BEMHTML({});
                 api.compile(this._getBEMHTML());
                 api.exportApply(bemhtml);
             } catch(e) {
@@ -54,9 +69,11 @@ modules.define('demo', [ 'i-bem__dom', 'pretty', 'functions__debounce' ], functi
                 return;
             }
 
-            this._html.setValue(pretty(JSON.stringify(bemhtml.apply(BEMJSON)), {
-                max_char: 1000
-            }));
+            var compiledText = (this.params.engine === 'vidom') 
+                    ? JSON.stringify(bemhtml.apply(BEMJSON), null, 4)
+                    : pretty(bemhtml.apply(BEMJSON), { max_char: 1000});
+            
+            this._html.setValue(compiledText);
         },
         _save: function() {
             var bemhtml = this._getBEMHTML(),
