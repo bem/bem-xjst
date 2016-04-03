@@ -37,7 +37,7 @@ modules.define('demo', [ 'i-bem__dom', 'pretty', 'functions__debounce' ], functi
         },
         _render: function() {
             try {
-                var api = new BEMHTML({}),
+                var api = new vidom({}),
                     bemhtml = {};
 
                 api.compile(this._getBEMHTML());
@@ -54,7 +54,7 @@ modules.define('demo', [ 'i-bem__dom', 'pretty', 'functions__debounce' ], functi
                 return;
             }
 
-            this._html.setValue(pretty(bemhtml.apply(BEMJSON), {
+            this._html.setValue(pretty(JSON.stringify(bemhtml.apply(BEMJSON)), {
                 max_char: 1000
             }));
         },
