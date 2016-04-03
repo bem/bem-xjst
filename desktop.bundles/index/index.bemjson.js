@@ -16,6 +16,7 @@ module.exports = {
     ],
     scripts: [
         { elem: 'js', url: 'xindex.js' },
+        { elem: 'js', url: 'xindex.browser.vidom.js' },
         { elem: 'js', url: 'xindex.browser.bemhtml.js' },
         { elem: 'js', url: 'https://cdnjs.cloudflare.com/ajax/libs/ace/1.2.2/ace.js' },
         { elem: 'js', url: 'https://apis.google.com/js/client.js' }
@@ -56,10 +57,17 @@ module.exports = {
                         },
                         {
                             elem: 'item',
-                            content: [
-                                'Engine:',
-                                'BEMHTML' // TODO: engine select
-                            ].join(' ')
+                            content: 'Engine:',
+                        },
+                        {
+                            block: 'engine-selector',
+                            mix: { block: 'header', elem: 'item' },
+                            mods: { state: 'loading' },
+                            versions: [
+                                { name: 'BEMHTML', value: 'bemhtml' },
+                                { name: 'VIDOM', value: 'vidom' },
+                                { name: 'BEMJSON', value: 'bemjson' }
+                            ]
                         },
                         {
                             block: 'link',
