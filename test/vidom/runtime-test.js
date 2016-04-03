@@ -6,6 +6,23 @@ var test = fixtures.test;
 
 describe('VIDOM compiler/Runtime', function() {
 
+  // FIXME modify this test to check cases with
+  // https://ru.bem.info/libs/bem-components/v2.4.0/desktop/radio-group/
+  it('should render many items in content' , function() {
+    test(function() {
+      block('b1')(
+        content()(function() {
+          return [
+            { block: 'b2' },
+            { block: 'b3' }
+          ];
+        })
+      )
+    }, { block: 'b1' },
+      [ 'div', { className: 'b1' },
+        [ 'div', { className: 'b2' } ], [ 'div', { className: 'b3' } ] ]);
+  });
+
   it('should not render ReactElement', function() {
     test(function() {},
       {
