@@ -51,7 +51,7 @@ modules.define('demo', [ 'i-bem__dom', 'pretty', 'functions__debounce' ], functi
         _render: function() {
             try {
                 var bemhtml = {};
-
+                
                 var api = (this.params.engine === 'vidom')
                     ? new vidom({})
                     : new BEMHTML({});
@@ -69,9 +69,23 @@ modules.define('demo', [ 'i-bem__dom', 'pretty', 'functions__debounce' ], functi
                 return;
             }
 
-            var compiledText = (this.params.engine === 'vidom') 
-                    ? JSON.stringify(bemhtml.apply(BEMJSON), null, 4)
-                    : pretty(bemhtml.apply(BEMJSON), { max_char: 1000});
+            var compiledText = '';
+
+            switch(this.params.engine) {
+                case 'vidom':{
+                    compiledText = JSON.stringify(bemhtml.apply(BEMJSON), null, 4);
+                    break;
+                }
+                case 'bemhtml':{
+                    compiledText = pretty(bemhtml.apply(BEMJSON), { max_char: 1000});
+                    break;
+                }
+                case 'bemjson':{
+                    compiledText = JSON.stringify(BEMJSON, null, 4);
+                    break;
+                }
+            }
+
             
             this._html.setValue(compiledText);
         },

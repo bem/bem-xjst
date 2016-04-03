@@ -65,7 +65,8 @@ module.exports = {
                             mods: { state: 'loading' },
                             versions: [
                                 { name: 'BEMHTML', value: 'bemhtml' },
-                                { name: 'VIDOM', value: 'vidom' }
+                                { name: 'VIDOM', value: 'vidom' },
+                                { name: 'BEMJSON', value: 'bemjson' }
                             ]
                         },
                         {
