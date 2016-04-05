@@ -138,21 +138,6 @@ describe('VIDOM compiler/Runtime', function() {
       [ 'div', { className: 'b1' }, 'ok' ]);
     });
 
-    it('should support > 31 templates (because of the bit mask)', function() {
-      test(function() {
-        block('b1').content()(function() {
-          return 'ok';
-        });
-        for (var i = 0; i < 128; i++) {
-          block('b1').content()(function() {
-            return applyNext();
-          });
-        }
-      },
-      { block: 'b1' },
-      [ 'div', { className: 'b1' }, 'ok' ]);
-    });
-
     // TODO
     xit('should support recursive applyNext() over block boundary', function() {
       test(function() {
