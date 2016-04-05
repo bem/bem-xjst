@@ -48,6 +48,7 @@ describe('VIDOM compiler/Runtime', function() {
         [ 'div', { className: 'b2' } ] ]);
   });
 
+  // FIXME: waiting for https://github.com/bem/bem-xjst/issues/236
   xit('should apply("content")', function() {
     test(function() {
       block('b1').def()(function() {
@@ -79,10 +80,29 @@ describe('VIDOM compiler/Runtime', function() {
     )
   });
 
-  it('should wrap text into container', function() {
+  // TODO [ 'span', null, 'str1', 'str2' ]
+  xit('xxx should wrap text into container', function() {
     test(function() {},
       [ 'str1', 'str2' ],
-      [ 'div', null, [ 'span', null, 'str1' ], [ 'span', null, 'str2' ] ]);
+      // [ 'div', null, [ 'span', null, 'str1' ], [ 'span', null, 'str2' ] ]);
+      [ 'div', null, 'str1', 'str2' ]);
+  });
+
+  it('should wrap single strings with span', function() {
+    test(function() {},
+      'hi there',
+      [ 'span', null, 'hi there' ]);
+  });
+
+  it('should wrap top-level tag false with span', function() {
+    test(function() {
+      block('a')(
+        tag()(false),
+        content()('hi there')
+      )
+    },
+      { block: 'a' },
+      [ 'span', { className: 'a' }, 'hi there' ]);
   });
 
   describe('applyNext()', function() {
@@ -136,33 +156,6 @@ describe('VIDOM compiler/Runtime', function() {
       },
       { block: 'b1' },
       [ 'div', { className: 'b1' }, 'ok' ]);
-    });
-
-    // TODO
-    xit('should support recursive applyNext() over block boundary', function() {
-      test(function() {
-        block('b1').tag()('a');
-        block('b1').bem()(false);
-        block('b1').def()(function() {
-          return '[ ' + applyNext() + ':' + applyNext() + ' ]';
-        });
-      },
-      {
-        block: 'b1',
-        content: {
-          block: 'b1',
-          content: {
-            block: 'b1',
-            content: 'ok'
-          }
-        }
-      },
-      // @awinogradov 17.02.2016 - wtf?
-      '[ <a>' +
-        '[ <a>[<a>ok</a>:<a>ok</a> ]</a>:<a>[<a>ok</a>:<a>ok</a>]</a>]' +
-          '</a>:<a>' +
-        '[ <a>[<a>ok</a>:<a>ok</a> ]</a>:<a>[<a>ok</a>:<a>ok</a>]</a>]' +
-      '</a> ]');
     });
   });
 
@@ -750,8 +743,8 @@ describe('VIDOM compiler/Runtime', function() {
       });
 
       it('starts with uniq', function() {
-        var str = template.apply({ block: 'b1' });
-        assert(str.indexOf('uniq') === 0);
+        var arr = template.apply({ block: 'b1' });
+        assert(arr[2].indexOf('uniq') === 0);
       });
 
       it('should be unique in different applies', function() {
@@ -779,9 +772,7 @@ describe('VIDOM compiler/Runtime', function() {
             })
           )
         });
-        var str = template.apply({ block: 'b2' });
-        var arr = str.split(sep);
-
+        var arr = template.apply({ block: 'b2' })[2].split(sep);
         assert.equal(arr[ 0 ], arr[1]);
       });
     });
