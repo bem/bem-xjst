@@ -83,7 +83,6 @@ describe('VIDOM compiler/Runtime', function() {
   it('should wrap text into container', function() {
     test(function() {},
       [ 'str1', 'str2' ],
-      // [ 'div', null, [ 'span', null, 'str1' ], [ 'span', null, 'str2' ] ]);
       [ 'div', null, 'str1', 'str2' ]);
   });
 
