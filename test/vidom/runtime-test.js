@@ -38,6 +38,35 @@ describe('VIDOM compiler/Runtime', function() {
           { $$typeof: 'yyy' } ]);
   });
 
+  it('should spread children if all of them are react elements', function() {
+    test(function() {},
+      {
+        block: 'b1',
+        content: [
+          { $$typeof: 'xxx' },
+          { $$typeof: 'yyy' }
+        ]
+      }, [ 'div', { className: 'b1' },
+          { $$typeof: 'xxx' },
+          { $$typeof: 'yyy' } ]);
+  });
+
+  it('should spread children if one of them is react element', function() {
+    test(function() {},
+      {
+        block: 'b1',
+        content: [
+          { block: 'b2' },
+          { $$typeof: 'xxx' }
+        ]
+      }, [ 'div', { className: 'b1' },
+          [ 'div', { className: 'b2' } ],
+          { $$typeof: 'xxx' }
+        ]);
+  });
+
+
+
   it('should render content as array', function() {
     test(function() {},
       { tag: 'section', content: [
