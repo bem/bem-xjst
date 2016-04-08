@@ -1,5 +1,22 @@
 # BEM-XJST Changelog
 
+# 2016-03-08, [v6.2.1](https://github.com/bem/bem-xjst/compare/v6.2.1...v6.2.0), @miripiruni
+
+1. Fixed arrow finction support for `replace`, `wrap`, `once`.
+2. Minor updates: readme, package meta info, authors file, etc.
+
+* [[`669db0d7db`](https://github.com/bem/bem-xjst/commit/669db0d7db)] - BEMHTML, BEMTREE added to keywords (Slava Oliyanchuk)
+* [[`abab495e2e`](https://github.com/bem/bem-xjst/commit/abab495e2e)] - README.md: description changed (Slava Oliyanchuk)
+* [[`ac43d023aa`](https://github.com/bem/bem-xjst/commit/ac43d023aa)] - Russian comments in README.ru.md (Slava Oliyanchuk)
+* [[`eb56169ddc`](https://github.com/bem/bem-xjst/commit/eb56169ddc)] - Pass context to wrap-based matchers and once (Alexey Yaroshevich)
+* [[`369b8543b2`](https://github.com/bem/bem-xjst/commit/369b8543b2)] - Twitter added (Slava Oliyanchuk)
+* [[`a2e4a0716a`](https://github.com/bem/bem-xjst/commit/a2e4a0716a)] - Twitter added (Slava Oliyanchuk)
+* [[`e51c1fae85`](https://github.com/bem/bem-xjst/commit/e51c1fae85)] - Increment year (Slava Oliyanchuk)
+* [[`da3bfecbc8`](https://github.com/bem/bem-xjst/commit/da3bfecbc8)] - AUTHORS added (miripiruni)
+* [[`7d16b39958`](https://github.com/bem/bem-xjst/commit/7d16b39958)] - package.json: engines field added (miripiruni)
+* [[`7d823dc92d`](https://github.com/bem/bem-xjst/commit/7d823dc92d)] - **Travis**: node 5 added (miripiruni)
+* [[`61f56a6e48`](https://github.com/bem/bem-xjst/commit/61f56a6e48)] - keywords, homepage, directories and contributors added (miripiruni)
+
 # 2016-03-24, [v6.2.0](https://github.com/bem/bem-xjst/compare/v6.1.1...v6.2.0), @miripiruni
 
 New `xhtml` option. Default value is `true`. But in nex major version we invert it.
