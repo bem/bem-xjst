@@ -63,11 +63,7 @@ module.exports = {
                             block: 'engine-selector',
                             mix: { block: 'header', elem: 'item' },
                             mods: { state: 'loading' },
-                            versions: [
-                                { name: 'BEMHTML', value: 'bemhtml' },
-                                { name: 'VIDOM', value: 'vidom' },
-                                { name: 'BEMJSON', value: 'bemjson' }
-                            ]
+                            engines: ['BEMHTML', 'VIDOM', 'BEMJSON']
                         },
                         {
                             block: 'link',
