@@ -138,6 +138,33 @@ var html = templates.apply(bemjson);
 ```
 Подробнее про [cоглашение по именованию](https://ru.bem.info/method/naming-convention/) на bem.info.
 
+### Поддержка JS-экземпляров для элементов (bem-core v4+)
+В библиотеке [bem-core](https://ru.bem.info/libs/bem-core/) начиная с 4 версии появилась поддержка JS-экземпляров для элементов.
+Это требует добавления класса `i-bem` для элементов, имеющих JS-параметры.
+Добиться этого можно с помощью опции `elemJsInstances`:
+```js
+var bemxjst = require('bem-xjst');
+var templates = bemxjst.bemhtml.compile(function() {
+    // В этом примере мы не добавляем пользовательских шаблонов.
+    // Для рендеринга HTML будет использовано поведение шаблонизатора по умолчанию.
+    }, {
+        // Включаем поддержку JS-экземпляров для элементов
+        elemJsInstances: true
+    });
+
+var bemjson = {
+    block: 'b',
+    elem: 'e',
+    js: true
+};
+
+var html = templates.apply(bemjson);
+```
+В результате `html` будет содержать строку:
+```html
+<div class="b__e i-bem" data-bem='{"b__e":{}}'></div>
+```
+
 ### Закрытие одиночных элементов
 
 Если у вас нет необходимости генерировать корректный XHTML (закрывать одиночные элементы),
