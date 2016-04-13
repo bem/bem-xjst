@@ -340,22 +340,6 @@ describe('VIDOM compiler/Tree', function() {
      ]);
   });
 
-  it('should support `.xjstOptions()`', function() {
-    test(function() {
-      block('b1').xjstOptions({ who: 'cares' }).content()(function() {
-        return 'ok';
-      });
-    },
-    { block: 'b1' },
-    [ 'div', { className: 'b1' }, 'ok' ]);
-  });
-
-  it('should verify match() argument', function() {
-    fail(function() {
-      block('b1').match('123')('123');
-    }, /Wrong.*match.*argument/);
-  });
-
   it('should execute matches in right order', function() {
     test(function() {
       block('bla')(
