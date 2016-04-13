@@ -1,5 +1,46 @@
 # BEM-XJST Changelog
 
+# 2016-03-13, [v6.3.0](https://github.com/bem/bem-xjst/compare/v6.3.0...v6.2.1), @miripiruni
+
+New option `elemJsInstances` for support JS instances for elems (bem-core v4+).
+
+In v6.3.0 `elemJsInstances` is set to `false` by default but will be inverted in one of the next major versions.
+
+```js
+var bemxjst = require('bem-xjst');
+var templates = bemxjst.bemhtml.compile(function() {
+    // In this example we will add no templates.
+    // Default behaviour is used for HTML rendering.
+    }, {
+        // Turn on support for JS instances for elems
+        elemJsInstances: true
+    });
+
+var bemjson = {
+    block: 'b',
+    elem: 'e',
+    js: true
+};
+
+var html = templates.apply(bemjson);
+```
+
+Result with v6.2.x:
+```html
+<div class="b__e" data-bem='{"b__e":{}}'></div>
+```
+
+Result with v6.3.0:
+```html
+<div class="b__e i-bem" data-bem='{"b__e":{}}'></div>
+```
+
+Notice that `i-bem` was added.
+
+* [[`d9f79c1855`](https://github.com/bem/bem-xjst/commit/d9f79c1855)] - Introduce elemInstances option (Vladimir Grinenko)
+* [[`d35758d452`](https://github.com/bem/bem-xjst/commit/d35758d452)] - **Docs**: anchors fixed (Slava Oliyanchuk)
+
+
 # 2016-03-08, [v6.2.1](https://github.com/bem/bem-xjst/compare/v6.2.1...v6.2.0), @miripiruni
 
 1. Fixed arrow finction support for `replace`, `wrap`, `once`.
