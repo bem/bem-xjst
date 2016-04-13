@@ -75,4 +75,40 @@ describe('BEMJSON js', function() {
       .should.equal('<div class="b i-bem" data-bem=\'{"b":{"a":"&#39;Sid&amp;' +
         'Nancy&#39;","b":"&#39;Tom&amp;Jerry&#39;"}}\'></div>');
   });
+
+  describe('elemJsInstances option', function() {
+    it('should not render i-bem for elems be default', function() {
+      compile('')
+        .apply({ block: 'b', elem: 'e', js: true })
+        .should.equal('<div class="b__e" data-bem=\'{"b__e":{}}\'></div>');
+    });
+
+    it('should render i-bem for elems with elemJsInstances option', function() {
+      compile(function() {}, { elemJsInstances: true })
+        .apply({ block: 'b', elem: 'e', js: true })
+        .should
+          .equal('<div class="b__e i-bem" data-bem=\'{"b__e":{}}\'></div>');
+    });
+
+    it('should render i-bem when mixed with other block with js', function() {
+      var tmpls = compile(function() {}, { elemJsInstances: true });
+
+      tmpls.apply({
+          block: 'a',
+          js: true,
+          mix: { block: 'b', elem: 'e', js: true }
+        })
+        .should.equal('<div class="a b__e i-bem"' +
+          ' data-bem=\'{"a":{},"b__e":{}}\'></div>');
+
+      tmpls.apply({
+        block: 'b',
+        elem: 'e',
+        js: true,
+        mix: { block: 'a', js: true }
+      })
+      .should.equal('<div class="b__e a i-bem"' +
+        ' data-bem=\'{"b__e":{},"a":{}}\'></div>');
+    });
+  });
 });

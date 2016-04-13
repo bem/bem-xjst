@@ -69,4 +69,13 @@ describe('Modes js', function() {
     { block: 'button' },
     '<div class="button"></div>');
   });
+
+  it('should render i-bem for elems with elemJsInstances option', function() {
+    test(function() {
+      block('b').elem('e').js()(true);
+    },
+    { block: 'b', elem: 'e' },
+    '<div class="b__e i-bem" data-bem=\'{"b__e":{}}\'></div>',
+    { elemJsInstances: true });
+  });
 });
