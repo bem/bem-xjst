@@ -32,7 +32,7 @@
     "elem", "local", "wrap", "extend", "oninit", "replace" ],
     "strict"        : false,    // true: Requires all functions run in ES5 Strict Mode
     "maxparams"     : false,    // {int} Max number of formal params allowed per function
-    "maxdepth"      : 3,        // {int} Max depth of nested blocks (within functions)
+    "maxdepth"      : 5,        // {int} Max depth of nested blocks (within functions)
     "maxstatements" : false,    // {int} Max number statements per function
     "maxcomplexity" : false,    // {int} Max cyclomatic complexity per function
     "maxlen"        : false,    // {int} Max number of characters per line
@@ -88,6 +88,7 @@
     // Custom Globals
     "globals"       : {
         "module": true,
-        "test": true
+        "test": true,
+        "BEMXJSTError": true
     }
 }
