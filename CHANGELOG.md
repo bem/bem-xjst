@@ -1,5 +1,39 @@
 # BEM-XJST Changelog
 
+# 2016-04-18, [v6.3.1](https://github.com/bem/bem-xjst/compare/v6.3.1...v6.3.0), @miripiruni
+
+Improved error message about no block subpredicate.
+
+Example:
+
+```bash
+$cat noblock.js
+var bemxjst = require('bem-xjst');
+var bemhtml = bemxjst.bemhtml;
+var templates = bemhtml.compile(function() {
+    tag()('span');
+});
+
+
+$ node noblock.js
+/Users/miripiruni/Documents/www/bem-xjst-errors/lib/compiler.js:59
+      throw new BEMXJSTError(e.message);
+      ^
+BEMXJSTError: block(…) subpredicate is not found.
+    See template with subpredicates:
+     * tag()
+    And template body:
+    ("span")
+    at _compile (.../lib/compiler.js:60:13)
+    at Compiler.compile (...//lib/compiler.js:79:3)
+    at Object.<anonymous> (.../noblock.js:3:25)
+    …
+
+```
+
+* [[`3362992103`](https://github.com/bem/bem-xjst/commit/3362992103)] - Merge pull request #207 from bem/error-no-block (Slava Oliyanchuk)
+
+
 # 2016-03-13, [v6.3.0](https://github.com/bem/bem-xjst/compare/v6.3.0...v6.2.1), @miripiruni
 
 New option `elemJsInstances` for support JS instances for elems (bem-core v4+).
