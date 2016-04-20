@@ -142,6 +142,7 @@ in comparison to previous bem-xjst version. Make sure that the
 
 ## Documentation
 
+ * [Documentation](https://github.com/bem/bem-xjst/releases/tree/master/docs/en/)
  * [Releases notes](https://github.com/bem/bem-xjst/releases)
  * [Migration guide from 4.x to 5.x](https://github.com/bem/bem-xjst/wiki/Migration-guide-from-4.x-to-5.x)
  * [Changes from v1.x version](https://github.com/bem/bem-xjst/wiki/Notable-changes-between-bem-xjst@1.x-and-bem-xjst@2.x)
