@@ -1,5 +1,46 @@
 # BEM-XJST Changelog
 
+# 2016-04-18, [v6.4.0](https://github.com/bem/bem-xjst/compare/v6.4.0...v6.3.1), @miripiruni
+
+New option for content escaping: `escapeContent`.
+
+In v6.4.0 `escapeContent` is set to `false` by default but will be inverted in one of the next major versions.
+
+Example:
+
+You can set `escapeContent` option to `true` to escape string values of `content` field with [`xmlEscape`](6-templates-context.md#xmlescape).
+
+```js
+var bemxjst = require('bem-xjst');
+var templates = bemxjst.bemhtml.compile(function() {
+    // In this example we will add no templates.
+    // Default behaviour is used for HTML rendering.
+    }, {
+        // Turn on content escaping
+        escapeContent: true
+    });
+
+var bemjson = {
+    block: 'danger',
+    // Danger UGC content
+    content: '&nbsp;<script src="alert()"></script>'
+};
+
+var html = templates.apply(bemjson);
+```
+
+Result:
+```html
+<div class="danger">&amp;nbsp;&lt;script src="alert()"&gt;&lt;/script&gt;</div>
+```
+
+If you want avoid escaping in content [use special value](4-data#content): `{ html: '…' }`.
+
+
+* [[`9bdb20479a`](https://github.com/bem/bem-xjst/commit/9bdb20479a)] - Merge pull request #217 from bem/escaping2 (Slava Oliyanchuk)
+* [[`9cb7249d03`](https://github.com/bem/bem-xjst/commit/9cb7249d03)] - Package name fixed (Slava Oliyanchuk)
+* [[`54d505922b`](https://github.com/bem/bem-xjst/commit/54d505922b)] - BEMXJST runSimple small refactoring (miripiruni)
+
 # 2016-04-18, [v6.3.1](https://github.com/bem/bem-xjst/compare/v6.3.1...v6.3.0), @miripiruni
 
 Improved error message about no block subpredicate.
