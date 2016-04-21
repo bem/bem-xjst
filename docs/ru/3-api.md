@@ -198,6 +198,7 @@ var html = templates.apply(bemjson);
 Вы можете включить экранирование содержимого поля `content` опцией `escapeContent`.
 В этом случае ко всем строковым значениям `content` будет применена функция
 [`xmlEscape`](6-templates-context.md#xmlescape).
+
 ```js
 var bemxjst = require('bem-xjst');
 var templates = bemxjst.bemhtml.compile(function() {
@@ -221,8 +222,33 @@ var html = templates.apply(bemjson);
 <div class="danger">&amp;nbsp;&lt;script src="alert()"&gt;&lt;/script&gt;</div>
 ```
 
-Если вам нужно вывести строку без экранирования [воспользуйтесь специальным
-значением поля `content`](4-data#content): `{ html: '…' }`.
+Если вам нужно вывести строку без экранирования воспользуйтесь специальным
+значением поля `content`: `{ html: '…' }`. Пример:
+
+```js
+var bemxjst = require('bem-xjst');
+var templates = bemxjst.bemhtml.compile(function() {
+    // В этом примере мы не добавляем пользовательских шаблонов.
+    // Для рендеринга HTML будет использовано поведение шаблонизатора по умолчанию.
+    }, {
+        escapeContent: true
+    });
+
+var bemjson = {
+    block: 'trusted',
+    // Безопасное содержимое
+    content: 'I <3 you!'
+};
+
+var html = templates.apply(bemjson);
+```
+В результате `html` будет содержать строку:
+
+```html
+<div class="trusted">I <3 you!</div>
+```
+
+Обратите внимание, что в `content.html` ожидается именно строка.
 
 
 ### <a name="bemcontext"></a>Расширение `BEMContext`

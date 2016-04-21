@@ -42,7 +42,7 @@ block('*')
         return this.ctx.counter;
     })
     .mix()(function() {
-        return { block : 'counter', js : { id : this.ctx.counter } }
+        return { block: 'counter', js: { id: this.ctx.counter } }
     })
 ```
 
@@ -159,7 +159,7 @@ applyCtx(bemjson, newctx)
 
 Пример BEMJSON:
 ```js
-{ block: 'header', mix: [ { block: 'sticky' } ] }
+{ block: 'header', mix: [{ block: 'sticky' }] }
 ```
 
 ```js

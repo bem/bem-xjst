@@ -150,8 +150,9 @@ node run.js
  убедиться, что в `benchmarks/package.json` указан правильный hash коммита
  `bem-xjst`.
 
-## Документация (на английском)
+## Документация
 
+ * [Документация](https://github.com/bem/bem-xjst/releases/tree/master/docs/ru/)
  * [Описания релизов](https://github.com/bem/bem-xjst/releases)
  * [Гайд по миграции с 4.x на 5.x](https://github.com/bem/bem-xjst/wiki/Migration-guide-from-4.x-to-5.x)
  * [Основные изменения с v1.x](https://github.com/bem/bem-xjst/wiki/Notable-changes-between-bem-xjst@1.x-and-bem-xjst@2.x)
