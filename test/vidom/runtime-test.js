@@ -6,6 +6,13 @@ var test = fixtures.test;
 
 describe('VIDOM compiler/Runtime', function() {
 
+  it('should mix className property if passed', function() {
+    test(function() {
+      block('b1')
+    }, { block: 'b1', attrs: { className: 'hi-there' }},
+      [ 'div', { className: 'b1 hi-there' } ]);
+  });
+
   // FIXME modify this test to check cases with
   // https://ru.bem.info/libs/bem-components/v2.4.0/desktop/radio-group/
   it('should render many items in content' , function() {
