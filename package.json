@@ -60,11 +60,8 @@
     "lib": "./lib"
   },
   "files": [
-    "bench/",
     "bin/",
-    "docs/",
     "lib/",
-    "test/",
     "index.js",
     "CHANGELOG.md",
     "README.md",
