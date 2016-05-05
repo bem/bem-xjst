@@ -2,6 +2,7 @@ var fixtures = require('./fixtures')('bemhtml');
 var test = fixtures.test;
 var assert = require('assert');
 var bemxjst = require('../').bemhtml;
+var compile = fixtures.compile;
 
 describe('Modes cls', function() {
   it('should throw error when args passed to cls mode', function() {
@@ -28,4 +29,13 @@ describe('Modes cls', function() {
     { block: 'button' },
     '<div class="button btn"></div>');
   });
+
+  it('should trim cls', function() {
+    compile(function() {
+      block('button').cls()('  one two  ');
+    })
+      .apply({ block: 'button' })
+      .should.equal('<div class="button one two"></div>');
+  });
+
 });
