@@ -38,4 +38,11 @@ describe('Modes cls', function() {
       .should.equal('<div class="button one two"></div>');
   });
 
+  it('should escape cls', function() {
+    compile(function() {
+      block('button').cls()('">');
+    })
+      .apply({ block: 'button' })
+      .should.equal('<div class="button &quot;>"></div>');
+  });
 });
