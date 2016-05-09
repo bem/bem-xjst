@@ -17,9 +17,9 @@ modules.define('demo', [ 'i-bem__dom', 'pretty', 'functions__debounce' ], functi
                     }.bind(this));
 
                     this._engines = {
-                        vidom: vidom,
-                        bemhtml: BEMHTML,
-                        bemjson: {}
+                        vidom: BEMVIDOMEngine,
+                        bemhtml: BEMHTMLEngine,
+                        bemjson: BEMJSONEngine
                     };
 
                     this._bemhtml = this.findBlockOn('bemhtml', 'editor');
@@ -44,47 +44,7 @@ modules.define('demo', [ 'i-bem__dom', 'pretty', 'functions__debounce' ], functi
         },
 
         _getEngine: function(engineName, engines) {
-            var bemhtml = {};
-            var compiledText = '';
-            var _engine = engines[engineName];
-            return {
-                render: function (bemjson) {
-                    var BEMJSON = safeEval(bemjson);
-
-                    if (BEMJSON instanceof Error) {
-                        return 'BEMJSON error: ' + BEMJSON.message + '\n' + BEMJSON.stack;
-                    }
-
-                    try {
-                        switch (engineName) {
-                            case 'vidom':
-                            {
-                                var api = new _engine({});
-                                api.compile(bemjson);
-                                api.exportApply(bemhtml);
-                                compiledText = JSON.stringify(bemhtml.apply(BEMJSON), null, 4);
-                                break;
-                            }
-                            case 'bemhtml':
-                            {
-                                var api = new _engine({});
-                                api.compile(bemjson);
-                                api.exportApply(bemhtml);
-                                compiledText = pretty(bemhtml.apply(BEMJSON), {max_char: 1000});
-                                break;
-                            }
-                            case 'bemjson':
-                            {
-                                compiledText = JSON.stringify(BEMJSON, null, 4);
-                                break;
-                            }
-                        }
-                    } catch (e) {
-                        return engineName.toUpperCase() + ' error: ' + e.message + '\n' + e.stack;
-                    }
-                    return compiledText;
-                }
-            }
+            return new engines[engineName];
 
         },
 
@@ -96,11 +56,17 @@ modules.define('demo', [ 'i-bem__dom', 'pretty', 'functions__debounce' ], functi
             return this._bemhtml.getValue();
         },
         _getBEMJSON: function() {
-            return this._bemjson.getValue();
+            return this._bemjson.getValue() || {};
         },
         _render: function() {
-            var engine = this._getEngine(this.params.engine, this._engines);
-            this._html.setValue(engine.render(this._getBEMJSON()));
+            const engine = this._getEngine(this.params.engine, this._engines);
+            let result = '';
+            try {
+                result = engine.render(this._getBEMJSON());
+            } catch(e) {
+                result = e.message;
+            }
+            this._html.setValue(result);
         },
         _save: function() {
             var bemhtml = this._getBEMHTML(),
@@ -154,11 +120,73 @@ modules.define('demo', [ 'i-bem__dom', 'pretty', 'functions__debounce' ], functi
         return ret;
     }
 
-    function safeEval(str) {
-        try {
-            return (new Function('return ' + str))();
-        } catch(e) {
-            return e;
+    class BEMXJSTEngine {
+        constructor() {
+            this._engineName = 'unknown';
+        }
+        render(bemjson) {
+            throw new Error('Render not implemented.');
+        }
+        _evalBEMJSON(str){
+            try {
+                return (new Function('return ' + str))();
+            } catch(e) {
+                throw new Error('BEMJSON error: ' + e.message);
+            }
+        }
+        _safe(fn) {
+            try {
+                return fn();
+            } catch(e) {
+                return this._engineName + ' error: ' + e.message + '\n' + e.stack;
+            }
+        }
+    }
+
+    class BEMHTMLEngine extends BEMXJSTEngine {
+        constructor() {
+            super();
+            this._engineName = 'BEMHTML';
+            this._engine = new BEMHTML({});
+        }
+        render(bemjson) {
+            let bemhtml = {};
+            const BEMJSON = this._evalBEMJSON(bemjson);
+            this._engine.compile(bemjson);
+            this._engine.exportApply(bemhtml);
+            return this._safe(function() {
+                return pretty(bemhtml.apply(BEMJSON), {max_char: 1000});
+            });
+        }
+    }
+
+    class BEMVIDOMEngine extends BEMXJSTEngine {
+        constructor() {
+            super();
+            this._engine = new vidom({});
+            this._engineName = 'VIDOM';
+        }
+        render(bemjson) {
+            let bemhtml = {};
+            const BEMJSON = this._evalBEMJSON(bemjson);
+            this._engine.compile(bemjson);
+            this._engine.exportApply(bemhtml);
+            return this._safe(function() {
+                return JSON.stringify(bemhtml.apply(BEMJSON), null, 4);
+            });
+        }
+    }
+
+    class BEMJSONEngine extends BEMXJSTEngine {
+        constructor() {
+            super();
+            this._engineName = 'BEMJSON';
+        }
+        render(bemjson) {
+            const BEMJSON = this._evalBEMJSON(bemjson);
+            return this._safe(function() {
+                return JSON.stringify(BEMJSON, null, 4);
+            });
         }
     }
 
