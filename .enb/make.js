@@ -14,7 +14,9 @@ var techs = {
         // bemhtml
         bemhtml: require('enb-bemxjst/techs/bemhtml'),
         bemxjst: require('./techs/bemxjst'),
-        htmlFromBemjson: require('enb-bemxjst/techs/bemjson-to-html')
+        htmlFromBemjson: require('enb-bemxjst/techs/bemjson-to-html'),
+        babel: require('enb-babel/techs/js-babel'),
+        prependModules: require('enb-babel/techs/prepend-modules')
     },
     enbBemTechs = require('enb-bem-techs'),
     levels = [
@@ -55,13 +57,17 @@ module.exports = function(config) {
             [techs.htmlFromBemjson],
 
             // js
-            [techs.browserJs, {
-                target: '?.js',
-                includeYM: true
+            [ techs.babel, {
+                target: '?.es5.js'
+            }],
+            
+            [ techs.prependModules, {
+                source: '?.es5.js',
+                target: '?.browser.js'
             }],
 
             // borschik
-            [techs.borschik, { sourceTarget: '?.js', destTarget: 'x?.js', freeze: true, minify: isProd }],
+            [techs.borschik, { sourceTarget: '?.browser.js', destTarget: 'x?.js', freeze: true, minify: false }],
             [techs.borschik, { sourceTarget: '?.browser.bemhtml.js', destTarget: 'x?.browser.bemhtml.js', freeze: true, minify: isProd }],
             [techs.borschik, { sourceTarget: '?.css', destTarget: 'x?.css', freeze: true, minify: isProd }]
         ]);
