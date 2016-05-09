@@ -63,7 +63,8 @@ module.exports = {
                             block: 'engine-selector',
                             mix: { block: 'header', elem: 'item' },
                             mods: { state: 'loading' },
-                            engines: ['BEMHTML', 'VIDOM', 'BEMJSON']
+                            // VIDOM will be enabled after https://github.com/bem/bem-xjst/pull/235 
+                            engines: ['BEMHTML', 'BEMJSON' /*, 'VIDOM' */]
                         },
                         {
                             block: 'link',
