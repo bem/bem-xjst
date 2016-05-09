@@ -67,7 +67,7 @@ module.exports = function(config) {
             }],
 
             // borschik
-            [techs.borschik, { sourceTarget: '?.browser.js', destTarget: 'x?.js', freeze: true, minify: false }],
+            [techs.borschik, { sourceTarget: '?.browser.js', destTarget: 'x?.js', freeze: true, minify: isProd }],
             [techs.borschik, { sourceTarget: '?.browser.bemhtml.js', destTarget: 'x?.browser.bemhtml.js', freeze: true, minify: isProd }],
             [techs.borschik, { sourceTarget: '?.css', destTarget: 'x?.css', freeze: true, minify: isProd }]
         ]);
