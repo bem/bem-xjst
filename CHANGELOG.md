@@ -1,5 +1,42 @@
 # BEM-XJST Changelog
 
+# 2016-05-11, [v6.4.1](https://github.com/bem/bem-xjst/compare/v6.4.1...v6.4.0), @miripiruni
+
+Bug fixed: in case of same block `mods` disappearing. Now bem-xjst keep it. Example:
+
+```js
+// Template:
+block('b1').elem('e1').content()(function() {
+    return JSON.stringify(this.mods);
+});
+```
+
+```js
+// BEMJSON:
+{
+    block: 'b1',
+    mods: { a: 1 },
+    content: { block: 'b1', elem: 'e1' }
+}
+```
+
+Result before fix (v6.4.0):
+```html
+<div class="b1 b1_a_1"><div class="b1__e1">{}</div></div>
+```
+
+Result after fix (v6.4.1):
+```html
+<div class="b1 b1_a_1"><div class="b1__e1">{"a":1}</div></div>
+```
+
+Now you can pass to `bemxjst.compile` named function.
+
+* [[`61f21249cf`](https://github.com/bem/bem-xjst/commit/61f21249cf)] - **bemjxst**: should keep `mods` in case of same block (miripiruni)
+* [[`ae5521104c`](https://github.com/bem/bem-xjst/commit/ae5521104c)] - Remove `elemMatch` fix for #260 (miripiruni)
+* [[`af9a35c906`](https://github.com/bem/bem-xjst/commit/af9a35c906)] - Change files in package.js (Vasiliy)
+* [[`274f438116`](https://github.com/bem/bem-xjst/commit/274f438116)] - bemxjst.compile: error when passed function with name (Fix #250) (miripiruni)
+
 # 2016-04-18, [v6.4.0](https://github.com/bem/bem-xjst/compare/v6.4.0...v6.3.1), @miripiruni
 
 New option for content escaping: `escapeContent`.
