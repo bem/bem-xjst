@@ -101,4 +101,30 @@ describe('BEMContext this.mods', function() {
       mods: { m1: 'v1' }
     }, '<div class="b1 b1_m1_v1 b1_m2_v2"></div>');
   });
+
+  it('should keep `mods` in case of same block', function () {
+    test(function() {
+      block('b1').elem('e1').content()(function() {
+        return JSON.stringify(this.mods);
+      });
+    }, {
+      block: 'b1',
+      mods: { a: 1 },
+      content: { block: 'b1', elem: 'e1' }
+    }, '<div class="b1 b1_a_1"><div class="b1__e1">{"a":1}' +
+      '</div></div>');
+  });
+
+  it('should keep `mods` in case of same block', function () {
+    test(function() {
+      block('b1').elem('e1').content()(function() {
+        return JSON.stringify(this.mods);
+      });
+    }, {
+      block: 'b1',
+      mods: { a: 1 },
+      content: { block: 'b1', mods: {}, elem: 'e1' }
+    }, '<div class="b1 b1_a_1"><div class="b1__e1">{}' +
+      '</div></div>');
+  });
 });
