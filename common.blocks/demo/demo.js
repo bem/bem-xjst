@@ -5,6 +5,22 @@ modules.define('demo', [ 'i-bem__dom', 'pretty', 'functions__debounce' ], functi
             js: {
                 inited: function() {
 
+                    this._page = this.findBlockOutside('page');
+                    this._engineSelector = this._page.findBlockInside('engine-selector');
+                    this._$engineSelector = this._engineSelector.domElem;
+
+                    this.params.engine = this._$engineSelector.find('option:selected').val();
+
+                    this._$engineSelector.on('change', function() {
+                        this.params.engine = this._$engineSelector.find('option:selected').val();
+                        this._render();
+                    }.bind(this));
+
+                    this._engines = {
+                        bemhtml: BEMHTMLEngine,
+                        bemjson: BEMJSONEngine
+                    };
+
                     this._bemhtml = this.findBlockOn('bemhtml', 'editor');
                     this._bemjson = this.findBlockOn('bemjson', 'editor');
                     this._html = this.findBlockOn('html', 'editor');
@@ -25,6 +41,12 @@ modules.define('demo', [ 'i-bem__dom', 'pretty', 'functions__debounce' ], functi
                 }
             }
         },
+
+        _getEngine: function(engineName, engines) {
+            return new engines[engineName];
+
+        },
+
         _onChange: function() {
             this._render();
             this._save();
@@ -33,30 +55,17 @@ modules.define('demo', [ 'i-bem__dom', 'pretty', 'functions__debounce' ], functi
             return this._bemhtml.getValue();
         },
         _getBEMJSON: function() {
-            return this._bemjson.getValue();
+            return this._bemjson.getValue() || {};
         },
         _render: function() {
+            const engine = this._getEngine(this.params.engine, this._engines);
+            let result = '';
             try {
-                var api = new BEMHTML({}),
-                    bemhtml = {};
-
-                api.compile(this._getBEMHTML());
-                api.exportApply(bemhtml);
+                result = engine.render(this._getBEMJSON());
             } catch(e) {
-                this._html.setValue('BEMHTML error: ' + e.message + '\n' + e.stack);
-                return;
+                result = e.message;
             }
-
-            var BEMJSON = safeEval(this._getBEMJSON());
-
-            if (BEMJSON instanceof Error) {
-                this._html.setValue('BEMJSON error: ' + BEMJSON.message + '\n' + BEMJSON.stack);
-                return;
-            }
-
-            this._html.setValue(pretty(bemhtml.apply(BEMJSON), {
-                max_char: 1000
-            }));
+            this._html.setValue(result);
         },
         _save: function() {
             var bemhtml = this._getBEMHTML(),
@@ -69,9 +78,9 @@ modules.define('demo', [ 'i-bem__dom', 'pretty', 'functions__debounce' ], functi
             });
 
             history.pushState({}, document.title, location.pathname + '?' + [
-                'bemhtml=' + encodeURIComponent(bemhtml),
-                'bemjson=' + encodeURIComponent(bemjson)
-            ].join('&'));
+                    'bemhtml=' + encodeURIComponent(bemhtml),
+                    'bemjson=' + encodeURIComponent(bemjson)
+                ].join('&'));
         },
         _load: function() {
             var data = parseParams(location.search.split('?')[1]) || store.get('playground');
@@ -110,11 +119,56 @@ modules.define('demo', [ 'i-bem__dom', 'pretty', 'functions__debounce' ], functi
         return ret;
     }
 
-    function safeEval(str) {
-        try {
-            return (new Function('return ' + str))();
-        } catch(e) {
-            return e;
+    class BEMXJSTEngine {
+        constructor() {
+            this._engineName = 'unknown';
+        }
+        render(bemjson) {
+            throw new Error('Render not implemented.');
+        }
+        _evalBEMJSON(str){
+            try {
+                return (new Function('return ' + str))();
+            } catch(e) {
+                throw new Error('BEMJSON error: ' + e.message);
+            }
+        }
+        _safe(fn) {
+            try {
+                return fn();
+            } catch(e) {
+                return this._engineName + ' error: ' + e.message + '\n' + e.stack;
+            }
+        }
+    }
+
+    class BEMHTMLEngine extends BEMXJSTEngine {
+        constructor() {
+            super();
+            this._engineName = 'BEMHTML';
+            this._engine = new BEMHTML({});
+        }
+        render(bemjson) {
+            let bemhtml = {};
+            const BEMJSON = this._evalBEMJSON(bemjson);
+            this._engine.compile(bemjson);
+            this._engine.exportApply(bemhtml);
+            return this._safe(function() {
+                return pretty(bemhtml.apply(BEMJSON), {max_char: 1000});
+            });
+        }
+    }
+
+    class BEMJSONEngine extends BEMXJSTEngine {
+        constructor() {
+            super();
+            this._engineName = 'BEMJSON';
+        }
+        render(bemjson) {
+            const BEMJSON = this._evalBEMJSON(bemjson);
+            return this._safe(function() {
+                return JSON.stringify(BEMJSON, null, 4);
+            });
         }
     }
 
