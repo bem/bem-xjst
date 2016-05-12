@@ -57,4 +57,38 @@ describe('Modes elemMod(elemModName, elemModVal)', function() {
       '<div class="b__inner b__inner_valid_valid"></div>' +
     '</div>');
   });
+
+  describe('elemModVal types', function() {
+    it('number should match to string', function() {
+      test(function() {
+        block('b').elem('e').elemMod('em', 1).tag()('span');
+      },
+      { block: 'b', elem: 'e', elemMods: { em: '1' } },
+      '<span class="b__e b__e_em_1"></span>');
+    });
+
+    it('string should match to number', function() {
+      test(function() {
+        block('b').elem('e').elemMod('em', '1').tag()('span');
+      },
+      { block: 'b', elem: 'e', elemMods: { em: 1 } },
+      '<span class="b__e b__e_em_1"></span>');
+    });
+
+    it('boolean should match to string', function() {
+      test(function() {
+        block('b').elem('e').elemMod('em', 'true').tag()('span');
+      },
+      { block: 'b', elem: 'e', elemMods: { em: true } },
+      '<span class="b__e b__e_em"></span>');
+    });
+
+    it('string should match to boolean', function() {
+      test(function() {
+        block('b').elem('e').elemMod('em', 'true').tag()('span');
+      },
+      { block: 'b', elem: 'e', elemMods: { em: true } },
+      '<span class="b__e b__e_em"></span>');
+    });
+  });
 });

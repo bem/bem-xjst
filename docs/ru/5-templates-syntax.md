@@ -76,6 +76,25 @@ block('page').mod('type', 'index').mix()({ block: 'mixed' });
 <body class="page page_type_index mixed"></body>
 ```
 
+`modVal` проверяются на соответствие после приведения к строке. Пример:
+```js
+{
+  block: 'item',
+  mods: {
+      size: 1 // Обратите внимание, что тип значения модификатора size — Number
+  }
+}
+```
+Шаблоны:
+```js
+block('item')
+  .mod('size', '1') // Здесь тип значения модификатора — String
+  .tag()('small');
+```
+Шаблон будет применен, так как bem-xjst проверит значения `modVal` на соответствие после приведения их к строке. Результат будет:
+```html
+<small class="item item_size_1"></small>
+```
 
 ### elemMod
 ```js
@@ -101,6 +120,8 @@ block('page').elem('content').elemMod('type', 'index').mix()({ block: 'mixed' })
 ```html
 <body class="page__content page__content_type_index mixed"></body>
 ```
+
+`elemModVal` проверяются на соответствие после приведения к строке. Это поведение аналогично поведению проверки `modVal`.
 
 
 ### match

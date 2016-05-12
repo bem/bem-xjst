@@ -79,6 +79,26 @@ Both templates are applied. Result:
 <body class="page page_type_index mixed"></body>
 ```
 
+`modVal` checked for compliance after converting to String. Example:
+```js
+{
+  block: 'item',
+  mods: {
+      size: 1 // Notice that value is Number
+  }
+}
+```
+Template:
+```js
+block('item')
+  .mod('size', '1') // Notice that value is String
+  .tag()('small');
+```
+The template are applied. Result:
+```html
+<small class="item item_size_1"></small>
+```
+
 
 ### elemMod
 ```js
@@ -103,6 +123,8 @@ Both templates are applied. Result:
 ```html
 <body class="page__content page__content_type_index mixed"></body>
 ```
+
+`elemModVal` checked for compliance after converting to String. This behavior is similar to checking `modVal`.
 
 
 ### match
