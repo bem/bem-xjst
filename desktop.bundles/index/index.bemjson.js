@@ -16,7 +16,6 @@ module.exports = {
     ],
     scripts: [
         { elem: 'js', url: 'xindex.js' },
-        { elem: 'js', url: 'xindex.browser.vidom.js' },
         { elem: 'js', url: 'xindex.browser.bemhtml.js' },
         { elem: 'js', url: 'https://cdnjs.cloudflare.com/ajax/libs/ace/1.2.2/ace.js' },
         { elem: 'js', url: 'https://apis.google.com/js/client.js' }
@@ -63,8 +62,7 @@ module.exports = {
                             block: 'engine-selector',
                             mix: { block: 'header', elem: 'item' },
                             mods: { state: 'loading' },
-                            // VIDOM will be enabled after https://github.com/bem/bem-xjst/pull/235 
-                            engines: ['BEMHTML', 'BEMJSON' /*, 'VIDOM' */]
+                            engines: ['BEMHTML', 'BEMJSON']
                         },
                         {
                             block: 'link',

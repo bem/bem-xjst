@@ -17,7 +17,6 @@ modules.define('demo', [ 'i-bem__dom', 'pretty', 'functions__debounce' ], functi
                     }.bind(this));
 
                     this._engines = {
-                        vidom: BEMVIDOMEngine,
                         bemhtml: BEMHTMLEngine,
                         bemjson: BEMJSONEngine
                     };
@@ -156,23 +155,6 @@ modules.define('demo', [ 'i-bem__dom', 'pretty', 'functions__debounce' ], functi
             this._engine.exportApply(bemhtml);
             return this._safe(function() {
                 return pretty(bemhtml.apply(BEMJSON), {max_char: 1000});
-            });
-        }
-    }
-
-    class BEMVIDOMEngine extends BEMXJSTEngine {
-        constructor() {
-            super();
-            this._engine = new vidom({});
-            this._engineName = 'VIDOM';
-        }
-        render(bemjson) {
-            let bemhtml = {};
-            const BEMJSON = this._evalBEMJSON(bemjson);
-            this._engine.compile(bemjson);
-            this._engine.exportApply(bemhtml);
-            return this._safe(function() {
-                return JSON.stringify(bemhtml.apply(BEMJSON), null, 4);
             });
         }
     }
