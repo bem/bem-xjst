@@ -19,4 +19,4 @@ Project structure:
  * index.js — entry point.
  * data.js — typical data from any API or your backend.
  * bemtree-templates.js — templates to convert JSON to BEMJSON.
- * bemhtml.templates.js — templates to convert BEMJSON to HTML.
+ * bemhtml-templates.js — templates to convert BEMJSON to HTML.
