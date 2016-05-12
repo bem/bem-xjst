@@ -43,4 +43,31 @@ describe('Modes attrs', function() {
     },
     '<div class="button" type="link" name="button"></div>');
   });
+
+  describe('Style cases', function() {
+    it('should convert style attrs to inline styles', function() {
+      test(function() {
+        block('b').attrs()({
+          style: {
+            background: '#000',
+            padding: '10px 20px'
+          }
+        });
+      },
+      { block: 'b' },
+      '<div class="b" style="background:#000;padding:10px 20px;"></div>');
+    });
+
+    it('should merge style from bemjson with templates', function() {
+      test(function() {
+        block('b').attrs()({
+          style: {
+            background: '#000'
+          }
+        });
+      },
+      { block: 'b', attrs: { style: { color: 'red' } } },
+      '<div class="b" style="background:#000;color:red;"></div>');
+    });
+  });
 });
