@@ -788,8 +788,6 @@ oninit(function(exports) {
 });
 
 block('i-services').def()(
-    elemMatch(function() { return this.elem; })(''),
-
     elem('name')(function() {
         return applyCtx(this['i-services'].serviceName(this.ctx.id));
     }),
