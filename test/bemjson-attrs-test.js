@@ -106,4 +106,20 @@ describe('BEMJSON attrs', function() {
       });
     }, { block: 'b' }, '<div class="b opa"></div>');
   });
+
+  describe('Style cases', function() {
+    it('should convert style attrs to inline styles', function() {
+      test(function() {}, {
+        block: 'b',
+        attrs: {
+          style: {
+            width: '100px',
+            height: '100px',
+            'font-size': '14px'
+          }
+        }
+      },
+      '<div class="b" style="width:100px;height:100px;font-size:14px;"></div>');
+    });
+  });
 });
