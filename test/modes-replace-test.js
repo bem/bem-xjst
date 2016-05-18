@@ -50,4 +50,18 @@ describe('Modes replace', function() {
       block('b2').replace()({ block: 'b1' });
     });
   });
+
+  it('should not match on removed mods', function () {
+    test(function() {
+      block('b1').mod('a', 'b').replace()(function() {
+        return {
+          block: 'b1',
+          content: 'content'
+        };
+      });
+    }, {
+      block: 'b1',
+      mods: { a: 'b' }
+    }, '<div class="b1">content</div>');
+  });
 });
