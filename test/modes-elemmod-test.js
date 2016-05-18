@@ -17,8 +17,9 @@ describe('Modes elemMod(elemModName, elemModVal)', function() {
     },
     {
       block: 'b',
-      content: { elem: 'inner',
-      elemMods: { valid: true }
+      content: {
+        elem: 'inner',
+        elemMods: { valid: true }
       }
     },
     '<div class="b">' +
