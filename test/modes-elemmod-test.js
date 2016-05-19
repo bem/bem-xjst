@@ -57,4 +57,12 @@ describe('Modes elemMod(elemModName, elemModVal)', function() {
       '<div class="b__inner b__inner_valid_valid"></div>' +
     '</div>');
   });
+
+  it('should support simple elemMods', function() {
+    test(function() {
+      block('b').elem('e').elemMod('disabled').tag()('span');
+    },
+    { block: 'b', elem: 'e', elemMods: { disabled: true } },
+    '<span class="b__e b__e_disabled"></span>');
+  });
 });

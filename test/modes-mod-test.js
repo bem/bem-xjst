@@ -34,4 +34,12 @@ describe('Modes .mod(modName, modVal)', function() {
     { block: 'b', mods: { valid: 'valid' } },
     '<div class="b b_valid_valid"></div>');
   });
+
+  it('should support simple mods', function() {
+    test(function() {
+      block('b').mod('disabled').tag()('span');
+    },
+    { block: 'b', mods: { disabled: true } },
+    '<span class="b b_disabled"></span>');
+  });
 });
