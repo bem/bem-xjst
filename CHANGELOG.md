@@ -1,5 +1,37 @@
 # BEM-XJST Changelog
 
+# 2016-05-20, [v6.5.1](https://github.com/bem/bem-xjst/compare/v6.5.0...v6.5.1), @miripiruni
+
+Now bem-xjst trim and escape cls. Example:
+
+```js
+// Template:
+block('b1').elem('e1').content()(function() {
+    return JSON.stringify(this.mods);
+});
+```
+
+```js
+// BEMJSON:
+[
+    { block: 'b1', cls: '">' },
+    { block: 'b2', cls: '   hello    ' }
+]
+```
+
+Result before fix (v6.5.0):
+```html
+<div class="b ">"></div>
+<div class="   hello    "></div>
+```
+
+Result after fix (v6.5.1):
+```html
+<div class="b &quot;>"></div>
+<div class="hello"></div>
+```
+
+
 # 2016-05-20, [v6.5.0](https://github.com/bem/bem-xjst/compare/v6.4.3...v6.5.0), @miripiruni
 
 bemxjst.compile() should work with arrow functions and function with name and params.
