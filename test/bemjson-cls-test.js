@@ -67,4 +67,16 @@ describe('BEMJSON cls', function() {
       .apply({ cls: { a: 1, b: 2 } })
       .should.equal('<div class="[object Object]"></div>');
   });
+
+  it('should trim cls', function() {
+    compile('')
+      .apply({ cls: '   hello    ' })
+      .should.equal('<div class="hello"></div>');
+  });
+
+  it('should escape cls', function() {
+    compile('')
+      .apply({ block: 'b', cls: '">' })
+      .should.equal('<div class="b &quot;>"></div>');
+  });
 });
