@@ -1,5 +1,26 @@
 # BEM-XJST Changelog
 
+# 2016-05-20, [v6.4.3](https://github.com/bem/bem-xjst/compare/v6.4.2...v6.4.3), @miripiruni
+
+bem-xjst should not render attrs if it’s not hash. Strings, arrays, and etc.
+Example:
+
+```js
+// BEMJSON:
+{ block: 'b', attrs: [ 1, 2 ] }
+```
+
+Result before fix (v6.4.2):
+```html
+<div class="b" 0="1" 1="2"></div>
+```
+
+Result after fix (v6.4.3):
+```html
+<div class="b"></div>
+```
+
+
 # 2016-05-20, [v6.4.2](https://github.com/bem/bem-xjst/compare/v6.4.1...v6.4.2), @miripiruni
 
 bem-xjst should not inherit mods from namesake parent block. Example:
