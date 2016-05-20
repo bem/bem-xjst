@@ -41,7 +41,7 @@
     "coa": "^1.0.1",
     "inherits": "^2.0.1",
     "minimalistic-assert": "^1.0.0",
-    "q": "~0.9.3"
+    "q": "^2.0.3"
   },
   "devDependencies": {
     "browserify": "^9.0.6",
