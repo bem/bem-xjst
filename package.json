@@ -44,7 +44,7 @@
     "q": "^2.0.3"
   },
   "devDependencies": {
-    "browserify": "^9.0.6",
+    "browserify": "^13.0.1",
     "jscs": "^3.0.3",
     "jshint": "^2.7.0",
     "mocha": "2.4.5",
