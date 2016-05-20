@@ -1,5 +1,28 @@
 # BEM-XJST Changelog
 
+# 2016-05-20, [v6.5.0](https://github.com/bem/bem-xjst/compare/v6.4.3...v6.5.0), @miripiruni
+
+bemxjst.compile() should work with arrow functions and function with name and params.
+
+```js
+var bemhtml = require('bem-xjst').bemhtml;
+
+var myFunction = function() {
+    block('page').tag()('body');
+};
+
+// myFunction can be in v6.5.0:
+//   function name() { … }
+//   function (a, b) { … }
+//   function name(a, b) { … }
+//   () => { … }
+//   (a, b) => { … }
+//   _ => { … }
+
+var templates = bemhtml.compile(myFunction);
+```
+
+
 # 2016-05-20, [v6.4.3](https://github.com/bem/bem-xjst/compare/v6.4.2...v6.4.3), @miripiruni
 
 bem-xjst should not render attrs if it’s not hash. Strings, arrays, and etc.
