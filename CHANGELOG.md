@@ -1,6 +1,62 @@
 # BEM-XJST Changelog
 
-# 2016-05-11, [v6.4.1](https://github.com/bem/bem-xjst/compare/v6.4.1...v6.4.0), @miripiruni
+# 2016-05-20, [v6.4.2](https://github.com/bem/bem-xjst/compare/v6.4.1...v6.4.2), @miripiruni
+
+bem-xjst should not inherit mods from namesake parent block. Example:
+
+```js
+// BEMJSON:
+{
+    block: 'b1',
+    mods: { a: 1 },
+    content: { block: 'b1' }
+}
+```
+
+Result before fix (v6.4.1):
+```html
+<div class="b1 b1_a_1"><div class="b1_a_1"></div></div>
+```
+
+Result after fix (v6.4.2):
+```html
+<div class="b1 b1_a_1"><div class="b1"></div></div>
+```
+
+bem-xjst should not match on removed mods. Example:
+
+```js
+// Template:
+block('b1').mod('a', 'b').replace()(function() {
+    return {
+        block: 'b1',
+        content: 'content'
+    };
+});
+```
+
+```js
+// BEMJSON:
+{
+    block: 'b1',
+    mods: { a: 1 }
+}
+```
+
+Result before fix (v6.4.1): endless loop :(
+
+Result after fix (v6.4.2):
+```html
+<div class="b1">content</div>
+```
+
+
+* [[`3451467c5d`](https://github.com/bem/bem-xjst/commit/3451467c5d)] - **bemxjst**: should not inherit `mods` from namesake parent block (Dmitry Starostin)
+* [[`c2f697f71a`](https://github.com/bem/bem-xjst/commit/c2f697f71a)] - We don’t need it anymore (Vasiliy Loginevskiy)
+* [[`ed7624ac91`](https://github.com/bem/bem-xjst/commit/ed7624ac91)] - Simple example (miripiruni)
+
+
+# 2016-05-11, [v6.4.1](https://github.com/bem/bem-xjst/compare/v6.4.0...v6.4.1), @miripiruni
 
 Bug fixed: in case of same block `mods` disappearing. Now bem-xjst keep it. Example:
 
