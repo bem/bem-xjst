@@ -59,4 +59,12 @@ describe('BEMJSON mods', function() {
       }
     }, '<div class="b1 b1__e1"></div>');
   });
+
+  it('should not inherit mods from namesake parent block', function () {
+    test(function() {}, {
+      block: 'b1',
+      mods: { a: 1 },
+      content: { block: 'b1' }
+    }, '<div class="b1 b1_a_1"><div class="b1"></div></div>');
+  });
 });
