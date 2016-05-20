@@ -48,8 +48,7 @@ describe('BEMJSON attrs', function() {
       '<div class="b"></div>');
   });
 
-  // TODO: https://github.com/bem/bem-xjst/issues/187
-  xit('should not return String as attrs value', function() {
+  it('should not return String as attrs value', function() {
     test(function() {},
       { block: 'b', attrs: 'skipme' },
       '<div class="b"></div>');
@@ -73,8 +72,7 @@ describe('BEMJSON attrs', function() {
       '<div class="b"></div>');
   });
 
-  // TODO: https://github.com/bem/bem-xjst/issues/187
-  xit('should not return Array as attrs value', function() {
+  it('should not return Array as attrs value', function() {
     test(function() {},
       { block: 'b', attrs: [ 1, 2 ] },
       '<div class="b"></div>');
