@@ -115,4 +115,19 @@ describe('BEMContext this.position', function() {
     { block: 'a1', content: { block: 'a2', content: { block: 'a3' } } },
     '<div class="a1 1"><div class="a2 1"><div class="a3 1"></div></div></div>');
   });
+
+  it('should proper calc position with applyCtx()', function() {
+    test(function() {
+      block('a')(
+        cls()(function() { return this.position; }),
+        cls()(function() {
+          applyCtx({ block: 'b' });
+          return applyNext();
+        })
+      );
+    },
+    { block: 'a' },
+    '<div class="a 1"></div>');
+  });
+
 });
