@@ -162,7 +162,7 @@
 ```
 Результат шаблонизации BEMHTML:
 ```html
-<div class="link i-bem" data-bem='{"link":{title:"&#39;Sid &amp; Nancy&#39;"}}'>
+<div class="link i-bem" data-bem='{"link":{title:"film &#39;Sid &amp; Nancy&#39;"}}'>
 </div>
 ```
 
