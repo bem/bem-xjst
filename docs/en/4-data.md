@@ -146,7 +146,7 @@ Values are escaped:
 ```
 Result of BEMHTML templating:
 ```html
-<div class="link i-bem" data-bem='{"link":{title:"&#39;Sid &amp; Nancy&#39;"}}'></div>
+<div class="link i-bem" data-bem='{"link":{title:"film &#39;Sid &amp; Nancy&#39;"}}'></div>
 ```
 
 
