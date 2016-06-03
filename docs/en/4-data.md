@@ -2,7 +2,7 @@
 
 ## Overview
 Any JavaScript object can be considered BEMJSON. However, to control the
-templating result, we need the standard modes expected by bem-xjst.
+templating result, we need the standard modes expected by [bem-xjst](1-about.md).
 
 ## Conventions for standard BEMJSON modes
 
