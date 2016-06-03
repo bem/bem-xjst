@@ -1,14 +1,14 @@
 # What is available in the template body?
 
-While traversing input data, BEM-XJST builds a context, which contains:
+While traversing input data, bem-xjst builds a context, which contains:
 
-* [normalized information about the current BEM entity](#normalized)
-* [the current BEMJSON node](#ctx)
+* [normalized information about the current BEM entity](#normalized-information-about-the-current-bem-entity)
+* [the current BEMJSON node](#current-bemjson-node)
 * [helpers](#helpers)
-* [user-defined custom fields](#user-defined)
-* [methods for controlling the templating process](#methods)
+* [user-defined custom fields](#user-defined-custom-fields)
+* [methods for controlling the templating process](#methods-for-controlling-the-templating-process)
 
-## <a name="normalized"></a>Normalized information about the current BEM entity
+## Normalized information about the current BEM entity
 
 The template engine normalizes data about the current BEM entity. The current BEMJSON node might have incomplete information about the BEM entity. For example:
 
@@ -41,7 +41,7 @@ block('page').match(function() {
 ```
 
 
-## <a name="ctx"></a>Current BEMJSON node
+## Current BEMJSON node
 The current BEMJSON node is available in the `this.ctx` field.
 
 Example:
@@ -66,7 +66,7 @@ Result of BEMHTML templating:
 ```
 
 
-## <a name="helpers"></a>Helpers
+## Helpers
 ### Escape methods
 
 #### xmlEscape
@@ -119,7 +119,7 @@ By default, input data from the [`js`](4-data.md#js) field and data from the [`j
 
 ### Position helpers
 
-#### `this.position`
+#### this.position
 
 The position in the BEM tree (the `this.position` context field) is a natural number corresponding to the sequential number of the current (contextual) BEM entity in relation to its neighbors in the tree (peer entities).
 
@@ -186,7 +186,7 @@ Checks whether the node is the last among its peers in the input tree.
 
 ### Unique ID generator
 
-#### `this.generateId()`
+#### this.generateId()
 
 Generates an 'id' for the current node.
 
@@ -228,7 +228,7 @@ Result of BEMHTML templating:
 * `this.isSimple({*} arg)` Checks whether `arg` is a JavaScript primitive type.
 * `this.isShortTag({String} tagName)` Checks whether `tagName` is a tag that doesn’t require a closing element.
 
-### `this.reapply()`
+### this.reapply()
 This is the ability to template any BEMJSON data located in the template body and get a string as the result.
 
 BEMJSON:
@@ -250,7 +250,7 @@ Result of BEMHTML templating:
 ```
 
 
-## <a name="user-defined"></a>User-defined custom fields
+## User-defined custom fields
 
 The context available in the template body can be extended by the user.
 
@@ -304,9 +304,10 @@ As a result, `html` contains the string:
 <div class="b">Hello, templates</div>
 ```
 
-## <a name="methods"></a>Methods for controlling the templating process
+## Methods for controlling the templating process
 
 The methods `apply`, `applyNext` and `applyCtx` are available in the body of templates. For more information, see the next section on runtime.
+
 ***
 
 Read next: [runtime](7-runtime.md)

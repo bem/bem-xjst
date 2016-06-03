@@ -1,6 +1,6 @@
-# About BEM-XJST
+# About bem-xjst
 
-## What is BEM-XJST?
+## What is bem-xjst?
 bem-xjst is a template engine for web development using the BEM methodology. Starting with version 5.0.0, it contains two engines:
 
 1. BEMHTML — for transforming BEMJSON to HTML.
@@ -16,7 +16,7 @@ Before using the template engine, you should review:
 
 ## Features
 1. Templates are extensible: they can be redefined or extended.
-1. Templates are written using [pattern matching](7-runtime.md#matching) for the values and structure of input data.
+1. Templates are written using [pattern matching](7-runtime.md#how-templates-are-selected-and-applied) for the values and structure of input data.
 1. Traverses input data by default.
 1. Built-in rendering behavior is used by default, even if the user didn’t add templates.
 1. Written in JavaScript, so the entire JavaScript infrastructure is available for checking code quality and conforming to best practices.

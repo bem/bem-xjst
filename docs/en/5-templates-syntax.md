@@ -1,8 +1,8 @@
 # Template syntax
-User-defined templates are a major part of BEM-XJST. Template contains [predicate](#predicate) and [body](#body).
+User-defined templates are a major part of bem-xjst. Template contains [predicate](#template-predicate) and [body](#template-body).
 
 
-## <a name="predicate"></a>Template predicate
+## Template predicate
 
 For each node of the input tree, the template engine checks the conditions
 specified in the templates. These conditions are called subpredicates. They make
@@ -10,7 +10,7 @@ up the template predicate. Conditions can be simple, such as checking the name
 of the block or element. They can also be complex, such as checking the values
 of user-defined modes in the current BEMJSON node.
 
-## <a name="list-of-predicates"></a>List of subpredicates
+## List of subpredicates
 * [block](#block)
 * [elem](#elem)
 * [mod](#mod)
@@ -24,7 +24,7 @@ of user-defined modes in the current BEMJSON node.
  */
 block(name)
 ```
-The name can be specified as[`'*'`](https://github.com/bem/bem-xjst/blob/master/docs/ru/7-runtime.md#wildcard).
+The name can be specified as[`'*'`](7-runtime.md#templates-for-any-entities).
 
 Each template must contain the block name subpredicate. Otherwise, the template engine throws an error: `BEMHTML error: block('…') not found in one of the templates`.
 
@@ -52,7 +52,7 @@ Input data:
  */
 elem(name)
 ```
-Checking the element. The name can be specified as [`'*'`](https://github.com/bem/bem-xjst/blob/master/docs/ru/7-runtime.md#wildcard).
+Checking the element. The name can be specified as [`'*'`](7-runtime.md#templates-for-any-entities).
 
 
 ### mod
@@ -134,7 +134,7 @@ Both templates are applied. Result:
  */
 match(function() { return … })
 ```
-Checking a custom condition. In the context of the function, all s are accessible that are [accessible in the template](https://github.com/bem/bem-xjst/blob/master/docs/ru/6-templates-context.md). The result of the function is converted to `Boolean`.
+Checking a custom condition. In the context of the function, all s are accessible that are [accessible in the template](6-templates-context.md). The result of the function is converted to `Boolean`.
 
 The order for checking `match` is guaranteed. The order for checking the other predicates isn’t important.
 
@@ -157,7 +157,7 @@ block('page')
     })
 ```
 
-The following two templates are the same in BEM-XJST terms:
+The following two templates are the same in bem-xjst terms:
 ```js
 block('link').elem('icon')
 elem('icon').block('link')
@@ -181,7 +181,7 @@ block('link')(
 There is no restriction on the nesting level of subpredicates.
 
 
-## <a name="body"></a>Template body
+## Template body
 The body of a template represents instructions for generating a templating result for the current BEMJSON node.
 
 The process of templating each node of the input data consists of phases called modes. Each mode is responsible for generating a separate part of the result. For example, for BEMHTML this might be an HTML tag, HTML class, HTML attributes, tag contents, and so on.
@@ -251,9 +251,9 @@ Result of BEMHTML templating:
 * [cls](#cls)
 * [replace](#replace)
 * [wrap](#wrap)
-* [User-defined modes](#user-defined)
+* [User-defined modes](#user-defined-modes)
 
-#### `def`
+#### def
 
 ```js
 /**
@@ -265,7 +265,7 @@ The `def` mode (short for "default") has a special status. It is responsible for
 
 This is a special mode that shouldn’t be used unless truly necessary. A user-defined template that redefines `def` disables calls of the other modes by default.
 
-#### `tag`
+#### tag
 ```js
 /**
  * @param {Function|String} name
@@ -275,7 +275,7 @@ tag()(name)
 HTML tag. `false` or `''` tells the BEMHTML engine to skip the HTML tag generation stage. Default: `div`.
 
 
-#### `attrs`
+#### attrs
 ```js
 /**
  * @param {function|Object} value
@@ -285,7 +285,7 @@ attrs()(value)
 Hash with HTML attributes. The attribute values [are escaped using the attrEscape function](6-templates-context.md#attrescape).
 
 
-#### `content`
+#### content
 ```js
 /**
  * @param {*} value
@@ -294,7 +294,7 @@ content()(value)
 ```
 Child nodes. By default, it is taken from the `content`  of the current BEMJSON node.
 
-#### `mix`
+#### mix
 ```js
 /**
  * @param {function|Object|Object[]|String} mixed
@@ -310,7 +310,7 @@ block('button').mix()([ { block: 'mixed' }, { block: 'control' } ]);
 block('header').mix()(function() { return { block: 'mixed' }; });
 ```
 
-#### `js`
+#### js
 ```js
 /**
  * @param {function|Boolean|Object} value
@@ -319,7 +319,7 @@ js()(value)
 ```
 JavaScript parameters. If the value isn’t falsy, it mixes `i-bem` and adds the content to JavaScript parameters. [More information about i-bem and JavaScript parameters](https://en.bem.info/technology/i-bem/v2/i-bem-js-params/#syntax-for-passing-parameters).  Data is [escaped using the jsAttrEscape function](6-templates-context.md#jsattrescape).
 
-#### `bem`
+#### bem
 ```js
 /**
  * @param {function|Boolean} value
@@ -328,7 +328,7 @@ bem()(value)
 ```
 Tells the template engine whether to add classes and JavaScript parameters for the BEM entity and its mixes. Default: `true`.
 
-#### `cls`
+#### cls
 ```js
 /**
  * @param {function|String} value
@@ -340,7 +340,7 @@ Adds an HTML class unrelated to the BEM subject domain.
 
 ### Helper modes
 
-#### `replace`
+#### replace
 For replacing the current node (matching the node and rendering some other entity). Example:
 ```js
 // BEMJSON
@@ -357,7 +357,7 @@ Result of BEMHTML templating:
 ```
 You can’t use `replace` for self-substitution with a wrapper, or it will loop endlessly.
 
-#### `wrap`
+#### wrap
 Wrap the current node in additional markup.
 
 Example:
@@ -382,7 +382,7 @@ Result of BEMHTML templating:
 <div class="wrap"><div class="quote">Docendo discimus</div></div>
 ```
 
-## <a name="user-defined"></a>User-defined modes
+## User-defined modes
 You can define your own mode and use it in the template body. Example:
 ```js
 // BEMJSON
@@ -427,5 +427,7 @@ More information about [apply()](7-runtime.md#apply).
 ## BEMTREE
 
 Only the [def](#def) and [content](#content) modes are used by the BEMTREE engine. User-defined modes can also be used. The other modes described in the documentation above can only be used in BEMHTML.
+
+***
 
 Read next: [What is available in the template body?](6-templates-context.md)

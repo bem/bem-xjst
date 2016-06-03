@@ -1,28 +1,28 @@
 # Runtime
 
-- [How the template engine runtime works](#how-it-works)
-- [Templates for any entities](#wildcard)
-- [Instructions for managing runtime](#methods)
+- [How the template engine runtime works](#how-the-template-engine-runtime-works)
+- [Templates for any entities](#templates-for-any-entities)
+- [Instructions for controlling runtime](#Instructions-for-controlling-runtime)
   - [apply](#apply): call the specified mode
   - [applyNext](#applynext): apply templates with lower priority than the current one to the node
   - [applyCtx](#applyctx): apply templates to any BEMJSON
 
-## <a name="how-it-works"></a>How the template engine runtime works
+## How the template engine runtime works
 
-The BEM-XJST template engine has a built-in mechanism for transversing the input data tree. This tree is recursively pre-order transversed, searching for an appropriate template for each node.
+The bem-xjst template engine has a built-in mechanism for transversing the input data tree. This tree is recursively pre-order transversed, searching for an appropriate template for each node.
 
 In the template body, the current node can be replaced with another one or have a new one appended. In this case, the template engine tries to fit the templates to all the new nodes.
 
-If you didn’t add any templates, BEM-XJST generates the result using defaults. This behavior is [described in the section on modes](5-templates-syntax.md#body).
+If you didn’t add any templates, bem-xjst generates the result using defaults. This behavior is [described in the section on modes](5-templates-syntax.md#body).
 
-### <a name="matching"></a>How templates are selected and applied
+### How templates are selected and applied
 
-Templates are located in an ordered list. Templates are checked in reverse order, meaning the last templates take priority over the first ones (taking the [wildcard](#wildcard) into account). For each node of the input tree, the template engine checks the predicate of each template. To do this, all the subpredicates are executed in the context of the node. If all the subpredicates returned `true`, the template search ends and the body of the current template is executed.
+Templates are located in an ordered list. Templates are checked in reverse order, meaning the last templates take priority over the first ones (taking the [wildcard](#templates-for-any-entities) into account). For each node of the input tree, the template engine checks the predicate of each template. To do this, all the subpredicates are executed in the context of the node. If all the subpredicates returned `true`, the template search ends and the body of the current template is executed.
 
 If a template is not found, the default behavior is used.
 
 
-## <a name="wildcard"></a>Templates for any entities
+## Templates for any entities
 
 You can write `*` in predicates instead of the name of a block or element. For example, this may be useful for uniform processing of all blocks.
 
@@ -55,7 +55,7 @@ A template with a subpredicate for `*` takes higher priority than a template wit
 
 A subpredicate for a `*` block is true for an empty object.
 
-## <a name="methods"></a>Instructions for controlling runtime
+## Instructions for controlling runtime
 
 ### apply
 ```js
@@ -171,5 +171,3 @@ Result of templating:
 ```html
 <div class="layout header sticky"></div>
 ```
-
-***

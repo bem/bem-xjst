@@ -2,7 +2,7 @@
 
 ## Overview
 Any JavaScript object can be considered BEMJSON. However, to control the
-templating result, we need the standard modes expected by BEM-XJST.
+templating result, we need the standard modes expected by bem-xjst.
 
 ## Conventions for standard BEMJSON modes
 
@@ -17,7 +17,7 @@ templating result, we need the standard modes expected by BEM-XJST.
 * [attrs](#attrs) hash of HTML attributes
 * [cls](#cls) HTML class
 * [tag](#tag) HTML tag
-* [user-defined fields](#user-defined)
+* [user-defined fields](#user-defined-fields)
 
 
 ### block
@@ -108,7 +108,7 @@ Result of BEMHTML templating:
 
 ### mix
 
-`{Object|Object[]|String}` BEM entities to [mix](https://en.bem.info/method/key-concepts/#mix) with the current one.
+`{Object|Object[]|String}` BEM entities to [mix](https://en.bem.info/methodology/key-concepts/#mix) with the current one.
 ```js
 // BEMJSON
 {
@@ -220,9 +220,9 @@ start
 ```
 
 
-### <a name="user-defined"></a>User-defined fields
+### User-defined fields
 
-You can add any other data fields in order to later process them in the template body as you see fit.. Example:
+You can add any other data fields in order to later process them in the template body as you see fit. Example:
 ```js
 // BEMJSON
 {

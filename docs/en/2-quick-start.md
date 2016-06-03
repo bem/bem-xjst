@@ -37,4 +37,6 @@ The resulting `html` contains this string:
 
 [Online demo](https://bem.github.io/bem-xjst/).
 
+***
+
 Read next: [API](3-api.md)

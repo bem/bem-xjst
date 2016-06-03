@@ -1,16 +1,16 @@
 # API
 
-* [Choosing an engine, compiling and applying templates](#choose-engine)
-* [Adding templates](#add-templates)
+* [Choosing an engine, compiling and applying templates](#choosing-an-engine-compiling-and-applying-templates)
+* [Adding templates](#adding-templates)
 * [Settings](#settings)
   - [Escaping](#escaping)
-  - [Delimiters in names of BEM entities](#naming)
-  - [Support JS-instances for elements (bem-core v4+)](#elemjs)
-  - [XHTML option](#xhtml)
-  - [Extending BEMContext](#bemcontext)
-* [Bundling](#bundle)
+  - [Delimiters in names of BEM entities](#delimiters-in-names-of-bem-entities)
+  - [Support JS-instances for elements (bem-core v4+)](#support-js-instances-for-elements-bem-core-v4)
+  - [XHTML option](#xhtml-option)
+  - [Extending BEMContext](#extending-bemcontext)
+* [Bundling](#bundling)
 
-## <a name="choose-engine"></a>Choosing an engine, compiling and applying templates
+## Choosing an engine, compiling and applying templates
 
 ### BEMHTML engine
 ```js
@@ -76,7 +76,7 @@ var result = templates.apply(bemjson);
 ```
 
 
-## <a name="add-templates"></a>Adding templates
+## Adding templates
 
 To add templates to the `templates` instance, use the `compile` method.
 ```js
@@ -103,11 +103,11 @@ html = templates.apply(bemjson);
 // html: '<h2 class="header">Documentation</h2>'
 ```
 
-If you need to [bundle](https://en.bem.info/method/build/#build-results) all the templates, the most efficient way is to use the [generate](#generate) method.
+If you need to [bundle](https://en.bem.info/methodology/build/#build-results) all the templates, the most efficient way is to use the [generate](#bundling) method.
 
-## <a name="settings"></a>Settings
+## Settings
 
-### <a name="escaping"></a>Escaping
+### Escaping
 
 You can set `escapeContent` option to `true` to escape string values of `content` field with [`xmlEscape`](6-templates-context.md#xmlescape).
 
@@ -169,7 +169,7 @@ In this case `content.html` will be rendered as is:
 
 Notice that in `content.html` expected only string type.
 
-### <a name="naming"></a>Delimiters in names of BEM entities
+### Delimiters in names of BEM entities
 
 ```js
 var bemxjst = require('bem-xjst');
@@ -199,10 +199,10 @@ The resulting `html` contains the string:
 ```html
 <div class="page page_theme_gray"><div class="page__head page__head_type_short"></div></div>
 ```
-You can find more information about [naming conventions](https://en.bem.info/method/naming-convention/) on bem.info.
+You can find more information in [naming conventions](https://en.bem.info/methodology/naming-convention/) article.
 
 
-### <a name="elemjs"></a>Support JS-instances for elements (bem-core v4+)
+### Support JS-instances for elements (bem-core v4+)
 
 bem-xjst have `elemJsInstances` option for support JS instances for elems (bem-core v4+).
 
@@ -238,7 +238,7 @@ Result with v6.3.0:
 Notice that `i-bem` was added.
 
 
-### <a name="xhtml"></a>XHTML option
+### XHTML option
 
 `xhtml` option allow you to ommit closing slash in void HTML elements (only have a start tag).
 
@@ -265,7 +265,7 @@ Result:
 <br>
 ```
 
-### <a name="bemcontext"></a>Extending `BEMContext`
+### Extending `BEMContext`
 
 You can extend `BEMContext` in order to use user-defined functions in the template body.
 
@@ -296,7 +296,7 @@ The resulting `html` contains the string:
 ```
 
 
-## <a name="bundle"></a>Bundling
+## Bundling
 
 The `generate` method generates JavaScript code that can be passed and run in the browser to get the `templates` object. Example:
 ```js
