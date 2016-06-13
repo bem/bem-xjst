@@ -3,16 +3,17 @@
 * [Выбор движка, компиляция и применение шаблонов](#Выбор-движка-компиляция-и-применение-шаблонов)
 * [Добавление шаблонов](#Добавление-шаблонов)
 * [Настройки](#Настройки)
-  - [Экранирование](#Экранирование)
   - [Разделители в именовании БЭМ-сущностей](#Разделители-в-именовании-БЭМ-сущностей)
   - [Поддержка JS-экземпляров для элементов (bem-core v4+)](#Поддержка-js-экземпляров-для-элементов-bem-core-v4)
   - [Закрытие одиночных элементов](#Закрытие-одиночных-элементов)
+  - [Экранирование](#Экранирование)
   - [Расширение BEMContext](#Расширение-bemcontext)
 * [Создание бандла](#Создание-бандла)
 
 ## Выбор движка, компиляция и применение шаблонов
 
 ### Движок BEMHTML
+
 ```js
 var bemxjst = require('bem-xjst');
 var bemhtml = bemxjst.bemhtml;
@@ -30,11 +31,13 @@ var html = templates.apply(bemjson);
 ```
 
 В результате `html` будет содержать строку:
+
 ```html
 <q class="quote">Пришел, увидел, отшаблонизировал.</q>
 ```
 
 ### Движок BEMTREE
+
 ```js
 var bemxjst = require('bem-xjst');
 var bemtree = bemxjst.bemtree;
@@ -75,10 +78,10 @@ var result = templates.apply(bemjson);
 ]
 ```
 
-
 ## Добавление шаблонов
 
 Чтобы добавить шаблоны к экземпляру `templates` воспользуйтесь методом `compile`.
+
 ```js
 var bemxjst = require('bem-xjst');
 
@@ -133,18 +136,25 @@ var bemjson = {
 
 var html = templates.apply(bemjson);
 ```
+
 В результате `html` будет содержать строку:
+
 ```html
 <div class="page page_theme_gray">
     <div class="page__head page__head_type_short"></div>
 </div>
 ```
+
 Подробнее читай в [cоглашении по именованию](https://ru.bem.info/methodology/naming-convention/).
 
 ### Поддержка JS-экземпляров для элементов (bem-core v4+)
+
 В библиотеке [bem-core](https://ru.bem.info/libs/bem-core/) начиная с 4 версии появилась поддержка JS-экземпляров для элементов.
+
 Это требует добавления класса `i-bem` для элементов, имеющих JS-параметры.
+
 Добиться этого можно с помощью опции `elemJsInstances`:
+
 ```js
 var bemxjst = require('bem-xjst');
 var templates = bemxjst.bemhtml.compile(function() {
@@ -163,7 +173,9 @@ var bemjson = {
 
 var html = templates.apply(bemjson);
 ```
+
 В результате `html` будет содержать строку:
+
 ```html
 <div class="b__e i-bem" data-bem='{"b__e":{}}'></div>
 ```
@@ -172,6 +184,7 @@ var html = templates.apply(bemjson);
 
 Если у вас нет необходимости генерировать корректный XHTML (закрывать одиночные элементы),
 можно немного сэкономить, отключив опцию `xhtml`:
+
 ```js
 var bemxjst = require('bem-xjst');
 var templates = bemxjst.bemhtml.compile(function() {
@@ -188,7 +201,9 @@ var bemjson = {
 
 var html = templates.apply(bemjson);
 ```
+
 В результате `html` будет содержать строку:
+
 ```html
 <br>
 ```
@@ -216,6 +231,7 @@ var bemjson = {
 
 var html = templates.apply(bemjson);
 ```
+
 В результате `html` будет содержать строку:
 
 ```html
@@ -242,6 +258,7 @@ var bemjson = {
 
 var html = templates.apply(bemjson);
 ```
+
 В результате `html` будет содержать строку:
 
 ```html
@@ -250,18 +267,19 @@ var html = templates.apply(bemjson);
 
 Обратите внимание, что в `content.html` ожидается именно строка.
 
-
-### Расширение `BEMContext`
+### Расширение BEMContext
 
 Вы можете расширять `BEMContext`, чтобы использовать в теле шаблона пользовательские функции.
 
 ```js
 var bemxjst = require('bem-xjst');
 var templates = bemxjst.bemhtml.compile('');
+
 // Расширяем прототип контекста
 templates.BEMContext.prototype.hi = function(name) {
     return 'Hello, ' + username;
 };
+
 // Добавляем шаблоны
 templates.compile(function() {
     block('b').content()(function() {
@@ -277,14 +295,15 @@ var html = templates.apply(bemjson);
 ```
 
 В результате `html` будет содержать строку:
+
 ```html
 <div class="b">Hello, templates</div>
 ```
 
-
 ## Создание бандла
 
-Метод `generate` генерирует JS-код, который может быть передан и выполнен в браузере для получения объекта `templates`. Пример:
+Метод `generate` генерирует JS-код, который может быть передан и выполнен в браузере для получения объекта `templates`.
+
 ```js
 var bemxjst = require('bem-xjst');
 var bundle = bemxjst.bemhtml.generate(function() {
@@ -292,6 +311,7 @@ var bundle = bemxjst.bemhtml.generate(function() {
     // ...
 });
 ```
+
 В `bundle` будет строка, содержащая JS-код ядра BEMHTML и пользовательских шаблонов.
 
 ***

@@ -3,48 +3,48 @@
 В процессе обхода входных данных bem-xjst строит контекст, который будет содержать:
 
 * [нормализованные сведения о текущей БЭМ-сущности](#Нормализованные-сведения-о-текущей-БЭМ-сущности)
-* [текущий узел BEMJSON](#Текущий-узел-BEMJSON)
+* [текущий узел BEMJSON](#Текущий-узел-bemjson)
 * [хелперы](#Хелперы)
 * [кастомные пользовательские поля](#Кастомные-пользовательские-поля)
 * [методы для управления шаблонизацией](#Методы-для-управления-шаблонизацией)
 
 ## Нормализованные сведения о текущей БЭМ-сущности
 
-Шаблонизатор нормализует сведения о текущей БЭМ-сущности. В текущем BEMJSON-узле могут быть неполные сведения о БЭМ-сущности. Например:
+Шаблонизатор нормализует сведения о текущей БЭМ-сущности. В текущем BEMJSON-узле могут быть неполные сведения о БЭМ-сущности:
 
 ```js
 {
     block: 'page',
     content: {
         elem: 'top'
-        // У узла нет поля block.
-        // Но шаблонизатор поймет, в контексте
-        // какого блока находится элемент top.
+        // У узла нет поля `block`.
+        // Но шаблонизатор поймёт, в контексте какого блока находится элемент `top`.
     }
 }
 ```
 
 Поля с нормализованными данными:
-* `this.block` {String} блок в текущем узле, либо блок БЭМ-сущности, в контексте которой находится текущий узел.
-* `this.elem` {String} элемент в текущем узле
-* `this.mods` {Object} модификаторы блока, явно указанные в текущем узле
-* `this.elemMods` {Object} модификаторы элемента, явно указанные в текущем узле
+* `this.block {String}` — блок в текущем узле, либо блок БЭМ-сущности, в контексте которой находится текущий узел.
+* `this.elem {String}` — элемент в текущем узле
+* `this.mods {Object}` — модификаторы блока, явно указанные в текущем узле
+* `this.elemMods {Object}` — модификаторы элемента, явно указанные в текущем узле
 
 Обратите внимание, что объекты `this.mods` и `this.elemMods` всегда присутствуют, поэтому проверки на их наличие в теле шаблона избыточные:
+
 ```js
 block('page').match(function() {
     // Избыточно:
     return this.mods && this.mods.type === 'index' && this.ctx.weather;
+
     // Достаточно:
     return this.mods.type === 'index' && this.ctx.weather;
 }).def()(function() { return … });
 ```
 
-
 ## Текущий узел BEMJSON
+
 В поле `this.ctx` доступен текущий узел BEMJSON.
 
-Пример:
 ```js
 {
     block: 'company',
@@ -61,15 +61,17 @@ block('company').attr()(function() {
 });
 ```
 Результат шаблонизации BEMHTML:
+
 ```html
 <div class="company" id="yandex" name="yandex"></div>
 ```
 
-
 ## Хелперы
+
 ### Методы для экранирования
 
 #### xmlEscape
+
 ```js
 /**
  * @param {String} str
@@ -77,24 +79,31 @@ block('company').attr()(function() {
  */
 this.xmlEscape(str)
 ```
+
 Возвращает переданную строку `str` с заэкранированными символами XML: `&`, `<`, `>`.
 
 Пример использования:
+
 ```js
 { block: 'button' }
 ```
+
 Шаблон:
+
 ```js
 block('button').def()(function() {
     return this.xmlEscape('<b>&</b>');
 });
 ```
+
 Результат шаблонизации BEMHTML:
+
 ```html
 &lt;b&gt;&amp;&lt;/b&gt;
 ```
 
 #### attrEscape
+
 ```js
 /**
  * @param {String} str
@@ -102,9 +111,11 @@ block('button').def()(function() {
  */
 this.attrEscape(str)
 ```
+
 Возвращает переданную строку `str` с заэкранированными символами XML- и HTML-атрибутов: `"` и `&`.
 
 #### jsAttrEscape
+
 ```js
 /**
  * @param {String} str
@@ -112,10 +123,10 @@ this.attrEscape(str)
  */
 this.jsAttrEscape(str)
 ```
+
 Возвращает переданную строку `str` с заэкранированными символами: `'` и `&`.
 
 По умолчанию входные данные из поля [`js`](4-data.md#js) и данные из режима [`js`](5-templates-syntax.md#js) экранируются этой функцией.
-
 
 ### Хелперы определения позиции
 
@@ -129,14 +140,15 @@ this.jsAttrEscape(str)
 * Позиции нумеруются начиная с 1.
 
 Пример нумерации позиций во входном БЭМ-дереве:
+
 ```js
 {
-    block: 'page',          // this.position === 1
+    block: 'page',                // this.position === 1
     content: [
-        { block: 'head' },    // this.position === 1
-        'text',               // this.position === undefined
+        { block: 'head' },        // this.position === 1
+        'text',                   // this.position === undefined
         {
-            block: 'menu',      // this.position === 2
+            block: 'menu',        // this.position === 2
             content: [
                 { elem: 'item' }, // this.position === 1
                 'text',           // this.position === undefined
@@ -148,10 +160,10 @@ this.jsAttrEscape(str)
 }
 ```
 
-БЭМ-дерево может быть достроено в процессе выполнения шаблонов с помощью
-шаблонов в режиме [`def`](5-templates-syntax.md#def) или [`content`](5-templates-syntax.md#content). Такое динамическое изменение БЭМ-дерева учитывается при вычислении позиции.
+БЭМ-дерево может быть достроено в процессе выполнения шаблонов с помощью шаблонов в режиме [`def`](5-templates-syntax.md#def) или [`content`](5-templates-syntax.md#content). Такое динамическое изменение БЭМ-дерева учитывается при вычислении позиции.
 
-Функция определения последней БЭМ-сущности среди соседей `isLast` возвратит `false`, если в массиве, содержащем узлы, последний элемент не является БЭМ-сущностью. Например:
+Функция определения последней БЭМ-сущности среди соседей `isLast` возвратит `false`, если в массиве, содержащем узлы, последний элемент не является БЭМ-сущностью.
+
 ```js
 block('list')(
     content()([
@@ -169,23 +181,26 @@ block('list')(
 На практике описанный случай не должен порождать ошибок, так как проверка на первую/последнюю БЭМ-сущность обычно применяется к автоматически сгенерированным спискам, в которые не имеет смысла включать данные других типов.
 
 #### isFirst
+
 ```js
 /**
  * @returns {Boolean}
  */
 this.isFirst()
 ```
+
 Проверяет, является ли узел первым среди своих соседей во входном дереве.
 
 #### isLast
+
 ```js
 /**
  * @returns {Boolean}
  */
 this.isLast()
 ```
-Проверяет, является ли узел последним среди своих соседей во входном дереве.
 
+Проверяет, является ли узел последним среди своих соседей во входном дереве.
 
 ### Генератор уникальных идентификаторов
 
@@ -194,11 +209,14 @@ this.isLast()
 Генерирует id для текущего узла.
 
 Пример использования:
+
 ```js
 // BEMJSON
 { block: 'input', label: 'Имя', value: 'Иван' }
 ```
-Шаблон
+
+Шаблон:
+
 ```js
 block('input').content()(function() {
     var id = this.generateId();
@@ -219,7 +237,9 @@ block('input').content()(function() {
     ];
 });
 ```
+
 Результат шаблонизации BEMHTML:
+
 ```html
 <div class="input">
     <label for="uniq14563433829878">Имя</label>
@@ -228,17 +248,22 @@ block('input').content()(function() {
 ```
 
 ### Другие хелперы
+
 * `this.isSimple({*} arg)` Проверяет, является ли `arg` примитивным JavaScript-типом.
 * `this.isShortTag({String} tagName)` Проверяет, является ли `tagName` тегом, не требующим закрывающего элемента.
 
 ### this.reapply()
+
 Это возможность отшаблонизировать произвольные BEMJSON-данные, находясь в теле шаблона и получить в результате строку.
 
 BEMJSON:
+
 ```js
 { block: 'a' }
 ```
+
 Шаблон:
+
 ```js
 block('a').js()(function() {
     return {
@@ -246,22 +271,25 @@ block('a').js()(function() {
     };
 });
 ```
+
 Результат шаблонизации BEMHTML:
+
 ```html
 <div class="a i-bem" data-bem='{
     "a":{"template":"<div class=\"b b_m_v\"></div>"}}'></div>
 ```
-
 
 ## Кастомные пользовательские поля
 
 Контекст, доступный в теле шаблона, может быть расширен пользователем.
 
 При помощи функции `oninit` в коде шаблонов:
+
 ```js
 var bemxjst = require('bem-xjst');
 
 var templates = bemxjst.bemhtml.compile(function() {
+
     // Внимание: oninit сработает только при первой компиляции шаблонов.
     oninit(function(exports, shared) {
         shared.BEMContext.prototype.hi = function(name) {
@@ -279,37 +307,47 @@ var bemjson = { block: 'b' };
 // Применяем шаблоны
 var html = templates.apply(bemjson);
 ```
-html будет содержать строку:
+
+`html` будет содержать строку:
+
 ```html
 <div class="b">Hello, username</div>
 ```
 
 При помощи прототипа BEMContext:
+
 ```js
 var bemxjst = require('bem-xjst');
 var templates = bemxjst.bemhtml.compile('');
+
 // Расширяем прототип контекста
 templates.BEMContext.prototype.hi = function(name) {
     return 'Hello, ' + username;
 };
+
 // Добавляем шаблоны
 templates.compile(function() {
     block('b').content()(function() {
         return this.hi('templates');
     });
 });
+
 var bemjson = { block: 'b' };
+
 // Применяем шаблоны
 var html = templates.apply(bemjson));
 ```
+
 В результате `html` будет содержать строку:
+
 ```html
 <div class="b">Hello, templates</div>
 ```
 
 ## Методы для управления шаблонизацией
 
-В теле шаблонов доступны методы `apply`, `applyNext` и `applyCtx`. Подробнее о них читайте в следующей секции про runtime.
+В теле шаблонов доступны методы `apply`, `applyNext` и `applyCtx`. Подробнее о них читайте в следующей секции про [runtime](7-runtime.md).
+
 ***
 
 Читать далее: [runtime](7-runtime.md)

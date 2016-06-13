@@ -17,23 +17,28 @@ If you didn’t add any templates, bem-xjst generates the result using defaults.
 
 ### How templates are selected and applied
 
-Templates are located in an ordered list. Templates are checked in reverse order, meaning the last templates take priority over the first ones (taking the [wildcard](#templates-for-any-entities) into account). For each node of the input tree, the template engine checks the predicate of each template. To do this, all the subpredicates are executed in the context of the node. If all the subpredicates returned `true`, the template search ends and the body of the current template is executed.
+Templates are located in an ordered list. Templates are checked in reverse order, meaning the last templates take priority over the first ones (taking the wildcard](#templates-for-any-entities) into account).
+
+For each node of the input tree, the template engine checks the predicate of each template. To do this, all the subpredicates are executed in the context of the node. If all the subpredicates returned `true`, the template search ends and the body of the current template is executed.
 
 If a template is not found, the default behavior is used.
-
 
 ## Templates for any entities
 
 You can write `*` in predicates instead of the name of a block or element. For example, this may be useful for uniform processing of all blocks.
 
 BEMJSON input:
+
 ```js
 [
     { block: 'header' },
-    { block: 'link', mix: [{ block : 'title' }], counter: '15498653' },
-    { block: 'snippet', counter: '15498653' }
+    { block: 'link', mix: [{ block : 'title' }], counter: '1549865' },
+    { block: 'snippet', counter: '1549865' }
 ]
 ```
+
+Template:
+
 ```js
 block('*')
     .match(function() {
@@ -44,11 +49,12 @@ block('*')
     })
 ```
 
-Result of HTML rendering
+Result of HTML rendering:
+
 ```html
 <div class="header"></div>
-<div class="link counter title i-bem" data-bem='{"counter":{"id":"15498653"}}'></div>
-<div class="snippet counter i-bem" data-bem='{"counter":{"id":"15498653"}}'></div>
+<div class="link counter title i-bem" data-bem='{"counter":{"id":"1549865"}}'></div>
+<div class="snippet counter i-bem" data-bem='{"counter":{"id":"1549865"}}'></div>
 ```
 
 A template with a subpredicate for `*` takes higher priority than a template with a specific name in the subpredicate. This is related to performance optimization. In practice, you are unlikely to encounter a situation where this matters.
@@ -58,6 +64,7 @@ A subpredicate for a `*` block is true for an empty object.
 ## Instructions for controlling runtime
 
 ### apply
+
 ```js
 /**
  * @params {String} modeName mode name
@@ -70,12 +77,12 @@ apply(modeName, assignObj)
 
 Used for calling a standard or user-defined mode of the current node.
 
-Usage example: BEMJSON:
 ```js
 { block: 'button' }
 ```
 
 Template:
+
 ```js
 block('button')(
     mode('test')(function() {
@@ -91,11 +98,13 @@ block('button')(
 ```
 
 Result of BEMHTML templating:
+
 ```html
 pingpong
 ```
 
-You can’t use `apply` to call user-defined modes for other blocks. Example:
+You can’t use `apply` to call user-defined modes for other blocks.
+
 ```js
 // BEMJSON
 [
@@ -103,7 +112,9 @@ You can’t use `apply` to call user-defined modes for other blocks. Example:
     { block: 'footer' }
 ]
 ```
+
 Template:
+
 ```js
 block('footer').mode('custom')('footer');
 block('header').mode('custom')('header');
@@ -115,11 +126,14 @@ block('header').tag()(function() {
 });
 ```
 
+Result of templating:
+
 ```html
 <header class="header"></header><div class="footer"></div>
 ```
 
 ### applyNext
+
 ```js
 /**
  * @param {Object} [newctx] the object whose keys become fields
@@ -141,8 +155,8 @@ block('link').tag()(function() {
 });
 ```
 
-
 ### applyCtx
+
 ```js
 /**
  * @param {BEMJSON} bemjson input data
@@ -154,10 +168,11 @@ applyCtx(bemjson, newctx)
 
 Use the `applyCtx` construction for modifying the current fragment of the BEM tree `this.ctx` and calling `apply()` to apply templates.
 
-BEMJSON example:
 ```js
 { block: 'header', mix: [{ block: 'sticky' }] }
 ```
+
+Template:
 
 ```js
 block('header').def()(function() {
@@ -168,6 +183,7 @@ block('header').def()(function() {
 });
 ```
 Result of templating:
+
 ```html
 <div class="layout header sticky"></div>
 ```
