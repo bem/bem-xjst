@@ -6,17 +6,17 @@ templating result, we need the standard modes expected by [bem-xjst](1-about.md)
 
 ## Conventions for standard BEMJSON modes
 
-* [block](#block) block name
-* [elem](#elem) element name
-* [mods](#mods) block modifier hash
-* [elemMods](#elemmods) element modifier hash
-* [content](#content) child nodes
-* [mix](#mix) BEM entities that should be mixed
-* [bem](#bem) whether to add classes and JavaScript parameters for the BEM entity itself and its mixes
-* [js](#js) JavaScript parameters
-* [attrs](#attrs) hash of HTML attributes
-* [cls](#cls) HTML class
-* [tag](#tag) HTML tag
+* [block](#block) — block name
+* [elem](#elem) — element name
+* [mods](#mods) — block modifier hash
+* [elemMods](#elemmods) — element modifier hash
+* [content](#content) — child nodes
+* [mix](#mix) — BEM entities that should be mixed
+* [bem](#bem) — whether to add classes and JavaScript parameters for the BEM entity itself and its mixes
+* [js](#js) — JavaScript parameters
+* [attrs](#attrs) — hash of HTML attributes
+* [cls](#cls) — HTML class
+* [tag](#tag) — HTML tag
 * [user-defined fields](#user-defined-fields)
 
 
