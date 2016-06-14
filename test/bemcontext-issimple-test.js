@@ -32,6 +32,10 @@ describe('BEMContext this.isSimple(arg)', function() {
     bemhtml.apply({ block: 'b', val: '' }).should.equal(true);
   });
 
+  it('should return true for escaped String', function() {
+    bemhtml.apply({ block: 'b', val: { html: '' } }).should.equal(true);
+  });
+
   it('should return true for Boolean', function() {
     bemhtml.apply({ block: 'b', val: false }).should.equal(true);
   });
