@@ -39,10 +39,17 @@ describe('Content escaping', function() {
     '<unescaped>');
   });
 
-  it('should ignore other props if html exists', function() {
+  it('should ignore html field if block/elem/cls/attrs/tag exists', function() {
     test(function() {
     }, { block: 'b', html: '<unescaped>', content: 'safe text' },
     '<div class="b">safe text</div>');
+  });
+
+  it('should determine unescaped html field if there are no bem-entity ' +
+    'properties', function() {
+    test(function() {
+    }, { html: '<unescaped>', content: 'safe text' },
+    '<unescaped>');
   });
 
   it('should ignore html with non string value', function() {
