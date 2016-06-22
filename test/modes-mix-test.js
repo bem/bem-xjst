@@ -150,4 +150,15 @@ describe('Modes mix', function() {
       elem: 'elem'
     }, '<div class="b1__elem b2__elem"></div>');
   });
+
+  it('should concat mix from templates with mix from bemjson', function() {
+    test(function() {
+      block('b1')(
+        mix()({ block: 'template' })
+      );
+    }, {
+      block: 'b1',
+      mix: { block: 'bemjson' }
+    }, '<div class="b1 template bemjson"></div>');
+  });
 });

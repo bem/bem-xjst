@@ -78,4 +78,13 @@ describe('Modes js', function() {
     '<div class="b__e i-bem" data-bem=\'{"b__e":{}}\'></div>',
     { elemJsInstances: true });
   });
+
+  it('should merge js from templates and js from bemjson', function() {
+    test(function() {
+      block('b').js()({ templ: '1' });
+    },
+    { block: 'b', js: { bemjson: '2' } },
+    '<div class="b i-bem" data-bem=\'{"b":{"bemjson":' +
+      '"2","templ":"1"}}\'></div>');
+  });
 });
