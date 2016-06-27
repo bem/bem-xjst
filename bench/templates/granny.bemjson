@@ -1,4 +1,4 @@
-[
+module.exports = ([
 	{
 		"block": "i-global",
 		"params": {
@@ -4346,4 +4346,4 @@
 			"yabro": "16_3_0_5640"
 		}
 	}
-]
+]);
