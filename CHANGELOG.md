@@ -1,5 +1,53 @@
 # BEM-XJST Changelog
 
+# 2016-06-27, [v6.5.2](https://github.com/bem/bem-xjst/compare/v6.5.1...v6.5.2), @miripiruni
+
+Fixed `apply('modename')` behaviour.
+
+```js
+// Template:
+block('b1').def()(function() {
+    return applyCtx([ apply('content'), apply('tag') ]);
+});
+```
+
+```js
+// BEMJSON:
+{ block: 'b1', tag: 'a', content: '1' }
+```
+
+Result before fix (v6.5.1):
+```html
+// empty string
+```
+
+Result after fix (v6.5.2):
+```html
+a1
+```
+
+Dependency updated. Node.js 6.x in Travis config added.
+
+Commits:
+* [[`9d230c552f`](https://github.com/bem/bem-xjst/commit/9d230c552f)] - `apply(modeName)` must return values from `this.ctx` if no other templates (miripiruni)
+* [[`0b96bacbeb`](https://github.com/bem/bem-xjst/commit/0b96bacbeb)] - Benchmarks postinstall fixed (miripiruni)
+* [[`9037b9dd0b`](https://github.com/bem/bem-xjst/commit/9037b9dd0b)] - Benchmarks fixed (miripiruni)
+* [[`9b9ffc7836`](https://github.com/bem/bem-xjst/commit/9b9ffc7836)] - Update README.ru.md (Vitaly Harisov)
+* [[`34b7365379`](https://github.com/bem/bem-xjst/commit/34b7365379)] - Lint to documentation changed to https://en.bem.info/platform/bem-xjst/ (Vitaly Harisov)
+* [[`f63357ad9f`](https://github.com/bem/bem-xjst/commit/f63357ad9f)] - Tests about escaping improved (miripiruni)
+* [[`9c05eded3d`](https://github.com/bem/bem-xjst/commit/9c05eded3d)] - Update after review (Vasiliy Loginevskiy)
+* [[`9495a91140`](https://github.com/bem/bem-xjst/commit/9495a91140)] - Add escaped object to simple primitives. (Vasiliy Loginevskiy)
+* [[`7fc384883a`](https://github.com/bem/bem-xjst/commit/7fc384883a)] - Return reused function early (Alexey Gurianov)
+* [[`41eddf7128`](https://github.com/bem/bem-xjst/commit/41eddf7128)] - chore(package): update mocha to version 2.5.3 (greenkeeperio-bot)
+* [[`f247a9c0fe`](https://github.com/bem/bem-xjst/commit/f247a9c0fe)] - Fix an output HTML according to its BEMJSON (#2) (Vassily Krasnov)
+* [[`3a25c73262`](https://github.com/bem/bem-xjst/commit/3a25c73262)] - Update 4-data.md (Vassily Krasnov)
+* [[`543f7647e5`](https://github.com/bem/bem-xjst/commit/543f7647e5)] - chore(package): update dependencies (greenkeeperio-bot)
+* [[`aa24538426`](https://github.com/bem/bem-xjst/commit/aa24538426)] - Dependency updated: q from 0.9.3 to 2.0.3 (miripiruni)
+* [[`92016f17f9`](https://github.com/bem/bem-xjst/commit/92016f17f9)] - Dependency updated: coa from 0.3.9 to 1.0.1 (miripiruni)
+* [[`3a16d495d8`](https://github.com/bem/bem-xjst/commit/3a16d495d8)] - **Trivial**: dependency status badges added (Slava Oliyanchuk)
+* [[`30e1149e67`](https://github.com/bem/bem-xjst/commit/30e1149e67)] - **Trivial**: dependency status badges added (Slava Oliyanchuk)
+* [[`50b8554b54`](https://github.com/bem/bem-xjst/commit/50b8554b54)] - Travis config: Node.js 6.x added (Slava Oliyanchuk)
+
 # 2016-05-20, [v6.5.1](https://github.com/bem/bem-xjst/compare/v6.5.0...v6.5.1), @miripiruni
 
 Now bem-xjst trim and escape cls. Example:
