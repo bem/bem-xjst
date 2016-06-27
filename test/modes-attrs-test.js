@@ -43,4 +43,12 @@ describe('Modes attrs', function() {
     },
     '<div class="button" type="link" name="button"></div>');
   });
+
+  it('should merge attrs from templates and from bemjson', function() {
+    test(function() {
+      block('b').attrs()({ templ: '1' });
+    },
+    { block: 'b', attrs: { bemjson: '2' } },
+    '<div class="b" templ="1" bemjson="2"></div>');
+  });
 });
