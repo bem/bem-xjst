@@ -5,13 +5,13 @@
   "description": "Benchmarks for bem-xjst",
   "main": "run.js",
   "scripts": {
-    "postinstall": "BROWSERIFY=browserify make -C node_modules/bem-xjst",
+    "postinstall": "cd ./node_modules/bem-xjst && npm install && npm run make",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "",
   "license": "MIT",
   "dependencies": {
-    "bem-xjst": "https://github.com/bem/bem-xjst.git#70d77b3",
+    "bem-xjst": "https://github.com/bem/bem-xjst.git#f7ee7c9",
     "benchmark": "2.1.0",
     "browserify": "^11.0.0",
     "microtime": "^1.4.2",
