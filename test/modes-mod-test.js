@@ -34,4 +34,54 @@ describe('Modes .mod(modName, modVal)', function() {
     { block: 'b', mods: { valid: 'valid' } },
     '<div class="b b_valid_valid"></div>');
   });
+
+  describe('modVal types', function() {
+    it('number should match to string', function() {
+      test(function() {
+        block('b').mod('m', 1).tag()('span');
+      },
+      { block: 'b', mods: { m: '1' } },
+      '<span class="b b_m_1"></span>');
+    });
+
+    it('string should match to number', function() {
+      test(function() {
+        block('b').mod('m', '1').tag()('span');
+      },
+      { block: 'b', mods: { m: 1 } },
+      '<span class="b b_m_1"></span>');
+    });
+
+    it('boolean should match to string', function() {
+      test(function() {
+        block('b').mod('m', true).tag()('span');
+      },
+      { block: 'b', mods: { m: 'true' } },
+      '<span class="b b_m_true"></span>');
+    });
+
+    it('string should match to boolean', function() {
+      test(function() {
+        block('b').mod('m', 'true').tag()('span');
+      },
+      { block: 'b', mods: { m: true } },
+      '<span class="b b_m"></span>');
+    });
+
+    it('number 1 should not match to boolean true', function() {
+      test(function() {
+        block('b').mod('m', 1).tag()('span');
+      },
+      { block: 'b', mods: { m: true } },
+      '<div class="b b_m"></div>');
+    });
+
+    it('string 1 should not match to null', function() {
+      test(function() {
+        block('b').mod('m', '1').tag()('span');
+      },
+      { block: 'b', mods: { m: null } },
+      '<div class="b"></div>');
+    });
+  });
 });
