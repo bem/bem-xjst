@@ -3,6 +3,16 @@ var assert = require('assert');
 var utile = require('utile');
 var vm = require('vm');
 
+require('chai').should();
+
+/**
+ * test helper
+ *
+ * @param {?Function} fn - matchers
+ * @param {BEMJSON} data - incoming bemjson
+ * @param {String} expected - expected resulting html
+ * @param {?Object} options - compiler options
+ */
 function test(fn, data, expected, options) {
   if (!options) options = {};
 
@@ -31,6 +41,7 @@ function test(fn, data, expected, options) {
   if (options.after)
     options.after(template);
 }
+
 exports.test = test;
 
 function fail(fn, regexp) {
@@ -38,4 +49,15 @@ function fail(fn, regexp) {
     bemxjst.compile(fn);
   }, regexp);
 }
+
 exports.fail = fail;
+
+function compile(fn, options) {
+  if (typeof fn !== 'function') {
+    options = fn;
+    fn = function() {};
+  }
+  return bemxjst.compile(fn, options || {});
+}
+
+exports.compile = compile;

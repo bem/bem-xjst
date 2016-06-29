@@ -1,5 +1,6 @@
 var assert = require('assert');
 var fixtures = require('./fixtures');
+var compile = fixtures.compile;
 var bemxjst = require('../');
 
 var test = fixtures.test;
@@ -1189,6 +1190,38 @@ describe('BEMHTML compiler/Runtime', function() {
       },
       { block: 'b', attrs: { bemjson: '2' } },
       '<div class="b" templ="1" bemjson="2"></div>');
+    });
+  });
+
+  describe('Modes cls', function() {
+    it('should trim cls', function() {
+      compile(function() {
+        block('button').cls()('  one two  ');
+      })
+        .apply({ block: 'button' })
+        .should.equal('<div class="button one two"></div>');
+    });
+
+    it('should escape cls', function() {
+      compile(function() {
+        block('button').cls()('">');
+      })
+        .apply({ block: 'button' })
+        .should.equal('<div class="button &quot;>"></div>');
+    });
+  });
+
+  describe('BEMJSON cls', function() {
+    it('should trim cls', function() {
+      compile('')
+      .apply({ cls: '   hello    ' })
+      .should.equal('<div class="hello"></div>');
+    });
+
+    it('should escape cls', function() {
+      compile('')
+      .apply({ block: 'b', cls: '">' })
+      .should.equal('<div class="b &quot;>"></div>');
     });
   });
 });
