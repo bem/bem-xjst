@@ -1,5 +1,23 @@
 # BEM-XJST Changelog
 
+# 2016-06-27, [v7.0.0](https://github.com/bem/bem-xjst/compare/v6.5.2...v7.0.0), @miripiruni
+
+Hooray! Next major version is here!
+
+Breacking changes:
+1. No more `this.isArray()`. Use `Array.isArray()` instead.
+2. No more `once()` mode. You dont need it at all.
+3. Now `xhtml` option default value is `false`. But you can set it to `true` manualy.
+4. `modVal` and `elemModVal` cast to String before checking to match. See docs for examples.
+
+
+Commits:
+
+* [[`97574f5282`](https://github.com/bem/bem-xjst/commit/97574f5282)] - **BEMHTML**: #214 Inverse xhtml option default value to false (miripiruni)
+* [[`caad627dce`](https://github.com/bem/bem-xjst/commit/caad627dce)] - Fix #213: Throw away this.isArray() (miripiruni)
+* [[`26d0725c39`](https://github.com/bem/bem-xjst/commit/26d0725c39)] - Fix #213: Throw away once() (miripiruni)
+* [[`079a5c89b2`](https://github.com/bem/bem-xjst/commit/079a5c89b2)] - Merge pull request #266 from bem/issue-220__mod-types (Slava Oliyanchuk)
+
 # 2016-06-27, [v6.5.2](https://github.com/bem/bem-xjst/compare/v6.5.1...v6.5.2), @miripiruni
 
 Fixed `apply('modename')` behaviour.
