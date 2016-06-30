@@ -4,7 +4,7 @@
 
 Hooray! Next major version is here!
 
-Breacking changes:
+Breaking changes:
 1. No more `this.isArray()`. Use `Array.isArray()` instead.
 2. No more `once()` mode. You dont need it at all.
 3. Now `xhtml` option default value is `false`. But you can set it to `true` manualy.
