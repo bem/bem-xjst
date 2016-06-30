@@ -77,13 +77,4 @@ describe('Runtime Match', function() {
       });
     }, { block: 'b', foo: 'This is' }, 'This is ContextChild');
   });
-
-  it('should pass BEMContext instance and json to once body',
-    function() {
-    test(function() {
-      block('b').def().once()(function(ctx, json) {
-        return json.foo + ' ' + ctx.constructor.name;
-      });
-    }, { block: 'b', foo: 'This is' }, 'This is ContextChild');
-  });
 });
