@@ -93,7 +93,7 @@ describe('BEMHTML engine tests', function() {
       );
     }, {
       block: 'page', elem: 'css', url: 'ohai'
-    }, '<link rel="stylesheet" href="ohai"/>');
+    }, '<link rel="stylesheet" href="ohai">');
   });
 
   it('should support `.xjstOptions()`', function() {
@@ -110,7 +110,7 @@ describe('BEMHTML engine tests', function() {
     it('should close short tags by default', function() {
       compile('')
         .apply({ tag: 'br' })
-        .should.equal('<br/>');
+        .should.equal('<br>');
     });
 
     it('should not close short tags with xhtml: false', function() {
