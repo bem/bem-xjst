@@ -1,5 +1,14 @@
 # BEM-XJST Changelog
 
+## 2016-07-01, [v4.3.5](https://github.com/bem/bem-xjst/compare/v4.3.4...v4.3.5), @miripiruni
+
+Port commits from v6.x:
+1. **BUGFIX**: `apply(modeName)` must return values from `this.ctx` if no other
+templates (port commit 9d230c5)
+2. **BUGFIX**: BEMXJST: Fix for calc position (port commit 1cb9d14)
+3. **IMPROVEMENT**: BEMHTML: should trim and escape cls (port commit c5acfb4)
+
+
 ## 2016-02-01, [v4.3.4](https://github.com/bem/bem-xjst/compare/v4.3.2...v4.3.4), @miripiruni
 Skip mix item if falsy:
 
