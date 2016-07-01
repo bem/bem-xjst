@@ -1,5 +1,6 @@
 var assert = require('assert');
 var fixtures = require('./fixtures');
+var compile = fixtures.compile;
 var bemxjst = require('../');
 
 var test = fixtures.test;
@@ -1066,6 +1067,278 @@ describe('BEMHTML compiler/Runtime', function() {
       assert.throws(function() {
         template.apply(bemjson);
       });
+    });
+  });
+
+  describe('Runtime apply()', function() {
+    it('apply(\'content\') from def()', function() {
+      test(function() {
+        block('b').def()(function() {
+          return apply('content');
+        });
+      }, { block: 'b', content: 'test' },
+      'test');
+    });
+
+    it('apply(\'mix\') from def()', function() {
+      test(function() {
+        block('b').def()(function() {
+          return apply('mix');
+        });
+      }, { block: 'b', mix: 'test' },
+      'test');
+    });
+
+    it('apply(\'tag\') from tag()', function() {
+      test(function() {
+        block('b').tag()(function() {
+          return 'span';
+        });
+        block('b').tag()(function() {
+          return apply('tag');
+        });
+      }, { block: 'b', tag: 'a' },
+      '<span class="b"></span>');
+    });
+
+    it('apply(\'tag\') from def()', function() {
+      test(function() {
+        block('b').def()(function() {
+          return apply('tag');
+        });
+      }, { block: 'b', tag: 'a' },
+      'a');
+    });
+
+    it('apply(\'bem\') from def()', function() {
+      test(function() {
+        block('b').def()(function() {
+          return apply('bem');
+        });
+      }, { block: 'b', bem: false },
+      false);
+    });
+
+    it('apply(\'cls\') from def()', function() {
+      test(function() {
+        block('b').def()(function() {
+          return apply('cls');
+        });
+      }, { block: 'b', cls: 'test' },
+      'test');
+    });
+
+    it('apply(\'attrs\') from def()', function() {
+      test(function() {
+        block('b').def()(function() {
+          return apply('attrs').target;
+        });
+      }, { block: 'b', attrs: { target: '_blank' } },
+      '_blank');
+    });
+
+    it('apply(\'js\') from def()', function() {
+      test(function() {
+        block('b').def()(function() {
+          return apply('js').data;
+        });
+      }, { block: 'b', js: { data: 'test' } },
+      'test');
+    });
+
+    it('apply(\'usermode\') from def()', function() {
+      test(function() {
+        block('b').def()(function() {
+          return apply('usermode');
+        });
+      }, { block: 'b', usermode: 'test' },
+      'test');
+    });
+
+    it('apply(\'undefusermode\') from def()', function() {
+      test(function() {
+        block('b').def()(function() {
+          return apply('undefusermode');
+        });
+      }, { block: 'b' },
+      undefined);
+    });
+
+    it('should concat mix from templates with mix from bemjson', function() {
+      test(function() {
+        block('b1')(
+          mix()({ block: 'template' })
+        );
+      }, {
+        block: 'b1',
+        mix: { block: 'bemjson' }
+      }, '<div class="b1 template bemjson"></div>');
+    });
+
+    it('should merge js from templates and js from bemjson', function() {
+      test(function() {
+        block('b').js()({ templ: '1' });
+      },
+      { block: 'b', js: { bemjson: '2' } },
+      '<div class="b i-bem" data-bem=\'{"b":{"bemjson":' +
+        '"2","templ":"1"}}\'></div>');
+    });
+
+    it('should merge attrs from templates and from bemjson', function() {
+      test(function() {
+        block('b').attrs()({ templ: '1' });
+      },
+      { block: 'b', attrs: { bemjson: '2' } },
+      '<div class="b" templ="1" bemjson="2"></div>');
+    });
+  });
+
+  describe('Modes cls', function() {
+    it('should trim cls', function() {
+      compile(function() {
+        block('button').cls()('  one two  ');
+      })
+        .apply({ block: 'button' })
+        .should.equal('<div class="button one two"></div>');
+    });
+
+    it('should escape cls', function() {
+      compile(function() {
+        block('button').cls()('">');
+      })
+        .apply({ block: 'button' })
+        .should.equal('<div class="button &quot;>"></div>');
+    });
+  });
+
+  describe('BEMJSON cls', function() {
+    it('should trim cls', function() {
+      compile('')
+      .apply({ cls: '   hello    ' })
+      .should.equal('<div class="hello"></div>');
+    });
+
+    it('should escape cls', function() {
+      compile('')
+      .apply({ block: 'b', cls: '">' })
+      .should.equal('<div class="b &quot;>"></div>');
+    });
+  });
+
+  describe('BEMContext this.position', function() {
+    it('should have proper this.position', function() {
+      test(function() {
+        block('b').content()(function() { return this.position; });
+      }, [
+        { block: 'b' },
+        { block: 'b' },
+        { block: 'b' }
+      ], '<div class="b">1</div>' +
+        '<div class="b">2</div>' +
+        '<div class="b">3</div>');
+    });
+
+    it('should not count not bem entities', function() {
+      test(function() {
+        block('b').content()(function() { return this.position; });
+      }, [
+        { block: 'b' },
+        42,
+        { block: 'b' },
+        'string',
+        { block: 'b' },
+        null,
+        { block: 'b' },
+        {},
+        { block: 'b' }
+      ], '<div class="b">1</div>' +
+        '42' +
+        '<div class="b">2</div>' +
+        'string' +
+        '<div class="b">3</div>' +
+        '<div class="b">4</div>' +
+        '<div></div>' +
+        '<div class="b">5</div>');
+    });
+
+    it('should calc position for nested elements', function() {
+      test(function() {
+        block('menu').elem('item').def()(function() {
+          this.ctx.elemMods = { pos: this.position };
+          return applyNext();
+        });
+      },
+      {
+        block: 'menu',
+        content: [ { elem: 'item' }, { elem: 'item' }, { elem: 'item' } ]
+      },
+      '<div class="menu">' +
+      '<div class="menu__item menu__item_pos_1"></div>' +
+      '<div class="menu__item menu__item_pos_2"></div>' +
+      '<div class="menu__item menu__item_pos_3"></div>' +
+      '</div>');
+    });
+
+    it('should calc position with array mess', function() {
+      test(function() {
+        block('menu').elem('item').def()(function() {
+          this.ctx.elemMods = { pos: this.position };
+          return applyNext();
+        });
+      },
+      {
+        block: 'menu',
+        content: [
+          [ { elem: 'item' } ],
+          [ { elem: 'item' }, [ { elem: 'item' } ] ]
+        ]
+      },
+      '<div class="menu">' +
+      '<div class="menu__item menu__item_pos_1"></div>' +
+      '<div class="menu__item menu__item_pos_2"></div>' +
+      '<div class="menu__item menu__item_pos_3"></div>' +
+      '</div>');
+    });
+
+    it('should calc position for single block', function() {
+      test(function() {
+        block('single').content()(function() {
+          return this.position;
+        });
+      },
+      { block: 'single' },
+      '<div class="single">1</div>');
+    });
+
+    it('should calc position for single nested block', function() {
+      test(function() {
+        block('b').content()(function() {
+          return this.position;
+        });
+      },
+      { block: 'wrap', content: { block: 'b' } },
+      '<div class="wrap"><div class="b">1</div></div>');
+    });
+
+    it('should calc position for single element', function() {
+      test(function() {
+        block('b').elem('e').content()(function() {
+          return this.position;
+        });
+      },
+      { block: 'b', content: { elem: 'e' } },
+      '<div class="b"><div class="b__e">1</div></div>');
+    });
+
+    it('should calc position for nested blocks', function() {
+      test(function() {
+        block('*').cls()(function() {
+          return this.position;
+        });
+      },
+      { block: 'a1', content: { block: 'a2', content: { block: 'a3' } } },
+      '<div class="a1 1"><div class="a2 1">' +
+      '<div class="a3 1"></div></div></div>');
     });
   });
 });
