@@ -421,6 +421,35 @@ describe('BEMHTML compiler/Runtime', function() {
       }, '<div class="replace b__e sprite sprite_test_opa bemjson"></div>');
     });
 
+    it.only('should work with undefined nested mix', function() {
+      test(function() {
+        block('serp-item')(
+          elem('title').tag()('h2'),
+          elem('title-link').def()(function() {
+            return applyCtx(this.extend(this.ctx, {
+              block: 'link',
+              elem: undefined,
+              mix: [ {
+                block: this.block,
+                elem: this.elem
+              }, this.ctx.mix ]
+            }));
+          })
+        );
+      }, {
+        block: 'serp-item',
+        content: {
+          elem: 'title',
+          content: {
+            elem: 'title-link',
+            content: 'Title link content'
+          }
+        }
+      }, '<div class="serp-item"><h2 class="serp-item__title">' +
+        '<div class="link serp-item__title-link"' +
+        '>Title link content</div></h2></div>');
+    });
+
     it('should check that mix do not overwrite jsParams', function() {
       test(function() {
         block('b1')(
