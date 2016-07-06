@@ -401,6 +401,26 @@ describe('BEMHTML compiler/Runtime', function() {
          '</a>');
     });
 
+    it('should render both mix from templates and from bemjson', function() {
+      test(function() {
+        block('b').elem('e').replace()(function() {
+          var mix = [
+            { block: this.block, elem: this.elem },
+            { block: 'sprite', mods: { test: 'opa' } }
+          ].concat(this.ctx.mix);
+
+          return {
+            block: 'replace',
+            mix: mix
+          };
+        });
+      }, {
+        block: 'b',
+        elem: 'e',
+        mix: { block: 'bemjson' }
+      }, '<div class="replace b__e sprite sprite_test_opa bemjson"></div>');
+    });
+
     it('should check that mix do not overwrite jsParams', function() {
       test(function() {
         block('b1')(
