@@ -1,5 +1,18 @@
 # BEM-XJST Changelog
 
+## 2016-07-06, [v4.3.7](https://github.com/bem/bem-xjst/compare/v4.3.6...v4.3.7), @miripiruni
+
+Fixed issue with undefined nested mix.
+
+v4.3.6 marked as deprecated because of [#303](https://github.com/bem/bem-xjst/issues/303).
+
+Commits:
+* [[`19cd865e20`](https://github.com/bem/bem-xjst/commit/19cd865e20)] - Merge
+* pull request #306 from bem/issue-303__undefined-nested-mix (Slava Oliyanchuk)
+* [[`1bcc5b6a5b`](https://github.com/bem/bem-xjst/commit/1bcc5b6a5b)] -
+* **BEMHTML**: Fix for #303 undefined nested mix (miripiruni)
+
+
 ## 2016-07-06, [v4.3.6](https://github.com/bem/bem-xjst/compare/v4.3.5...v4.3.6), @miripiruni
 
 v4.3.5 marked as deprecated because of [#303](https://github.com/bem/bem-xjst/issues/303).
