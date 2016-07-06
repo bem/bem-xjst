@@ -1,5 +1,15 @@
 # BEM-XJST Changelog
 
+## 2016-07-06, [v4.3.6](https://github.com/bem/bem-xjst/compare/v4.3.5...v4.3.6), @miripiruni
+
+v4.3.5 marked as deprecated because of [#303](https://github.com/bem/bem-xjst/issues/303).
+
+The fix already here.
+
+Commits:
+* [[`45cc61b20e`](https://github.com/bem/bem-xjst/commit/45cc61b20e)] - Merge pull request #305 from bem/issue-303__mix-and-elem (Slava Oliyanchuk)
+* [[`da8a205373`](https://github.com/bem/bem-xjst/commit/da8a205373)] - **BEMHTML**: fix #303 bug with mix and render (miripiruni)
+
 ## 2016-07-01, [v4.3.5](https://github.com/bem/bem-xjst/compare/v4.3.4...v4.3.5), @miripiruni
 
 Port commits from v6.x:
