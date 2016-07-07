@@ -14,7 +14,7 @@
     "bem-xjst": "https://github.com/bem/bem-xjst.git#f7ee7c9",
     "benchmark": "2.1.0",
     "browserify": "^11.0.0",
-    "microtime": "^1.4.2",
+    "microtime": "^2.0.0",
     "yargs": "^3.15.0"
   }
 }
