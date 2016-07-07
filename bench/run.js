@@ -109,7 +109,42 @@ templates.forEach(function(template) {
   }
 });
 
+var stat = [];
+
+function checkResults(rme, hz) {
+  if (!rme || !hz) return;
+
+  stat.push({ rme: rme, hz: hz });
+
+  if (stat.length % 2) return;
+
+  var i = stat.length - 1;
+  var prev = stat[i];
+  var next = stat[i - 1];
+  var optimisticNext = next.hz + (next.hz * (next.rme/100));
+  var prevNoise = (prev.hz * (prev.rme/100));
+  var pessimisticPrev = prev.hz - prevNoise;
+  var optimisticPrev = prev.hz + prevNoise;
+
+  if (optimisticNext > pessimisticPrev) {
+    if (optimisticNext > optimisticPrev) {
+      console.log('Faster than prev version:',
+        '~' + Math.round(Math.abs(next.hz/prev.hz)) + '%',
+        '(optimistic diff ' + Math.round(optimisticNext - optimisticPrev) + ' ops/sec)');
+    } else {
+      console.log('Next is the same as prev.');
+    }
+  } else {
+    console.log('Slow than prev version:',
+      '~' + Math.round(Math.abs(next.hz/prev.hz)) + '%',
+      '(optimistic diff ' + Math.round(optimisticPrev - optimisticNext) + ' ops/sec)');
+  }
+  console.log('\n');
+}
+
 suite.on('cycle', function(event) {
   console.log(String(event.target));
+  if (argv.compare)
+    checkResults(event.target.stats.rme, event.target.hz);
 });
 suite.run();
