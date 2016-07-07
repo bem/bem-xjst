@@ -1,5 +1,15 @@
 # BEM-XJST Changelog
 
+# 2016-07-07, [v6.5.3](https://github.com/bem/bem-xjst/compare/v6.5.2...v6.5.3), @miripiruni
+
+Fixed issue with undefined nested mix.
+
+v6.5.2 marked as deprecated because of #303.
+
+Commits:
+* [[`3b9c4220c6`](https://github.com/bem/bem-xjst/commit/3b9c4220c6)] - **BEMHTML**: Fix for #303 undefined nested mix (miripiruni)
+
+
 # 2016-06-27, [v6.5.2](https://github.com/bem/bem-xjst/compare/v6.5.1...v6.5.2), @miripiruni
 
 Fixed `apply('modename')` behaviour.
