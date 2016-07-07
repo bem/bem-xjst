@@ -161,4 +161,53 @@ describe('Modes mix', function() {
       mix: { block: 'bemjson' }
     }, '<div class="b1 template bemjson"></div>');
   });
+
+  it('should render both mix from templates and from bemjson', function() {
+    test(function() {
+      block('b').elem('e').replace()(function() {
+        var mix = [
+          { block: this.block, elem: this.elem },
+          { block: 'sprite', mods: { test: 'opa' } }
+        ].concat(this.ctx.mix);
+
+        return {
+          block: 'replace',
+          mix: mix
+        };
+      });
+    }, {
+      block: 'b',
+      elem: 'e',
+      mix: { block: 'bemjson' }
+    }, '<div class="replace b__e sprite sprite_test_opa bemjson"></div>');
+  });
+
+  it('should work with undefined nested mix', function() {
+    test(function() {
+      block('serp-item')(
+        elem('title').tag()('h2'),
+        elem('title-link').def()(function() {
+          return applyCtx(this.extend(this.ctx, {
+            block: 'link',
+            elem: undefined,
+            mix: [ {
+              block: this.block,
+              elem: this.elem
+            }, this.ctx.mix ]
+          }));
+        })
+      );
+    }, {
+      block: 'serp-item',
+      content: {
+        elem: 'title',
+        content: {
+          elem: 'title-link',
+          content: 'Title link content'
+        }
+      }
+    }, '<div class="serp-item"><h2 class="serp-item__title">' +
+      '<div class="link serp-item__title-link"' +
+      '>Title link content</div></h2></div>');
+  });
 });
