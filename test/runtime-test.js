@@ -421,7 +421,7 @@ describe('BEMHTML compiler/Runtime', function() {
       }, '<div class="replace b__e sprite sprite_test_opa bemjson"></div>');
     });
 
-    it.only('should work with undefined nested mix', function() {
+    it('should work with undefined nested mix', function() {
       test(function() {
         block('serp-item')(
           elem('title').tag()('h2'),
