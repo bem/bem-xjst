@@ -26,7 +26,8 @@
     "clean": "rm -f lib/bem{html,tree}/bundle.js",
     "lint": "jscs `ls lib/*.js lib/**/*.js test/*.js | grep -v bundle` && jshint `ls lib/*.js lib/**/*.js test/*.js | grep -v bundle`",
     "mocha-test": "mocha --reporter=spec test/*-test.js",
-    "test": "npm run make && npm run lint && npm run mocha-test"
+    "test": "npm run make && npm run lint && npm run mocha-test && npm run bench",
+    "bench": "cd bench && npm i && node run --compare --compile --min-samples 500"
   },
   "repository": {
     "type": "git",
