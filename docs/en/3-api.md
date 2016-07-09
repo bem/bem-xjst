@@ -1,18 +1,19 @@
 # API
 
-* [Choosing an engine, compiling and applying templates](#choose-engine)
-* [Adding templates](#add-templates)
+* [Choosing an engine, compiling and applying templates](#choosing-an-engine-compiling-and-applying-templates)
+* [Adding templates](#adding-templates)
 * [Settings](#settings)
+  - [Delimiters in names of BEM entities](#delimiters-in-names-of-bem-entities)
+  - [Support JS-instances for elements (bem-core v4+)](#support-js-instances-for-elements-bem-core-v4)
+  - [XHTML option](#xhtml-option)
   - [Escaping](#escaping)
-  - [Delimiters in names of BEM entities](#naming)
-  - [Support JS-instances for elements (bem-core v4+)](#elemjs)
-  - [XHTML option](#xhtml)
-  - [Extending BEMContext](#bemcontext)
-* [Bundling](#bundle)
+  - [Extending BEMContext](#extending-bemcontext)
+* [Bundling](#bundling)
 
-## <a name="choose-engine"></a>Choosing an engine, compiling and applying templates
+## Choosing an engine, compiling and applying templates
 
 ### BEMHTML engine
+
 ```js
 var bemxjst = require('bem-xjst');
 var bemhtml = bemxjst.bemhtml;
@@ -30,11 +31,13 @@ var html = templates.apply(bemjson);
 ```
 
 The resulting `html` contains the string:
+
 ```html
 <q class="quote">I came, I saw, I templated.</q>
 ```
 
 ### BEMTREE engine
+
 ```js
 var bemxjst = require('bem-xjst');
 var bemtree = bemxjst.bemtree;
@@ -75,10 +78,10 @@ var result = templates.apply(bemjson);
 ]
 ```
 
-
-## <a name="add-templates"></a>Adding templates
+## Adding templates
 
 To add templates to the `templates` instance, use the `compile` method.
+
 ```js
 var bemxjst = require('bem-xjst');
 
@@ -103,11 +106,111 @@ html = templates.apply(bemjson);
 // html: '<h2 class="header">Documentation</h2>'
 ```
 
-If you need to [bundle](https://en.bem.info/method/build/#build-results) all the templates, the most efficient way is to use the [generate](#generate) method.
+If you need to [bundle](https://en.bem.info/methodology/build/#build-results) all the templates, the most efficient way is to use the [generate](#bundling) method.
 
-## <a name="settings"></a>Settings
+## Settings
 
-### <a name="escaping"></a>Escaping
+### Delimiters in names of BEM entities
+
+```js
+var bemxjst = require('bem-xjst');
+var templates = bemxjst.bemhtml.compile(function() {
+    // This example doesn’t add any templates.
+    // HTML will be rendered using the default behavior of the template engine.
+    }, {
+        // Setting up BEM naming
+        naming: {
+            elem: '__',
+            mod: '_'
+        }
+    });
+
+var bemjson = {
+    block: 'page',
+    mods: { theme: 'gray' },
+    content: {
+        elem: 'head',
+        elemMods: { type: 'short' }
+    }
+};
+
+var html = templates.apply(bemjson);
+```
+
+The resulting `html` contains the string:
+
+```html
+<div class="page page_theme_gray"><div class="page__head page__head_type_short"></div></div>
+```
+
+You can find more information in [naming conventions](https://en.bem.info/methodology/naming-convention/) article.
+
+### Support JS-instances for elements (bem-core v4+)
+
+bem-xjst have `elemJsInstances` option for support JS instances for elems ([bem-core](https://en.bem.info/libs/bem-core/) v4+).
+
+```js
+var bemxjst = require('bem-xjst');
+var templates = bemxjst.bemhtml.compile(function() {
+    // In this example we will add no templates.
+    // Default behaviour is used for HTML rendering.
+    }, {
+        // Turn on support for JS instances for elems
+        elemJsInstances: true
+    });
+
+var bemjson = {
+    block: 'b',
+    elem: 'e',
+    js: true
+};
+
+var html = templates.apply(bemjson);
+```
+
+Result with v6.2.x:
+
+```html
+<div class="b__e" data-bem='{"b__e":{}}'></div>
+```
+
+Result with v6.3.0:
+
+```html
+<div class="b__e i-bem" data-bem='{"b__e":{}}'></div>
+```
+
+Notice that `i-bem` was added.
+
+### XHTML option
+
+`xhtml` option allow you to ommit closing slash in void HTML elements (only have a start tag).
+
+Default value is `true`. But in nex major version we invert it.
+
+Example for v6.2.0:
+
+```js
+var bemxjst = require('bem-xjst');
+var templates = bemxjst.bemhtml.compile(function() {
+    // In this example we didn’t add templates
+    // bem-xjst will render by default
+    }, {
+        // Turn off XHTML
+        xhtml: false
+    });
+
+var bemjson = { tag: 'br' };
+var html = templates.apply(bemjson);
+```
+
+Result:
+
+```html
+<br>
+```
+
+### Escaping
 
 You can set `escapeContent` option to `true` to escape string values of `content` field with [`xmlEscape`](6-templates-context.md#xmlescape).
 
@@ -133,6 +236,7 @@ var html = templates.apply(bemjson);
 ```
 
 Result:
+
 ```html
 <div class="danger">&amp;nbsp;&lt;script src="alert()"&gt;&lt;/script&gt;</div>
 ```
@@ -163,119 +267,26 @@ var html = templates.apply(bemjson);
 ```
 
 In this case `content.html` will be rendered as is:
+
 ```html
 <div class="trusted">I <3 you!</div>
 ```
 
 Notice that in `content.html` expected only string type.
 
-### <a name="naming"></a>Delimiters in names of BEM entities
-
-```js
-var bemxjst = require('bem-xjst');
-var templates = bemxjst.bemhtml.compile(function() {
-    // This example doesn’t add any templates.
-    // HTML will be rendered using the default behavior of the template engine.
-    }, {
-        // Setting up BEM naming
-        naming: {
-            elem: '__',
-            mod: '_'
-        }
-    });
-
-var bemjson = {
-    block: 'page',
-    mods: { theme: 'gray' },
-    content: {
-        elem: 'head',
-        elemMods: { type: 'short' }
-    }
-};
-
-var html = templates.apply(bemjson);
-```
-The resulting `html` contains the string:
-```html
-<div class="page page_theme_gray"><div class="page__head page__head_type_short"></div></div>
-```
-You can find more information about [naming conventions](https://en.bem.info/method/naming-convention/) on bem.info.
-
-
-### <a name="elemjs"></a>Support JS-instances for elements (bem-core v4+)
-
-bem-xjst have `elemJsInstances` option for support JS instances for elems (bem-core v4+).
-
-```js
-var bemxjst = require('bem-xjst');
-var templates = bemxjst.bemhtml.compile(function() {
-    // In this example we will add no templates.
-    // Default behaviour is used for HTML rendering.
-    }, {
-        // Turn on support for JS instances for elems
-        elemJsInstances: true
-    });
-
-var bemjson = {
-    block: 'b',
-    elem: 'e',
-    js: true
-};
-
-var html = templates.apply(bemjson);
-```
-
-Result with v6.2.x:
-```html
-<div class="b__e" data-bem='{"b__e":{}}'></div>
-```
-
-Result with v6.3.0:
-```html
-<div class="b__e i-bem" data-bem='{"b__e":{}}'></div>
-```
-
-Notice that `i-bem` was added.
-
-
-### <a name="xhtml"></a>XHTML option
-
-`xhtml` option allow you to ommit closing slash in void HTML elements (only have a start tag).
-
-Default value is `true`. But in nex major version we invert it.
-
-Example for v6.2.0:
-
-```js
-var bemxjst = require('bem-xjst');
-var templates = bemxjst.bemhtml.compile(function() {
-    // In this example we didn’t add templates
-    // bem-xjst will render by default
-    }, {
-        // Turn off XHTML
-        xhtml: false
-    });
-
-var bemjson = { tag: 'br' };
-var html = templates.apply(bemjson);
-```
-
-Result:
-```html
-<br>
-```
-
-### <a name="bemcontext"></a>Extending `BEMContext`
+### Extending BEMContext
 
 You can extend `BEMContext` in order to use user-defined functions in the template body.
 
 ```js
 var bemxjst = require('bem-xjst');
 var templates = bemxjst.bemhtml.compile('');
+
 // Extend the context prototype
 templates.BEMContext.prototype.hi = function(name) {
     return 'Hello, ' + username;
 };
+
 // Add templates
 templates.compile(function() {
     block('b').content()(function() {
@@ -291,14 +302,16 @@ var html = templates.apply(bemjson);
 ```
 
 The resulting `html` contains the string:
+
 ```html
 <div class="b">Hello, templates</div>
 ```
 
+## Bundling
 
-## <a name="bundle"></a>Bundling
+The `generate` method generates JavaScript code that can be passed and run in the
+browser to get the `templates` object.
 
-The `generate` method generates JavaScript code that can be passed and run in the browser to get the `templates` object. Example:
 ```js
 var bemxjst = require('bem-xjst');
 var bundle = bemxjst.bemhtml.generate(function() {

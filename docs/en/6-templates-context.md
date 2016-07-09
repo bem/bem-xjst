@@ -1,14 +1,14 @@
 # What is available in the template body?
 
-While traversing input data, BEM-XJST builds a context, which contains:
+While traversing input data, bem-xjst builds a context, which contains:
 
-* [normalized information about the current BEM entity](#normalized)
-* [the current BEMJSON node](#ctx)
+* [normalized information about the current BEM entity](#normalized-information-about-the-current-bem-entity)
+* [the current BEMJSON node](#current-bemjson-node)
 * [helpers](#helpers)
-* [user-defined custom fields](#user-defined)
-* [methods for controlling the templating process](#methods)
+* [user-defined custom fields](#user-defined-custom-fields)
+* [methods for controlling the templating process](#methods-for-controlling-the-templating-process)
 
-## <a name="normalized"></a>Normalized information about the current BEM entity
+## Normalized information about the current BEM entity
 
 The template engine normalizes data about the current BEM entity. The current BEMJSON node might have incomplete information about the BEM entity. For example:
 
@@ -17,34 +17,35 @@ The template engine normalizes data about the current BEM entity. The current BE
     block: 'page',
     content: {
         elem: 'top'
-        // The node doesn’t have the 'block' field.
+        // The node doesn’t have the `block` field.
         // But the template engine understands which
-        // block context the 'top' element is in.
+        // block context the `top` element is in.
     }
 }
 ```
 
 Fields with normalized data:
-* `this.block` {String} the block in the current node, or the block of the BEM entity that provides the context for the current node.
-* `this.elem` {String} element in the current node
-* `this.mods` {Object} block modifiers that are explicitly defined in the current node
-* `this.elemMods` {Object} element modifiers that are explicitly defined in the current node
+* `this.block {String}` — the block in the current node, or the block of the BEM entity that provides the context for the current node.
+* `this.elem {String}` — element in the current node
+* `this.mods {Object}` — block modifiers that are explicitly defined in the current node
+* `this.elemMods {Object}` — element modifiers that are explicitly defined in the current node
 
 Note that the `this.mods` and `this.elemMods` objects always exist, so checking for their presence in the template body is redundant:
+
 ```js
 block('page').match(function() {
     // Redundant:
     return this.mods && this.mods.type === 'index' && this.ctx.weather;
+
     // Sufficient:
     return this.mods.type === 'index' && this.ctx.weather;
 }).def()(function() { return … });
 ```
 
+## Current BEMJSON node
 
-## <a name="ctx"></a>Current BEMJSON node
 The current BEMJSON node is available in the `this.ctx` field.
 
-Example:
 ```js
 {
     block: 'company',
@@ -60,16 +61,19 @@ block('link').attr()(function() {
     };
 });
 ```
+
 Result of BEMHTML templating:
+
 ```html
 <div class="company" id="yandex" name="yandex"></div>
 ```
 
+## Helpers
 
-## <a name="helpers"></a>Helpers
 ### Escape methods
 
 #### xmlEscape
+
 ```js
 /**
  * @param {String} str
@@ -77,24 +81,31 @@ Result of BEMHTML templating:
  */
 this.xmlEscape(str)
 ```
+
 Returns the passed `str` string with the following XML symbols escaped: `&`, `<`, `>`.
 
 Usage example:
+
 ```js
 { block: 'button' }
 ```
+
 Template:
+
 ```js
 block('button').def()(function() {
     return this.xmlEscape('<b>&</b>');
 });
 ```
+
 Result of BEMHTML templating:
+
 ```html
 &lt;b&gt;&amp;&lt;/b&gt;
 ```
 
 #### attrEscape
+
 ```js
 /**
  * @param {String} str
@@ -102,9 +113,11 @@ Result of BEMHTML templating:
  */
 this.attrEscape(str)
 ```
+
 Returns the passed `str` string with the following characters for XML and HTML attributes escaped: `"` and `&`.
 
 #### jsAttrEscape
+
 ```js
 /**
  * @param {String} str
@@ -112,14 +125,14 @@ Returns the passed `str` string with the following characters for XML and HTML a
  */
 this.jsAttrEscape(str)
 ```
+
 Returns the passed `str` string with the following characters escaped: `'` and `&`.
 
 By default, input data from the [`js`](4-data.md#js) field and data from the [`js`](5-templates-syntax.md#js) mode are escaped using this function.
 
-
 ### Position helpers
 
-#### `this.position`
+#### this.position
 
 The position in the BEM tree (the `this.position` context field) is a natural number corresponding to the sequential number of the current (contextual) BEM entity in relation to its neighbors in the tree (peer entities).
 
@@ -129,14 +142,15 @@ When calculating the position:
 * Positions are numbered starting from 1.
 
 Example of position numbering in the input BEM tree:
+
 ```js
 {
-    block: 'page',          // this.position === 1
+    block: 'page',                // this.position === 1
     content: [
-        { block: 'head' },    // this.position === 1
-        'text',               // this.position === undefined
+        { block: 'head' },        // this.position === 1
+        'text',                   // this.position === undefined
         {
-            block: 'menu',      // this.position === 2
+            block: 'menu',        // this.position === 2
             content: [
                 { elem: 'item' }, // this.position === 1
                 'text',           // this.position === undefined
@@ -150,7 +164,8 @@ Example of position numbering in the input BEM tree:
 
 The BEM tree may be filled in as templates are executing, by using templates in the [`def`](5-templates-syntax.md#def) or [`content`](5-templates-syntax.md#content) mode. This dynamic modification of the BEM tree is taken into account when calculating positions.
 
-The `isLast` function for determining the last BEM entity among peers returns `false` if the last element in the array containing the nodes is not a BEM entity. For example:
+The `isLast` function for determining the last BEM entity among peers returns `false` if the last element in the array containing the nodes is not a BEM entity.
+
 ```js
 block('list')(
     content()([
@@ -166,36 +181,42 @@ This behavior is explained by the fact that for optimization purposes, BEMHTML d
 In practice, this case shouldn’t generate errors, because the check for the first and last BEM entity is normally applied to automatically generated lists, and it doesn’t make sense to include other types of data in them.
 
 #### isFirst
+
 ```js
 /**
  * @returns {Boolean}
  */
 this.isFirst()
 ```
+
 Checks whether the node is the first among its peers in the input tree.
 
 #### isLast
+
 ```js
 /**
  * @returns {Boolean}
  */
 this.isLast()
 ```
-Checks whether the node is the last among its peers in the input tree.
 
+Checks whether the node is the last among its peers in the input tree.
 
 ### Unique ID generator
 
-#### `this.generateId()`
+#### this.generateId()
 
 Generates an 'id' for the current node.
 
 Usage example:
+
 ```js
 // BEMJSON
 { block: 'input', label: 'Name', value: 'John Malkovich' }
 ```
+
 Template
+
 ```js
 block('input').content()(function() {
     var id = this.generateId();
@@ -216,7 +237,9 @@ block('input').content()(function() {
     ];
 });
 ```
+
 Result of BEMHTML templating:
+
 ```html
 <div class="input">
     <label for="uniq14563433829878">Name</label>
@@ -225,17 +248,22 @@ Result of BEMHTML templating:
 ```
 
 ### Other helpers
+
 * `this.isSimple({*} arg)` Checks whether `arg` is a JavaScript primitive type.
 * `this.isShortTag({String} tagName)` Checks whether `tagName` is a tag that doesn’t require a closing element.
 
-### `this.reapply()`
+### this.reapply()
+
 This is the ability to template any BEMJSON data located in the template body and get a string as the result.
 
 BEMJSON:
+
 ```js
 { block: 'a' }
 ```
+
 Template:
+
 ```js
 block('a').js()(function() {
     return {
@@ -243,22 +271,25 @@ block('a').js()(function() {
     };
 });
 ```
+
 Result of BEMHTML templating:
+
 ```html
 <div class="a i-bem" data-bem='{
     "a":{"template":"<div class=\"b b_m_v\"></div>"}}'></div>
 ```
 
-
-## <a name="user-defined"></a>User-defined custom fields
+## User-defined custom fields
 
 The context available in the template body can be extended by the user.
 
 Using the `oninit` function in the template code:
+
 ```js
 var bemxjst = require('bem-xjst');
 
 var templates = bemxjst.bemhtml.compile(function() {
+
     // Note: oninit only works for the first template compilation.
     oninit(function(exports, shared) {
         shared.BEMContext.prototype.hi = function(name) {
@@ -276,37 +307,47 @@ var bemjson = { block: 'b' };
 // Applying templates
 var html = templates.apply(bemjson);
 ```
-'html' contains the string:
+
+`html` contains the string:
+
 ```html
 <div class="b">Hello, username</div>
 ```
 
 Using the BEMContext prototype:
+
 ```js
 var bemxjst = require('bem-xjst');
 var templates = bemxjst.bemhtml.compile('');
+
 // Extending the context prototype
 templates.BEMContext.prototype.hi = function(name) {
     return 'Hello, ' + username;
 };
+
 // Adding templates
 templates.compile(function() {
     block('b').content()(function() {
         return this.hi('templates');
     });
 });
+
 var bemjson = { block: 'b' };
+
 // Applying templates
 var html = templates.apply(bemjson));
 ```
+
 As a result, `html` contains the string:
+
 ```html
 <div class="b">Hello, templates</div>
 ```
 
-## <a name="methods"></a>Methods for controlling the templating process
+## Methods for controlling the templating process
 
-The methods `apply`, `applyNext` and `applyCtx` are available in the body of templates. For more information, see the next section on runtime.
+The methods `apply`, `applyNext` and `applyCtx` are available in the body of templates. For more information, see the next section on [runtime](7-runtime.md).
+
 ***
 
 Read next: [runtime](7-runtime.md)

@@ -1,28 +1,28 @@
 # Input data — BEMJSON
 
 ## Overview
+
 Any JavaScript object can be considered BEMJSON. However, to control the
-templating result, we need the standard modes expected by BEM-XJST.
+templating result, we need the standard modes expected by [bem-xjst](1-about.md).
 
 ## Conventions for standard BEMJSON modes
 
-* [block](#block) block name
-* [elem](#elem) element name
-* [mods](#mods) block modifier hash
-* [elemMods](#elemmods) element modifier hash
-* [content](#content) child nodes
-* [mix](#mix) BEM entities that should be mixed
-* [bem](#bem) whether to add classes and JavaScript parameters for the BEM entity itself and its mixes
-* [js](#js) JavaScript parameters
-* [attrs](#attrs) hash of HTML attributes
-* [cls](#cls) HTML class
-* [tag](#tag) HTML tag
-* [user-defined fields](#user-defined)
-
+* [block](#block) — block name
+* [elem](#elem) — element name
+* [mods](#mods) — block modifier hash
+* [elemMods](#elemmods) — element modifier hash
+* [content](#content) — child nodes
+* [mix](#mix) — BEM entities that should be mixed
+* [bem](#bem) — whether to add classes and JavaScript parameters for the BEM entity itself and its mixes
+* [js](#js) — JavaScript parameters
+* [attrs](#attrs) — hash of HTML attributes
+* [cls](#cls) — HTML class
+* [tag](#tag) — HTML tag
+* [user-defined fields](#user-defined-fields)
 
 ### block
 
-`{String}` block name. Example:
+`{String}` block name.
 
 ```js
 // BEMJSON
@@ -30,7 +30,9 @@ templating result, we need the standard modes expected by BEM-XJST.
 ```
 
 ### elem
-`{String}` element name. Example:
+
+`{String}` element name.
+
 ```js
 // BEMJSON
 {
@@ -45,7 +47,8 @@ templating result, we need the standard modes expected by BEM-XJST.
 
 ### mods
 
-`{Object}` block modifier hash. Keys can be any valid keys for JavaScript objects. Values can be `String` or `Boolean` types. Example:
+`{Object}` block modifier hash. Keys can be any valid keys for JavaScript objects. Values can be `String` or `Boolean` types.
+
 ```js
 // BEMJSON
 {
@@ -53,13 +56,15 @@ templating result, we need the standard modes expected by BEM-XJST.
     mods: { name: 'index', visible: true }
 }
 ```
+
 Result of BEMHTML templating:
+
 ```html
 <div class="tab tab_name_index tab_visible"></div>
 ```
 
+`mods` is ignored if `elem` and `elemMods` are specified.
 
-`mods` is ignored if `elem` and `elemMods` are specified. Example:
 ```js
 // BEMJSON
 {
@@ -72,14 +77,15 @@ Result of BEMHTML templating:
 ```
 
 Result of BEMHTML templating:
+
 ```html
 <div class="control__input control__input_type_search"></div>
 ```
 
-
 ### elemMods
 
 `{Object}` hash of element modifiers. `elemMods` is ignored if the element isn’t specified.
+
 ```js
 // BEMJSON
 {
@@ -89,10 +95,10 @@ Result of BEMHTML templating:
 }
 ```
 
-
 ### content
 
-`{*}` Child nodes. Example:
+`{*}` Child nodes.
+
 ```js
 // BEMJSON
 {
@@ -105,10 +111,27 @@ Result of BEMHTML templating:
 }
 ```
 
+An object with `html` field is a special type of BEMJSON nodes. All other fields of such objects will be ignored. `html` field should have a string which will be rendered as is.
+
+```js
+{
+    block: 'markup',
+    content: {
+        html: '<code>new Date();</code>'
+    }
+}
+```
+
+Result of BEMHTML templating:
+
+```html
+<div class="markup"><code>new Date();</code></div>
+```
 
 ### mix
 
-`{Object|Object[]|String}` BEM entities to [mix](https://en.bem.info/method/key-concepts/#mix) with the current one.
+`{Object|Object[]|String}` BEM entities to [mix](https://en.bem.info/methodology/key-concepts/#mix) with the current one.
+
 ```js
 // BEMJSON
 {
@@ -116,14 +139,19 @@ Result of BEMHTML templating:
     mix: { block: 'controller' }
 }
 ```
+
 Result of BEMHTML templating:
+
 ```html
 <div class="link controller"></div>
 ```
 
 ### js
 
-`{Boolean|Object}` JavaScript parameters. If the value isn’t falsy, it mixes `i-bem` and adds the content to the JavaScript parameters. By default: `undefined`. [More information about i-bem and JavaScript parameters](https://en.bem.info/technology/i-bem/v2/i-bem-js-params/#syntax-for-passing-parameters)
+`{Boolean|Object}` JavaScript parameters. If the value isn’t falsy, it mixes `i-bem` and adds the content to the JavaScript parameters. By default: `undefined`.
+
+More information about [i-bem and JavaScript parameters](https://en.bem.info/platform/i-bem/parameters/).
+
 ```js
 // BEMJSON
 {
@@ -131,12 +159,15 @@ Result of BEMHTML templating:
    js: true
 }
 ```
+
 Result of BEMHTML templating:
+
 ```html
 <div class="link i-bem" data-bem='{"link":{}}'></div>
 ```
 
 Values are escaped:
+
 ```js
 // BEMJSON
 {
@@ -144,15 +175,17 @@ Values are escaped:
    js: { title: 'film "Sid & Nancy"' }
 }
 ```
+
 Result of BEMHTML templating:
+
 ```html
 <div class="link i-bem" data-bem='{"link":{title:"film &#39;Sid &amp; Nancy&#39;"}}'></div>
 ```
 
-
 ### bem
 
-`{Boolean}` tells the template engine whether to add classes and JavaScript parameters for the BEM entity and its mixes.. By default: `true`.
+`{Boolean}` tells the template engine whether to add classes and JavaScript parameters for the BEM entity and its mixes. By default: `true`.
+
 ```js
 // BEMJSON
 {
@@ -161,15 +194,17 @@ Result of BEMHTML templating:
     bem: false
 }
 ```
+
 Result of BEMHTML templating:
+
 ```html
 <div></div>
 ```
 
-
 ### attrs
 
-`{Object}` hash of HTML attributes. Attribute values are [escaped using the attrEscape function](6-templates-context.md#attrescape). Example:
+`{Object}` hash of HTML attributes. Attribute values are [escaped using the attrEscape function](6-templates-context.md#attrescape).
+
 ```js
 // BEMJSON
 {
@@ -179,15 +214,16 @@ Result of BEMHTML templating:
     }
 }
 ```
+
 Result of BEMHTML templating:
+
 ```html
 <div id="anchor" name="Cartoon &quot;Tom &amp; Jerry&quot;"></div>
 ```
 
-
 ### cls
 
-`{String}` HTML class or classes (separated by spaces) that do not belong to the BEM subject domain (block-element-modifier). For example, the use of [microformats](http://microformats.org/) or semantic markup from [schema.org](https://schema.org/).
+`{String}` HTML class or classes (separated by spaces) that do not belong to the BEM subject domain. For example, the use of [microformats](http://microformats.org/) or semantic markup from [schema.org](https://schema.org/).
 
 ```js
 // BEMJSON
@@ -197,11 +233,12 @@ Result of BEMHTML templating:
     content: 'Andrei Linde'
 }
 ```
+
 Result of BEMHTML templating:
+
 ```html
 <div class="user h-card p-name">Andrei Linde</div>
 ```
-
 
 ### tag
 
@@ -214,15 +251,17 @@ Result of BEMHTML templating:
     content: 'start'
 }
 ```
+
 Result of BEMHTML templating:
+
 ```html
 start
 ```
 
+### User-defined fields
 
-### <a name="user-defined"></a>User-defined fields
+You can add any other data fields in order to later process them in the template body as you see fit.
 
-You can add any other data fields in order to later process them in the template body as you see fit.. Example:
 ```js
 // BEMJSON
 {
@@ -232,7 +271,7 @@ You can add any other data fields in order to later process them in the template
 }
 ```
 
-For more information about how to process user-defined BEMJSON fields, see the section on templates.
+For more information about how to process user-defined BEMJSON fields, see the section on [templates](5-templates-syntax.md).
 
 ***
 
