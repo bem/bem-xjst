@@ -4,7 +4,7 @@
 
 Fixed issue with undefined nested mix.
 
-v6.5.2 marked as deprecated because of #303.
+v7.0.0 marked as deprecated because of #303.
 
 Commits:
 * [[`3b9c4220c6`](https://github.com/bem/bem-xjst/commit/3b9c4220c6)] - **BEMHTML**: Fix for #303 undefined nested mix (miripiruni)
