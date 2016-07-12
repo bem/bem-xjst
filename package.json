@@ -26,7 +26,8 @@
     "clean": "rm -f lib/bem{html,tree}/bundle.js",
     "lint": "jscs `ls lib/*.js lib/**/*.js test/*.js | grep -v bundle` && jshint `ls lib/*.js lib/**/*.js test/*.js | grep -v bundle`",
     "mocha-test": "mocha --reporter=spec test/*-test.js",
-    "test": "npm run make && npm run lint && npm run mocha-test"
+    "test": "npm run make && npm run lint && npm run coverage",
+    "coverage": "./node_modules/.bin/istanbul cover ./node_modules/mocha/bin/_mocha -- -u bdd -R spec --recursive test/*-test.js"
   },
   "repository": {
     "type": "git",
@@ -48,7 +49,8 @@
     "jscs": "^3.0.3",
     "jshint": "^2.7.0",
     "mocha": "2.5.3",
-    "chai": "3.5.0"
+    "chai": "3.5.0",
+    "istanbul": "0.4.x"
   },
   "author": "Fedor Indutny <fedor@indutny.com>",
   "maintainers": [
