@@ -22,10 +22,14 @@
     "preversion": "bash scripts/update-authors.sh && git add AUTHORS && git commit -m \"update AUTHORS\" || true",
     "make-bemhtml": "browserify --standalone bemhtml lib/bemhtml/index.js -o lib/bemhtml/bundle.js",
     "make-bemtree": "browserify --standalone bemtree lib/bemtree/index.js -o lib/bemtree/bundle.js",
-    "make": "npm run make-bemhtml && npm run make-bemtree",
-    "clean": "rm -f lib/bem{html,tree}/bundle.js",
-    "lint": "jscs `ls lib/*.js lib/**/*.js test/*.js | grep -v bundle` && jshint `ls lib/*.js lib/**/*.js test/*.js | grep -v bundle`",
+    "make-vidom": "browserify --standalone vidom lib/vidom/index.js -o lib/vidom/bundle.js",
     "mocha-test": "mocha --reporter=spec test/*-test.js",
+    "make": "npm run make-bemhtml && npm run make-bemtree && npm run make-vidom",
+    "clean": "rm -f lib/bem{html,tree}/bundle.js lib/vidom/bundle.js",
+    "lint": "jscs `ls lib/*.js lib/**/*.js test/**/*.js | grep -v bundle` && jshint `ls lib/*.js lib/**/*.js test/*.js | grep -v bundle`",
+    "test-bemhtml": "mocha --reporter=spec test/bemhtml/*-test.js",
+    "test-bemtree": "mocha --reporter=spec test/bemtree/*-test.js",
+    "test-vidom": "mocha --reporter=spec test/vidom/*-test.js",
     "test": "npm run make && npm run lint && npm run mocha-test"
   },
   "repository": {

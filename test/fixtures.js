@@ -1,6 +1,5 @@
 var bemxjst = require('../');
 var assert = require('assert');
-
 require('chai').should();
 
 module.exports = function(engine) {
