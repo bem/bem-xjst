@@ -150,7 +150,7 @@ describe('Modes mix', function() {
     }, '<div class="b1__elem b2__elem"></div>');
   });
 
-  it('should concat mix from templates with mix from bemjson', function() {
+  it('should override mix from bemjson with mix from templates', function() {
     test(function() {
       block('b1')(
         mix()({ block: 'template' })
@@ -158,7 +158,7 @@ describe('Modes mix', function() {
     }, {
       block: 'b1',
       mix: { block: 'bemjson' }
-    }, '<div class="b1 template bemjson"></div>');
+    }, '<div class="b1 template"></div>');
   });
 
   it('should render both mix from templates and from bemjson', function() {
