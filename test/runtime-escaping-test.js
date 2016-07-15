@@ -58,4 +58,12 @@ describe('Content escaping', function() {
       { html: { toString: function () { return '<lol>'; } } } ],
     '<div></div><div></div>');
   });
+
+  it('should ignore `tag:false` if html field exist', function() {
+    test(function() {}, {
+      tag: false,
+      html: '<script>console.log("hello html");</script>'
+    },
+    '<script>console.log("hello html");</script>');
+  });
 });
