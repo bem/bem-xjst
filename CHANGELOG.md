@@ -1,5 +1,33 @@
 # BEM-XJST Changelog
 
+# 2016-07-15, [v7.0.2](https://github.com/bem/bem-xjst/compare/v7.0.1...v7.0.2), @miripiruni
+
+Fixed case with `html` and `tag` fields.
+
+```js
+{
+    tag: false,
+    html: '<script>console.log("hello html");</script>'
+}
+```
+
+Result with v7.0.1:
+```html
+[object Object]
+```
+
+Result with v7.0.2:
+```html
+<script>console.log("hello html");</script>
+```
+
+Commits:
+* [[`184a659371`](https://github.com/bem/bem-xjst/commit/184a659371)] - BEMHTML: should properly render unescaped html field if `tag:false` present (fix for #312)
+* [[`21bc431a6c`](https://github.com/bem/bem-xjst/commit/21bc431a6c)] - Merge pull request #295 from bem/renderClose (Slava Oliyanchuk)
+* [[`6362bd9d54`](https://github.com/bem/bem-xjst/commit/6362bd9d54)] - v7.0.0 is deprecated (Slava Oliyanchuk)
+* [[`4c54ada780`](https://github.com/bem/bem-xjst/commit/4c54ada780)] - Merge pull request #288 from vithar/docs-anchors (Slava Oliyanchuk)
+
+
 # 2016-07-07, [v7.0.1](https://github.com/bem/bem-xjst/compare/v7.0.0...v7.0.1), @miripiruni
 
 Fixed issue with undefined nested mix.
