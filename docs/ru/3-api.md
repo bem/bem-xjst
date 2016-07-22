@@ -277,7 +277,7 @@ var templates = bemxjst.bemhtml.compile('');
 
 // Расширяем прототип контекста
 templates.BEMContext.prototype.hi = function(name) {
-    return 'Hello, ' + username;
+    return 'Hello, ' + name;
 };
 
 // Добавляем шаблоны
