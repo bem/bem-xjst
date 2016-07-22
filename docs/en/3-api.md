@@ -284,7 +284,7 @@ var templates = bemxjst.bemhtml.compile('');
 
 // Extend the context prototype
 templates.BEMContext.prototype.hi = function(name) {
-    return 'Hello, ' + username;
+    return 'Hello, ' + name;
 };
 
 // Add templates
