@@ -1,7 +1,13 @@
 var assert = require('assert');
 var fixtures = require('./fixtures')('bemtree');
 var bemxjst = require('../index').bemtree;
-var test = fixtures.test;
+var fixturesTest = fixtures.test;
+
+var test = function(fn, data, expected) {
+  return fixturesTest(fn, data, expected, {
+    engine: 'BEMTREE'
+  });
+};
 
 describe('BEMTREE engine tests', function() {
   describe('applyNext()', function() {

@@ -6,7 +6,7 @@ require('chai').should();
 module.exports = function(engine) {
   function fail(fn, regexp) {
     assert.throws(function() {
-      bemxjst[engine].compile(fn);
+      bemxjst[engine]._compile(fn);
     }, regexp);
   }
 
@@ -15,7 +15,8 @@ module.exports = function(engine) {
       options = fn;
       fn = function() {};
     }
-    return bemxjst[engine].compile(fn, options || {});
+
+    return bemxjst[engine]._compile(fn, options || {});
   }
 
   /**
