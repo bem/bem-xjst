@@ -1,5 +1,15 @@
 # BEM-XJST Changelog
 
+# 2016-07-29 [v7.0.3](https://github.com/bem/bem-xjst/compare/v7.0.2...v7.0.3), @miripiruni
+
+Fixed bug with `{ html: '' }`. In 7.0.2 result is `[object Object]`. In 7.0.3: `''`.
+
+
+Commits:
+* [[`bc28643520`](https://github.com/bem/bem-xjst/commit/bc28643520)] - **BEMXJST**: work with empty string in html field (miripiruni)
+* [[`5bd2476ae5`](https://github.com/bem/bem-xjst/commit/5bd2476ae5)] - **Docs**: variable name fixed (miripiruni)
+
+
 # 2016-07-15, [v7.0.2](https://github.com/bem/bem-xjst/compare/v7.0.1...v7.0.2), @miripiruni
 
 Fixed case with `html` and `tag` fields.
