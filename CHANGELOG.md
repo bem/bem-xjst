@@ -1,6 +1,6 @@
 # BEM-XJST Changelog
 
-# 2016-07-29 [v6.5.5](https://github.com/bem/bem-xjst/compare/v6.5.4...v6.5.5), # @miripiruni
+# 2016-07-29 [v6.5.5](https://github.com/bem/bem-xjst/compare/v6.5.4...v6.5.5), @miripiruni
 
 Fixed bug with `{ html: '' }`. In 6.5.4 result is `[object Object]`. In 6.5.5: `''`.
 
