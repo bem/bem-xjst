@@ -39,6 +39,12 @@ describe('Content escaping', function() {
     '<unescaped>');
   });
 
+  it('should work with empty string in html field', function() {
+    test(function() {},
+      { html: '' },
+      '');
+  });
+
   it('should ignore html field if block/elem/cls/attrs/tag exists', function() {
     test(function() {
     }, { block: 'b', html: '<unescaped>', content: 'safe text' },
