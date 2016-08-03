@@ -1,5 +1,26 @@
 # BEM-XJST Changelog
 
+## 2016-08-03 [v4.4.0](https://github.com/bem/bem-xjst/compare/v4.3.7...v4.4.0), @miripiruni
+
+New option `production`. When it set to `true` bem-xjst will render bemjson even
+if one template contains error.
+
+Example:
+```
+var template = bemxjst.compile(function() {
+  block('b1').attrs()(function() {
+    var attrs = applyNext();
+    attrs.undef.foo = 'bar';
+    return attrs;
+  });
+}, { production: true });
+var html = template.apply({ block: 'page', content: { block: 'b1' } });
+```
+`html` will equals `<div class="page"></div>`.
+
+Commits:
+* [[`8b3369f270`](https://github.com/bem/bem-xjst/commit/8b3369f270)] - Merge pull request #299 from bem/trycatch-for-4.x (Slava Oliyanchuk)
+
 ## 2016-07-06, [v4.3.7](https://github.com/bem/bem-xjst/compare/v4.3.6...v4.3.7), @miripiruni
 
 Fixed issue with undefined nested mix.
