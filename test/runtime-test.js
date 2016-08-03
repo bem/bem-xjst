@@ -973,6 +973,37 @@ describe('BEMHTML compiler/Runtime', function() {
     });
   });
 
+  describe('Production mode', function() {
+    it('should render even if error in one block', function() {
+      var template = bemxjst.compile(function() {
+        block('b1').attrs()(function() {
+          var attrs = applyNext();
+          attrs.undef.foo = 'bar';
+          return attrs;
+        });
+      }, { production: true });
+
+      assert.equal(template.apply({
+        block: 'page',
+        content: { block: 'b1' }
+      }), '<div class="page"></div>');
+    });
+
+    it('should throw error with one apply if production mode off', function() {
+      var template = bemxjst.compile(function() {
+        block('b1').attrs()(function() {
+          var attrs = applyNext();
+          attrs.foo = 'bar';
+          return attrs;
+        });
+      });
+
+      assert.throws(function() {
+        template.apply({ block: 'b1' });
+      });
+    });
+  });
+
   describe('Match', function() {
     var bemjson = {
       block: 'b1',
@@ -994,12 +1025,6 @@ describe('BEMHTML compiler/Runtime', function() {
             return attrs;
           })
         );
-      });
-    });
-
-    it('should throw error with one apply', function() {
-      assert.throws(function() {
-        template.apply(bemjson);
       });
     });
 
