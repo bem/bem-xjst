@@ -18,6 +18,8 @@ var html = template.apply({ block: 'page', content: { block: 'b1' } });
 ```
 `html` will equals `<div class="page"></div>`.
 
+Also in production mode bem-xjst will produce error messages to STDERR.
+
 Commits:
 * [[`8b3369f270`](https://github.com/bem/bem-xjst/commit/8b3369f270)] - Merge pull request #299 from bem/trycatch-for-4.x (Slava Oliyanchuk)
 
