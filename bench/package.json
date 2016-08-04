@@ -12,7 +12,7 @@
   "license": "MIT",
   "dependencies": {
     "bem-xjst": "https://github.com/bem/bem-xjst.git#4d90404",
-    "benchmark": "2.1.0",
+    "benchmark": "https://github.com/miripiruni/benchmark.js.git",
     "browserify": "^11.0.0",
     "microtime": "^2.0.0",
     "yargs": "^3.15.0"
