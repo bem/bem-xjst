@@ -1,11 +1,11 @@
 /* begin: /Users/indutny/Code/bem/bem-components/libs/bem-core/common.blocks/page/page.bemhtml */
 block('page')(
 
-    def().xjstOptions({ flush: true }).once()(function() {
+    def().xjstOptions({ flush: true }).replace()(function() {
         var ctx = this.ctx;
         this._nonceCsp = ctx.nonce;
 
-        return applyCtx([
+        return [
             ctx.doctype || '<!DOCTYPE html>',
             {
                 tag : 'html',
@@ -32,7 +32,7 @@ block('page')(
                     ctx
                 ]
             }
-        ]);
+        ];
     }),
 
     tag()('body'),
@@ -423,7 +423,7 @@ block('menu')(
                     }
                 };
 
-            if(!this.isArray(ctx.content)) throw Error('menu: content must be an array of the menu items');
+            if(!Array.isArray(ctx.content)) throw Error('menu: content must be an array of the menu items');
 
             iterateItems(ctx.content);
         }

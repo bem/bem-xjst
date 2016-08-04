@@ -3044,7 +3044,7 @@ block('b-keyboard-loader')(
             };
         }),
         match(function() {
-            return this.isArray(this.ctx.content);
+            return Array.isArray(this.ctx.content);
         })(function() {
             return [{
                 block: 'b-link',
@@ -5101,7 +5101,7 @@ block('search')(
         return !this.ctx.content;
     }).content()(function() {
         var input = this.ctx.input,
-            len = this.isArray(input) ? input.length : (input = [input], 1),
+            len = Array.isArray(input) ? input.length : (input = [input], 1),
             row = [],
             i = 0,
             item;
@@ -6665,16 +6665,14 @@ block('b-menu-horiz').match(function() {
 })(
     js()(true),
 
-    elem('item').def().once()(function() {
-        return applyNext(
-            {
-                position: this.position - 1,
-                ctx: {
-                    elem: 'layout-unit',
-                    content: this.ctx
-                }
+    elem('item').replace()(function() {
+        return {
+            position: this.position - 1,
+            ctx: {
+                elem: 'layout-unit',
+                content: this.ctx
             }
-        );
+        };
     }),
 
     elem('layout-unit').mix()(function() {
@@ -6743,7 +6741,7 @@ block('lang-switcher').wrap()(function() {
                 mods: this.mods,
                 elem: 'foobar', // защита от зацикливания
                 tag: '',
-                content: (this.isArray(this.ctx.content) && this.ctx.content.length < 4) && (this.ctx.noMore !== true) ?
+                content: (Array.isArray(this.ctx.content) && this.ctx.content.length < 4) && (this.ctx.noMore !== true) ?
                     (
                         // Нужно для правильного выставления позиции в вертикальном меню, см подробности в
                         // lang-switcher__lang.bemhtml.
@@ -9431,7 +9429,7 @@ block('serp-meta2')(
                 });
             };
 
-        if (this.isArray(content) && content.every(isString)) {
+        if (Array.isArray(content) && content.every(isString)) {
             content = content.join('');
         }
         return isString(content) ? nowrapSmallPrefix(content) : applyNext();
@@ -11130,7 +11128,7 @@ block('button').mod('round', 'yes')(
         this.ctx.mods = this.extend({
             'only-icon': 'yes'
         }, this.ctx.mods);
-        
+
         return applyNext();
     })
 );
@@ -12939,7 +12937,7 @@ block('b-autocomplete-item')(
     match(function() {
         return this.ctx.search_cgi;
     }).match(function() {
-        return this.isArray(this.ctx.search_cgi);
+        return Array.isArray(this.ctx.search_cgi);
     }).js()(function() {
         return {
             cgi: this.ctx.search_cgi
@@ -12959,7 +12957,7 @@ block('b-autocomplete-item')(
     content()(function() {
         var data = this.ctx.data,
             iCommonString = BEM.blocks['i-common__string'],
-            text = iCommonString.escapeHTML(this.isArray(data) ? data[1] : data);
+            text = iCommonString.escapeHTML(Array.isArray(data) ? data[1] : data);
 
         return iCommonString.highlight(text, this.ctx.hl);
     })
@@ -13021,7 +13019,7 @@ block('b-autocomplete-item').mod('type', 'foot')(
 
     content()(function() {
         return (this.ctx.data.slice(1).map(function(chunk) {
-            return this.isArray(chunk) ? {
+            return Array.isArray(chunk) ? {
                     tag: 'span',
                     elem: 'foot',
                     content: chunk[0]
