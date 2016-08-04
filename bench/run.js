@@ -126,6 +126,7 @@ function checkResults(rme, hz, stats) {
   console.log('next.stats.deviation:', next.stats.deviation);
   console.log('prev.stats.mean:', prev.stats.mean);
   console.log('prev.stats.deviation:', prev.stats.deviation);
+  console.log('prev.samples:', prev.stats.sample);
 
   check(
     next.stats.mean - next.stats.deviation,
