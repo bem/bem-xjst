@@ -1,9 +1,9 @@
 var assert = require('assert');
-var bemxjst = require('../').bemhtml;
+var bemhtml = require('./fixtures')('bemhtml');
 
 describe('Runtime BEMContext', function() {
   it('should support extending of templates.BEMContext prototype', function() {
-    var templates = bemxjst.compile();
+    var templates = bemhtml.compile();
     templates.BEMContext.prototype.myField = 'opa';
     templates.compile(function() {
       block('b').content()(function() { return this.myField; });
@@ -12,7 +12,7 @@ describe('Runtime BEMContext', function() {
   });
 
   it('should redefine templates.BEMContext prototype later', function() {
-    var templates = bemxjst.compile();
+    var templates = bemhtml.compile();
     var bemjson = { block: 'b', tag: false };
     templates.BEMContext.prototype.what = 'hip';
     templates.compile(function() {

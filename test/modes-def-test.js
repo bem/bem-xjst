@@ -1,10 +1,10 @@
 var assert = require('assert');
-var bemxjst = require('../').bemhtml;
+var bemhtml = require('./fixtures')('bemhtml');
 
 describe('Modes def', function() {
   it('should throw error when args passed to def mode', function() {
     assert.throws(function() {
-      bemxjst.compile(function() {
+      bemhtml.compile(function() {
         block('b1').def('blah');
       });
     });

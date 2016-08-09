@@ -1,12 +1,11 @@
 var fixtures = require('./fixtures')('bemhtml');
 var test = fixtures.test;
 var assert = require('assert');
-var bemxjst = require('../').bemhtml;
 
 describe('Modes mix', function() {
   it('should throw error when args passed to mix mode', function() {
     assert.throws(function() {
-      bemxjst.compile(function() {
+      fixtures.compile(function() {
         block('b1').mix([
           { block: 'b2' }
         ]);

@@ -1,7 +1,6 @@
 var fixtures = require('./fixtures')('bemhtml');
 var test = fixtures.test;
 var assert = require('assert');
-var bemxjst = require('../').bemhtml;
 var BEMXJSTError = require('../lib/bemxjst/error').BEMXJSTError;
 
 describe('Templates syntax', function() {
@@ -36,7 +35,7 @@ describe('Templates syntax', function() {
 
   it('should throw error when no block subpredicate', function() {
     assert.throws(function() {
-      bemxjst.compile(function() {
+      fixtures.compile(function() {
         // No block() subpredicate
         elem('e').tag()('b');
       });
