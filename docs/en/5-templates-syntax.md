@@ -424,10 +424,20 @@ BEM entities to [mix](https://en.bem.info/method/key-concepts/#mix) with the cur
 
 Usage example:
 
-```
+```js
 block('link').mix()({ block: 'mixed' });
 block('button').mix()([ { block: 'mixed' }, { block: 'control' } ]);
 block('header').mix()(function() { return { block: 'mixed' }; });
+```
+
+You can use addMix mode to add mix. addMix is shortcut of mix:
+```js
+addMix()('my_new_mix'); // This is equivalent to following:
+mix()(function() {
+    var mixes = applyNext();
+    if (!Array.isArray(mixes)) mixes = [ mixes ];
+    return mixes.concat('my_new_mix');
+});
 ```
 
 #### js
