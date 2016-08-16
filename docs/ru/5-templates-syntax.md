@@ -355,6 +355,16 @@ attrs()(value)
 
 Хеш с HTML-атрибутами. Значения атрибутов [будут экранированны функцией attrEscape](6-templates-context.md#attrescape).
 
+Для того, чтобы добавить `attrs` вы можете использовать режим addAttrs, который
+является сокращением режима attrs и выглядит более лаконично:
+```js
+addAttrs()({ id: 'test', name: 'test' }); // Это полностью эквивалентно следующему:
+attrs()(function() {
+    var attrs = applyNext() || {}; // аттрибуты из предыдущих шаблонов или BEMJSON-а
+    return this.extend(attrs, { id: 'test', name: 'test' });
+});
+```
+
 #### content
 
 ```js

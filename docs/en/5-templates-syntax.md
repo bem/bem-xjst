@@ -362,6 +362,16 @@ attrs()(value)
 
 Hash with HTML attributes. The attribute values [are escaped using the attrEscape function](6-templates-context.md#attrescape).
 
+You can use addAttrs mode to add attributes. addAttrs is shortcut of attrs mode:
+```js
+addAttrs()({ id: 'test', name: 'test' });
+// This is equivalent to following:
+attrs()(function() {
+    var attrs = applyNext() || {}; // Get attrs from previous templates
+    return this.extend(attrs, { id: 'test', name: 'test' });
+});
+```
+
 #### content
 
 ```js
