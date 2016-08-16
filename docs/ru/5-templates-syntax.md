@@ -352,10 +352,21 @@ mix()(mixed)
 
 Пример использования:
 
-```
+```js
 block('link').mix()({ block: 'mixed' });
 block('button').mix()([ { block: 'mixed' }, { block: 'control' } ]);
 block('header').mix()(function() { return { block: 'mixed' }; });
+```
+
+Для того, чтобы добавить `mix` вы можете использовать режим addMix, который
+является сокращением режима mix и выглядит более лаконично:
+```js
+addMix()('Добавляемый микс'); // Это полностью эквивалентно следующему:
+mix()(function() {
+    var mixes = applyNext();
+    if (!Array.isArray(mixes)) mixes = [ mixes ];
+    return mixes.concat('Добавляемый микс');
+});
 ```
 
 #### js
