@@ -74,18 +74,6 @@ describe('Runtime applyNext()', function() {
       ' button__control_type_span"></span>');
   });
 
-  it('should apply templates for new mod', function() {
-    test(function() {
-      block('button').def()(function() {
-        this.mods.type = 'span';
-        return applyNext();
-      });
-      block('button').mod('type', 'span').tag()('span');
-    },
-    { block: 'button' },
-    '<span class="button button_type_span"></span>');
-  });
-
   it('should apply base matcher while wrapping', function() {
     test(function() {
       block('button').content()(function() {

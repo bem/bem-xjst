@@ -286,6 +286,8 @@ block('link')(
 * [attrs](#attrs)
 * [content](#content)
 * [mix](#mix)
+* [mods](#mods)
+* [elemMods](#elemMods)
 * [js](#js)
 * [bem](#bem)
 * [cls](#cls)
@@ -376,6 +378,65 @@ mix()(function() {
     var mixes = applyNext();
     if (!Array.isArray(mixes)) mixes = [ mixes ];
     return mixes.concat('Добавляемый микс');
+});
+```
+
+#### mods
+
+```js
+/**
+ * @param {function|Object} mods
+ */
+mods()(mods)
+```
+
+Хеш модификаторов блока.
+
+Пример использования:
+
+```js
+block('link').mods()({ type: 'download' });
+block('link').mods()(function() { return { type: 'download' }; });
+```
+
+Значение вычисленное в режиме `mods` переопределит значение указанное в BEMJSON-е.
+Для того, чтобы добавить модификаторы, вы должны использовать режим addMods, который
+является сокращением режима mods и выглядит более лаконично:
+```js
+addMods()({ theme: 'dark' }); // Это полностью эквивалентно следующему:
+mods()(function() {
+    this.mods = this.extend(applyNext() || this.mods, { theme: 'dark' });
+    return this.mods;
+});
+```
+
+
+#### elemMods
+
+```js
+/**
+ * @param {function|Object} elemMods
+ */
+elemMods()(elemMods)
+```
+
+Хеш модификаторов элемента.
+
+Пример использования:
+
+```js
+block('link').elemMods()({ type: 'download' });
+block('link').elemMods()(function() { return { type: 'download' }; });
+```
+
+Значение вычисленное в режиме `elemMods` переопределит значение указанное в BEMJSON-е.
+Для того, чтобы добавить модификаторы вы можете использовать режим addElemMods, который
+является сокращением режима elemMods и выглядит более лаконично:
+```js
+addElemMods()({ theme: 'dark' }); // Это полностью эквивалентно следующему:
+elemMods()(function() {
+    this.elemMods = this.extend(applyNext() || this.elemMods, { theme: 'dark' });
+    return this.elemMods;
 });
 ```
 

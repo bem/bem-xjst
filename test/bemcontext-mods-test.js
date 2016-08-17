@@ -10,7 +10,8 @@ describe('BEMContext this.mods', function() {
     }, { block: 'b1' }, '<div class="b1">yes</div>');
   });
 
-  it('should support changing mods in runtime', function() {
+  it('should support changing mods in runtime (use mods() or addMods())',
+    function() {
     test(function() {
       block('b1').def()(function() {
         this.mods.a = 'b';
@@ -76,7 +77,7 @@ describe('BEMContext this.mods', function() {
     }, '<div class="b1 b1_a_b"><div class="b2">yes</div></div>');
   });
 
-  it('should lazily override mods without propagating them', function() {
+  it.skip('should lazily override mods without propagating them', function() {
     test(function() {
       block('b1').def()(function() {
         return applyNext({ 'mods.a': 'yes' });

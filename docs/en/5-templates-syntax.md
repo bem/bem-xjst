@@ -293,6 +293,8 @@ Result of BEMHTML templating:
 * [attrs](#attrs)
 * [content](#content)
 * [mix](#mix)
+* [mods](#mods)
+* [elemMods](#elemMods)
 * [js](#js)
 * [bem](#bem)
 * [cls](#cls)
@@ -382,6 +384,63 @@ mix()(function() {
     var mixes = applyNext();
     if (!Array.isArray(mixes)) mixes = [ mixes ];
     return mixes.concat('my_new_mix');
+});
+```
+
+#### mods
+
+```js
+/**
+ * @param {function|Object} mods
+ */
+mods()(mods)
+```
+
+Hash for modifiers of block.
+
+Example:
+
+```js
+block('link').mods()({ type: 'download' });
+block('link').mods()(function() { return { type: 'download' }; });
+```
+
+Value from `mods` mode rewrite value from BEMJSON.
+You can use addMods mode to add modifiers. addMods is shortcut of mods:
+```js
+addMods()({ theme: 'dark' }); // This is equivalent to following:
+mods()(function() {
+    this.mods = this.extend(applyNext(), { theme: 'dark' });
+    return this.mods;
+});
+```
+
+#### elemMods
+
+```js
+/**
+ * @param {function|Object} elemMods
+ */
+elemMods()(elemMods)
+```
+
+Hash for modifiers of element.
+
+Examle:
+
+```js
+block('link').elemMods()({ type: 'download' });
+block('link').elemMods()(function() { return { type: 'download' }; });
+```
+
+Value from `elemMods` mode rewrite value from BEMJSON.
+You can use addElemMods mode to add modifiers for element. addElemMods is
+shortcut of elemMods:
+```js
+addElemMods()({ theme: 'dark' }); // This is equivalent to following:
+elemMods()(function() {
+    this.elemMods = this.extend(applyNext(), { theme: 'dark' });
+    return this.elemMods;
 });
 ```
 

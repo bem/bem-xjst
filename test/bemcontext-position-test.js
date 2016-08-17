@@ -39,9 +39,8 @@ describe('BEMContext this.position', function() {
 
   it('should calc position for nested elements', function() {
     test(function() {
-      block('menu').elem('item').def()(function() {
-        this.elemMods.pos = this.position;
-        return applyNext();
+      block('menu').elem('item').addElemMods()(function() {
+        return { pos: this.position };
       });
     },
     {
@@ -57,9 +56,8 @@ describe('BEMContext this.position', function() {
 
   it('should calc position with array mess', function() {
     test(function() {
-      block('menu').elem('item').def()(function() {
-        this.elemMods.pos = this.position;
-        return applyNext();
+      block('menu').elem('item').addElemMods()(function() {
+        return { pos: this.position };
       });
     },
     {
