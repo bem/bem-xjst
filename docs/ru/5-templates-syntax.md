@@ -313,6 +313,8 @@ block('link')(
 * [attrs](#attrs)
 * [content](#content)
 * [mix](#mix)
+* [mods](#mods)
+* [elemMods](#elemMods)
 * [js](#js)
 * [bem](#bem)
 * [cls](#cls)
@@ -443,6 +445,96 @@ mix()(function() {
     return mixes.concat('my-new-mix');
 });
 ```
+
+
+#### mods
+
+```js
+/**
+ * @param {function|Object} mods
+ */
+mods()(mods)
+```
+
+Хеш модификаторов блока.
+
+Пример использования:
+
+```js
+block('link').mods()({ type: 'download' });
+block('link').mods()(function() { return { type: 'download' }; });
+```
+
+Значение, вычисленное в режиме `mods()`, переопределит значение, указанное в BEMJSON-е.
+
+По умолчанию возвращает значение `this.mods`.
+
+```js
+// BEMJSON:
+{ block: 'b' }
+
+// Шаблон:
+block('b').def()(function() {
+    return apply('mods');
+});
+```
+
+Возвратит `{}`.
+
+Для того, чтобы добавить модификаторы, вы должны использовать режим addMods, который
+является сокращением режима mods и выглядит более лаконично:
+```js
+addMods()({ theme: 'dark' }); // Это полностью эквивалентно следующему:
+mods()(function() {
+    this.mods = this.extend(applyNext() || this.mods, { theme: 'dark' });
+    return this.mods;
+});
+```
+
+
+#### elemMods
+
+```js
+/**
+ * @param {function|Object} elemMods
+ */
+elemMods()(elemMods)
+```
+
+Хеш модификаторов элемента.
+
+Пример использования:
+
+```js
+block('link').elemMods()({ type: 'download' });
+block('link').elemMods()(function() { return { type: 'download' }; });
+```
+
+Значение, вычисленное в режиме `elemMods()`, переопределит значение, указанное в BEMJSON-е.
+
+По умолчанию возвращает значение `this.elemMods`.
+
+```js
+// BEMJSON:
+{ block: 'b', elem: 'e' }
+
+// Шаблон:
+block('b').elem('e').def()(function() {
+    return apply('elemMods');
+});
+```
+
+Возвратит `{}`.
+
+Для того, чтобы добавить модификаторы, вы можете использовать режим addElemMods, который
+является сокращением режима elemMods и выглядит более лаконично:
+```js
+addElemMods()({ theme: 'dark' }); // Это полностью эквивалентно следующему:
+elemMods()(function() {
+    this.elemMods = this.extend(applyNext() || this.elemMods, { theme: 'dark' });
+    return this.elemMods;
+```
+
 
 #### js
 

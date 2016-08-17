@@ -13,6 +13,7 @@ describe('BEMContext this.mods', function() {
   it('should support changing mods in runtime', function() {
     test(function() {
       block('b1').def()(function() {
+        // But better use mods() or addMods()
         this.mods.a = 'b';
         return applyNext();
       });

@@ -35,13 +35,9 @@ describe('BEMContext this.isLast()', function() {
 
   it('should preserve position', function() {
     test(function() {
-      block('button').def()(function() {
-        if (this.isLast()) this.mods.last = 'yes';
-        return applyNext();
-      });
-      block('button').def()(function() {
-        return applyNext();
-      });
+      block('button')
+        .match(function() { return this.isLast(); })
+        .addMods()({ last: 'yes' });
     },
     [
       { block: 'button' },
