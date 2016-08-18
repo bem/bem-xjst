@@ -8,7 +8,6 @@ node_js:
 
 env:
   global:
-    - GH_REF: github.com/bem/bh.git
     - ISTANBUL_COVERAGE: yes
 
 after_success:
