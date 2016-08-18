@@ -20,13 +20,14 @@
   "scripts": {
     "prepublish": "npm run make",
     "preversion": "bash scripts/update-authors.sh && git add AUTHORS && git commit -m \"update AUTHORS\" || true",
-    "make-bemhtml": "browserify --standalone bemhtml lib/bemhtml/index.js -o lib/bemhtml/bundle.js",
-    "make-bemtree": "browserify --standalone bemtree lib/bemtree/index.js -o lib/bemtree/bundle.js",
-    "make": "npm run make-bemhtml && npm run make-bemtree",
+    "make": "npm run make:bemhtml && npm run make:bemtree",
+    "make:bemhtml": "browserify --standalone bemhtml lib/bemhtml/index.js -o lib/bemhtml/bundle.js --debug",
+    "make:bemtree": "browserify --standalone bemtree lib/bemtree/index.js -o lib/bemtree/bundle.js --debug",
     "clean": "rm -f lib/bem{html,tree}/bundle.js",
-    "lint": "jscs `ls lib/*.js lib/**/*.js test/*.js | grep -v bundle` && jshint `ls lib/*.js lib/**/*.js test/*.js | grep -v bundle`",
-    "mocha-test": "mocha --reporter=spec test/*-test.js",
-    "test": "npm run make && npm run lint && npm run mocha-test"
+    "test": "npm run make && npm run test:lint && npm run test:coverage",
+    "test:lint": "jscs `ls lib/*.js lib/**/*.js test/*.js | grep -v bundle` && jshint `ls lib/*.js lib/**/*.js test/*.js | grep -v bundle`",
+    "test:mocha": "mocha --reporter=spec test/*-test.js",
+    "test:coverage": "./node_modules/.bin/istanbul cover ./node_modules/mocha/bin/_mocha -- -u bdd -R spec test/*-test.js"
   },
   "repository": {
     "type": "git",
@@ -45,10 +46,11 @@
   },
   "devDependencies": {
     "browserify": "^13.0.1",
+    "istanbul": "^0.4.4",
+    "chai": "^3.5.0",
     "jscs": "^3.0.3",
     "jshint": "^2.7.0",
-    "mocha": "2.5.3",
-    "chai": "3.5.0"
+    "mocha": "^2.5.3"
   },
   "author": "Fedor Indutny <fedor@indutny.com>",
   "maintainers": [

@@ -4,6 +4,7 @@
 [![Build Status](http://img.shields.io/travis/bem/bem-xjst/master.svg)](https://travis-ci.org/bem/bem-xjst)
 [![Dependency Status](https://david-dm.org/bem/bem-xjst.svg)](https://david-dm.org/bem/bem-xjst)
 [![devDependency Status](https://david-dm.org/bem/bem-xjst/dev-status.svg)](https://david-dm.org/bem/bem-xjst#info=devDependencies)
+[![Coverage Status](https://coveralls.io/repos/github/bem/bem-xjst/badge.svg?branch=coverage-badge)](https://coveralls.io/github/bem/bem-xjst?branch=coverage-badge)
 
 Компилятор БЭМ-специфичных шаблонов, основанный на [XJST](https://github.com/veged/xjst).
 

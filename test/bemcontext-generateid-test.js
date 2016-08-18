@@ -1,5 +1,5 @@
 var assert = require('assert');
-var bemxjst = require('../').bemhtml;
+var bemxjst = require('./fixtures')('bemhtml');
 
 describe('BEMContext this.generateId()', function() {
   var template;

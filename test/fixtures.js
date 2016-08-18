@@ -1,21 +1,31 @@
-var bemxjst = require('../');
 var assert = require('assert');
 
 require('chai').should();
 
 module.exports = function(engine) {
-  function fail(fn, regexp) {
-    assert.throws(function() {
-      bemxjst[engine].compile(fn);
-    }, regexp);
-  }
-
   function compile(fn, options) {
     if (typeof fn !== 'function') {
       options = fn;
       fn = function() {};
     }
-    return bemxjst[engine].compile(fn, options || {});
+
+    if (!options) options = {};
+
+    var engineName = options.engine || 'BEMHTML';
+    var Engine = require('../lib/' + engineName.toLowerCase());
+    var api = new Engine(options);
+    var template = {};
+
+    api.compile(fn);
+    api.exportApply(template);
+
+    return template;
+  }
+
+  function fail(fn, regexp) {
+    assert.throws(function() {
+      compile(fn, { engine: engine });
+    }, regexp);
   }
 
   /**
