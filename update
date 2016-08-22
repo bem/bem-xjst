@@ -1,0 +1,19 @@
+#!/bin/bash
+
+bemjson=desktop.bundles/index/index.bemjson.js
+version=$1
+msg="${version} in version selector"
+
+echo "update bem-xjst to $1..."
+npm install bem-xjst@${version} --save --save-exact
+npm version ${version} --no-git-tag-version
+npm i
+npm run build
+git add package.json index.html xindex.browser.bemhtml.js xindex.js
+git commit -m ${version}
+hash=$(git rev-parse HEAD)
+echo ${hash}
+sed -i -e 's/versions: \[/versions: \[\
+                                { name: "'${version}'", hash: "'${hash}'" },/g' ${bemjson}
+git add ${bemjson}
+git commit -m "${msg}"
