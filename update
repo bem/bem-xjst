@@ -15,5 +15,6 @@ hash=$(git rev-parse HEAD)
 echo ${hash}
 sed -i -e 's/versions: \[/versions: \[\
                                 { name: "'${version}'", hash: "'${hash}'" },/g' ${bemjson}
-git add ${bemjson}
+npm run build
+git add ${bemjson} index.html
 git commit -m "${msg}"
