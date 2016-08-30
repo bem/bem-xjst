@@ -339,6 +339,24 @@ content()(value)
 
 Дочерние узлы. По умолчанию будет взято из поля `content` текущего узла BEMJSON.
 
+Чтобы добавить дочерний узел в содержимое вы можете воспользоваться режимами
+`appendContent` и `prependContent`.
+
+```js
+block('quote')(
+    prependContent()('«'),
+    appendContent()('»'),
+    appendContent({ block: 'link' });
+);
+```
+```js
+{ block: 'quote', content: 'Пришел, увидел, отшаблонизировал' }
+```
+Результатом шаблонизации будет строка:
+```html
+<div class="quote">«Пришел, увидел, отшаблонизировал»<div class="link"></div></div>
+```
+
 #### mix
 
 ```js

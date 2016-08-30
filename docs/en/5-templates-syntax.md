@@ -346,6 +346,24 @@ content()(value)
 
 Child nodes. By default, it is taken from the `content` of the current BEMJSON node.
 
+You can use `appendContent` and `prependContent` modes to add child nodes to
+content.
+
+```js
+block('quote')(
+    prependContent()('“'), // add some things before actual content
+    appendContent()('”'), // add content to the end
+    appendContent({ block: 'link' }); // add more content to the end
+);
+```
+```js
+{ block: 'quote', content: 'I came, I saw, I templated.' }
+```
+Result:
+```html
+<div class="quote">“I came, I saw, I templated.”<div class="link"></div></div>
+```
+
 #### mix
 
 ```js
