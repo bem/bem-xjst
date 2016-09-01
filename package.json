@@ -50,7 +50,8 @@
     "chai": "^3.5.0",
     "jscs": "^3.0.3",
     "jshint": "^2.7.0",
-    "mocha": "^2.5.3"
+    "mocha": "^3.0.2",
+    "chai": "^3.5.0"
   },
   "author": "Fedor Indutny <fedor@indutny.com>",
   "maintainers": [
