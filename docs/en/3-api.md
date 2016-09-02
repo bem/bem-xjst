@@ -8,7 +8,8 @@
   - [Support JS-instances for elements (bem-core v4+)](#elemjs)
   - [XHTML option](#xhtml)
   - [Extending BEMContext](#bemcontext)
-* [Bundling](#bundle)
+  - [Runtime linting](#runtime-linting)
+* [Bundling](#bundling)
 
 ## <a name="choose-engine"></a>Choosing an engine, compiling and applying templates
 
@@ -295,6 +296,55 @@ The resulting `html` contains the string:
 <div class="b">Hello, templates</div>
 ```
 
+### Runtime linting
+
+By turning on `runtimeLint` option you can get warnings about wrong
+templates or input data.
+About these warnings you can read [migration guide](https://github.com/bem/bem-xjst/wiki/Migration-guide-from-4.x-to-5.x).
+
+```js
+var bemxjst = require('bem-xjst');
+var bemhtml = bemxjst.bemhtml;
+
+var templates = bemhtml.compile(function() {
+  block('b').content()('yay');
+
+  block('mods-changes').def()(function() {
+    this.ctx.mods.one = 2;
+    return applyNext();
+  });
+}, { runtimeLint: true });
+
+var html = templates.apply([
+  { block: 'b' },
+
+  // boolean attributes
+  { block: 'b', attrs: { one: true, two: 'true' } },
+
+  // mods for elem
+  { block: 'c', elem: 'e', mods: { test: 'opa' } },
+
+  // Присвоения в this.ctx.mods
+  { block: 'mods-changes', mods: { one: '1', two: '2' } }
+]);
+```
+
+As usual you get result of applying templates in `html` variable. But in
+addition of this you can catch wargings in STDERR:
+```
+BEM-XJST WARNING: boolean attribute value: true in BEMJSON: { block: 'b', attrs: { one: true, two: 'true' } }
+Notice what bem-xjst behaviour changed: https://github.com/bem/bem-xjst/releases/tag/v4.3.3
+
+BEM-XJST WARNING: mods for elem in BEMJSON: { block: 'c', elem: 'e', mods: { test: 'opa' } }
+Notice what bem-xjst behaviour changed: https://github.com/bem/bem-xjst/releases/tag/v5.0.0
+
+BEM-XJST WARNING: looks like someone changed ctx.mods in BEMJSON: { block: 'mods-changes', mods: { one: 2, two: '2' } }
+old value of ctx.mod.one was 1
+Notice that you should change this.mods instead of this.ctx.mods in templates
+```
+
+
+## Bundling
 
 ## <a name="bundle"></a>Bundling
 
