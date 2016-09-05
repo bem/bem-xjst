@@ -293,6 +293,8 @@ Result of BEMHTML templating:
 * [attrs](#attrs)
 * [content](#content)
 * [mix](#mix)
+* [mods](#mods)
+* [elemMods](#elemMods)
 * [js](#js)
 * [bem](#bem)
 * [cls](#cls)
@@ -364,6 +366,50 @@ block('link').mix()({ block: 'mixed' });
 block('button').mix()([ { block: 'mixed' }, { block: 'control' } ]);
 block('header').mix()(function() { return { block: 'mixed' }; });
 ```
+
+`mods()` templates doesn’t have own stack and will be stored in `def`
+stack. Therefore you can’t use `apply('mods')` and can’t call `applyNext()`
+to get `mods` runtime value. Use normalized value from `this.mods`.
+
+#### mods
+
+```js
+/**
+ * @param {function|Object} mods
+ */
+
+mods()(mods)
+```
+
+Hash for modifiers of block. `mods()` extends mods from BEMJSON.
+
+Example:
+
+```js
+block('link').mods()({ type: 'download' }); // With value as object literal
+block('link').mods()(function() { return { type: 'download' }; }); // Or function generator
+```
+
+#### elemMods
+
+```js
+/**
+ * @param {function|Object} mods
+ */
+
+elemMods()(elemMods)
+```
+
+Hash for modifiers of element. `elemMods()` extends elemMods from BEMJSON.
+
+Example:
+
+```js
+block('link').elem('text').elemMods()({ size: 's' });
+block('link').elem('text').elemMods()(function() { return { size: 's' }; });
+```
+
+`elemMods()` templates have the same behaviour as `mods()` templates.
 
 #### js
 
