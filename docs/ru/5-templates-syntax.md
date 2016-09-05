@@ -286,6 +286,8 @@ block('link')(
 * [attrs](#attrs)
 * [content](#content)
 * [mix](#mix)
+* [mods](#mods)
+* [elemMods](#elemMods)
 * [js](#js)
 * [bem](#bem)
 * [cls](#cls)
@@ -357,6 +359,56 @@ block('link').mix()({ block: 'mixed' });
 block('button').mix()([ { block: 'mixed' }, { block: 'control' } ]);
 block('header').mix()(function() { return { block: 'mixed' }; });
 ```
+
+#### mods
+
+```js
+/**
+ * @param {function|Object} mods
+ */
+
+mods()(mods)
+```
+
+Хеш модификаторов блока. `mods()` доопределяет mods указанные в BEMJSON.
+
+```js
+block('link').mods()({ type: 'download' }); // Значение можно задавать литералом объекта
+block('link').mods()(function() { return { type: 'download' }; }); // Или функцией возвращающей объект
+```
+
+Режим `mods()({ test: 1 })` это сокращение для
+```js
+def()(function() {
+    this.mods.test = 1;
+    return applyNext();
+})
+```
+
+Шаблоны этого режима не содержатся в отдельном стеке шаблонов режима `mods()`,
+а попадают в стек к режиму `def()`. Поэтому нельзя вызвать `apply('mods')` в любом
+шаблоне и нельзя воспользоваться `applyNext()` чтобы получить значения `mods`. Чтобы
+получить доступ к модификаторам блока используйте нормализованное значение
+`this.mods`.
+
+#### elemMods
+
+```js
+/**
+ * @param {function|Object} mods
+ */
+
+elemMods()(elemMods)
+```
+
+Хеш модификаторов элемента. `elemMods()` доопределяет elemMods указанные в BEMJSON.
+
+```js
+block('link').elem('text').elemMods()({ size: 's' });
+block('link').elem('text').elemMods()(function() { return { size: 's' }; });
+```
+
+Поведение шаблонов `elemMods()` аналогично поведению `mods()`.
 
 #### js
 
