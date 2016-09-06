@@ -9,10 +9,17 @@ Ordinary benchmark test:
 3. Run test
 
 Apply compare:
-`node apply-stand.js`
+```bash node runner.js
+    --rev1 d53646f2c340b5496fbd75a5313e3284b58e238d
+    --rev2 d53646f2c340b5496fbd75a5313e3284b58e238d
+    --bemjson 1000
+    --dataPath ./node_modules/web-data/data
+    --templatePath ./node_modules/web-data/templates.js
+```
 
-The test runs `bemhtml.apply(bemjson)` for 2000 times on real web3 bemjson data.
-Test repeats 100 times. Then avarege of percentiles computed.
+`dataPath` and `templatePath` are optional.
+
+The test runs `bemhtml.apply(bemjson)` on 1000 bemjson data.  Then average of percentiles computed.
 
 Or you can run old test:
 
