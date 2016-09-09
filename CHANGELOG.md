@@ -1,5 +1,24 @@
 # BEM-XJST Changelog
 
+# 2016-09-09 [v7.0.4](https://github.com/bem/bem-xjst/compare/v7.0.3...v7.0.4), @miripiruni
+
+Functions `this.xmlEscape()`, `this.attrEscape()` and `this.jsAttrEscape()` optimized. See [PR #328](https://github.com/bem/bem-xjst/pull/328#issuecomment-245779443).
+
+Commits:
+* [[`fb9b96ec6a`](https://github.com/bem/bem-xjst/commit/fb9b96ec6a)] - Merge pull request #328 from bem/faster-escaping (Slava Oliyanchuk)
+* [[`3e80b00c1f`](https://github.com/bem/bem-xjst/commit/3e80b00c1f)] - **Utils**: faster escaping functions (see issue #327) (miripiruni)
+* [[`d53646f2c3`](https://github.com/bem/bem-xjst/commit/d53646f2c3)] - Merge pull request #330 from bem/greenkeeper-mocha-3.0.2 (Slava Oliyanchuk)
+* [[`5c1d93eea4`](https://github.com/bem/bem-xjst/commit/5c1d93eea4)] - chore(package): update mocha to version 3.0.2 (greenkeeperio-bot)
+* [[`442aaecffa`](https://github.com/bem/bem-xjst/commit/442aaecffa)] - Merge pull request #325 from bem/coverage-badge (Slava Oliyanchuk)
+* [[`0636def423`](https://github.com/bem/bem-xjst/commit/0636def423)] - **Match**: unused code removed (miripiruni)
+* [[`36860b9421`](https://github.com/bem/bem-xjst/commit/36860b9421)] - **Deps**: ^ added (miripiruni)
+* [[`0a031dbfa8`](https://github.com/bem/bem-xjst/commit/0a031dbfa8)] - **Coverage**: move _compile method to fixtures.js (miripiruni)
+* [[`15fcf1a60c`](https://github.com/bem/bem-xjst/commit/15fcf1a60c)] - **Coverage**: more (miripiruni)
+* [[`9294f767f1`](https://github.com/bem/bem-xjst/commit/9294f767f1)] - **Coverage**: this.identify (miripiruni)
+* [[`371e94b16a`](https://github.com/bem/bem-xjst/commit/371e94b16a)] - Coverage bundles with source maps (miripiruni)
+* [[`f68ecd8a55`](https://github.com/bem/bem-xjst/commit/f68ecd8a55)] - Istanbul test coverage (miripiruni)
+* [[`faac9c5bb0`](https://github.com/bem/bem-xjst/commit/faac9c5bb0)] - **Bench**: support bem-xjst 7.x (miripiruni)
+
 # 2016-07-29 [v7.0.3](https://github.com/bem/bem-xjst/compare/v7.0.2...v7.0.3), @miripiruni
 
 Fixed bug with `{ html: '' }`. In 7.0.2 result is `[object Object]`. In 7.0.3: `''`.
