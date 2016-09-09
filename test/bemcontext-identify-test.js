@@ -45,7 +45,7 @@ describe('BEMContext this.identify()', function() {
     var res = template.apply({ block: 'b' });
 
     assert.equal(res[0], undefined);
-    assert.equal(res[1].substr(0, 12),
-                ('uniq' + (+new Date()) + 1).substr(0, 12));
+    assert.equal(res[1].substr(0, 11),
+                ('uniq' + (+new Date()) + 1).substr(0, 11));
   });
 });
