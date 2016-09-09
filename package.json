@@ -1,6 +1,6 @@
 {
   "name": "bem-xjst",
-  "version": "7.0.3",
+  "version": "7.0.4",
   "description": "Declarative Template Engine for the browser and server",
   "keywords": [
     "template",
@@ -50,8 +50,7 @@
     "chai": "^3.5.0",
     "jscs": "^3.0.3",
     "jshint": "^2.7.0",
-    "mocha": "^3.0.2",
-    "chai": "^3.5.0"
+    "mocha": "^3.0.2"
   },
   "author": "Fedor Indutny <fedor@indutny.com>",
   "maintainers": [
