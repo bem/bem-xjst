@@ -40,6 +40,7 @@
   "license": "MPL-2.0",
   "dependencies": {
     "coa": "^1.0.1",
+    "enb-source-map": "^1.9.0",
     "inherits": "^2.0.1",
     "minimalistic-assert": "^1.0.0",
     "q": "^2.0.3"
