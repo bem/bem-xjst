@@ -1,5 +1,48 @@
 # BEM-XJST Changelog
 
+# 2016-09-09 [v7.1.0](https://github.com/bem/bem-xjst/compare/v7.0.4...v7.1.0), @miripiruni
+
+You can use `appendContent` and `prependContent` modes to add child nodes to content.
+
+```js
+block('quote')(
+    prependContent()('“'), // add some things before actual content
+    appendContent()('”'), // add content to the end
+    appendContent({ block: 'link' }); // add more content to the end
+);
+```
+```js
+{ block: 'quote', content: 'I came, I saw, I templated.' }
+```
+Result:
+```html
+<div class="quote">“I came, I saw, I templated.”<div class="link"></div></div>
+```
+
+`appendContent()` and `prependContent()` is a shortcuts to `content()` + `applyNext()`:
+
+```js
+// appendContent() is the same as:
+content()(function() {
+    return [
+        applyNext(),
+        'additional content'
+    ];
+});
+
+// prependContent() is the same as:
+content()(function() {
+    return [
+        'additional content',
+        applyNext()
+    ];
+});
+```
+
+Commits:
+* [[`b59973d5b2`](https://github.com/bem/bem-xjst/commit/b59973d5b2)] - Merge pull request #337 from bem/content-mods (Slava Oliyanchuk)
+* [[`bfc4e09c0c`](https://github.com/bem/bem-xjst/commit/bfc4e09c0c)] - **Tests**: identify test is slow on Travis. Accuracy changed. (miripiruni)
+
 # 2016-09-09 [v7.0.4](https://github.com/bem/bem-xjst/compare/v7.0.3...v7.0.4), @miripiruni
 
 Functions `this.xmlEscape()`, `this.attrEscape()` and `this.jsAttrEscape()` optimized. See [PR #328](https://github.com/bem/bem-xjst/pull/328#issuecomment-245779443).
