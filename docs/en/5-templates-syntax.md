@@ -364,6 +364,26 @@ Result:
 <div class="quote">“I came, I saw, I templated.”<div class="link"></div></div>
 ```
 
+`appendContent()` and `prependContent()` is a shortcuts to `content()` + `applyNext()`:
+
+```js
+// appendContent()('additional content') is the same as:
+content()(function() {
+    return [
+        applyNext(),
+        'additional content'
+    ];
+});
+
+// prependContent()('additional content') is the same as:
+content()(function() {
+    return [
+        'additional content',
+        applyNext()
+    ];
+});
+```
+
 #### mix
 
 ```js

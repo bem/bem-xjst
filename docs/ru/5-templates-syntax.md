@@ -357,6 +357,26 @@ block('quote')(
 <div class="quote">«Пришел, увидел, отшаблонизировал»<div class="link"></div></div>
 ```
 
+`appendContent()` и `prependContent()` это синтаксический сахар над `content()` + `applyNext()`:
+
+```js
+// appendContent()('еще') тоже самое что и:
+content()(function() {
+    return [
+        applyNext(),
+        'еще'
+    ];
+});
+
+// prependContent()('еще') тоже самое что и:
+content()(function() {
+    return [
+        'еще',
+        applyNext()
+    ];
+});
+```
+
 #### mix
 
 ```js
