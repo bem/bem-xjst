@@ -83,5 +83,27 @@ describe('Modes .mod(modName, modVal)', function() {
       { block: 'b', mods: { m: null } },
       '<div class="b"></div>');
     });
+
+    it('string should support mod with one argument', function() {
+      test(function() {
+        block('b').mod('m').tag()('span');
+      },
+      [
+        { block: 'b', mods: { m: true } },
+        { block: 'b', mods: { m: 'test' } },
+        { block: 'b', mods: { m: 0 } },
+        { block: 'b', mods: { m: false } },
+        { block: 'b', mods: { m: null } },
+        { block: 'b', mods: { m: '' } },
+        { block: 'b', mods: { no: 'test' } }
+      ],
+      '<span class="b b_m"></span>' +
+      '<span class="b b_m_test"></span>' +
+      '<span class="b b_m_0"></span>' +
+      '<div class="b"></div>' +
+      '<div class="b"></div>' +
+      '<div class="b"></div>' +
+      '<div class="b b_no_test"></div>');
+    });
   });
 });

@@ -123,6 +123,29 @@ The template are applied. Result:
 <small class="item item_size_1"></small>
 ```
 
+If second argument of `mod()` was omited then templates with any
+non-empty value of modifier will be applied.
+
+```js
+block('a').mod('size').tag()('span');
+```
+Template will be applied to BEMJSON node if block equals to 'a' and
+'size' modifier exists (equals neither to `undefined` nor to `''` nor to `false`
+nor to `null`).
+
+```js
+{ block: 'a', mods: { size: 's' } },
+{ block: 'a', mods: { size: 10 } },
+```
+
+But templates will not be applied to entities:
+```js
+{ block: 'a', mods: { size: '', theme: 'dark' } }
+{ block: 'a', mods: { theme: 'dark' } },
+{ block: 'a', mods: { size: undefined } },
+{ block: 'a', mods: {} }
+```
+
 ### elemMod
 
 ```js
@@ -157,6 +180,10 @@ Both templates are applied. Result:
 ```
 
 `elemModVal` checked for compliance after converting to String. This behavior is similar to checking `modVal`.
+
+Second argument of `elemMod()` can be omited. In this case
+behavior of `elemMods()` will be the same as `mods()` without second argument.
+The templates will be applied to BEMJSON nodes with modifier with any value.
 
 ### match
 
