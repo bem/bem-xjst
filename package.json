@@ -64,6 +64,7 @@
   "files": [
     "bin/",
     "lib/",
+    "runtime-lint/",
     "index.js",
     "CHANGELOG.md",
     "README.md",
