@@ -96,16 +96,6 @@ describe('BEMHTML engine tests', function() {
     }, '<link rel="stylesheet" href="ohai">');
   });
 
-  it('should support `.xjstOptions()`', function() {
-    test(function() {
-      block('b1').xjstOptions({ who: 'cares' }).content()(function() {
-        return 'ok';
-      });
-    }, {
-      block: 'b1'
-    }, '<div class="b1">ok</div>');
-  });
-
   describe('xhtml option', function() {
     it('should close short tags by default', function() {
       compile('')

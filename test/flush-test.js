@@ -56,25 +56,4 @@ describe('Flush', function() {
       }
     });
   });
-
-  it('should not flush custom def() with `.xjstOptions({ flush: true })',
-    function () {
-    test(function() {
-      block('b2').def().xjstOptions({ flush: true })(function() {
-        return applyCtx({ block: 'b1' });
-      });
-
-      block('*').tag()('a');
-    }, {
-      block: 'b2'
-    }, '', {
-      flush: true,
-      after: function after(template) {
-        assert.deepEqual(template._buf, [
-          '<a class="b1">',
-          '</a>'
-        ]);
-      }
-    });
-  });
 });
