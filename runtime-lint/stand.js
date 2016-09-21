@@ -11,6 +11,14 @@ var templates = bemhtml.compile(function() {
     this.ctx.mods.three = 3;
     return applyNext();
   });
+
+  block('class-attr-tmpl').attrs()(function() {
+    return { class: 'wrong' };
+  });
+
+  block('databem-attr-tmpl').attrs()(function() {
+    return { 'data-bem': 'wrong' };
+  });
 }, { runtimeLint: true });
 
 var html = templates.apply([
@@ -26,7 +34,15 @@ var html = templates.apply([
   { block: 'mods-changes', mods: { one: '1', two: '2' } },
 
   // additions in ctx.mods
-  { block: 'mods-changes2', mods: { one: '1', two: '2' } }
+  { block: 'mods-changes2', mods: { one: '1', two: '2' } },
+
+  // class in attrs
+  { block: 'class-attr-bemjson', attrs: { id: 'test', class: 'jquery' } },
+  { block: 'class-attr-tmpl' },
+
+  // 'data-bem' in attrs
+  { block: 'databem-attr-bemjson', attrs: { 'data-bem': { block: 'a', js: true } } },
+  { block: 'databem-attr-tmpl' }
 ]);
 
 console.log(html);
