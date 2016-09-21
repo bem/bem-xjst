@@ -1,5 +1,95 @@
 # BEM-XJST Changelog
 
+# 2016-09-21 [v7.3.0](https://github.com/bem/bem-xjst/compare/v7.2.0...v7.3.0), @miripiruni
+
+1. Support `mod()` and `elemMod()` without second argument
+
+```js
+/**
+ * @param {String} modName name of the block modifier
+ * @param {String|Boolean} [modVal] value of the block modifier
+ */
+mod(modName, modVal)
+```
+
+If second argument of `mod()` was omited then templates with any
+non-empty value of modifier will be applied.
+
+```js
+block('a').mod('size').tag()('span');
+```
+Template will be applied to BEMJSON node if block equals to 'a' and
+'size' modifier exists (equals neither to `undefined` nor to `''` nor to `false`
+nor to `null`).
+
+```js
+{ block: 'a', mods: { size: true } },
+{ block: 'a', mods: { size: 's' } },
+{ block: 'a', mods: { size: 0 } }
+```
+
+But templates will not be applied to entities:
+```js
+{ block: 'a', mods: { theme: 'dark' /* no `size` modifier */ } },
+{ block: 'a', mods: {} },
+{ block: 'a', mods: { size: '', } },
+{ block: 'a', mods: { size: undefined } },
+{ block: 'a', mods: { size: false } },
+{ block: 'a', mods: { size: null } }
+```
+
+The same for `elemMod()` mode.
+
+2. Runtime lint warning for class and data-bem attributes in attrs field in BEMJSON or `attrs()` template result.
+
+BEMJSON:
+```js
+// class in attrs
+{ block: 'class-attr-bemjson', attrs: { id: 'test', class: 'jquery' } },
+{ block: 'class-attr-tmpl' },
+
+// 'data-bem' in attrs
+{ block: 'databem-attr-bemjson', attrs: { 'data-bem': { block: 'a', js: true } } },
+{ block: 'databem-attr-tmpl' }
+```
+
+Templates:
+```js
+block('class-attr-tmpl').attrs()(function() {
+    return { class: 'wrong' };
+});
+
+block('databem-attr-tmpl').attrs()(function() {
+    return { 'data-bem': 'wrong' };
+});
+```
+
+Now with such templates or such BEMJSON you will get warnings:
+```js
+BEM-XJST WARNING: looks like you’re trying to set HTML class from attrs field in BEMJSON. Please use cls() mode for it. See documentation: https://github.com/bem/bem-xjst/blob/master/docs/en/5-templates-syntax.md#cls
+ctx: {"block":"class-attr-tmpl"}
+attrs: {"class":"wrong"}
+
+BEM-XJST WARNING: looks like you’re trying to set data-bem attribute from attrs field in BEMJSON. Please use js() mode for it. See documentation: https://github.com/bem/bem-xjst/blob/master/docs/en/5-templates-syntax.md#js
+ctx: {"block":"databem-attr-bemjson","attrs":{"data-bem":{"block":"a","js":true}}}
+attrs: {"data-bem":{"block":"a","js":true}}
+
+BEM-XJST WARNING: looks like you’re trying to set data-bem attribute from attrs field in BEMJSON. Please use js() mode for it. See documentation: https://github.com/bem/bem-xjst/blob/master/docs/en/5-templates-syntax.md#js
+ctx: {"block":"databem-attr-bemjson","attrs":{"data-bem":{"block":"a","js":true}}}
+attrs: {"data-bem":{"block":"a","js":true}}
+
+BEM-XJST WARNING: looks like you’re trying to set data-bem attribute from attrs field in BEMJSON. Please use js() mode for it. See documentation: https://github.com/bem/bem-xjst/blob/master/docs/en/5-templates-syntax.md#js
+ctx: {"block":"databem-attr-tmpl"}
+attrs: {"data-bem":"wrong"}
+```
+
+Commits:
+* [[`61e555bddf`](https://github.com/bem/bem-xjst/commit/61e555bddf)] - Merge pull request #346 from bem/issue-274__mods-wildcard (Slava Oliyanchuk)
+* [[`6a9625d0b9`](https://github.com/bem/bem-xjst/commit/6a9625d0b9)] - Merge pull request #349 from bem/issue-212__attrs-runtime-lint (Slava Oliyanchuk)
+* [[`53dbfef63d`](https://github.com/bem/bem-xjst/commit/53dbfef63d)] - Merge pull request #347 from bem/del-mod (Slava Oliyanchuk)
+* [[`5f5221f603`](https://github.com/bem/bem-xjst/commit/5f5221f603)] - Fixed #274: Support `mod(m)` and `elemMod(em)` without second argument (miripiruni)
+* [[`9aacd9105b`](https://github.com/bem/bem-xjst/commit/9aacd9105b)] - Runtime lint: Warning about class or data-bem in `attrs` (miripiruni)
+
 # 2016-09-13 [v7.2.0](https://github.com/bem/bem-xjst/compare/v7.1.0...v7.2.0), @miripiruni
 
 By turning on `runtimeLint` option you can get warnings about wrong templates or input data.
