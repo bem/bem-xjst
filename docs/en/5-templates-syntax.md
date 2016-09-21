@@ -70,7 +70,7 @@ Checking the element. The name can be specified as [`'*'`](7-runtime.md#template
 ```js
 /**
  * @param {String} modName name of the block modifier
- * @param {String|Boolean} modVal value of the block modifier
+ * @param {String|Boolean} [modVal] value of the block modifier
  */
 mod(modName, modVal)
 ```
@@ -151,7 +151,7 @@ But templates will not be applied to entities:
 ```js
 /**
  * @param {String} elemModName name of the element modifier
- * @param {String|Boolean} elemModVal value of the element modifier
+ * @param {String|Boolean} [elemModVal] value of the element modifier
 */
 elemMod(elemModName, elemModVal)
 ```
