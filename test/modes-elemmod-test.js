@@ -60,6 +60,28 @@ describe('Modes elemMod(elemModName, elemModVal)', function() {
   });
 
   describe('elemModVal types', function() {
+    it('string should support elemMod with one argument', function() {
+      test(function() {
+        block('b').elem('e').elemMod('m').tag()('span');
+      },
+      [
+        { block: 'b', elem: 'e', elemMods: { m: true } },
+        { block: 'b', elem: 'e', elemMods: { m: 'test' } },
+        { block: 'b', elem: 'e', elemMods: { m: 0 } },
+        { block: 'b', elem: 'e', elemMods: { m: false } },
+        { block: 'b', elem: 'e', elemMods: { m: null } },
+        { block: 'b', elem: 'e', elemMods: { m: '' } },
+        { block: 'b', elem: 'e', elemMods: { no: 'test' } }
+      ],
+      '<span class="b__e b__e_m"></span>' +
+      '<span class="b__e b__e_m_test"></span>' +
+      '<span class="b__e b__e_m_0"></span>' +
+      '<div class="b__e"></div>' +
+      '<div class="b__e"></div>' +
+      '<div class="b__e"></div>' +
+      '<div class="b__e b__e_no_test"></div>');
+    });
+
     it('number should match to string', function() {
       test(function() {
         block('b').elem('e').elemMod('em', 1).tag()('span');
