@@ -109,7 +109,49 @@ templates.forEach(function(template) {
   }
 });
 
+var stat = [];
+
+function checkResults(rme, hz, stats) {
+  if (!rme || !hz) return;
+
+  stat.push({ rme: rme, hz: hz, stats: stats });
+
+  if (stat.length % 2) return;
+
+  var i = stat.length - 1;
+  var prev = stat[i];
+  var next = stat[i - 1];
+
+  console.log('next.stats.mean:', next.stats.mean);
+  console.log('next.stats.deviation:', next.stats.deviation);
+  console.log('prev.stats.mean:', prev.stats.mean);
+  console.log('prev.stats.deviation:', prev.stats.deviation);
+  console.log('prev.samples:', prev.stats.sample);
+
+  check(
+    next.stats.mean - next.stats.deviation,
+    next.stats.mean + next.stats.deviation,
+    prev.stats.mean - prev.stats.deviation,
+    prev.stats.mean + prev.stats.deviation,
+    next.stats.mean - prev.stats.mean
+  );
+
+  console.log('\n');
+}
+
+function check(optimisticNext, pessimisticNext, optimisticPrev, pessimisticPrev, diff) {
+  if (optimisticNext > pessimisticPrev) {
+    console.log('Slow than prev version: diff ' + diff + ' sec');
+  } else if (pessimisticNext < optimisticPrev) {
+    console.log('Faster than prev version: diff ' + diff + ' sec');
+  } else {
+    console.log('Next is the same as prev.');
+  }
+}
+
 suite.on('cycle', function(event) {
   console.log(String(event.target));
+  if (argv.compare)
+    checkResults(event.target.stats.rme, event.target.hz, event.target.stats);
 });
 suite.run();
