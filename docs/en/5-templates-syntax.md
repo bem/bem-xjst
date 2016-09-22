@@ -440,7 +440,7 @@ block('button').mix()([ { block: 'mixed' }, { block: 'control' } ]);
 block('header').mix()(function() { return { block: 'mixed' }; });
 ```
 
-You can use addMix mode to add mix. addMix is shortcut of mix:
+You can use `addMix()` mode to add mix. `addMix()` is shortcut of `mix()`:
 ```js
 addMix()('my_new_mix'); // This is equivalent to following:
 mix()(function() {
