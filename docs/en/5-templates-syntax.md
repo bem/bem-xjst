@@ -569,7 +569,7 @@ More information about [apply()](7-runtime.md#apply).
 
 ## BEMTREE
 
-Only the [def](#def) and [content](#content) modes are used by the BEMTREE engine. User-defined modes can also be used. The other modes described in the documentation above can only be used in BEMHTML.
+Only the [def](#def), [content](#content), [replace](#replace) and [wrap](#wrap) modes are used by the BEMTREE engine. User-defined modes can also be used. The other modes described in the documentation above can only be used in BEMHTML.
 
 ***
 
