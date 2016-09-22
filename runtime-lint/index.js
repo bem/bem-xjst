@@ -50,13 +50,13 @@ var collectMixes = function collectMixes(item, res, context) {
 var checkMixes = function checkMixes(mix, ctx, mixesFromTmpls) {
     if (mix.length) {
       var hash = {};
-      mix.forEach(function(mixItem, i) {
+      mix.forEach(function(mixItem) {
         if (!mixItem.elem) {
           if (!hash[mixItem.block])
             hash[mixItem.block] = {};
 
           if (mixItem.mods) {
-            Object.keys(mixItem.mods).forEach(function(modName, n) {
+            Object.keys(mixItem.mods).forEach(function(modName) {
               var b = hash[mixItem.block];
 
               if (!b[modName]) {
@@ -234,6 +234,88 @@ block('*')(
 
     if (mixesFromTmpls && mixesFromTmpls.length)
       checkMixes(mix, ctx, mixesFromTmpls);
+
+    return applyNext();
+  }),
+
+  // Check naming:
+  def()(function() {
+    var _this = this;
+    var cb = this._bemxjst.classBuilder;
+    var ctx = this.ctx;
+
+    var check = function check(str) {
+      if (!str)
+        return;
+
+      str = String(str);
+
+      return str.indexOf(cb.modDelim) !== -1 ||
+        str.indexOf(cb.elemDelim) !== -1;
+    };
+
+    if (check(this.block)) {
+      console.warn(
+        '\nBEM-XJST WARNING: wrong block name. ' +
+        '\nBlock name can not contain modifier delimeter nor elem delimeter. ' +
+        '\nblock: ' + this.block +
+        '\nctx: ' + JSON.stringify(ctx)
+      );
+    }
+
+    if (check(this.elem)) {
+      console.warn(
+        '\nBEM-XJST WARNING: wrong elem name. ' +
+        '\nElement name can not contain modifier delimeter nor elem delimeter. ' +
+        '\nelem: ' + this.elem +
+        '\nctx: ' + JSON.stringify(ctx)
+      );
+    }
+
+    Object.keys(_this.mods).forEach(function(modName) {
+      // modName
+      if (check(modName)) {
+        console.warn(
+          '\nBEM-XJST WARNING: wrong modifier name. ' +
+          '\nModifier name can not contain modifier delimeter nor elem delimeter. ' +
+          '\nmods: ' + JSON.stringify(_this.mods) +
+          '\nctx: ' + JSON.stringify(ctx)
+        );
+      }
+
+      // modVal
+      if (check(_this.mods[modName])) {
+        console.warn(
+          '\nBEM-XJST WARNING: wrong modifier value. ' +
+          '\nModifier value can not contain modifier delimeter nor elem delimeter. ' +
+          '\nmods: ' + JSON.stringify(_this.mods) +
+          '\nctx: ' + JSON.stringify(ctx)
+        );
+      }
+    });
+
+    // elemMods
+    Object.keys(_this.elemMods).forEach(function(modName) {
+      // modName
+      if (check(modName)) {
+        console.warn(
+          '\nBEM-XJST WARNING: wrong element modifier name. ' +
+          '\nModifier name can not contain modifier delimeter nor elem delimeter. ' +
+          '\nelemMods: ' + JSON.stringify(_this.elemMods) +
+          '\nctx: ' + JSON.stringify(ctx)
+        );
+      }
+
+      // modVal
+      if (check(_this.elemMods[modName])) {
+        console.warn(
+          '\nBEM-XJST WARNING: wrong element modifier value. ' +
+          '\nModifier value can not contain modifier delimeter nor elem delimeter. ' +
+          '\nelemMods: ' + JSON.stringify(_this.elemMods) +
+          '\nctx: ' + JSON.stringify(ctx)
+        );
+      }
+    });
 
     return applyNext();
   })

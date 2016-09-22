@@ -27,7 +27,6 @@ var templates = bemhtml.compile(function() {
   block('mix-elemmod-tmpl').elem('e').mix()(function() {
     return [ applyNext(), { elemMods: { color: 'green' } } ];
   });
-
 }, { runtimeLint: true });
 
 var html = templates.apply([
@@ -62,7 +61,22 @@ var html = templates.apply([
   { block: 'mix-elemmod', elem: 'e', elemMods: { m: 1 }, mix: { elemMods: { m: 2 } } },
   { block: 'mix-elemmod', elem: 'e', mix: [ { elemMods: { type: 'test' } }, { elemMods: { type: 'shmest' } } ] },
   // mix the same mod from templates
-  { block: 'mix-elemmod-tmpl', elem: 'e', elemMods: { color: 'red' } }
+  { block: 'mix-elemmod-tmpl', elem: 'e', elemMods: { color: 'red' } },
+
+  // Wrong names
+  { block: 'bad__name' },
+  { block: 'bad_name' },
+  { block: 'b', elem: 'e_e' },
+  { block: 'b', elem: 'e__e' },
+  { block: 'b', mods: { mod_name: 'bad' } },
+  { block: 'b', mods: { mod__name: 'bad' } },
+  { block: 'b', mods: { modName: 'very_bad' } },
+  { block: 'b', mods: { modName: 'very__bad' } },
+
+  { block: 'b', elem: 'e', elemMods: { mod_name: 'bad' } },
+  { block: 'b', elem: 'e', elemMods: { mod__name: 'bad' } },
+  { block: 'b', elem: 'e', elemMods: { modName: 'very_bad' } },
+  { block: 'b', elem: 'e', elemMods: { modName: 'very__bad' } }
 ]);
 
 console.log(html);
