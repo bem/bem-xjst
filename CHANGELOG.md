@@ -1,5 +1,22 @@
 # BEM-XJST Changelog
 
+# 2016-09-22 [v7.3.1](https://github.com/bem/bem-xjst/compare/v7.3.0...v7.3.1), @miripiruni
+
+New runtime lint cases:
+* check block, elem, modifier names and modifier values
+* check if mixed entity has the same modifier
+
+New benchmark test with histogram graph any revision compare and no dependencies.
+
+Commits:
+* [[`bd0dd65980`](https://github.com/bem/bem-xjst/commit/bd0dd65980)] - Merge pull request #352 from bem/issue-350__check-mix (Slava Oliyanchuk)
+* [[`b26bdf6045`](https://github.com/bem/bem-xjst/commit/b26bdf6045)] - **Docs**: modes in BEMTREE (fix for #335) (miripiruni)
+* [[`4f41cb41b7`](https://github.com/bem/bem-xjst/commit/4f41cb41b7)] - Runtime lint: check block, elem, modifier names and modifier values (miripiruni)
+* [[`6daa6fe7ea`](https://github.com/bem/bem-xjst/commit/6daa6fe7ea)] - Runtime lint: check mix the same elemMods (miripiruni)
+* [[`9a128aa330`](https://github.com/bem/bem-xjst/commit/9a128aa330)] - Runtime lint: check mix the same mods (miripiruni)
+* [[`7c6ce3abe2`](https://github.com/bem/bem-xjst/commit/7c6ce3abe2)] - **Docs**: example improved (miripiruni)
+* [[`bf385ec6d0`](https://github.com/bem/bem-xjst/commit/bf385ec6d0)] - **Bench**: port of new benchmark test from v6.x (miripiruni)
+
 # 2016-09-21 [v7.3.0](https://github.com/bem/bem-xjst/compare/v7.2.0...v7.3.0), @miripiruni
 
 1. Support `mod()` and `elemMod()` without second argument
