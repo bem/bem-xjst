@@ -1,3 +1,78 @@
+var collectMixes = function collectMixes(item, res, context) {
+  res = res || [];
+  if (!item)
+    return res;
+
+  context = context || {
+    block: item.block,
+    elem: item.elem,
+    mods: item.mods,
+    elemMods: item.elemMods
+  };
+
+  if (item.block || item.mods) {
+    res.push({
+      block: item.block || context.block,
+      mods: item.mods,
+      js: item.js
+    });
+    if (item.block)
+      context = { block: item.block, mods: item.mods };
+  }
+
+  if (item.elem || (item.elemMods && context.elem)) {
+    res.push({
+      block: item.block || context.block,
+      elem: item.elem || context.elem,
+      elemMods: item.elemMods,
+      js: item.js
+    });
+    if (item.elem)
+      context = {
+        block: item.block || context.block,
+        mods: item.mods || context.mods,
+        elem: item.elem,
+        elemMods: item.elemMods
+      };
+  }
+
+  if (typeof item === 'string')
+    res.push({ block: item });
+
+  if (item.mix) {
+    if (!Array.isArray(item.mix)) item.mix = [ item.mix ];
+    item.mix.map(function(mix) { return collectMixes(mix, res, context); });
+  }
+
+  return res;
+};
+
+var checkMixes = function checkMixes(mix, ctx, mixesFromTmpls) {
+    if (mix.length) {
+      var hash = {};
+      mix.forEach(function(mixItem) {
+        if (!hash[mixItem.block])
+          hash[mixItem.block] = {};
+
+        if (mixItem.mods) {
+          Object.keys(mixItem.mods).forEach(function(modName) {
+            var b = hash[mixItem.block];
+
+            if (!b[modName]) {
+              b[modName] = true;
+            } else {
+              console.warn(
+                '\nBEM-XJST WARNING: you’re trying to mix block with mods to the same block with the same mods. ' +
+                '\nctx: ' + JSON.stringify(ctx) +
+                (mixesFromTmpls ? '\nmixes from templates: ' + JSON.stringify(mixesFromTmpls) : '')
+              );
+            }
+          });
+        }
+      });
+    }
+};
+
 // true/false in attributes
 block('*')(
 
@@ -101,6 +176,27 @@ block('*')(
   def()(function() {
     if (this.ctx.attrs)
       apply('check-attrs', { check: this.ctx.attrs });
+
+    return applyNext();
+  }),
+
+  def()(function() {
+    var ctx = this.ctx;
+    var mix = collectMixes(ctx, []);
+
+    checkMixes(mix, ctx);
+
+    return applyNext();
+  }),
+
+  mix()(function() {
+    var ctx = this.ctx;
+    var mixesFromTmpls = applyNext();
+    var mix = collectMixes({ block: this.block, mods: this.mods, mix: mixesFromTmpls }, []);
+
+    if (mixesFromTmpls && mixesFromTmpls.length) {
+      checkMixes(mix, ctx, mixesFromTmpls);
+    }
 
     return applyNext();
   })

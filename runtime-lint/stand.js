@@ -19,6 +19,11 @@ var templates = bemhtml.compile(function() {
   block('databem-attr-tmpl').attrs()(function() {
     return { 'data-bem': 'wrong' };
   });
+
+  block('mix-mod-tmpl').mix()(function() {
+    return [ applyNext(), { mods: { color: 'green' } } ];
+  });
+
 }, { runtimeLint: true });
 
 var html = templates.apply([
@@ -42,7 +47,15 @@ var html = templates.apply([
 
   // 'data-bem' in attrs
   { block: 'databem-attr-bemjson', attrs: { 'data-bem': { block: 'a', js: true } } },
-  { block: 'databem-attr-tmpl' }
+  { block: 'databem-attr-tmpl' },
+
+  // mix the same mod
+  { block: 'mix-mod', mods: { m: 1 }, mix: { mods: { m: 2 } } },
+  { block: 'mix-mod', mix: [ { mods: { type: 'test' } }, { mods: { type: 'shmest' } } ] },
+  // mix the same mod from templates
+  { block: 'mix-mod-tmpl', mods: { color: 'red' } }
+
+  // TODO: check elemMod
 ]);
 
 console.log(html);
