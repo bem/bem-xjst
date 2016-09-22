@@ -1,3 +1,100 @@
+var collectMixes = function collectMixes(item, res, context) {
+  res = res || [];
+  if (!item)
+    return res;
+
+  context = context || {
+    block: item.block,
+    elem: item.elem,
+    mods: item.mods,
+    elemMods: item.elemMods
+  };
+
+  if (item.block || item.mods) {
+    res.push({
+      block: item.block || context.block,
+      mods: item.mods,
+      js: item.js
+    });
+    if (item.block)
+      context = { block: item.block, mods: item.mods };
+  }
+
+  if (item.elem || (item.elemMods && context.elem)) {
+    res.push({
+      block: item.block || context.block,
+      elem: item.elem || context.elem,
+      elemMods: item.elemMods,
+      js: item.js
+    });
+    if (item.elem)
+      context = {
+        block: item.block || context.block,
+        mods: item.mods || context.mods,
+        elem: item.elem,
+        elemMods: item.elemMods
+      };
+  }
+
+  if (typeof item === 'string')
+    res.push({ block: item });
+
+  if (item.mix) {
+    if (!Array.isArray(item.mix)) item.mix = [ item.mix ];
+    item.mix.map(function(mix) { return collectMixes(mix, res, context); });
+  }
+
+  return res;
+};
+
+var checkMixes = function checkMixes(mix, ctx, mixesFromTmpls) {
+    if (mix.length) {
+      var hash = {};
+      mix.forEach(function(mixItem) {
+        if (!mixItem.elem) {
+          if (!hash[mixItem.block])
+            hash[mixItem.block] = {};
+
+          if (mixItem.mods) {
+            Object.keys(mixItem.mods).forEach(function(modName) {
+              var b = hash[mixItem.block];
+
+              if (!b[modName]) {
+                b[modName] = true;
+              } else {
+                console.warn(
+                  '\nBEM-XJST WARNING: you’re trying to mix block with mods to the same block with the same mods. ' +
+                  '\nctx: ' + JSON.stringify(ctx) +
+                  (mixesFromTmpls ? '\nmixes from templates: ' + JSON.stringify(mixesFromTmpls) : '')
+                );
+              }
+            });
+          }
+        } else {
+          var key = mixItem.block + '__' + mixItem.elem;
+          if (!hash[key])
+            hash[key] = {};
+
+          if (mixItem.elemMods) {
+            Object.keys(mixItem.elemMods).forEach(function(modName) {
+              var b = hash[key];
+
+              if (!b[modName]) {
+                b[modName] = true;
+              } else {
+                console.warn(
+                  '\nBEM-XJST WARNING: you’re trying to mix block with mods to the same block with the same mods. ' +
+                  '\nctx: ' + JSON.stringify(ctx) +
+                  (mixesFromTmpls ? '\nmixes from templates: ' + JSON.stringify(mixesFromTmpls) : '')
+                );
+              }
+            });
+          }
+        }
+      });
+    }
+};
+
 // true/false in attributes
 block('*')(
 
@@ -101,6 +198,124 @@ block('*')(
   def()(function() {
     if (this.ctx.attrs)
       apply('check-attrs', { check: this.ctx.attrs });
+
+    return applyNext();
+  }),
+
+  def()(function() {
+    var ctx = this.extend({}, this.ctx);
+    var mix = collectMixes(ctx, []);
+
+    if (ctx.mods || ctx.elemMods)
+      checkMixes(mix, ctx);
+
+    return applyNext();
+  }),
+
+  mix()(function() {
+    var ctx = this.extend({}, this.ctx);
+    var mixesFromTmpls = applyNext();
+    var mix;
+
+    if (!this.elem) {
+      mix = collectMixes({
+        block: this.block,
+        mods: this.mods,
+        mix: mixesFromTmpls
+      }, []);
+    } else {
+      mix = collectMixes({
+        block: this.block,
+        elem: this.elem,
+        elemMods: this.elemMods,
+        mix: mixesFromTmpls
+      }, []);
+    }
+
+    if (mixesFromTmpls && mixesFromTmpls.length)
+      checkMixes(mix, ctx, mixesFromTmpls);
+
+    return applyNext();
+  }),
+
+  // Check naming:
+  def()(function() {
+    var _this = this;
+    var cb = this._bemxjst.classBuilder;
+    var ctx = this.ctx;
+
+    var check = function check(str) {
+      if (!str)
+        return;
+
+      str = String(str);
+
+      return str.indexOf(cb.modDelim) !== -1 ||
+        str.indexOf(cb.elemDelim) !== -1;
+    };
+
+    if (check(this.block)) {
+      console.warn(
+        '\nBEM-XJST WARNING: wrong block name. ' +
+        '\nBlock name can not contain modifier delimeter nor elem delimeter. ' +
+        '\nblock: ' + this.block +
+        '\nctx: ' + JSON.stringify(ctx)
+      );
+    }
+
+    if (check(this.elem)) {
+      console.warn(
+        '\nBEM-XJST WARNING: wrong elem name. ' +
+        '\nElement name can not contain modifier delimeter nor elem delimeter. ' +
+        '\nelem: ' + this.elem +
+        '\nctx: ' + JSON.stringify(ctx)
+      );
+    }
+
+    Object.keys(_this.mods).forEach(function(modName) {
+      // modName
+      if (check(modName)) {
+        console.warn(
+          '\nBEM-XJST WARNING: wrong modifier name. ' +
+          '\nModifier name can not contain modifier delimeter nor elem delimeter. ' +
+          '\nmods: ' + JSON.stringify(_this.mods) +
+          '\nctx: ' + JSON.stringify(ctx)
+        );
+      }
+
+      // modVal
+      if (check(_this.mods[modName])) {
+        console.warn(
+          '\nBEM-XJST WARNING: wrong modifier value. ' +
+          '\nModifier value can not contain modifier delimeter nor elem delimeter. ' +
+          '\nmods: ' + JSON.stringify(_this.mods) +
+          '\nctx: ' + JSON.stringify(ctx)
+        );
+      }
+    });
+
+    // elemMods
+    Object.keys(_this.elemMods).forEach(function(modName) {
+      // modName
+      if (check(modName)) {
+        console.warn(
+          '\nBEM-XJST WARNING: wrong element modifier name. ' +
+          '\nModifier name can not contain modifier delimeter nor elem delimeter. ' +
+          '\nelemMods: ' + JSON.stringify(_this.elemMods) +
+          '\nctx: ' + JSON.stringify(ctx)
+        );
+      }
+
+      // modVal
+      if (check(_this.elemMods[modName])) {
+        console.warn(
+          '\nBEM-XJST WARNING: wrong element modifier value. ' +
+          '\nModifier value can not contain modifier delimeter nor elem delimeter. ' +
+          '\nelemMods: ' + JSON.stringify(_this.elemMods) +
+          '\nctx: ' + JSON.stringify(ctx)
+        );
+      }
+    });
 
     return applyNext();
   })
