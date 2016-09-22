@@ -24,6 +24,10 @@ var templates = bemhtml.compile(function() {
     return [ applyNext(), { mods: { color: 'green' } } ];
   });
 
+  block('mix-elemmod-tmpl').elem('e').mix()(function() {
+    return [ applyNext(), { elemMods: { color: 'green' } } ];
+  });
+
 }, { runtimeLint: true });
 
 var html = templates.apply([
@@ -53,9 +57,12 @@ var html = templates.apply([
   { block: 'mix-mod', mods: { m: 1 }, mix: { mods: { m: 2 } } },
   { block: 'mix-mod', mix: [ { mods: { type: 'test' } }, { mods: { type: 'shmest' } } ] },
   // mix the same mod from templates
-  { block: 'mix-mod-tmpl', mods: { color: 'red' } }
+  { block: 'mix-mod-tmpl', mods: { color: 'red' } },
 
-  // TODO: check elemMod
+  { block: 'mix-elemmod', elem: 'e', elemMods: { m: 1 }, mix: { elemMods: { m: 2 } } },
+  { block: 'mix-elemmod', elem: 'e', mix: [ { elemMods: { type: 'test' } }, { elemMods: { type: 'shmest' } } ] },
+  // mix the same mod from templates
+  { block: 'mix-elemmod-tmpl', elem: 'e', elemMods: { color: 'red' } }
 ]);
 
 console.log(html);

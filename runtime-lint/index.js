@@ -50,24 +50,46 @@ var collectMixes = function collectMixes(item, res, context) {
 var checkMixes = function checkMixes(mix, ctx, mixesFromTmpls) {
     if (mix.length) {
       var hash = {};
-      mix.forEach(function(mixItem) {
-        if (!hash[mixItem.block])
-          hash[mixItem.block] = {};
+      mix.forEach(function(mixItem, i) {
+        if (!mixItem.elem) {
+          if (!hash[mixItem.block])
+            hash[mixItem.block] = {};
 
-        if (mixItem.mods) {
-          Object.keys(mixItem.mods).forEach(function(modName) {
-            var b = hash[mixItem.block];
+          if (mixItem.mods) {
+            Object.keys(mixItem.mods).forEach(function(modName, n) {
+              var b = hash[mixItem.block];
 
-            if (!b[modName]) {
-              b[modName] = true;
-            } else {
-              console.warn(
-                '\nBEM-XJST WARNING: you’re trying to mix block with mods to the same block with the same mods. ' +
-                '\nctx: ' + JSON.stringify(ctx) +
-                (mixesFromTmpls ? '\nmixes from templates: ' + JSON.stringify(mixesFromTmpls) : '')
-              );
-            }
-          });
+              if (!b[modName]) {
+                b[modName] = true;
+              } else {
+                console.warn(
+                  '\nBEM-XJST WARNING: you’re trying to mix block with mods to the same block with the same mods. ' +
+                  '\nctx: ' + JSON.stringify(ctx) +
+                  (mixesFromTmpls ? '\nmixes from templates: ' + JSON.stringify(mixesFromTmpls) : '')
+                );
+              }
+            });
+          }
+        } else {
+          var key = mixItem.block + '__' + mixItem.elem;
+          if (!hash[key])
+            hash[key] = {};
+
+          if (mixItem.elemMods) {
+            Object.keys(mixItem.elemMods).forEach(function(modName) {
+              var b = hash[key];
+
+              if (!b[modName]) {
+                b[modName] = true;
+              } else {
+                console.warn(
+                  '\nBEM-XJST WARNING: you’re trying to mix block with mods to the same block with the same mods. ' +
+                  '\nctx: ' + JSON.stringify(ctx) +
+                  (mixesFromTmpls ? '\nmixes from templates: ' + JSON.stringify(mixesFromTmpls) : '')
+                );
+              }
+            });
+          }
         }
       });
     }
@@ -181,22 +203,37 @@ block('*')(
   }),
 
   def()(function() {
-    var ctx = this.ctx;
+    var ctx = this.extend({}, this.ctx);
     var mix = collectMixes(ctx, []);
 
-    checkMixes(mix, ctx);
+    if (ctx.mods || ctx.elemMods)
+      checkMixes(mix, ctx);
 
     return applyNext();
   }),
 
   mix()(function() {
-    var ctx = this.ctx;
+    var ctx = this.extend({}, this.ctx);
     var mixesFromTmpls = applyNext();
-    var mix = collectMixes({ block: this.block, mods: this.mods, mix: mixesFromTmpls }, []);
+    var mix;
 
-    if (mixesFromTmpls && mixesFromTmpls.length) {
-      checkMixes(mix, ctx, mixesFromTmpls);
+    if (!this.elem) {
+      mix = collectMixes({
+        block: this.block,
+        mods: this.mods,
+        mix: mixesFromTmpls
+      }, []);
+    } else {
+      mix = collectMixes({
+        block: this.block,
+        elem: this.elem,
+        elemMods: this.elemMods,
+        mix: mixesFromTmpls
+      }, []);
     }
+
+    if (mixesFromTmpls && mixesFromTmpls.length)
+      checkMixes(mix, ctx, mixesFromTmpls);
 
     return applyNext();
   })
