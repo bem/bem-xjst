@@ -4,11 +4,9 @@ var test = fixtures.test;
 describe('Modes addMix', function() {
   it('should support addMix', function() {
     test(function() {
-      block('button')(
-        addMix()(function() {
-          return 'tmpls';
-        })
-      );
+      block('button').addMix()(function() {
+        return 'tmpls';
+      });
     },
     { block: 'button', mix: { block: 'bemjson' } },
     '<div class="button bemjson tmpls"></div>');
@@ -20,6 +18,16 @@ describe('Modes addMix', function() {
     },
     { block: 'button', mix: { block: 'bemjson' } },
     '<div class="button bemjson tmpls"></div>');
+  });
+
+  it('should render mix with just mods', function() {
+    test(function() {
+      block('b').addMix()(function() {
+        return { mods: { type: 'test' } };
+      });
+    },
+    { block: 'b' },
+    '<div class="b b_type_test"></div>');
   });
 
   it('should accumulate result', function() {
