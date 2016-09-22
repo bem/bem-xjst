@@ -51,6 +51,19 @@ describe('Modes addJs', function() {
       'data-bem=\'{"button":{"one":1,"two":42}}\'></div>');
   });
 
+  it('should extend js from BEMJSON', function() {
+    test(function() {
+      block('button')(
+        addJs()(function() {
+          return { type: 'serial' };
+        })
+      );
+    },
+    { block: 'button', js: { film: 'lost' } },
+    '<div class="button i-bem" ' +
+      'data-bem=\'{"button":{"film":"lost","type":"serial"}}\'></div>');
+  });
+
   it('should extend js from js mode', function() {
     test(function() {
       block('button')(

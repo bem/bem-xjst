@@ -45,6 +45,14 @@ describe('Modes addMix', function() {
     '<div class="button bemjson tmpls tmpls1"></div>');
   });
 
+  it('should concat with mix from BEMJSON', function() {
+    test(function() {
+      block('button').addMix()({ block: 'templ' });
+    },
+    { block: 'button', mix: { block: 'bemjson' } },
+    '<div class="button bemjson templ"></div>');
+  });
+
   it('should extend mix', function() {
     test(function() {
       block('button').mix()({ block: 'templ_1' });

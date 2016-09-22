@@ -22,6 +22,18 @@ describe('Modes addAttrs', function() {
     '<div class="button" id="test"></div>');
   });
 
+  it('should extend attrs from BEMJSON', function() {
+    test(function() {
+      block('button')(
+        addAttrs()(function() {
+          return { c: 'd' };
+        })
+      );
+    },
+    { block: 'button', attrs: { a: 'b' } },
+    '<div class="button" a="b" c="d"></div>');
+  });
+
   it('should rewrite attrs from bemjson if no other attrs templates',
     function() {
     test(function() {
