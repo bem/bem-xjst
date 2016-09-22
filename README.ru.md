@@ -28,12 +28,12 @@ var templates = bemhtml.compile(function() {
   block('b').content()('yay');
 });
 
-// Формируем входные данные в формате BEMJSON 
+// Формируем входные данные в формате BEMJSON
 var bemjson = { block: 'b' };
 
 // Применяем шаблоны к входным данным, чтобы получить HTML
-templates.apply();
-// Результат: <div class="b">yay</div>
+var html = templates.apply();
+// Результат в переменной html: <div class="b">yay</div>
 ```
 
 ```js
@@ -46,12 +46,12 @@ var templates = bemtree.compile(function() {
   block('b').content()('yay');
 });
 
-// Формируем входные данные в формате BEMJSON 
+// Формируем входные данные в формате BEMJSON
 var bemjson = { block: 'b' };
 
 // Применяем шаблоны к входным данным, чтобы получить BEMJSON
-templates.apply({ block: 'b' });
-// Результат: { block: 'b1', content: 'yay' }
+var res = templates.apply({ block: 'b' });
+// Результат в переменной res: { block: 'b1', content: 'yay' }
 ```
 
 ### В виде CLI-утилиты

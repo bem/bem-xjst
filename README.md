@@ -28,8 +28,8 @@ var templates = bemhtml.compile(function() {
 });
 
 // Apply templates to data context in BEMJSON format and get result as HTML string
-templates.apply({ block: 'b' });
-// Result: <div class="b">yay</div>
+var html = templates.apply({ block: 'b' });
+// Result in html: <div class="b">yay</div>
 ```
 
 ```js
@@ -42,8 +42,8 @@ var templates = bemtree.compile(function() {
 });
 
 // Apply templates to data context in BEMJSON format and get result as BEMJSON
-templates.apply({ block: 'b' });
-// Result: { block: 'b1', content: 'yay' }
+var bemjson = templates.apply({ block: 'b' });
+// Result in bemjson: { block: 'b1', content: 'yay' }
 ```
 
 ### As a CLI tool
