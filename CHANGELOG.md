@@ -1,5 +1,37 @@
 # BEM-XJST Changelog
 
+# 2016-09-23 [v8.0.0](https://github.com/bem/bem-xjst/compare/v7.3.1...v8.0.0), @miripiruni
+
+## Changes in modes behaviour
+
+* Now `mix()`, `js()`, `attrs()` modes will replace BEMJSON values.
+* If you want extend BEMJSON value in the modes please use `applyNext()`.
+* In all the modes `applyNext()` will return BEMJSON value if it exists.
+* If you want add mix, js or attrs now you can use `addMix()`, `addJs()` or `addAttrs()` modes.
+
+More about new behaviour you can [read in documentation](https://github.com/bem/bem-xjst/blob/master/docs/en/5-templates-syntax.md#description-of-standard-modes).
+
+## `escapeContent: true` by default
+
+If you want to mantain backward capabitity you can set `escapeContent: false` manualy.
+
+Notice that `applyCtx(…)` and `this.reapply(…)` returns strings. It means that if result  will be escaped if contains HTML tags.
+
+Commits:
+
+* [[`299a72663d`](https://github.com/bem/bem-xjst/commit/299a72663d)] - **BEMHTML**: Set default value of escapeContent to true (fix for #323) (miripiruni)
+* [[`de8f13c8a2`](https://github.com/bem/bem-xjst/commit/de8f13c8a2)] - Merge pull request #311 from bem/issue-261__semantic-changes-in-modes (Slava Oliyanchuk)
+* [[`3de409279f`](https://github.com/bem/bem-xjst/commit/3de409279f)] - **Docs**: spelling fixed (miripiruni)
+* [[`a12b3634bc`](https://github.com/bem/bem-xjst/commit/a12b3634bc)] - **BEMXJST**: Tree.methods cleanup (miripiruni)
+* [[`722028a6fa`](https://github.com/bem/bem-xjst/commit/722028a6fa)] - **BEMHTML**: codestyle (miripiruni)
+* [[`d3b28e0065`](https://github.com/bem/bem-xjst/commit/d3b28e0065)] - **BEMHTML**: more tests about add*() modes (miripiruni)
+* [[`6ea96d2e9e`](https://github.com/bem/bem-xjst/commit/6ea96d2e9e)] - **BEMHTML**: addMix fixed (miripiruni)
+* [[`88f290df7d`](https://github.com/bem/bem-xjst/commit/88f290df7d)] - **Docs**: spelling fixed (miripiruni)
+* [[`76428b6b09`](https://github.com/bem/bem-xjst/commit/76428b6b09)] - **Semantic**: introduce addJs (miripiruni)
+* [[`b7c89c94e4`](https://github.com/bem/bem-xjst/commit/b7c89c94e4)] - **Semantic**: introduce addAttrs (miripiruni)
+* [[`2835877ced`](https://github.com/bem/bem-xjst/commit/2835877ced)] - **Semantic**: introduce addMix (miripiruni)
+* [[`ffb3e36252`](https://github.com/bem/bem-xjst/commit/ffb3e36252)] - **Semantic**: change behaviour of `mix`, `js` и `attrs` modes (miripiruni)
+
 # 2016-09-22 [v7.3.1](https://github.com/bem/bem-xjst/compare/v7.3.0...v7.3.1), @miripiruni
 
 New runtime lint cases:
