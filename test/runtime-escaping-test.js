@@ -26,11 +26,11 @@ describe('Content escaping', function() {
   });
 
   // (miripiruni) this will be changed in next major release
-  it('shouldn’t escape content by default',
+  it('should escape content by default',
     function() {
     test(function() {},
       { block: 'b', content: '<script>' },
-      '<div class="b"><script></div>');
+      '<div class="b">&lt;script&gt;</div>');
   });
 
   it('should expect raw html', function() {

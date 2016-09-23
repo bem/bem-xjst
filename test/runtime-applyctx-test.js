@@ -13,7 +13,7 @@ describe('Runtime applyCtx()', function() {
     },
     { block: 'b1' },
     '<div class="b1">' +
-    '<div class="b2">omg</div><br class="b3"></div>');
+    '&lt;div class="b2"&gt;omg&lt;/div&gt;&lt;br class="b3"&gt;</div>');
   });
 
   it('should work with both context and changes', function() {
@@ -27,6 +27,6 @@ describe('Runtime applyCtx()', function() {
       });
     },
     { block: 'b1' },
-    '<div class="b1"><div class="b2">ohai</div></div>');
+    '<div class="b1">&lt;div class="b2"&gt;ohai&lt;/div&gt;</div>');
   });
 });

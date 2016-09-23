@@ -12,6 +12,8 @@ describe('Runtime this.reapply()', function() {
       block('b2').content()(function() {
         return this.wtf || 'ok';
       });
-    }, { block: 'b1' }, '<div class="b1"><div class="b2">ok</div></div>');
+    },
+    { block: 'b1' },
+    '<div class="b1">&lt;div class="b2"&gt;ok&lt;/div&gt;</div>');
   });
 });
