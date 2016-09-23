@@ -355,6 +355,16 @@ attrs()(value)
 
 Хеш с HTML-атрибутами. Значения атрибутов [будут экранированны функцией attrEscape](6-templates-context.md#attrescape).
 
+Для того, чтобы добавить `attrs`, вы можете использовать режим `addAttrs()`, который
+является сокращением режима `attrs()` и выглядит более лаконично:
+```js
+addAttrs()({ id: 'test', name: 'test' }); // Это полностью эквивалентно следующему:
+attrs()(function() {
+    var attrs = applyNext() || {}; // атрибуты из предыдущих шаблонов или BEMJSON-а
+    return this.extend(attrs, { id: 'test', name: 'test' });
+});
+```
+
 #### content
 
 ```js
@@ -417,10 +427,21 @@ mix()(mixed)
 
 Пример использования:
 
-```
+```js
 block('link').mix()({ block: 'mixed' });
 block('button').mix()([ { block: 'mixed' }, { block: 'control' } ]);
 block('header').mix()(function() { return { block: 'mixed' }; });
+```
+
+Для того, чтобы добавить `mix`, вы можете использовать режим `addMix()`, который
+является сокращением режима `mix()` и выглядит более лаконично:
+```js
+addMix()('my-new-mix'); // Это полностью эквивалентно следующему:
+mix()(function() {
+    var mixes = applyNext();
+    if (!Array.isArray(mixes)) mixes = [ mixes ];
+    return mixes.concat('my-new-mix');
+});
 ```
 
 #### js

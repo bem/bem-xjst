@@ -26,7 +26,7 @@ describe('Modes attrs', function() {
     '<div class="checkbox" type="button" hidden></div>');
   });
 
-  it('should not override user attrs', function() {
+  it('should override bemjson attrs', function() {
     test(function() {
       block('button').attrs()({
         type: 'button',
@@ -41,14 +41,6 @@ describe('Modes attrs', function() {
         name: 'button'
       }
     },
-    '<div class="button" type="link" name="button"></div>');
-  });
-
-  it('should merge attrs from templates and from bemjson', function() {
-    test(function() {
-      block('b').attrs()({ templ: '1' });
-    },
-    { block: 'b', attrs: { bemjson: '2' } },
-    '<div class="b" templ="1" bemjson="2"></div>');
+    '<div class="button" type="button" disabled></div>');
   });
 });

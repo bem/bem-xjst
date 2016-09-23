@@ -28,10 +28,17 @@
                                 //   "double" : require double quotes
     "undef"         : true,     // true: Require all non-global variables to be declared (prevents global leaks)
     "unused"        : true,     // true: Require all defined variables be used
-    "predef"        : [ "block", "apply", "applyNext", "applyCtx", "tag",
-    "attrs", "bem", "cls", "content", "js", "match", "mix", "mod", "tag",
-    "elem", "local", "wrap", "extend", "oninit", "replace", "appendContent",
-    "prependContent" ],
+    "predef"        : [
+        // Subpredicates:
+        "block", "elem", "mod", "elemMod", "match",
+        // Runtime related:
+        "oninit", "xjstOptions", "apply", "applyNext", "applyCtx", "local",
+        // Output generators:
+        "wrap", "replace", "extend", "mode", "def",
+        "content", "appendContent", "prependContent",
+        "attrs", "addAttrs", "js", "addJs", "mix", "addMix",
+        "tag", "cls", "bem"
+     ],
     "strict"        : false,    // true: Requires all functions run in ES5 Strict Mode
     "maxparams"     : false,    // {int} Max number of formal params allowed per function
     "maxdepth"      : 5,        // {int} Max depth of nested blocks (within functions)
