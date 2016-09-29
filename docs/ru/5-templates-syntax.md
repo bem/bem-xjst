@@ -486,7 +486,7 @@ block('b').def()(function() {
 ```js
 addMods()({ theme: 'dark' }); // Это полностью эквивалентно следующему:
 mods()(function() {
-    this.mods = this.extend(applyNext() || this.mods, { theme: 'dark' });
+    this.mods = this.extend(applyNext(), { theme: 'dark' });
     return this.mods;
 });
 ```
@@ -531,7 +531,7 @@ block('b').elem('e').def()(function() {
 ```js
 addElemMods()({ theme: 'dark' }); // Это полностью эквивалентно следующему:
 elemMods()(function() {
-    this.elemMods = this.extend(applyNext() || this.elemMods, { theme: 'dark' });
+    this.elemMods = this.extend(applyNext(), { theme: 'dark' });
     return this.elemMods;
 ```
 
