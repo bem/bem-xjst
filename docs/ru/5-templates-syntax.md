@@ -318,6 +318,7 @@ block('link')(
 * [cls](#cls)
 * [replace](#replace)
 * [wrap](#wrap)
+* [extend](#extend)
 * [Пользовательские режимы](#Пользовательские-режимы)
 
 #### def
@@ -515,6 +516,52 @@ block('quote').wrap()(function() {
 </div>
 ```
 
+#### extend
+
+Доопределить контекст исполнения шаблонов.
+
+Пример:
+
+```js
+// BEMJSON
+{ block: 'action' }
+```
+
+Шаблоны:
+
+```js
+block('action').extend()({ 'ctx.type': 'Sale', sale: '50%' });
+block('action').content()(function() {
+    return this.ctx.type + ' ' + this.sale;
+});
+```
+
+Результат шаблонизации BEMHTML:
+
+```html
+<div class="action">Sale 50%</div>
+```
+
+`extend()` может использоваться для прокидывания данных во все дочерние узлы
+через контекст выполнения шаблонов.
+
+Пример:
+
+```js
+block('page').extend()({ meaning: 42 });
+block('*').attrs()(function() { return { life: this.meaning }; });
+```
+
+```js
+// BEMJSON
+{ block: 'page', content: { block: 'wrap', content: { block: 'para' } }
+```
+
+```html
+<div class="page" life="42"><div class="wrap" life="42"><div class="para"
+life="42"></div></div></div>
+```
+
 ## Пользовательские режимы
 
 Вы можете определить свой режим и использовать его в теле шаблона.
@@ -565,7 +612,7 @@ block('control')(
 ## BEMTREE
 
 Движком BEMTREE используются только режимы [def](#def), [content](#content) и
-режимы-хелперы [replace](#replace) и [wrap](#wrap). Пользовательские режимы тоже могут быть использованы. Остальные режимы, описанные в документации выше, применимы только к BEMHTML.
+режимы-хелперы [replace](#replace), [extend](#extend) и [wrap](#wrap). Пользовательские режимы тоже могут быть использованы. Остальные режимы, описанные в документации выше, применимы только к BEMHTML.
 
 ***
 

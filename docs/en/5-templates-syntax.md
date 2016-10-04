@@ -325,6 +325,7 @@ Result of BEMHTML templating:
 * [cls](#cls)
 * [replace](#replace)
 * [wrap](#wrap)
+* [extend](#extend)
 * [User-defined modes](#user-defined-modes)
 
 #### def
@@ -520,6 +521,53 @@ Result of BEMHTML templating:
 <div class="wrap"><div class="quote">Docendo discimus</div></div>
 ```
 
+#### extend
+
+`extend` mode allows you to extend context of template.
+
+Example:
+
+```js
+// BEMJSON
+{ block: 'action' }
+```
+
+Templates:
+
+```js
+block('action').extend()({ 'ctx.type': 'Sale', sale: '50%' });
+block('action').content()(function() {
+    return this.ctx.type + ' ' + this.sale;
+});
+```
+
+Result of BEMHTML apply:
+
+```html
+<div class="action">Sale 50%</div>
+```
+
+`extend()` may used as a data proxy to all child nodes.
+
+Example:
+
+```js
+// Templates
+block('page').extend()({ meaning: 42 });
+block('*').attrs()(function() { return { life: this.meaning }; });
+```
+
+```js
+// BEMJSON
+{ block: 'page', content: { block: 'wrap', content: { block: 'para' } }
+```
+
+```html
+<div class="page" life="42"><div class="wrap" life="42"><div class="para"
+life="42"></div></div></div>
+```
+
+
 ## User-defined modes
 
 You can define your own mode and use it in the template body. Example:
@@ -569,7 +617,8 @@ More information about [apply()](7-runtime.md#apply).
 
 ## BEMTREE
 
-Only the [def](#def), [content](#content), [replace](#replace) and [wrap](#wrap) modes are used by the BEMTREE engine. User-defined modes can also be used. The other modes described in the documentation above can only be used in BEMHTML.
+Only the [def](#def), [content](#content), [replace](#replace),
+[extend](#extend) and [wrap](#wrap) modes are used by the BEMTREE engine. User-defined modes can also be used. The other modes described in the documentation above can only be used in BEMHTML.
 
 ***
 
