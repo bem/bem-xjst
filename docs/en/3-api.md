@@ -6,6 +6,7 @@
   - [Delimiters in names of BEM entities](#delimiters-in-names-of-bem-entities)
   - [Support JS-instances for elements (bem-core v4+)](#support-js-instances-for-elements-bem-core-v4)
   - [XHTML option](#xhtml-option)
+  - [Optional End Tags](#optional-end-tags)
   - [Escaping](#escaping)
   - [Extending BEMContext](#extending-bemcontext)
   - [Runtime linting](#runtime-linting)
@@ -209,6 +210,45 @@ Result:
 
 ```html
 <br>
+```
+
+### Optional End Tags
+
+With option `omitOptionalEndTags` template engine will ommit
+optional end tags. The option is turn off by default.
+
+You can find list of optional end tags in specifications:
+[HTML4](https://html.spec.whatwg.org/multipage/syntax.html#optional-tags) and
+[HTML5](https://www.w3.org/TR/html5/syntax.html#optional-tags).
+
+```js
+var bemxjst = require('bem-xjst');
+var templates = bemxjst.bemhtml.compile(function() {
+    // In this example we will add no templates.
+    // Default behaviour is used for HTML rendering.
+    }, {
+        // Turn off optional end tags
+        omitOptionalEndTags: true
+    });
+
+var bemjson = {
+    tag: 'table',
+    content: {
+        tag: 'tr',
+        content: [
+            { tag: 'th', content: 'table header' },
+            { tag: 'td', content: 'table cell' }
+        ]
+    }
+};
+
+var html = templates.apply(bemjson);
+```
+
+Result:
+
+```html
+<table><tr><th>table header<td>table cell</table>
 ```
 
 ### Escaping
