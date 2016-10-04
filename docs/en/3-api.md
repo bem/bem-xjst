@@ -7,6 +7,7 @@
   - [Support JS-instances for elements (bem-core v4+)](#support-js-instances-for-elements-bem-core-v4)
   - [XHTML option](#xhtml-option)
   - [Optional End Tags](#optional-end-tags)
+  - [Unquoted attributes](#unquoted-attributes)
   - [Escaping](#escaping)
   - [Extending BEMContext](#extending-bemcontext)
   - [Runtime linting](#runtime-linting)
@@ -250,6 +251,36 @@ Result:
 ```html
 <table><tr><th>table header<td>table cell</table>
 ```
+
+### Unquoted attributes
+
+HTML specification allows us ommit unnececary quotes in some cases. See
+[HTML4](https://www.w3.org/TR/html4/intro/sgmltut.html#h-3.2.2) and
+[HTML5](https://www.w3.org/TR/html5/syntax.html#attributes) specs.
+
+You can use `unquotedAttrs` option to do so.
+
+```js
+var bemxjst = require('bem-xjst');
+var templates = bemxjst.bemhtml.compile(function() {
+    // In this example we will add no templates.
+    // Default behaviour is used for HTML rendering.
+    }, {
+        // allow unqouted attributes if it’s possible
+        unquotedAttrs: true
+    });
+
+var bemjson = { block: 'b', attrs: { name: 'test' } };
+
+var html = templates.apply(bemjson);
+```
+
+Result:
+
+```html
+<div class=b name=test></div>
+```
+
 
 ### Escaping
 

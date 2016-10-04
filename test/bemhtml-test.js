@@ -161,4 +161,41 @@ describe('BEMHTML engine tests', function() {
         .should.equal('<form class="f">test</form>');
     });
   });
+
+  describe('unquotedAttrs option', function() {
+    it('should render class attr w/o quotes if spec allows', function() {
+      test(function() {},
+        { block: 'b' },
+        '<div class=b></div>',
+        { unquotedAttrs: true });
+    });
+
+    it('should’t render class attr w/o quotes if mix', function() {
+      test(function() {},
+        { block: 'b', mix: 'mixed' },
+        '<div class="b mixed"></div>',
+        { unquotedAttrs: true });
+    });
+
+    it('should render id attr if spec allows', function() {
+      test(function() {},
+        { block: 'b', attrs: { id: 'nospace' } },
+        '<div class=b id=nospace></div>',
+        { unquotedAttrs: true });
+    });
+
+    it('should’t render id attr if there is space in value', function() {
+      test(function() {},
+        { block: 'b', attrs: { id: 'space test' } },
+        '<div class=b id="space test"></div>',
+        { unquotedAttrs: true });
+    });
+
+    it('should render class if there is no space in value', function() {
+      test(function() {},
+        { block: 'b', bem: false, cls: 'test' },
+        '<div class=test></div>',
+        { unquotedAttrs: true });
+    });
+  });
 });
