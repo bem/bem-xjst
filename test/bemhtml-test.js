@@ -119,4 +119,46 @@ describe('BEMHTML engine tests', function() {
         .should.equal('<br class="b">');
     });
   });
+
+  describe('omitOptionalEndTags option', function() {
+    it('should omit optional end tags with option', function() {
+      compile(function() {}, { omitOptionalEndTags: true })
+        .apply({ tag: 'p', content: 'test' })
+        .should.equal('<p>test');
+    });
+
+    it('should’t omit optional end tags without option', function() {
+      compile('')
+        .apply({ tag: 'p', content: 'test' })
+        .should.equal('<p>test</p>');
+    });
+
+    it('should’t omit optional end tags with option if tag is mandatory',
+      function() {
+      compile(function() {}, { omitOptionalEndTags: true })
+        .apply({ tag: 'form', content: 'test' })
+        .should.equal('<form>test</form>');
+    });
+
+    it('should omit optional end tags from templates with option', function() {
+      compile(function() { block('para').tag()('p'); },
+        { omitOptionalEndTags: true })
+        .apply({ block: 'para', content: 'test' })
+        .should.equal('<p class="para">test');
+    });
+
+    it('should’t omit optional end tags from templates w/o option', function() {
+      compile(function() { block('para').tag()('p'); })
+        .apply({ block: 'para', content: 'test' })
+        .should.equal('<p class="para">test</p>');
+    });
+
+    it('should’t omit optional end tags from templates with option ' +
+      'if tag is mandatory', function() {
+      compile(function() { block('f').tag()('form'); },
+      { omitOptionalEndTags: true })
+        .apply({ block: 'f', content: 'test' })
+        .should.equal('<form class="f">test</form>');
+    });
+  });
 });

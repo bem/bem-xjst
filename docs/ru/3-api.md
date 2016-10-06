@@ -6,6 +6,7 @@
   - [Разделители в именовании БЭМ-сущностей](#Разделители-в-именовании-БЭМ-сущностей)
   - [Поддержка JS-экземпляров для элементов (bem-core v4+)](#Поддержка-js-экземпляров-для-элементов-bem-core-v4)
   - [Закрытие одиночных элементов](#Закрытие-одиночных-элементов)
+  - [Опциональные закрывающие теги](#Опциональные-закрывающие-теги)
   - [Экранирование](#Экранирование)
   - [Расширение BEMContext](#Расширение-bemcontext)
   - [Runtime проверки ошибок в шаблонах и входных данных](#Runtime-проверки-ошибок-в-шаблонах-и-входных-данных)
@@ -207,6 +208,45 @@ var html = templates.apply(bemjson);
 
 ```html
 <br>
+```
+
+### Опциональные закрывающие теги
+
+При помощи опции `omitOptionalEndTags` шаблонизатор не будет выводить
+опциональные закрывающие теги. По умолчанию эта опция выключена.
+
+Список опциональных закрывающих тегов можно найти в спецификациях
+[HTML4](https://html.spec.whatwg.org/multipage/syntax.html#optional-tags) и
+[HTML5](https://www.w3.org/TR/html5/syntax.html#optional-tags).
+
+```js
+var bemxjst = require('bem-xjst');
+var templates = bemxjst.bemhtml.compile(function() {
+    // В этом примере мы не добавляем пользовательских шаблонов.
+    // Для рендеринга HTML будет использовано поведение шаблонизатора по умолчанию.
+    }, {
+        // Отключаем вывод опциональных закрывающих тегов
+        omitOptionalEndTags: true
+    });
+
+var bemjson = {
+    tag: 'table',
+    content: {
+        tag: 'tr',
+        content: [
+            { tag: 'th', content: 'table header' },
+            { tag: 'td', content: 'table cell' }
+        ]
+    }
+};
+
+var html = templates.apply(bemjson);
+```
+
+В результате `html` будет содержать строку:
+
+```html
+<table><tr><th>table header<td>table cell</table>
 ```
 
 ### Экранирование
