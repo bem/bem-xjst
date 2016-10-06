@@ -1,9 +1,9 @@
-({
-    block: 'button',
-    name: 'name',
-    icon: {
-        block: 'icon',
-        url: 'arrow.svg'
-    },
-    text: 'submit'
-});
+([
+  { block: 'link' },
+  { tag: 'br' },
+  { block: 'link', url: '/', content: 'Home link' },
+  { tag: 'br' },
+  { block: 'link', target: '_blank', url: '/' },
+  { tag: 'br' },
+  { block: 'link', mods: { disabled: true }, url: '/' }
+]);
