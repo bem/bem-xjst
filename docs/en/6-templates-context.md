@@ -348,6 +348,44 @@ As a result, `html` contains the string:
 
 The methods `apply`, `applyNext` and `applyCtx` are available in the body of templates. For more information, see the next section on [runtime](7-runtime.md).
 
+
+# Template function
+
+When body of template is function, it calls with two arguments:
+1. context of template (familiar to us as `this`)
+2. current BEMJSON node (familiar to us as `this.ctx`)
+
+Example:
+```js
+block('link').attrs()(function(node, ctx) {
+    return {
+        // the same as this.ctx.url
+        href: ctx.url,
+
+        // the same as this.position
+        'data-position': node.position
+    };
+});
+```
+
+The same arguments available in function of `match()`.
+
+```js
+match(function(node, ctx) {
+    // the same as this.mods.disabled
+    return !node.mods.disabled &&
+        // the same as this.ctx.target
+        ctx.target;
+})
+```
+
+Moreover, template functions can be arrow functions:
+
+```js
+match((node, ctx) => (!node.mods.disabled && ctx.target))
+addAttrs()((node, ctx) => ({ href: ctx.url }))
+```
+
 ***
 
 Read next: [runtime](7-runtime.md)
