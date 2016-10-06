@@ -37,6 +37,7 @@
         "wrap", "replace", "extend", "mode", "def",
         "content", "appendContent", "prependContent",
         "attrs", "addAttrs", "js", "addJs", "mix", "addMix",
+        "mods", "addMods", "elemMods", "addElemMods",
         "tag", "cls", "bem"
      ],
     "strict"        : false,    // true: Requires all functions run in ES5 Strict Mode

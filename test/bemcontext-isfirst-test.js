@@ -4,10 +4,10 @@ var test = fixtures.test;
 describe('BEMContext this.isFirst()', function() {
   it('should preserve position', function() {
     test(function() {
-      block('button').def()(function() {
-        if (this.isFirst()) this.mods.first = 'yes';
-        return applyNext();
-      });
+      block('button')
+        .match(function() { return this.isFirst(); })
+        .addMods()({ first: 'yes' });
+
       block('button').def()(function() {
         return applyNext();
       });
@@ -22,11 +22,13 @@ describe('BEMContext this.isFirst()', function() {
 
   it('should calc isFirst/isLast with array mess', function() {
     test(function() {
-      block('button').elem('inner').def()(function() {
-        if (this.isFirst()) this.elemMods.first = 'yes';
-        if (this.isLast()) this.elemMods.last = 'yes';
-        return applyNext();
-      });
+      block('button').elem('inner')(
+        match(function() { return this.isFirst(); })
+          .addElemMods()(function() { return { first: 'yes' }; }),
+
+        match(function() { return this.isLast(); })
+          .addElemMods()(function() { return { last: 'yes' }; })
+      );
     },
     {
       block: 'button',
@@ -42,14 +44,14 @@ describe('BEMContext this.isFirst()', function() {
     '</div>');
   });
 
-  // TODO: https://github.com/bem/bem-xjst/issues/174
-  xit('should calc isFirst/isLast for single element', function() {
+  it('should calc isFirst/isLast for single element', function() {
     test(function() {
-      block('button').elem('inner').def()(function() {
-        if (this.isFirst()) this.elemMods.first = 'yes';
-        if (this.isLast()) this.elemMods.last = 'yes';
-        return applyNext();
-      });
+      block('button').elem('inner')(
+        match(function() { return this.isFirst(); })
+          .addElemMods()({ first: 'yes' }),
+        match(function() { return this.isLast(); })
+          .addElemMods()({ last: 'yes' })
+      );
     },
     { block: 'button', content: { elem: 'inner' } },
     '<div class="button">' +
@@ -59,13 +61,14 @@ describe('BEMContext this.isFirst()', function() {
   });
 
   // TODO: https://github.com/bem/bem-xjst/issues/174
-  xit('should ignore empty array items', function() {
+  it.skip('should ignore empty array items', function() {
     test(function() {
-      block('button').def()(function() {
-        if (this.isFirst()) this.mods.first = 'yes';
-        if (this.isLast()) this.mods.last = 'yes';
-        return applyNext();
-      });
+      block('button')(
+        match(function() { return this.isFirst(); })
+          .addMods()({ first: 'yes' }),
+        match(function() { return this.isLast(); })
+          .addMods()({ last: 'yes' })
+      );
     },
     [
       false,
