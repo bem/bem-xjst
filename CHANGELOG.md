@@ -1,5 +1,49 @@
 # BEM-XJST Changelog
 
+# 2016-10-06 [v8.2.0](https://github.com/bem/bem-xjst/compare/v8.1.0...v8.2.0), @miripiruni
+
+With option `omitOptionalEndTags` template engine will ommit
+optional end tags. The option is turn off by default.
+
+You can find list of optional end tags in specifications:
+[HTML4](https://html.spec.whatwg.org/multipage/syntax.html#optional-tags) and
+[HTML5](https://www.w3.org/TR/html5/syntax.html#optional-tags).
+
+```js
+var bemxjst = require('bem-xjst');
+var templates = bemxjst.bemhtml.compile(function() {
+    // In this example we will add no templates.
+    // Default behaviour is used for HTML rendering.
+    }, {
+        // Turn off optional end tags
+        omitOptionalEndTags: true
+    });
+
+var bemjson = {
+    tag: 'table',
+    content: {
+        tag: 'tr',
+        content: [
+            { tag: 'th', content: 'table header' },
+            { tag: 'td', content: 'table cell' }
+        ]
+    }
+};
+
+var html = templates.apply(bemjson);
+```
+
+Result:
+
+```html
+<table><tr><th>table header<td>table cell</table>
+```
+
+Commits:
+* [[`207b3733de`](https://github.com/bem/bem-xjst/commit/207b3733de)] - Merge pull request #361 from bem/issue-360__optional-closing-tags (Slava Oliyanchuk)
+* [[`042dcb1385`](https://github.com/bem/bem-xjst/commit/042dcb1385)] - **BEMHTML**: Omit optional closing tags (fix for #360) (miripiruni)
+
+
 # 2016-10-06 [v8.1.0](https://github.com/bem/bem-xjst/compare/v8.0.0...v8.1.0), @miripiruni
 
 New modes: `mods()`, `elemMods()`, `addMods()`, `addElemMods()`.
