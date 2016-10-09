@@ -46,11 +46,12 @@
   },
   "devDependencies": {
     "browserify": "^13.0.1",
-    "istanbul": "^0.4.4",
     "chai": "^3.5.0",
+    "istanbul": "^0.4.4",
     "jscs": "^3.0.3",
     "jshint": "^2.7.0",
-    "mocha": "^3.0.2"
+    "mocha": "^3.0.2",
+    "xjst-ddsl": "github:awinogradov/xjst-ddsl#pluggable"
   },
   "author": "Fedor Indutny <fedor@indutny.com>",
   "maintainers": [
