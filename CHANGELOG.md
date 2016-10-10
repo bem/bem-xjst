@@ -1,5 +1,38 @@
 # BEM-XJST Changelog
 
+# 2016-10-10 [v6.7.0](https://github.com/bem/bem-xjst/compare/v6.6.0...v6.7.0), @miripiruni
+
+New option `production`. When it set to `true` bem-xjst will render bemjson even if one template contains error.
+
+Example:
+```js
+var template = bemxjst.compile(function() {
+  block('b1').attrs()(function() {
+    var attrs = applyNext();
+    attrs.undef.foo = 'bar';
+    return attrs;
+  });
+}, { production: true });
+var html = template.apply({ block: 'page', content: { block: 'b1' } });
+```
+`html` will equals `<div class="page"></div>`.
+
+Also in production mode bem-xjst will produce error messages to STDERR.
+
+```bash
+$node index.js 1> stdout.txt 2> stderr.txt
+
+$ cat stdout.txt
+<div class="page"></div>
+
+$ cat stderr.txt
+BEMXJST ERROR: cannot render block b1, elem undefined, mods {}, elemMods {} [TypeError: Cannot read property 'undef' of undefined]
+```
+
+Commits:
+* [[`b233bf4e94`](https://github.com/bem/bem-xjst/commit/b233bf4e94)] - **BEMXJST**: production option (fix for #298) (miripiruni)
+
+
 # 2016-07-29 [v6.6.0](https://github.com/bem/bem-xjst/compare/v6.5.5...v6.6.0), @miripiruni
 
 By turning on `runtimeLint` option you can get warnings about wrong
