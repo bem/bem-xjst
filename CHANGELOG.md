@@ -1,5 +1,40 @@
 # BEM-XJST Changelog
 
+# 2016-10-10, [v5.2.0](https://github.com/bem/bem-xjst/compare/v5.1.0...v5.1.1), @miripiruni
+
+Port of [v4.4.0](https://github.com/bem/bem-xjst/releases/tag/v4.4.0).
+
+New option `production`. When it set to `true` bem-xjst will render bemjson even
+if one template contains error.
+
+Example:
+```js
+var template = bemxjst.compile(function() {
+  block('b1').attrs()(function() {
+    var attrs = applyNext();
+    attrs.undef.foo = 'bar';
+    return attrs;
+  });
+}, { production: true });
+var html = template.apply({ block: 'page', content: { block: 'b1' } });
+```
+`html` will equals `<div class="page"></div>`.
+
+Also in production mode bem-xjst will produce error messages to STDERR.
+
+```bash
+$node index.js 1> stdout.txt 2> stderr.txt
+
+$ cat stdout.txt
+<div class="page"></div>
+
+$ cat stderr.txt
+BEMXJST ERROR: cannot render block b1, elem undefined, mods {}, elemMods {} [TypeError: Cannot read property 'undef' of undefined]
+```
+
+Commits:
+* [[`ca9b1c6be2`](https://github.com/bem/bem-xjst/commit/ca9b1c6be2)] - **BEMXJST**: production option (fix for #298) (miripiruni)
+
 # 2016-03-24, [v5.1.1](https://github.com/bem/bem-xjst/compare/v5.1.0...v5.1.1), @miripiruni
 
 ## Fix rendering mixes for namesake elems
