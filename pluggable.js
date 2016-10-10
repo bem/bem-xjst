@@ -25,7 +25,9 @@ class XJST {
     inherits(plugin.engine, this.engine);
     this.engine = plugin.engine;
 
-    const instance = new this.engine(this.options);
+    const options = Object.assign(this.options, plugin.options);
+    const instance = new this.engine(options);
+
     this.runtime = {};
     instance.compile(''); // ¯ \ _ (ツ) _ / ¯
     instance.exportApply(this.runtime);
