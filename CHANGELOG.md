@@ -1,6 +1,6 @@
 # BEM-XJST Changelog
 
-# 2016-10-10 [v8.3.0](https://github.com/bem/bem-xjst/compare/v8.1.0...v8.2.0), @miripiruni
+# 2016-10-10 [v8.3.0](https://github.com/bem/bem-xjst/compare/v8.2.0...v8.3.0), @miripiruni
 
 New option `production`. When it set to `true` bem-xjst will render bemjson even if one template contains error.
 
