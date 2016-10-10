@@ -1,6 +1,6 @@
 # Benchmarks
 
-Ordinary benchmark test:
+## New benchmark test
 
 1. Install dependencies: `npm i`
 
@@ -11,6 +11,11 @@ Ordinary benchmark test:
 `dataPath` and `templatePath` are optional.
 
 The results of test would be directory `dat-d5364-and-d5364` with svg histogram and STDOUT with some numbers.
+
+You can download 1000 bemjson files from https://github.com/miripiruni/web-data
+
+
+## Old test
 
 Or you can run old test:
 
