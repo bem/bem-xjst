@@ -28,4 +28,35 @@ describe('API compile', function() {
     assert.equal(template.apply({ block: 'b1' }), '<a class="b1">ok</a>');
     assert.equal(template.apply({ block: 'b2' }), '<div class="b2">ok</div>');
   });
+
+  describe('Production mode', function() {
+    it('should render even if error in one block', function() {
+      var template = bemxjst.compile(function() {
+        block('b1').attrs()(function() {
+          var attrs = applyNext();
+          attrs.undef.foo = 'bar';
+          return attrs;
+        });
+      }, { production: true });
+
+      assert.equal(template.apply({
+        block: 'page',
+        content: { block: 'b1' }
+      }), '<div class="page"></div>');
+    });
+
+    it('should throw error with one apply if production mode off', function() {
+      var template = bemxjst.compile(function() {
+        block('b1').attrs()(function() {
+          var attrs = applyNext();
+          attrs.foo = 'bar';
+          return attrs;
+        });
+      });
+
+      assert.throws(function() {
+        template.apply({ block: 'b1' });
+      });
+    });
+  });
 });
