@@ -10,6 +10,7 @@
   - [Экранирование](#Экранирование)
   - [Расширение BEMContext](#Расширение-bemcontext)
   - [Runtime проверки ошибок в шаблонах и входных данных](#Runtime-проверки-ошибок-в-шаблонах-и-входных-данных)
+  - [Режим production](#режим-production)
 * [Создание бандла](#Создание-бандла)
 
 ## Выбор движка, компиляция и применение шаблонов
@@ -384,6 +385,37 @@ Notice what bem-xjst behaviour changed: https://github.com/bem/bem-xjst/releases
 BEM-XJST WARNING: looks like someone changed ctx.mods in BEMJSON: { block: 'mods-changes', mods: { one: 2, two: '2' } }
 old value of ctx.mod.one was 1
 Notice that you should change this.mods instead of this.ctx.mods in templates
+```
+
+### Режим Production
+
+Вы можете использовать опцию `production`, чтобы отрендерить весь BEMJSON,
+даже если в одном из шаблонов произошла ошибка.
+
+Пример:
+```js
+var template = bemxjst.compile(function() {
+  block('b1').attrs()(function() {
+    var attrs = applyNext();
+    attrs.undef.foo = 'bar';
+    return attrs;
+  });
+}, { production: true });
+var html = template.apply({ block: 'page', content: { block: 'b1' } });
+```
+`html` будет содержать `<div class="page"></div>`.
+
+Если в результате выполнения шаблонов случится ошибка, то узел не будет отрендерен, но шаблонизатор продолжит
+работу, выведя в STDERR сообщение об этой ошибке.
+
+```bash
+$node index.js 1> stdout.txt 2> stderr.txt
+
+$ cat stdout.txt
+<div class="page"></div>
+
+$ cat stderr.txt
+BEMXJST ERROR: cannot render block b1, elem undefined, mods {}, elemMods {} [TypeError: Cannot read property 'undef' of undefined]
 ```
 
 

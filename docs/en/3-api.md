@@ -10,6 +10,7 @@
   - [Escaping](#escaping)
   - [Extending BEMContext](#extending-bemcontext)
   - [Runtime linting](#runtime-linting)
+  - [Production mode](#production-mode)
 * [Bundling](#bundling)
 
 ## Choosing an engine, compiling and applying templates
@@ -393,6 +394,35 @@ Notice what bem-xjst behaviour changed: https://github.com/bem/bem-xjst/releases
 BEM-XJST WARNING: looks like someone changed ctx.mods in BEMJSON: { block: 'mods-changes', mods: { one: 2, two: '2' } }
 old value of ctx.mod.one was 1
 Notice that you should change this.mods instead of this.ctx.mods in templates
+```
+
+### Production mode
+
+You can use option `production` to render whole BEMJSON even if one template contains error.
+
+Example:
+```js
+var template = bemxjst.compile(function() {
+  block('b1').attrs()(function() {
+    var attrs = applyNext();
+    attrs.undef.foo = 'bar';
+    return attrs;
+  });
+}, { production: true });
+var html = template.apply({ block: 'page', content: { block: 'b1' } });
+```
+`html` will equals `<div class="page"></div>`.
+
+Also in production mode bem-xjst will produce error messages to STDERR.
+
+```bash
+$node index.js 1> stdout.txt 2> stderr.txt
+
+$ cat stdout.txt
+<div class="page"></div>
+
+$ cat stderr.txt
+BEMXJST ERROR: cannot render block b1, elem undefined, mods {}, elemMods {} [TypeError: Cannot read property 'undef' of undefined]
 ```
 
 
