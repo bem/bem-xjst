@@ -102,7 +102,7 @@ Result of BEMHTML templating:
 ```js
 // BEMJSON
 {
-    block: 'page'
+    block: 'page',
     content: [
         { block: 'header'},
         { block: 'article', content: '…' },
