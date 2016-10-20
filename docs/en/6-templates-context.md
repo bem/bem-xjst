@@ -251,6 +251,7 @@ Result of BEMHTML templating:
 
 * `this.isSimple({*} arg)` Checks whether `arg` is a JavaScript primitive type.
 * `this.isShortTag({String} tagName)` Checks whether `tagName` is a tag that doesn’t require a closing element.
+* `this.extend({Object} o1, {Object} o2)` Returns new object with all fields from `o1` and `o2`.
 
 ### this.reapply()
 
