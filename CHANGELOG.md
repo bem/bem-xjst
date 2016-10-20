@@ -1,5 +1,13 @@
 # BEM-XJST Changelog
 
+# 2016-10-20 [v7.4.1](https://github.com/bem/bem-xjst/compare/v7.4.0...v7.4.1), @miripiruni
+
+`extend()` mode fixed. Read [documentation](https://github.com/bem/bem-xjst/blob/v7.x/docs/en/5-templates-syntax.md#extend).
+
+Commits:
+* [[`2d62bb5714`](https://github.com/bem/bem-xjst/commit/2d62bb5714)] - **BEMXJST**: extend() mode fix #180 (miripiruni)
+
+
 # 2016-10-10 [v7.4.0](https://github.com/bem/bem-xjst/compare/v7.3.1...v7.4.0), @miripiruni
 
 New option `production`. When it set to `true` bem-xjst will render bemjson even if one template contains error.
