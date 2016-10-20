@@ -1,5 +1,25 @@
 # BEM-XJST Changelog
 
+# 2016-10-20 [v8.3.1](https://github.com/bem/bem-xjst/compare/v8.3.0...v8.3.1), @miripiruni
+
+`extend()` mode fixed. Read [documentation](https://github.com/bem/bem-xjst/blob/master/docs/en/5-templates-syntax.md#extend).
+
+In documentation:
+ — description about `this.extend(o1, o2)` added
+ — spelling fixed
+ — description about production mode added
+
+Commits:
+* [[`19c4789a05`](https://github.com/bem/bem-xjst/commit/19c4789a05)] - **Docs**: describe this.extend() fix for #355 (miripiruni)
+* [[`ff8ca15360`](https://github.com/bem/bem-xjst/commit/ff8ca15360)] - Merge pull request #363 from bem/issue-180__extend (Slava Oliyanchuk)
+* [[`ab9d3cae90`](https://github.com/bem/bem-xjst/commit/ab9d3cae90)] - **BEMXJST**: extend() mode fix #180 (miripiruni)
+* [[`4263533c70`](https://github.com/bem/bem-xjst/commit/4263533c70)] - **docs**: Fix type (Vladimir Grinenko)
+* [[`3f3169e87d`](https://github.com/bem/bem-xjst/commit/3f3169e87d)] - **Docs**: production mode (miripiruni)
+* [[`6ad3d5c154`](https://github.com/bem/bem-xjst/commit/6ad3d5c154)] - **Bench**: bemjson files is not required (miripiruni)
+* [[`efa1d9a8c4`](https://github.com/bem/bem-xjst/commit/efa1d9a8c4)] - **Bench**: template for v7.x added (miripiruni)
+* [[`53db045a94`](https://github.com/bem/bem-xjst/commit/53db045a94)] - changelog updated (miripiruni)
+
+
 # 2016-10-10 [v8.3.0](https://github.com/bem/bem-xjst/compare/v8.2.0...v8.3.0), @miripiruni
 
 New option `production`. When it set to `true` bem-xjst will render bemjson even if one template contains error.
