@@ -44,6 +44,7 @@ module.exports = {
                             mix: { block: 'header', elem: 'item' },
                             mods: { state: 'loading' },
                             versions: [
+                                { name: "8.3.1", hash: "61050a14ebee85b44658e5a3f8a9a293baf1fcb1" },
                                 { name: "8.2.0", hash: "f2fe3a24fa622f1f1525e8488f7421a695a47b32" },
                                 { name: "8.1.0", hash: "c3ee07ae700b201e542e01ef8284df2c434b4da3" },
                                 { name: "8.0.0", hash: "3a173128a2c48c00a0d2b39675c2697528d1586f" },
