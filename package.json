@@ -15,7 +15,9 @@
     "BEMTREE"
   ],
   "bin": {
-    "bem-xjst": "bin/bem-xjst"
+    "bem-xjst": "bin/bem-xjst",
+    "lint": "bin/bem-xjst-lint",
+    "mirgate": "bin/bem-xjst-migrate"
   },
   "scripts": {
     "prepublish": "npm run make",
@@ -61,11 +63,13 @@
   "directories": {
     "bin": "./bin",
     "doc": "./docs",
-    "lib": "./lib"
+    "lib": "./lib",
+    "mirgation": "./mirgation"
   },
   "files": [
     "bin/",
     "lib/",
+    "mirgation/",
     "runtime-lint/",
     "index.js",
     "CHANGELOG.md",

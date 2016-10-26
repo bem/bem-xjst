@@ -1,0 +1,17 @@
+{
+  "name": "bem-xjst-static-analyzer",
+  "description": "bem-xjst templates analyzer. Can be used as static linter or mirgation tool.",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "test": "node test/index.js"
+  },
+  "author": "Slava Oliyanchuk <miripiruni@gmail.com> (http://miripiruni.org/)",
+  "license": "ISC",
+  "dependencies": {
+    "jscodeshift": "^0.3.29",
+    "jest": "^15.1.1",
+    "yargs": "^6.3.0"
+  },
+  "devDependencies": {}
+}
