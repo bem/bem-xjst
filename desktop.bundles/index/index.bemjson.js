@@ -99,7 +99,7 @@ module.exports = {
         {
             block: 'demo',
             js: {
-                version: BEMXJST_VERSION + '_2' // инвалидация дефолтных значений
+                version: BEMXJST_VERSION + '_3' // инвалидация дефолтных значений
             },
             mods: { state: 'loading' },
             content: [
