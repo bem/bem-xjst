@@ -1,30 +1,23 @@
-block('button')(
-    tag()('button'),
-    attrs()(function() {
-        return {
-            role: 'button',
-            name: this.ctx.name
-        };
-    }),
-    content()(
-        function() {
-            var ctx = this.ctx,
-                content = [ctx.icon];
-            'text' in ctx && content.push({ elem: 'text', content: ctx.text });
-            return content;
-        },
-        match(function() { return typeof this.ctx.content !== 'undefined'; })(function() {
-            return this.ctx.content;
-        })
-    )
-);
+block('link')(
+  // Default tag
+  tag()('span'),
 
-block('icon')(
-    tag()('span'),
-    attrs()(function() {
-        var attrs = {},
-            url = this.ctx.url;
-        if (url) attrs.style = 'background-image:url(' + url + ')';
-        return attrs;
-    })
+  // If url exists in BEMJSON
+  match(function (context, json) { return json.url; })(
+    // Then set a tag
+    tag()('a'),
+    // and set href HTML attribute
+    addAttrs()((context, json) => ({ href: json.url }))
+    // P.S. Arrow functions are supported as you can see
+  ),
+
+  // If target blank exists in BEMJSON
+  match((context, json) => json.target === '_blank')
+    // add rel attribute
+    .addAttrs()({ rel: 'noopener' }),
+
+  // If "disabled" modifier exist
+  match(context => context.mods.disabled)
+    // add aria attribute
+    .addAttrs()({ 'aria-disabled': 'true' })
 );
