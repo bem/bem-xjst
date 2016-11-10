@@ -1,5 +1,14 @@
 # BEM-XJST Changelog
 
+## 2016-11-10 [v4.4.1](https://github.com/bem/bem-xjst/compare/v4.4.0...v4.4.1), @miripiruni
+
+Revert behaviour `applyNext()` should return value from BEMJSON to sync with v1.x/v2.x/v3.x.
+
+Commits:
+* [[`771135db45`](https://github.com/bem/bem-xjst/commit/771135db45)] - Merge pull request #381 from bem/applyNext-issue-380 (Slava Oliyanchuk)
+* [[`e0f97185df`](https://github.com/bem/bem-xjst/commit/e0f97185df)] - Test added: applyNext() should not return value from BEMJSON. (miripiruni)
+* [[`281e12baba`](https://github.com/bem/bem-xjst/commit/281e12baba)] - ***Revert*** "`apply(modeName)` must return values from `this.ctx` if no other templates (port commit 9d230c552f0f5fd46cf2a8f90f7ed987c4391836)" (miripiruni)
+
 ## 2016-08-03 [v4.4.0](https://github.com/bem/bem-xjst/compare/v4.3.7...v4.4.0), @miripiruni
 
 New option `production`. When it set to `true` bem-xjst will render bemjson even
