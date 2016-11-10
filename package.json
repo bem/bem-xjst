@@ -1,6 +1,6 @@
 {
   "name": "bem-xjst",
-  "version": "4.4.0",
+  "version": "4.4.1",
   "main": "lib/bemhtml.js",
   "bin": {
     "bem-xjst": "bin/bem-xjst"
