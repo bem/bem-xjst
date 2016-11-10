@@ -450,6 +450,21 @@ describe('BEMHTML compiler/Runtime', function() {
         '>Title link content</div></h2></div>');
     });
 
+    it('applyNext() should not return value from BEMJSON (as it works in v1.x)',
+    function() {
+      test(function() {
+        block('link').mix()(function() {
+          return [ { block: 'mix' } ].concat(applyNext() || []);
+        });
+        block('root').content()({
+          block: 'link',
+          mix: { block: 'a', elem: 'b', elemMods: { c: 'd' } }
+        });
+      },
+      { block: 'root' },
+      '<div class="root"><div class="link mix a__b a__b_c_d"></div></div>');
+    });
+
     it('should check that mix do not overwrite jsParams', function() {
       test(function() {
         block('b1')(
