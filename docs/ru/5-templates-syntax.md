@@ -327,7 +327,7 @@ block('link')(
 
 ```js
 /**
- * @param {function|Array|Object[]} value
+ * @param {*} value
  */
 def()(value)
 ```
