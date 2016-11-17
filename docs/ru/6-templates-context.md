@@ -349,6 +349,46 @@ var html = templates.apply(bemjson));
 
 В теле шаблонов доступны методы `apply`, `applyNext` и `applyCtx`. Подробнее о них читайте в следующей секции про [runtime](7-runtime.md).
 
+
+# Функции шаблонов
+
+В случае, когда тело шаблона является функцией, она вызывается с двумя аргументами:
+1. контекст выполнения шаблона (доступный как `this` в теле шаблона);
+2. текущий узел BEMJSON, на который сматчился шаблон (доступный в теле шаблона
+как `this.ctx`).
+
+Пример:
+```js
+block('link').attrs()(function(node, ctx) {
+    return {
+        // тоже самое что и this.ctx.url
+        href: ctx.url,
+
+        // тоже самое что и this.position
+        'data-position': node.position
+    };
+});
+```
+
+Такие же аргументы доступны в функции подпредикате `match()`.
+
+```js
+match(function(node, ctx) {
+    // тоже самое что и this.mods.disabled
+    return !node.mods.disabled &&
+        // тоже самое что и this.ctx.target
+        ctx.target;
+})
+```
+
+Кроме того, функции шаблонов поддерживают ES6 arrow functions, поэтому вы можете
+писать везде в таком стиле:
+
+```js
+match((node, ctx) => (!node.mods.disabled && ctx.target))
+addAttrs()((node, ctx) => ({ href: ctx.url }))
+```
+
 ***
 
 Читать далее: [runtime](7-runtime.md)
