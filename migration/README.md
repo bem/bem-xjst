@@ -34,3 +34,7 @@ BEM-XJST WARNING:
 
 `./node_modules/.bin/jest --bail`
 
+
+# Mirgate from old DSL BEMHTML to JS syntax
+
+Take a look at https://github.com/bem/bem-templates-converter
