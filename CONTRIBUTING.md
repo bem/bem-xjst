@@ -1,4 +1,6 @@
-# bem-xjst
+# bem-xjst contributing notes
+
+If you want help you can fix issues than labeled [help wanted](https://github.com/bem/bem-xjst/issues?q=is%3Aissue+is%3Aopen+label%3A%22help+wanted%22).
 
 ## Development dependencies
 
