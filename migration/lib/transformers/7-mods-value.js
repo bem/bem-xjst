@@ -9,7 +9,11 @@ module.exports = function(file, api, opts) {
       var arg = p.value.arguments;
 
       if (typeof p.value.rawValue === 'number') {
-        var callee = p.parentPath.parentPath.value.callee;
+        var callee = p.parentPath &&
+          p.parentPath.parentPath &&
+          p.parentPath.parentPath.value &&
+          p.parentPath.parentPath.value.callee;
+
         if (callee.property && callee.property.type === 'Identifier' &&
           (callee.property.name === 'mod' || callee.property.name === 'elemMod')) {
           callee = callee.property;
