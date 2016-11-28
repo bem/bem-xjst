@@ -1,5 +1,14 @@
 # BEM-XJST Changelog
 
+# 2016-11-28 [v8.4.1](https://github.com/bem/bem-xjst/compare/v8.4.0...v8.4.1), @miripiruni
+
+Fix: `extend(function(ctx, json) { … })` mode callback now have two arguments. The same as `match()` and other.
+
+Commits:
+* [[`6a0ea778cf`](https://github.com/bem/bem-xjst/commit/6a0ea778cf)] - Merge pull request #386 from bem/issues/385 (Slava Oliyanchuk)
+* [[`21e5716819`](https://github.com/bem/bem-xjst/commit/21e5716819)] - Provide arguments for extend() mode (Vladimir Grinenko)
+
+
 # 2016-11-28 [v8.4.0](https://github.com/bem/bem-xjst/compare/v8.3.1...v8.4.0), @miripiruni
 
 New option `unquotedAttrs`. See [docs](https://github.com/bem/bem-xjst/blob/master/docs/en/3-api.md#unquoted-attributes).
