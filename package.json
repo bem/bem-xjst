@@ -1,6 +1,6 @@
 {
   "name": "bem-xjst",
-  "version": "7.5.0",
+  "version": "7.6.0",
   "description": "Declarative Template Engine for the browser and server",
   "keywords": [
     "template",
