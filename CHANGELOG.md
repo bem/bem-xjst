@@ -1,5 +1,16 @@
 # BEM-XJST Changelog
 
+# 2016-11-28 [v8.4.0](https://github.com/bem/bem-xjst/compare/v8.3.1...v8.4.0), @miripiruni
+
+New option `unquotedAttrs`. See [docs](https://github.com/bem/bem-xjst/blob/master/docs/en/3-api.md#unquoted-attributes).
+
+Commits:
+* [[`53f8444bca`](https://github.com/bem/bem-xjst/commit/53f8444bca)] - **BEMHTML**: support unquoted attributes (fix for #364) (miripiruni)
+* [[`52609624a1`](https://github.com/bem/bem-xjst/commit/52609624a1)] - Help wanted added (Slava Oliyanchuk)
+* [[`85512601d9`](https://github.com/bem/bem-xjst/commit/85512601d9)] - **Docs**: write about template arguments and arrow function (fix for #367) (miripiruni)
+* [[`7efbc32ba0`](https://github.com/bem/bem-xjst/commit/7efbc32ba0)] - **Docs**: def() parameter in JSDoc changed (Slava Oliyanchuk)
+
+
 # 2016-10-20 [v8.3.1](https://github.com/bem/bem-xjst/compare/v8.3.0...v8.3.1), @miripiruni
 
 `extend()` mode fixed. Read [documentation](https://github.com/bem/bem-xjst/blob/master/docs/en/5-templates-syntax.md#extend).
