@@ -68,4 +68,17 @@ describe('Modes extend', function() {
     { block: 'b' },
     '<div class="b" id="test">1</div>');
   });
+
+  it('should pass BEMContext instance and json to extend body',
+    function() {
+    test(function() {
+      block('b')(
+        extend()(function(ctx, json) {
+          return { bar: json.foo + ' ' + ctx.constructor.name };
+        }),
+        content()(function() { return this.bar; })
+      );
+    }, { block: 'b', foo: 'This is' },
+    '<div class="b">This is ContextChild</div>');
+  });
 });
