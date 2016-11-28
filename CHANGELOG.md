@@ -1,5 +1,13 @@
 # BEM-XJST Changelog
 
+# 2016-11-28 [v7.6.0](https://github.com/bem/bem-xjst/compare/v7.5.0...v7.6.0), @miripiruni
+
+Port from v8.4.0. New option `unquotedAttrs`. See [docs](https://github.com/bem/bem-xjst/blob/master/docs/en/3-api.md#unquoted-attributes).
+
+Commits:
+* [[`7eff482a7b`](https://github.com/bem/bem-xjst/commit/7eff482a7b)] - **BEMHTML**: support unquoted attributes (fix for #364) (miripiruni)
+
+
 # 2016-11-09 [v7.5.0](https://github.com/bem/bem-xjst/compare/v7.4.1...v7.5.0), @miripiruni
 
 With option `omitOptionalEndTags` template engine will ommit
