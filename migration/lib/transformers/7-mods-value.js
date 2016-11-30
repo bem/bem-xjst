@@ -14,6 +14,10 @@ module.exports = function(file, api, opts) {
           p.parentPath.parentPath.value &&
           p.parentPath.parentPath.value.callee;
 
+        if (!callee) {
+          return false;
+        }
+
         if (callee.property && callee.property.type === 'Identifier' &&
           (callee.property.name === 'mod' || callee.property.name === 'elemMod')) {
           callee = callee.property;
