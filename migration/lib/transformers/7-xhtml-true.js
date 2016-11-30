@@ -1,28 +1,18 @@
 var log = require('../logger');
+var Transformer = require('../transformer');
+var t = new Transformer();
 
 module.exports = function(file, api, opts) {
-  var j = api.jscodeshift;
+  t.description = 'For backward capability use option `xhtml:true`'
 
-  var ret = j(file.source)
-    .find(j.CallExpression, {
-      callee: { property: { type: 'Identifier', name: 'compile' }
-    }});
+  t.find = function(file, j) {
+    return j(file.source)
+      .find(j.CallExpression, {
+        callee: { property: { type: 'Identifier', name: 'compile' }
+      }});
+  };
 
-  if (opts.lint) {
-    if (ret.length === 0)
-      return;
-
-    ret.forEach(function(p) {
-      log({
-        descr: 'once() is deprecated. Please use def().',
-        path: p.value,
-        ret: ret,
-        file: file
-      });
-    });
-
-  } else {
-
+  t.replace = function(ret, j) {
     return ret
       .replaceWith(function(p) {
         var val = p.value;
@@ -44,8 +34,8 @@ module.exports = function(file, api, opts) {
         return j.callExpression(
           j.memberExpression(j.identifier(val.callee.object.name), j.identifier('compile')),
           args)
-      })
-      .toSource({ quote: 'single' });
+      });
+  };
 
-  }
+  return t.run(file, api, opts);
 };

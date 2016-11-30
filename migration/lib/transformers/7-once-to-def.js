@@ -1,30 +1,22 @@
 var log = require('../logger');
+var Transformer = require('../transformer');
+var t = new Transformer();
 
 module.exports = function(file, api, opts) {
-  var j = api.jscodeshift;
+  t.description = 'once() is deprecated. Please use def().';
 
-  var ret = j(file.source)
-    .find(j.MemberExpression, {
-      property: { type: 'Identifier' },
-      object: { callee: { type: 'Identifier', name: 'block' }}
-    })
-    .find(j.Identifier, { name: 'once' });
+  t.find = function(file, j) {
+    return j(file.source)
+      .find(j.MemberExpression, {
+        property: { type: 'Identifier' },
+        object: { callee: { type: 'Identifier', name: 'block' }}
+      })
+      .find(j.Identifier, { name: 'once' });
+  };
 
-  if (opts.lint) {
-    if (ret.length === 0)
-      return;
+  t.replace = function(ret, j) {
+    return ret.replaceWith(function(p) { return j.identifier('def'); });
+  };
 
-    ret.forEach(function(p) {
-      log({
-        descr: 'once() is deprecated. Please use def().',
-        path: p.value,
-        ret: ret,
-        file: file
-      });
-    });
-  } else {
-    return ret
-      .replaceWith(function(p) { return j.identifier('def'); })
-      .toSource({ quote: 'single' });
-  }
+  return t.run(file, api, opts);
 };

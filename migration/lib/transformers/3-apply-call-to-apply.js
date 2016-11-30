@@ -1,52 +1,53 @@
 var log = require('../logger');
+var Transformer = require('../transformer');
 
 module.exports = function(file, api, opts) {
-  var j = api.jscodeshift;
-  var member = [];
+  Transformer.prototype.init = function() {
+    this.member = [];
+  };
 
-  var ret = j(file.source)
-    .find(j.MemberExpression, {
-      property: { type: 'Identifier', name: 'call' }
-    })
-    .filter(function(p) {
-      var isApply = function(o) {
-        return o.type === 'Identifier' && o.name === 'apply'
-      };
-      var isMember = function(o) {
-        return o.type === 'MemberExpression' && isApply(o.property);
-      }
+  var t = new Transformer();
+  t.description = 'Since v3.x apply.call(bemjson) must be apply(bemjson)';
 
-      var o = p.value.object;
+  t.find = function(file, j) {
+    var transformer = this;
 
-      if (isMember(o)) {
-        member.push(o.object.name);
-      } else if (isApply(o)){
-        member.push(false);
-      }
+    return j(file.source)
+      .find(j.MemberExpression, {
+        property: { type: 'Identifier', name: 'call' }
+      })
+      .filter(function(p) {
+        var isApply = function(o) {
+          return o.type === 'Identifier' && o.name === 'apply'
+        };
+        var isMember = function(o) {
+          return o.type === 'MemberExpression' && isApply(o.property);
+        }
 
-      return isApply(o) || isMember(o);
-    });
+        var o = p.value.object;
 
-  if (opts.lint) {
-    if (ret.length === 0)
-      return;
+        if (isMember(o)) {
+          transformer.member.push(o.object.name);
+        } else if (isApply(o)){
+          transformer.member.push(false);
+        }
 
-    ret.forEach(function(p) {
-      log({
-        descr: 'Since v3.x apply.call(bemjson) must be apply(bemjson)',
-        path: p.value,
-        ret: ret,
-        file: file
+        return isApply(o) || isMember(o);
       });
-    });
-  } else {
+  };
 
-    ret = ret.map(function(item, i) {
-      return item.replace(member[i] ?
-                          j.memberExpression(j.identifier(member[i]), j.identifier('apply'))
+  t.replace = function(ret, j) {
+    var transformer = this;
+
+    return ret.map(function(item, i) {
+      return item.replace(transformer.member[i] ?
+                          j.memberExpression(
+                            j.identifier(transformer.member[i]),
+                            j.identifier('apply')
+                          )
                           : j.identifier('apply'));
     });
+  };
 
-    return ret.toSource({ quote: 'single' });
-  }
+  return t.run(file, api, opts);
 };

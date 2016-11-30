@@ -1,32 +1,26 @@
 var log = require('../logger');
+var Transformer = require('../transformer');
+var t = new Transformer();
 
 module.exports = function(file, api, opts) {
-  var j = api.jscodeshift;
+  t.description = 'this.mods always exists. You don’t need to check it.';
 
-  var ret = j(file.source)
-    .find(j.LogicalExpression, {
-      left: {
-        type: 'MemberExpression',
-        object: { type: 'ThisExpression' },
-        property: { name: 'mods' }
-      }
-    });
-
-  if (opts.lint) {
-    if (ret.length === 0)
-      return;
-
-    ret.forEach(function(p) {
-      log({
-        descr: 'this.mods always exists. You don’t need to check it.',
-        path: p.value,
-        ret: ret,
-        file: file
+  t.find = function(file, j) {
+    return j(file.source)
+      .find(j.LogicalExpression, {
+        left: {
+          type: 'MemberExpression',
+          object: { type: 'ThisExpression' },
+          property: { name: 'mods' }
+        }
       });
-    });
-  } else {
-     ret = ret.map(function(item) { return item.replace(item.value.right); });
+  };
 
-    return ret.toSource();
-  }
+  t.replace = function(ret, j) {
+    return ret.map(function(item) {
+      return item.replace(item.value.right);
+    })
+  };
+
+  return t.run(file, api, opts);
 };

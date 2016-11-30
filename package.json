@@ -17,7 +17,7 @@
   "bin": {
     "bem-xjst": "bin/bem-xjst",
     "lint": "bin/bem-xjst-lint",
-    "mirgate": "bin/bem-xjst-migrate"
+    "migrate": "bin/bem-xjst-migrate"
   },
   "scripts": {
     "prepublish": "npm run make",
@@ -64,12 +64,12 @@
     "bin": "./bin",
     "doc": "./docs",
     "lib": "./lib",
-    "mirgation": "./mirgation"
+    "migration": "./migration"
   },
   "files": [
     "bin/",
     "lib/",
-    "mirgation/",
+    "migration/",
     "runtime-lint/",
     "index.js",
     "CHANGELOG.md",

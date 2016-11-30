@@ -1,3 +1,5 @@
+#!/usr/bin/env bash
+
 if [ "$#" -ne 3 ]; then
     ./migration/lib/index.js
     exit 1

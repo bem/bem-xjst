@@ -1,10 +1,10 @@
 {
   "name": "bem-xjst-static-analyzer",
-  "description": "bem-xjst templates analyzer. Can be used as static linter or mirgation tool.",
+  "description": "bem-xjst templates analyzer. Can be used as static linter or migration tool.",
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
-    "test": "node test/index.js"
+    "test": "./node_modules/.bin/jest --bail"
   },
   "author": "Slava Oliyanchuk <miripiruni@gmail.com> (http://miripiruni.org/)",
   "license": "ISC",

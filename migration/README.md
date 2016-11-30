@@ -1,14 +1,16 @@
-# Mirgation tool
+# Migration tool
 
 `cd migration/ && npm i`
 
 `cd ../`
 
-`./bin/bem-xjst-migrate ./path-to-templates/ 8`
+`./bin/bem-xjst-migrate ./path-to-templates/ 7 8`
 
-where 8 is major version to migrate.
+where
+ * `7` is current bem-xjst version on your project
+ * `8` is major version to migrate.
 
-Notice that templates in `./path-to-templates` will be destructive rewrited.
+Notice that templates in `./path-to-templates` will be overwritten.
 
 # Static Lint
 
@@ -17,9 +19,11 @@ Notice that templates in `./path-to-templates` will be destructive rewrited.
 
 `cd ../`
 
-`./bin/bem-xjst-lint ./path-to-templates/ 8`
+`./bin/bem-xjst-lint ./path-to-templates/ 0 8`
 
-Where 8 is major version to lint.
+where
+ * `0` is major version from
+ * `8` is major to lint.
 
 Result of linting is console warning like this:
 
@@ -32,9 +36,9 @@ BEM-XJST WARNING:
 
 # Tests
 
-`./node_modules/.bin/jest --bail`
+`npm test`
 
 
-# Mirgate from old DSL BEMHTML to JS syntax
+# Migrate from old DSL BEMHTML to JS syntax
 
 Take a look at https://github.com/bem/bem-templates-converter
