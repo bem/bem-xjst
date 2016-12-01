@@ -9,3 +9,6 @@ block('b')(
 block('b')(
   mix()({ block: 'a' })
 );
+block('b')(
+  elem('e').mix()({ block: 'a' })
+);

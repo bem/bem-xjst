@@ -19,3 +19,8 @@ block('b')(
     return { block: 'a' };
   })
 );
+block('b')(
+  elem('e').mix()(function () {
+    return { block: 'a' };
+  })
+);
