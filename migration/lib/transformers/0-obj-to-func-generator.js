@@ -1,4 +1,5 @@
 var log = require('../logger');
+var get = require('lodash.get');
 var Transformer = require('../transformer');
 var t = new Transformer();
 
@@ -12,12 +13,7 @@ module.exports = function(file, api, opts) {
       .find(j.ObjectExpression)
       .filter(function(p) {
         var arg = p.value.arguments;
-
-        var callee = p.parentPath &&
-          p.parentPath.parentPath &&
-          p.parentPath.parentPath.value &&
-          p.parentPath.parentPath.value.callee &&
-          p.parentPath.parentPath.value.callee.callee;
+        var callee = get(p, 'parentPath.parentPath.value.callee.callee');
 
         if (! callee)
           return false;
