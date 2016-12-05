@@ -5,13 +5,13 @@ modules.define('demo', [ 'i-bem__dom', 'pretty', 'functions__debounce' ], functi
             js: {
                 inited: function() {
 
-                    this._bemhtml = this.findBlockOn('bemhtml', 'editor');
+                    this._templates = this.findBlockOn('templates', 'editor');
                     this._bemjson = this.findBlockOn('bemjson', 'editor');
-                    this._html = this.findBlockOn('html', 'editor');
-
+                    this._result = this.findBlockOn('result', 'editor');
+                    this._engine = BEMHTML;
                     this._debouncedOnChange = debounce(this._onChange, 150, this);
 
-                    this._bemhtml.on('change', this._debouncedOnChange);
+                    this._templates.on('change', this._debouncedOnChange);
                     this._bemjson.on('change', this._debouncedOnChange);
 
                     this._load() || this._render();
@@ -29,47 +29,54 @@ modules.define('demo', [ 'i-bem__dom', 'pretty', 'functions__debounce' ], functi
             this._render();
             this._save();
         },
-        _getBEMHTML: function() {
-            return this._bemhtml.getValue();
+        _getTemplate: function() {
+            return this._templates.getValue();
         },
         _getBEMJSON: function() {
             return this._bemjson.getValue();
         },
+        changeEngine: function(name) {
+            this._engine = window[name];
+            this._render();
+        },
+
         _render: function() {
             try {
-                var api = new BEMHTML({}),
-                    bemhtml = {};
+                var api = new this._engine({}),
+                    template = {};
 
-                api.compile(this._getBEMHTML());
-                api.exportApply(bemhtml);
+                api.compile(this._getTemplate());
+                api.exportApply(template);
             } catch(e) {
-                this._html.setValue('BEMHTML error: ' + e.message + '\n' + e.stack);
+                this._result.setValue('Template error: ' + e.message + '\n' + e.stack);
                 return;
             }
 
             var BEMJSON = safeEval(this._getBEMJSON());
 
             if (BEMJSON instanceof Error) {
-                this._html.setValue('BEMJSON error: ' + BEMJSON.message + '\n' + BEMJSON.stack);
+                this._result.setValue('BEMJSON error: ' + BEMJSON.message + '\n' + BEMJSON.stack);
                 return;
             }
 
-            this._html.setValue(pretty(bemhtml.apply(BEMJSON), {
-                max_char: 1000
-            }));
+            var finalCode = template.apply(BEMJSON);
+            if (this._engine === BEMHTML) {
+                finalCode = pretty(finalCode, {max_char: 1000});
+            }
+            this._result.setValue(finalCode);
         },
         _save: function() {
-            var bemhtml = this._getBEMHTML(),
+            var template = this._getTemplate(),
                 bemjson = this._getBEMJSON();
 
             store.set('playground', {
                 version: this.params.version,
-                bemhtml: bemhtml,
+                template: template,
                 bemjson: bemjson
             });
 
             history.pushState({}, document.title, location.pathname + '?' + [
-                'bemhtml=' + encodeURIComponent(bemhtml),
+                'template=' + encodeURIComponent(template),
                 'bemjson=' + encodeURIComponent(bemjson)
             ].join('&'));
         },
@@ -80,15 +87,15 @@ modules.define('demo', [ 'i-bem__dom', 'pretty', 'functions__debounce' ], functi
                 return false;
             }
 
-            if (data.bemhtml) {
-                this._bemhtml.setValue(data.bemhtml);
+            if (data.template) {
+                this._templates.setValue(data.template);
             }
 
             if (data.bemjson) {
                 this._bemjson.setValue(data.bemjson);
             }
 
-            return !!(data.bemhtml || data.bemjson)
+            return !!(data.template || data.bemjson)
         }
     }, {}));
 
