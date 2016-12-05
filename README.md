@@ -1,6 +1,6 @@
-# BEM-XJST
+# bem-xjst
 
-Declarative template engine for the browser and server.
+Declarative template engine for the browser and server with regular JS syntax.
 
 [![NPM version](http://img.shields.io/npm/v/bem-xjst.svg?style=flat)](http://www.npmjs.org/package/bem-xjst)
 [![Build Status](http://img.shields.io/travis/bem/bem-xjst/master.svg)](https://travis-ci.org/bem/bem-xjst)
@@ -8,152 +8,169 @@ Declarative template engine for the browser and server.
 [![devDependency Status](https://david-dm.org/bem/bem-xjst/dev-status.svg)](https://david-dm.org/bem/bem-xjst#info=devDependencies)
 [![Coverage Status](https://coveralls.io/repos/github/bem/bem-xjst/badge.svg?branch=coverage-badge)](https://coveralls.io/github/bem/bem-xjst?branch=coverage-badge)
 
-[Online demo](https://bem.github.io/bem-xjst/). Twitter account: [@bemxjst](https://twitter.com/bemxjst)
+## Features
 
-## Installation
+### Templates are extensible: they can be redefined or extended
 
-Install it by [npm](https://npmjs.org): `npm install bem-xjst`.
-
-## Usage
-
-### As a node.js module
+You can redefine or extend just a particular part of output not only by simple
+redefinition via new templates but also using ‘modes’. E.g. it may be a tag name
+or its content.
 
 ```js
-var bemxjst = require('bem-xjst');
-var bemhtml = bemxjst.bemhtml;
+block('link').tag()('span');
+// The template sets tag to `span` for all `link` blocks.
+// And tag() mode can be redefined if any condition passed.
 
-// Add templates
-var templates = bemhtml.compile(function() {
-  block('b').content()('yay');
-});
-
-// Apply templates to data context in BEMJSON format and get result as HTML string
-var html = templates.apply({ block: 'b' });
-// Result in html: <div class="b">yay</div>
+block('link').match(function(node, ctx) { return ctx.url; }).tag()('a');
+// The template sets tag to `a` only if block `link` have `url` field. 
+// Otherwise tag will be ‘span’ as previous template says.
 ```
+
+### Pattern matching
+
+Templates are written using [pattern matching](/docs/en/7-runtime.md#how-templates-are-selected-and-applied) for the values and structure of input data
 
 ```js
-var bemxjst = require('bem-xjst');
-var bemtree = bemxjst.bemtree;
-
-// Add templates
-var templates = bemtree.compile(function() {
-  block('b').content()('yay');
-});
-
-// Apply templates to data context in BEMJSON format and get result as BEMJSON
-var bemjson = templates.apply({ block: 'b' });
-// Result in bemjson: { block: 'b1', content: 'yay' }
+block('list').tag()('ul');
+block('item').tag()('li');
 ```
 
-### As a CLI tool
+We can apply these two declarative-style templates templates to data:
+```js
+{
+  block: 'list',
+  content: [
+    {
+      block: 'item',
+      content: {
+          block: 'list',
+          content: [
+              { block: 'item', content: 'CSS' },
+              { block: 'item', content: 'HTML' }
+          ]
+      }
+    },
+    {
+      block: 'item',
+      content: {
+          block: 'list',
+          content: [
+              { block: 'item', content: 'JS' }
+          ]
+      }
+    }
+  ]
+}
+```
 
-CLI can be used for creation bundles. See [Compiler generate](#generatestring-or-function).
+The result is:
+
+```html
+<ul class="list">
+    <li class="item">
+        <ul class="list">
+            <li class="item">CSS</li>
+            <li class="item">HTML</li>
+        </ul>
+    </li>
+    <li class="item">
+        <ul class="list">
+            <li class="item">JS</li>
+        </ul>
+    </li>
+</ul>
+```
+
+As you can see templates are as simple as CSS.
+
+### Automatic recursice traversing upon input data
+
+In the example above you may have noticed that bem-xjst automaticaly traverses input data by `content` fields. This behaviour is default feature of bem-xjst.
+
+### Default rendering
+
+Built-in rendering behavior is used by default, even if the user didn’t add templates. Even without templates. For example from above it will be:
+
+```html
+<div class="list">
+    <div class="item">
+        <div class="list">
+            <div class="item">CSS</div>
+            <div class="item">HTML</div>
+        </div>
+    </div>
+    <div class="item">
+        <div class="list">
+            <div class="item">JS</div>
+        </div>
+    </div>
+</div>
+```
+
+That is more than half of the work ;) You will add the salt (couple of templates for tags) and the HTML-soup is very tasty!
+
+
+### Written in JavaScript, so the entire JavaScript infrastructure is available for checking code quality and conforming to best practices
+
+Since templates is a regular JavaScript code you can use precommit hooks, automatic syntax validator from your editor and tools like JSHint/ESLint.
+
+### Runs on a server and client
+
+You can use bem-xjst in any browser as well as in any JavaScript VM. We support Node.JS v0.10 and higher.
+
+
+## Tell me more
+
+See documentation:
+
+1. [About](/blob/master/docs/en/1-about.md)
+2. [Quick Start](/blob/master/docs/en/2-quick-start.md)
+3. [API: usage, methods, signatures and etc](/blob/master/docs/en/3-api.md)
+4. [Input data format](/blob/master/docs/en/4-data.md): BEMJSON
+5. [Templates syntax](/blob/master/docs/en/5-templates-syntax.md)
+6. [Templates context](/blob/master/docs/en/6-templates-context.md)
+7. [Runtime](/blob/master/docs/en/7-runtime.md): processes for selecting and applying templates
+
+
+## Try it
+
+### Online sandbox
+
+[Online demo](https://bem.github.io/bem-xjst/) allows you to share code snippets, change versions and etc. Happy templating!
+
+
+### Install npm package
+
+To compile bem-xjst, you need [Node.js](https://nodejs.org/) v0.10 or later, and [npm](https://www.npmjs.com/).
 
 ```bash
-$ bem-xjst --help
-
-Usage:
-  bem-xjst [OPTIONS] [ARGS]
-
-
-Options:
-  -h, --help : Help
-  -v, --version : Version
-  -e, --engine : Engine name (default: bemhtml, supported: bemhtml | bemtree)
-  -i INPUT, --input=INPUT : File with user templates (default: stdin)
-  -o OUTPUT, --output=OUTPUT : Output bundle file (default: stdout)
+npm install bem-xjst
 ```
 
-## API
+Copy-paste [example from quick start](https://github.com/bem/bem-xjst/blob/master/docs/en/2-quick-start.md#basic-example) or see [simple example](https://github.com/bem/bem-xjst/tree/master/examples/simple-page) from repository. Then read [documentation](https://github.com/bem/bem-xjst/blob/master/docs/en/) and start experimenting with bem-xjst.
 
-### Compiler
 
-#### `.compile(string or function)`
+# Is bem-xjst used in production?
 
-Compile input templates and return `templates` object.
-(See documentation below for its methods)
-
-#### `.generate(string or function)`
-
-Generate output JavaScript code that might be transferred and executed in
-browser to get the `templates` object.
-
-### templates
-
-#### `.apply(context)`
-
-Run compiled templates on specified input context. Return resulting HTML output.
-
-#### `.compile(string or function)`
-
-Add more BEM templates to the `templates` instance. Might be called in runtime
-to deliver more blocks declarations to the client.
-
-```js
-var bemxjst = require('bem-xjst');
-var templates = bemxjst.bemhtml.compile(function() {
-    block('b').tag()('a');
-  });
-
-templates.apply({ block: 'b' });
-// Return '<a class="b"></a>'
-
-templates.compile(function() {
-  block('b').content()('Hi, folks!');
-});
-
-templates.apply({ block: 'b' });
-// Return '<a class="b">Hi, folks!</a>'
-```
-
-#### `.BEMContext`
-
-Constructor of the `this` object available in template bodies. Might be amended
-to expose some functionality to the templates, or to add [_flush][1] method.
-
-```js
-var bemxjst = require('bem-xjst');
-var templates = bemxjst.bemhtml.compile('');
-
-templates.BEMContext.prototype.myField = 'opa';
-
-templates.compile(function() {
-  block('b').content()(function() {
-    return this.myField;
-  });
-});
-
-templates.apply({ block: 'b' });
-// Return '<div class="b">opa</div>'
-```
+Yes. A lot of projects in [Yandex](https://company.yandex.com/) and Alfa-Bank, also in opensource projects based on [bem-core](https://github.com/bem/bem-core) and [bem-components](https://github.com/bem/bem-components).
 
 ## Benchmarks
 
-To run benchmarks:
+See [readme](https://github.com/bem/bem-xjst/tree/master/bench).
 
-```bash
-cd bench/
-npm install
-node run.js -h
-node run.js
-```
+## Runtime linter
 
-Benchmarks could be run in `--compare` mode to verify absence of regression
-in comparison to previous bem-xjst version. Make sure that the
-`benchmarks/package.json` has the right git hash of `bem-xjst` before running!
+See [readme](https://github.com/bem/bem-xjst/tree/master/runtime-lint).
 
-## Documentation
+## Static linter and migration tool for templates
+
+See [readme](https://github.com/bem/bem-xjst/tree/static-analyze/migration).
+
+## Links
 
  * [Documentation](https://en.bem.info/platform/bem-xjst/)
- * [Releases notes](https://github.com/bem/bem-xjst/releases)
- * [Migration guide from 4.x to 5.x](https://github.com/bem/bem-xjst/wiki/Migration-guide-from-4.x-to-5.x)
- * [Changes from v1.x version](https://github.com/bem/bem-xjst/wiki/Notable-changes-between-bem-xjst@1.x-and-bem-xjst@2.x)
-
-## License
-
-Code and documentation copyright 2016 YANDEX LLC. Code released under the
-[Mozilla Public License 2.0](LICENSE.txt).
-
-[0]: https://github.com/bem/bem-xjst/wiki/Notable-changes-between-bem-xjst@1.x-and-bem-xjst@2.x
-[1]: https://github.com/bem/bem-xjst/wiki/Notable-changes-between-bem-xjst@1.x-and-bem-xjst@2.x#this_str-is-gone
+ * [Changelog](CHANGELOG.md) and [releases notes](https://github.com/bem/bem-xjst/releases)
+ * [Contributing guide](https://github.com/bem/bem-xjst/blob/master/CONTRIBUTING.md)
+ * [Online demo](https://bem.github.io/bem-xjst/) (you can share code snippets)
+ * Twitter account: [@bemxjst](https://twitter.com/bemxjst)
+ * [Migration guides](https://github.com/bem/bem-xjst/wiki/Migration-guides) for all major versions

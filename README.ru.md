@@ -1,4 +1,6 @@
-# BEM-XJST
+# bem-xjst
+
+Декларативный шаблонизатор
 
 [![NPM version](http://img.shields.io/npm/v/bem-xjst.svg?style=flat)](http://www.npmjs.org/package/bem-xjst)
 [![Build Status](http://img.shields.io/travis/bem/bem-xjst/master.svg)](https://travis-ci.org/bem/bem-xjst)
@@ -6,164 +8,193 @@
 [![devDependency Status](https://david-dm.org/bem/bem-xjst/dev-status.svg)](https://david-dm.org/bem/bem-xjst#info=devDependencies)
 [![Coverage Status](https://coveralls.io/repos/github/bem/bem-xjst/badge.svg?branch=coverage-badge)](https://coveralls.io/github/bem/bem-xjst?branch=coverage-badge)
 
-Компилятор БЭМ-специфичных шаблонов, основанный на [XJST](https://github.com/veged/xjst).
 
-[Онлайн-демо](https://bem.github.io/bem-xjst/). Твиттер акаунт: [@bemxjst](https://twitter.com/bemxjst)
+## Отличительные черты
 
-## Установка
+### Шаблоны расширяемы: их можно переопределить или доопределить
 
-Устанавливается с помощью [npm](https://npmjs.org): `npm install bem-xjst`.
-
-## Использование
-
-### В качестве node.js модуля
+Вы можете переопределить или расширить шаблоны отвечающие за генерацию отдельных
+частей вывода: HTML-тега, HTML-атрибутов или содержимого узла. Например:
 
 ```js
-var bemxjst = require('bem-xjst');
-// Используем движок рендеринга bemhtml, чтобы получать HTML
-var bemhtml = bemxjst.bemhtml;
+block('link').tag()('span');
+// Этот шаблон определяет тег для всех блоков `link`.
+// Режим `tag()` может быть переопределен по произвольному условию.
 
-// Добавляем шаблоны
-var templates = bemhtml.compile(function() {
-  block('b').content()('yay');
-});
-
-// Формируем входные данные в формате BEMJSON
-var bemjson = { block: 'b' };
-
-// Применяем шаблоны к входным данным, чтобы получить HTML
-var html = templates.apply();
-// Результат в переменной html: <div class="b">yay</div>
+block('link').match(function(node, ctx) { return ctx.url; }).tag()('a');
+// Этот шаблон определяет тег `a` только в случае если в блоке `link` есть поле `url`.
+// Иначе тег будет `span`, как определено в предыдущем шаблоне.
 ```
+
+
+### Соответствие шаблону (pattern matching)
+
+Для каждого узла входного дерева данных шаблонизатор проверяет условие на
+соответствие шаблону.
 
 ```js
-var bemxjst = require('bem-xjst');
-// Используем движок рендеринга bemtree, чтобы получать BEMJSON
-var bemtree = bemxjst.bemtree;
-
-// Добавляем шаблоны
-var templates = bemtree.compile(function() {
-  block('b').content()('yay');
-});
-
-// Формируем входные данные в формате BEMJSON
-var bemjson = { block: 'b' };
-
-// Применяем шаблоны к входным данным, чтобы получить BEMJSON
-var res = templates.apply({ block: 'b' });
-// Результат в переменной res: { block: 'b1', content: 'yay' }
+block('list').tag()('ul');
+block('item').tag()('li');
 ```
 
-### В виде CLI-утилиты
+Для каждого блока `list` выполнится шаблон про тег `ul`. Для каждого блока
+`item` — шаблон про тег `li`.
 
-CLI может быть использован для создания бандлов. Смотри [Compiler
-generate](#generatestring-or-function).
+Например для входных данных:
+```js
+{
+  block: 'list',
+  content: [
+    {
+      block: 'item',
+      content: {
+          block: 'list',
+          content: [
+              { block: 'item', content: 'CSS' },
+              { block: 'item', content: 'HTML' }
+          ]
+      }
+    },
+    {
+      block: 'item',
+      content: {
+          block: 'list',
+          content: [
+              { block: 'item', content: 'JS' }
+          ]
+      }
+    }
+  ]
+}
+```
+
+Результат будет:
+
+```html
+<ul class="list">
+    <li class="item">
+        <ul class="list">
+            <li class="item">CSS</li>
+            <li class="item">HTML</li>
+        </ul>
+    </li>
+    <li class="item">
+        <ul class="list">
+            <li class="item">JS</li>
+        </ul>
+    </li>
+</ul>
+```
+
+Использовать декларативные шаблоны так же просто как и CSS для HTML.
+
+
+### Автоматический обход входных данных
+
+По предыдущему примеру вы могли заметить, что bem-xjst автоматически обходит
+входные данные заглядывая в поле `content`.
+
+
+### Рендеринг по умолчанию
+
+Встроенное поведение позволяет вам рендерить данные без шаблонов. Для данных из
+примера выше вы получите вот такой результат по умолчанию:
+
+```html
+<div class="list">
+    <div class="item">
+        <div class="list">
+            <div class="item">CSS</div>
+            <div class="item">HTML</div>
+        </div>
+    </div>
+    <div class="item">
+        <div class="list">
+            <div class="item">JS</div>
+        </div>
+    </div>
+</div>
+```
+
+Как видите, большую часть работы шаблонизатор сделал за вас. Осталось только
+добавить несколько шаблонов для тегов и ваш HTML будет выглядеть вполне
+прилично.
+
+
+### Чистый JS
+
+Шаблонизатор и сами шаблоны используют чистый JavaScript, что позволяет вам
+использовать всю мощь JS-инфраструктуры: прекоммит хуки, автоматические
+валидаторы кода и инструменты вроде JSHint/ESLint.
+
+
+### Работает на клиенте и сервере
+
+Вы можете использовать bem-xjst в любом браузере или на любой виртуальной машине
+JavaScript. Мы поддерживаем Node.js v0.10 и выше.
+
+
+
+## Подробности
+
+Читайте документацию:
+
+1. [О bem-xjst](/blob/master/docs/ru/1-about.md)
+2. [Быстрый старт](/blob/master/docs/ru/2-quick-start.md)
+3. [API: использование, сигнатура и описание методов](/blob/master/docs/ru/3-api.md)
+4. [Формат входных данных](/blob/master/docs/ru/4-data.md): BEMJSON
+5. [Шаблоны: синтаксис](/blob/master/docs/ru/5-templates-syntax.md)
+6. [Шаблоны: контекст](/blob/master/docs/ru/6-templates-context.md)
+7. [Runtime](/blob/master/docs/ru/7-runtime.md): как выбираются и применяются шаблоны
+
+
+## Попробуйте
+
+### Online-песочница
+
+[Online demo](https://bem.github.io/bem-xjst/) позволяет вам делится ссылкой на
+примеры шаблонов и входных данных.
+
+
+### Установка npm пакета
+
+Вам потребуется [Node.js](https://nodejs.org/) v0.10 или старше и [npm](https://www.npmjs.com/).
 
 ```bash
-$ bem-xjst --help
-
-Usage:
-  bem-xjst [OPTIONS] [ARGS]
-
-
-Options:
-  -h, --help : Help
-  -v, --version : Version
-  -e, --engine : Engine name (default: bemhtml, supported: bemhtml | bemtree)
-  -i INPUT, --input=INPUT : File with user templates (default: stdin)
-  -o OUTPUT, --output=OUTPUT : Output bundle file (default: stdout)
+npm install bem-xjst
 ```
 
-## API
+Скопируйте [пример из
+документации](https://github.com/bem/bem-xjst/blob/master/docs/ru/2-quick-start.md#Простой-пример)
+или смотрите [простой
+пример](https://github.com/bem/bem-xjst/tree/master/examples/simple-page) в
+репозитории. Затем прочитайте
+[документацию](https://github.com/bem/bem-xjst/blob/master/docs/ru/) и начинайте
+экспериментировать с шаблонизатором.
 
-### Compiler
 
-#### `.compile(string or function)`
+# bem-xjst используется в продакшене?
 
-Компилирует шаблоны и возвращает объект `templates`.
-(Смотри документацию его методов ниже).
+Да. Проекты компаний [Яндекс](https://company.yandex.ru/) и Альфа-Банк, а так же
+оперсорс проекты основанные на [bem-core](https://github.com/bem/bem-core) и [bem-components](https://github.com/bem/bem-components).
 
-#### `.generate(string or function)`
+## Тест на производительность
 
-Генерирует JS-код, который может быть передан и выполнен в браузере для
-получения объекта `templates`.
+См. [readme](https://github.com/bem/bem-xjst/tree/master/bench).
 
-### templates
+## Runtime линтер
 
-#### `.apply(context)`
+См. [readme](https://github.com/bem/bem-xjst/tree/master/runtime-lint).
 
-Применяет скомпилированные шаблоны к переданному BEMJSON в аргументе context.
-В зависимости от `engine` возвращает BEMJSON или HTML.
+## Статический линтер и автоматическая миграция шаблонов
 
-#### `.compile(string or function)`
+См. [readme](https://github.com/bem/bem-xjst/tree/static-analyze/migration).
 
-Добавляет шаблоны к экземпляру `templates`. Может быть вызван в рантайме.
+## Ссылки
 
-```js
-var bemxjst = require('bem-xjst');
-var templates = bemxjst.bemhtml.compile(function() {
-    block('b').tag()('a');
-  });
-
-templates.apply({ block: 'b' });
-// Результат '<a class="b"></a>'
-
-templates.compile(function() {
-  block('b').content()('Hi, folks!');
-});
-
-templates.apply({ block: 'b' });
-// Результат '<a class="b">Hi, folks!</a>'
-```
-
-#### `.BEMContext`
-
-Конструктор `this` доступного в теле шаблонов. Может быть расширен для
-предоставления дополнительной функциональности в шаблонах.
-
-```js
-var bemxjst = require('bem-xjst');
-var templates = bemxjst.bemhtml.compile('');
-
-templates.BEMContext.prototype.myField = 'opa';
-
-templates.compile(function() {
-  block('b').content()(function() {
-    return this.myField;
-  });
-});
-
-templates.apply({ block: 'b' });
-// Результат '<div class="b">opa</div>'
-```
-
-## Тесты на производительность
-
-Чтобы запустить тесты:
-
-```bash
-cd bench/
-npm install
-node run.js -h
-node run.js
-```
-
-Тесты на производительность могут быть запущены с параметром `--compare`
-для отслеживания регрессий и сравнения с предыдущей версией BEM-XJST. Не забудьте
- убедиться, что в `benchmarks/package.json` указан правильный hash коммита
- `bem-xjst`.
-
-## Документация
-
- * [Документация](https://ru.bem.info/platform/bem-xjst/)
- * [Описания релизов](https://github.com/bem/bem-xjst/releases)
- * [Гайд по миграции с 4.x на 5.x](https://github.com/bem/bem-xjst/wiki/Migration-guide-from-4.x-to-5.x)
- * [Основные изменения с v1.x](https://github.com/bem/bem-xjst/wiki/Notable-changes-between-bem-xjst@1.x-and-bem-xjst@2.x)
-
-## Лицензия
-
-Права на код и документацию принадлежат 2016 YANDEX LLC.
-[Mozilla Public License 2.0](LICENSE.txt).
-
-[0]: https://github.com/bem/bem-xjst/wiki/Notable-changes-between-bem-xjst@1.x-and-bem-xjst@2.x
-[1]: https://github.com/bem/bem-xjst/wiki/Notable-changes-between-bem-xjst@1.x-and-bem-xjst@2.x#this_str-is-gone
+ * [Документация на bem.info](https://ru.bem.info/platform/bem-xjst/)
+ * [Changelog](CHANGELOG.md) и [описание релизов](https://github.com/bem/bem-xjst/releases)
+ * [Гайд для контрибьюторов](https://github.com/bem/bem-xjst/blob/master/CONTRIBUTING.md)
+ * [Online demo](https://bem.github.io/bem-xjst/) (you can share code snippets)
+ * Twitter account: [@bemxjst](https://twitter.com/bemxjst)
+ * [Гайд по миграции](https://github.com/bem/bem-xjst/wiki/Migration-guides) для всех мажорных версий
