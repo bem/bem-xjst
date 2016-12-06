@@ -173,7 +173,7 @@ npm install bem-xjst
 экспериментировать с шаблонизатором.
 
 
-# bem-xjst используется в продакшене?
+## bem-xjst используется в продакшене?
 
 Да. Проекты компаний [Яндекс](https://company.yandex.ru/) и Альфа-Банк, а так же
 оперсорс проекты основанные на [bem-core](https://github.com/bem/bem-core) и [bem-components](https://github.com/bem/bem-components).
