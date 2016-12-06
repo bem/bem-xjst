@@ -68,7 +68,7 @@ module.exports = {
                         {
                             elem: 'item',
                             content: [
-                                'Engines: ',
+                                'Engine: ',
                                 {
                                   block: 'engine-selector',
                                   versions: [
