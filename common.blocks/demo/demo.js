@@ -112,7 +112,7 @@ modules.define('demo', [ 'i-bem__dom', 'pretty', 'functions__debounce' ], functi
 
     function safeEval(str) {
         try {
-            return (new Function('return ' + str))();
+            return (new Function('return ' + str.split('\n').join('')))();
         } catch(e) {
             return e;
         }
