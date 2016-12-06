@@ -68,9 +68,15 @@ module.exports = {
                         {
                             elem: 'item',
                             content: [
-                                'Engine:',
-                                'BEMHTML' // TODO: engine select
-                            ].join(' ')
+                                'Engines: ',
+                                {
+                                  block: 'engine-selector',
+                                  versions: [
+                                    { name: 'BEMHTML' },
+                                    { name: 'BEMTREE' }
+                                  ]
+                                }
+                            ]
                         },
                         {
                             block: 'link',
@@ -116,7 +122,7 @@ module.exports = {
                                 },
                                 {
                                     block: 'editor',
-                                    mix: { block: 'demo', elem: 'bemhtml' },
+                                    mix: { block: 'demo', elem: 'templates' },
                                     code: defaults.bemhtml
                                 }
                             ]
@@ -131,7 +137,7 @@ module.exports = {
                                     mode: 'ace/mode/html',
                                     showGutter: false
                                 },
-                                mix: { block: 'demo', elem: 'html' },
+                                mix: { block: 'demo', elem: 'result' },
                                 code: ''
                             }
                         }

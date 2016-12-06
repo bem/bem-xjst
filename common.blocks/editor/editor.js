@@ -36,6 +36,9 @@ modules.define('editor', ['i-bem__dom'], function(provide, BEMDOM) {
             return this._editor.getSession().getValue();
         },
         setValue: function(value) {
+            if (typeof value === 'object') {
+                value = JSON.stringify(value, null, '\t');
+            }
             this._editor.getSession().setValue(value);
             return this;
         }
