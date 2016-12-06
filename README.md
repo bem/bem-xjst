@@ -83,7 +83,7 @@ The result is:
 
 As you can see templates are as simple as CSS.
 
-### Automatic recursice traversing upon input data
+### Automatic recursive traversing upon input data
 
 In the example above you may have noticed that bem-xjst automaticaly traverses input data by `content` fields. This behaviour is default feature of bem-xjst.
 
