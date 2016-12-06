@@ -150,7 +150,7 @@ npm install bem-xjst
 Copy-paste [example from quick start](https://github.com/bem/bem-xjst/blob/master/docs/en/2-quick-start.md#basic-example) or see [simple example](https://github.com/bem/bem-xjst/tree/master/examples/simple-page) from repository. Then read [documentation](https://github.com/bem/bem-xjst/blob/master/docs/en/) and start experimenting with bem-xjst.
 
 
-# Is bem-xjst used in production?
+## Is bem-xjst used in production?
 
 Yes. A lot of projects in [Yandex](https://company.yandex.com/) and Alfa-Bank, also in opensource projects based on [bem-core](https://github.com/bem/bem-core) and [bem-components](https://github.com/bem/bem-components).
 
