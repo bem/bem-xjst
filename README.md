@@ -54,12 +54,10 @@ We can apply these two declarative-style templates templates to data:
       block: 'item',
       content: {
           block: 'list',
-          content: [
-              { block: 'item', content: 'JS' }
-          ]
+          content: { block: 'item', content: 'JS' }
       }
     }
-  ]
+  ] 
 }
 ```
 
