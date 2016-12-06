@@ -108,7 +108,9 @@ Built-in rendering behavior is used by default, even if the user didn’t add te
 That is more than half of the work ;) You will add the salt (couple of templates for tags) and the HTML-soup is very tasty!
 
 
-### Written in JavaScript, so the entire JavaScript infrastructure is available for checking code quality and conforming to best practices
+### No DSL, only JavaScript
+
+Written in JavaScript, so the entire JavaScript infrastructure is available for checking code quality and conforming to best practices.
 
 Since templates is a regular JavaScript code you can use precommit hooks, automatic syntax validator from your editor and tools like JSHint/ESLint.
 
