@@ -119,7 +119,7 @@ modules.define('demo', [ 'i-bem__dom', 'pretty', 'functions__debounce' ], functi
 
     function safeEval(str) {
         try {
-            return (new Function('return ' + str.split('\n').join('')))();
+            return (new Function('return ' + str.trim()))();
         } catch(e) {
             return e;
         }
