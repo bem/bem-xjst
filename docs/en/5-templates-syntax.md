@@ -726,7 +726,8 @@ More information about [apply()](7-runtime.md#apply).
 
 ## BEMTREE
 
-Only the [def](#def), [content](#content), [replace](#replace),
+In BEMTREE engine only data related modes are avaliable: [def](#def), [js](#js), [mix](#mix),
+[mods](#mods), [elemMods](#elemMods), [content](#content), [replace](#replace),
 [extend](#extend) and [wrap](#wrap) modes are used by the BEMTREE engine. User-defined modes can also be used. The other modes described in the documentation above can only be used in BEMHTML.
 
 ***
