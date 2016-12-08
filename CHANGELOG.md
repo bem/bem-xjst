@@ -1,5 +1,13 @@
 # BEM-XJST Changelog
 
+# 2016-12-08 [v8.5.0](https://github.com/bem/bem-xjst/compare/v8.4.2...v8.5.0), @miripiruni
+
+BEMTREE: added modes related to data: js(), addJs(), mix(), addMix(), mods(), addElemMods(), elemMods().
+
+Commits:
+* [[`a70d794d15`](https://github.com/bem/bem-xjst/commit/a70d794d15)] - Merge pull request #382 from bem/bemtree-modes__issue-362 (Slava Oliyanchuk)
+* [[`70cfeb51c6`](https://github.com/bem/bem-xjst/commit/70cfeb51c6)] - **BEMTREE**: js(), mix(), mods(), elemMods() added (miripiruni)
+
 # 2016-12-08 [v8.4.2](https://github.com/bem/bem-xjst/compare/v8.4.1...v8.4.2), @miripiruni
 
 Escaping functions fixed: now argumengs `undefined` or `null` and `NaN` will give you empty string as a result. In previous versions you get stringified results (`'undefined'`, `'null'`, `'NaN'`).
