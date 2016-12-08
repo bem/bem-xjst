@@ -82,7 +82,10 @@ Result of BEMHTML templating:
 this.xmlEscape(str)
 ```
 
-Returns the passed `str` string with the following XML symbols escaped: `&`, `<`, `>`.
+Returns the passed `str` string with the following XML symbols escaped: `&`,
+`<`, `>`. Normaly, expected that `str` is a `String`. But if `str` is
+`undefined`, `Null` or `NaN` an empty string returned. If `str` is of any other
+type it will be casted to String before escaping.
 
 Usage example:
 
@@ -114,7 +117,11 @@ Result of BEMHTML templating:
 this.attrEscape(str)
 ```
 
-Returns the passed `str` string with the following characters for XML and HTML attributes escaped: `"` and `&`.
+Returns the passed `str` string with the following characters for XML and HTML
+attributes escaped: `"` and `&`. Normaly, expected that `str` is a `String`.
+But if `str` is `undefined`, `Null` or `NaN` type you get empty string.
+If `str` is any other type you get native casting from it type to `String`
+before escaping.
 
 #### jsAttrEscape
 
@@ -126,7 +133,10 @@ Returns the passed `str` string with the following characters for XML and HTML a
 this.jsAttrEscape(str)
 ```
 
-Returns the passed `str` string with the following characters escaped: `'` and `&`.
+Returns the passed `str` string with the following characters escaped: `'` and
+`&`. Normaly, expected that `str` is a `String`. But if `str` is `undefined`,
+`Null` or `NaN` type you get empty string. If `str` is any other type you get
+native casting from it type to `String` before escaping.
 
 By default, input data from the [`js`](4-data.md#js) field and data from the [`js`](5-templates-syntax.md#js) mode are escaped using this function.
 
