@@ -112,7 +112,7 @@ That is more than half of the work ;) You will add the salt (couple of templates
 
 Written in JavaScript, so the entire JavaScript infrastructure is available for checking code quality and conforming to best practices.
 
-Since templates is a regular JavaScript code you can use precommit hooks, automatic syntax validator from your editor and tools like JSHint/ESLint.
+Since templates is a regular JavaScript code you can use automatic syntax validator from your editor and tools like JSHint/ESLint.
 
 ### Runs on a server and client
 
@@ -123,13 +123,13 @@ You can use bem-xjst in any browser as well as in any JavaScript VM. We support 
 
 See documentation:
 
-1. [About](/blob/master/docs/en/1-about.md)
-2. [Quick Start](/blob/master/docs/en/2-quick-start.md)
-3. [API: usage, methods, signatures and etc](/blob/master/docs/en/3-api.md)
-4. [Input data format](/blob/master/docs/en/4-data.md): BEMJSON
-5. [Templates syntax](/blob/master/docs/en/5-templates-syntax.md)
-6. [Templates context](/blob/master/docs/en/6-templates-context.md)
-7. [Runtime](/blob/master/docs/en/7-runtime.md): processes for selecting and applying templates
+1. [About](/docs/en/1-about.md)
+2. [Quick Start](/docs/en/2-quick-start.md)
+3. [API: usage, methods, signatures and etc](/docs/en/3-api.md)
+4. [Input data format](/docs/en/4-data.md): BEMJSON
+5. [Templates syntax](/docs/en/5-templates-syntax.md)
+6. [Templates context](/docs/en/6-templates-context.md)
+7. [Runtime](/docs/en/7-runtime.md): processes for selecting and applying templates
 
 
 ## Try it
