@@ -124,7 +124,7 @@ block('item').tag()('li');
 ### Чистый JS
 
 Шаблонизатор и сами шаблоны используют чистый JavaScript, что позволяет вам
-использовать всю мощь JS-инфраструктуры: прекоммит хуки, автоматические
+использовать всю мощь JS-инфраструктуры: автоматические
 валидаторы кода и инструменты вроде JSHint/ESLint.
 
 
@@ -139,13 +139,13 @@ JavaScript. Мы поддерживаем Node.js v0.10 и выше.
 
 Читайте документацию:
 
-1. [О bem-xjst](/blob/master/docs/ru/1-about.md)
-2. [Быстрый старт](/blob/master/docs/ru/2-quick-start.md)
-3. [API: использование, сигнатура и описание методов](/blob/master/docs/ru/3-api.md)
-4. [Формат входных данных](/blob/master/docs/ru/4-data.md): BEMJSON
-5. [Шаблоны: синтаксис](/blob/master/docs/ru/5-templates-syntax.md)
-6. [Шаблоны: контекст](/blob/master/docs/ru/6-templates-context.md)
-7. [Runtime](/blob/master/docs/ru/7-runtime.md): как выбираются и применяются шаблоны
+1. [О bem-xjst](/docs/ru/1-about.md)
+2. [Быстрый старт](/docs/ru/2-quick-start.md)
+3. [API: использование, сигнатура и описание методов](/docs/ru/3-api.md)
+4. [Формат входных данных](/docs/ru/4-data.md): BEMJSON
+5. [Шаблоны: синтаксис](/docs/ru/5-templates-syntax.md)
+6. [Шаблоны: контекст](/docs/ru/6-templates-context.md)
+7. [Runtime](/docs/ru/7-runtime.md): как выбираются и применяются шаблоны
 
 
 ## Попробуйте
@@ -176,7 +176,7 @@ npm install bem-xjst
 ## bem-xjst используется в продакшене?
 
 Да. Проекты компаний [Яндекс](https://company.yandex.ru/) и Альфа-Банк, а так же
-оперсорс проекты основанные на [bem-core](https://github.com/bem/bem-core) и [bem-components](https://github.com/bem/bem-components).
+оперсорс проекты основанные на [bem-core](https://github.com/bem/bem-core) и [bem-components](https://github.com/bem/bem-components), которые тоже используют bem-xjst.
 
 ## Тест на производительность
 
@@ -195,6 +195,6 @@ npm install bem-xjst
  * [Документация на bem.info](https://ru.bem.info/platform/bem-xjst/)
  * [Changelog](CHANGELOG.md) и [описание релизов](https://github.com/bem/bem-xjst/releases)
  * [Гайд для контрибьюторов](https://github.com/bem/bem-xjst/blob/master/CONTRIBUTING.md)
- * [Online demo](https://bem.github.io/bem-xjst/) (you can share code snippets)
- * Twitter account: [@bemxjst](https://twitter.com/bemxjst)
+ * [Онлайн демо](https://bem.github.io/bem-xjst/) (you can share code snippets)
+ * Twitter аккаунт: [@bemxjst](https://twitter.com/bemxjst)
  * [Гайд по миграции](https://github.com/bem/bem-xjst/wiki/Migration-guides) для всех мажорных версий
