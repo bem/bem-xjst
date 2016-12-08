@@ -1,5 +1,23 @@
 # BEM-XJST Changelog
 
+# 2016-12-08 [v8.4.2](https://github.com/bem/bem-xjst/compare/v8.4.1...v8.4.2), @miripiruni
+
+Escaping functions fixed: now argumengs `undefined` or `null` and `NaN` will give you empty string as a result. In previous versions you get stringified results (`'undefined'`, `'null'`, `'NaN'`).
+
+Commits:
+* [[`fb127451ed`](https://github.com/bem/bem-xjst/commit/fb127451ed)] - Merge pull request #387 from bem/yeti-or.notEscapeFalsy (Slava Oliyanchuk)
+* [[`ae3ecc5e6e`](https://github.com/bem/bem-xjst/commit/ae3ecc5e6e)] - **Docs**: notes about arg types in escaping functions (miripiruni)
+* [[`f68c0a7555`](https://github.com/bem/bem-xjst/commit/f68c0a7555)] - **Docs**: links fixed, some spellings fixed (Slava Oliyanchuk)
+* [[`60ca7146b9`](https://github.com/bem/bem-xjst/commit/60ca7146b9)] - **Docs**: minor changes (links, spelling, etc) (Slava Oliyanchuk)
+* [[`1977ee83da`](https://github.com/bem/bem-xjst/commit/1977ee83da)] - **Utils**: escaping function should’t render undefined/Null/NaN (Vasiliy Loginevskiy)
+* [[`d44db0ad2c`](https://github.com/bem/bem-xjst/commit/d44db0ad2c)] - **Docs**: headers fixed (Slava Oliyanchuk)
+* [[`e88732a7af`](https://github.com/bem/bem-xjst/commit/e88732a7af)] - **Docs**: headers fixed (Slava Oliyanchuk)
+* [[`f8610fb928`](https://github.com/bem/bem-xjst/commit/f8610fb928)] - **Docs**: about js (Slava Oliyanchuk)
+* [[`f3660f8a47`](https://github.com/bem/bem-xjst/commit/f3660f8a47)] - **Docs**: example cut (Slava Oliyanchuk)
+* [[`54a3e7d447`](https://github.com/bem/bem-xjst/commit/54a3e7d447)] - **Docs**: fix spelling (Slava Oliyanchuk)
+* [[`11e3079ab9`](https://github.com/bem/bem-xjst/commit/11e3079ab9)] - **Docs**: readme updated (#390 fixed) (miripiruni)
+* [[`79b3e4e125`](https://github.com/bem/bem-xjst/commit/79b3e4e125)] - Bundle size metrica (Fix for #366) (miripiruni)
+
 # 2016-11-28 [v8.4.1](https://github.com/bem/bem-xjst/compare/v8.4.0...v8.4.1), @miripiruni
 
 Fix: `extend(function(ctx, json) { … })` mode callback now have two arguments. The same as `match()` and other.
