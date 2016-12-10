@@ -113,4 +113,20 @@ describe('BEMContext this.position', function() {
     { block: 'a1', content: { block: 'a2', content: { block: 'a3' } } },
     '<div class="a1 1"><div class="a2 1"><div class="a3 1"></div></div></div>');
   });
+
+  it('should calc position with replace()', function() {
+    test(function() {
+      block('a').replace()({ block: 'b' });
+      block('b')
+        .match(function(self) { return self.isFirst(); })
+        .addMods()({ first: 'yes' });
+
+      block('b')
+        .match(function(self) { return self.isLast(); })
+        .addMods()({ last: 'yes' });
+    },
+    [ { block: 'a' }, { block: 'a' }, { block: 'a' } ],
+    '<div class="b b_first_yes"></div><div class="b"></div>' +
+      '<div class="b b_last_yes"></div>');
+  });
 });
