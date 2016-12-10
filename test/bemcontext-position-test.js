@@ -131,4 +131,53 @@ describe('BEMContext this.position', function() {
     '<div class="b b_first_yes"></div><div class="b"></div>' +
       '<div class="b b_last_yes"></div>');
   });
+
+
+  it('should calc position with appendContent()', function() {
+    test(function() {
+      block('a').appendContent()({ block: 'b', mix: 'added' });
+
+      block('b')(
+        match(function(self) { return self.isFirst(); })
+        .addMods()({ first: 'yes' }),
+
+        match(function(self) { return self.isLast(); })
+        .addMods()({ last: 'yes' }),
+
+        cls()(function() {
+          return 'p_' + this.position;
+        })
+      );
+    },
+    { block: 'a', content: [ { block: 'b' }, { block: 'b' } ] },
+    '<div class="a">' +
+      '<div class="b b_first_yes p_1"></div>' +
+      '<div class="b p_2"></div>' +
+      '<div class="b b_last_yes added p_3"></div>' +
+    '</div>');
+  });
+
+  it('should calc position with prependContent()', function() {
+    test(function() {
+      block('a').prependContent()({ block: 'b', mix: 'added' });
+
+      block('b')(
+        match(function(self) { return self.isFirst(); })
+        .addMods()({ first: 'yes' }),
+
+        match(function(self) { return self.isLast(); })
+        .addMods()({ last: 'yes' }),
+
+        cls()(function() {
+          return 'p_' + this.position;
+        })
+      );
+    },
+    { block: 'a', content: [ { block: 'b' }, { block: 'b' } ] },
+    '<div class="a">' +
+      '<div class="b b_first_yes added p_1"></div>' +
+      '<div class="b p_2"></div>' +
+      '<div class="b b_last_yes p_3"></div>' +
+    '</div>');
+  });
 });
