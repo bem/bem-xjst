@@ -1,5 +1,14 @@
 # BEM-XJST Changelog
 
+# 2016-12-12 [v7.6.2](https://github.com/bem/bem-xjst/compare/v7.6.1...v7.6.2), @miripiruni
+
+Ported release: https://github.com/bem/bem-xjst/releases/tag/v8.5.1
+
+Commits:
+* [[`b29b4ab388`](https://github.com/bem/bem-xjst/commit/b29b4ab388)] - **Test**: position with appendContent()/prependContent() (miripiruni)
+* [[`d4516463a3`](https://github.com/bem/bem-xjst/commit/d4516463a3)] - **BEMHTML**: fix position with replace() (#394 fixed) (miripiruni)
+
+
 # 2016-11-28 [v7.6.1](https://github.com/bem/bem-xjst/compare/v7.6.0...v7.6.1), @miripiruni
 
 Fix: `extend(function(ctx, json) { … })` mode callback now have two arguments. The same as `match()` and other.
