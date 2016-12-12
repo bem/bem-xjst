@@ -1,5 +1,14 @@
 # BEM-XJST Changelog
 
+# 2016-12-12 [v8.5.1](https://github.com/bem/bem-xjst/compare/v8.5.0...v8.5.1), @miripiruni
+
+Fixed bug: calculate position if block/elem was replaced via `replace()`. See [issue #394](https://github.com/bem/bem-xjst/issues/394).
+
+Commits:
+* [[`71cca07f04`](https://github.com/bem/bem-xjst/commit/71cca07f04)] - Merge pull request #395 from bem/replace-position__issue-394 (Slava Oliyanchuk)
+* [[`b32094e75f`](https://github.com/bem/bem-xjst/commit/b32094e75f)] - **Test**: position with appendContent()/prependContent() (miripiruni)
+* [[`eaa2728082`](https://github.com/bem/bem-xjst/commit/eaa2728082)] - **BEMHTML**: fix position with replace() (#394 fixed) (miripiruni)
+
 # 2016-12-08 [v8.5.0](https://github.com/bem/bem-xjst/compare/v8.4.2...v8.5.0), @miripiruni
 
 BEMTREE: added modes related to data: js(), addJs(), mix(), addMix(), mods(), addElemMods(), elemMods().
