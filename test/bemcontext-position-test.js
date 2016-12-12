@@ -121,11 +121,11 @@ describe('BEMContext this.position', function() {
       block('a').replace()({ block: 'b' });
       block('b')
         .match(function(self) { return self.isFirst(); })
-        .addMods()({ first: 'yes' });
+        .def()(function() { this.mods.first = 'yes'; return applyNext(); });
 
       block('b')
         .match(function(self) { return self.isLast(); })
-        .addMods()({ last: 'yes' });
+        .def()(function() { this.mods.last = 'yes'; return applyNext(); });
     },
     [ { block: 'a' }, { block: 'a' }, { block: 'a' } ],
     '<div class="b b_first_yes"></div><div class="b"></div>' +
@@ -139,10 +139,10 @@ describe('BEMContext this.position', function() {
 
       block('b')(
         match(function(self) { return self.isFirst(); })
-        .addMods()({ first: 'yes' }),
+        .def()(function() { this.mods.first = 'yes'; return applyNext(); }),
 
         match(function(self) { return self.isLast(); })
-        .addMods()({ last: 'yes' }),
+        .def()(function() { this.mods.last = 'yes'; return applyNext(); }),
 
         cls()(function() {
           return 'p_' + this.position;
@@ -163,10 +163,10 @@ describe('BEMContext this.position', function() {
 
       block('b')(
         match(function(self) { return self.isFirst(); })
-        .addMods()({ first: 'yes' }),
+        .def()(function() { this.mods.first = 'yes'; return applyNext(); }),
 
         match(function(self) { return self.isLast(); })
-        .addMods()({ last: 'yes' }),
+        .def()(function() { this.mods.last = 'yes'; return applyNext(); }),
 
         cls()(function() {
           return 'p_' + this.position;
