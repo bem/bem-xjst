@@ -24,4 +24,25 @@ describe('BEMContext this.extend()', function() {
     { block: 'button' },
     'foo');
   });
+
+  it('should always return new object', function() {
+    test(function() {
+      var obj = { foo: 'bar' };
+      block('button').def()(function() {
+        return String(this.extend(null, obj) !== obj);
+      });
+    },
+    { block: 'button' },
+    'true');
+  });
+
+  it('should always return new object', function() {
+    test(function() {
+      block('button').def()(function() {
+        return JSON.stringify(this.extend(null, null));
+      });
+    },
+    { block: 'button' },
+    '{}');
+  });
 });
