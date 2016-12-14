@@ -419,7 +419,7 @@ old value of ctx.mod.one was 1
 Notice that you should change this.mods instead of this.ctx.mods in templates
 ```
 
-### Режим Production
+### Режим production
 
 Вы можете использовать опцию `production`, чтобы отрендерить весь BEMJSON,
 даже если в одном из шаблонов произошла ошибка.
