@@ -2,7 +2,7 @@
 
 - [How the template engine runtime works](#how-the-template-engine-runtime-works)
 - [Templates for any entities](#templates-for-any-entities)
-- [Instructions for controlling runtime](#Instructions-for-controlling-runtime)
+- [Instructions for controlling runtime](#instructions-for-controlling-runtime)
   - [apply](#apply): call the specified mode
   - [applyNext](#applynext): apply templates with lower priority than the current one to the node
   - [applyCtx](#applyctx): apply templates to any BEMJSON

@@ -314,7 +314,7 @@ Result:
 <div class="danger">&amp;nbsp;&lt;script src="alert()"&gt;&lt;/script&gt;</div>
 ```
 
-If you want avoid escaping in content [use special value](4-data#content): `{ html: '…' }`.
+If you want avoid escaping in content [use special value](4-data.md#content): `{ html: '…' }`.
 
 Example:
 

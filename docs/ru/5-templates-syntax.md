@@ -314,7 +314,7 @@ block('link')(
 * [content](#content)
 * [mix](#mix)
 * [mods](#mods)
-* [elemMods](#elemMods)
+* [elemMods](#elemmods)
 * [js](#js)
 * [bem](#bem)
 * [cls](#cls)
@@ -724,7 +724,7 @@ block('control')(
 
 ## BEMTREE
 
-В движке BEMTREE используются только режимы ориентированные на данные: [def](#def), [js](#js), [mix](#mix), [mods](#mods), [elemMods](#elemMods), [content](#content) и
+В движке BEMTREE используются только режимы ориентированные на данные: [def](#def), [js](#js), [mix](#mix), [mods](#mods), [elemMods](#elemmods), [content](#content) и
 режимы-хелперы [replace](#replace), [extend](#extend) и [wrap](#wrap).
 Пользовательские режимы тоже могут быть использованы. Остальные режимы,
 ориентированные на HTML, описанные в документации выше, применимы только к BEMHTML.

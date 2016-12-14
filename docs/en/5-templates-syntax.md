@@ -321,7 +321,7 @@ Result of BEMHTML templating:
 * [content](#content)
 * [mix](#mix)
 * [mods](#mods)
-* [elemMods](#elemMods)
+* [elemMods](#elemmods)
 * [js](#js)
 * [bem](#bem)
 * [cls](#cls)
@@ -549,7 +549,8 @@ elemMods()(function() {
 js()(value)
 ```
 
-JavaScript parameters. If the value isn’t falsy, it mixes `i-bem` and adds the content to Javacript parameters. More information about [i-bem and JavaScript parameters](https://ru.bem.info/platform/i-bem/parameters/). Data is [escaped using the jsAttrEscape function](6-templates-context.md#jsattrescape).
+JavaScript parameters. If the value isn’t falsy, it mixes `i-bem` and adds the
+content to Javacript parameters. More information about [i-bem and JavaScript parameters](https://en.bem.info/platform/i-bem/parameters/). Data is [escaped using the jsAttrEscape function](6-templates-context.md#jsattrescape).
 
 #### bem
 
@@ -727,7 +728,7 @@ More information about [apply()](7-runtime.md#apply).
 ## BEMTREE
 
 In BEMTREE engine only data related modes are avaliable: [def](#def), [js](#js), [mix](#mix),
-[mods](#mods), [elemMods](#elemMods), [content](#content), [replace](#replace),
+[mods](#mods), [elemMods](#elemmods), [content](#content), [replace](#replace),
 [extend](#extend) and [wrap](#wrap) modes are used by the BEMTREE engine. User-defined modes can also be used. The other modes described in the documentation above can only be used in BEMHTML.
 
 ***
