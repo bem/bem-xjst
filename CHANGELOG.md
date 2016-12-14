@@ -1,5 +1,11 @@
 # BEM-XJST Changelog
 
+# 2016-12-14 [v7.6.3](https://github.com/bem/bem-xjst/compare/v7.6.2...v7.6.3), @miripiruni
+
+Commits:
+* [[`a3f396835d`](https://github.com/bem/bem-xjst/commit/a3f396835d)] - **BEMHTML**: revert position fix (miripiruni)
+
+
 # 2016-12-12 [v7.6.2](https://github.com/bem/bem-xjst/compare/v7.6.1...v7.6.2), @miripiruni
 
 Ported release: https://github.com/bem/bem-xjst/releases/tag/v8.5.1
