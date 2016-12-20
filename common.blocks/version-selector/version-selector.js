@@ -5,6 +5,9 @@ modules.define('version-selector', [ 'i-bem__dom', 'querystring' ], function(pro
             js: {
                 inited: function() {
 
+                    var bPage = this.findBlockOutside('page');
+                    var bDemo = bPage.findBlockInside('demo');
+                    var bEngineSelector = bPage.findBlockInside('engine-selector');
                     var d = document;
                     var selector = this.params;
                     var transport;
@@ -52,6 +55,7 @@ modules.define('version-selector', [ 'i-bem__dom', 'querystring' ], function(pro
                             },
                             unfreeze = function() {
                                 var demo = document.getElementsByClassName('demo')[0];
+                                bDemo.changeEngine(bEngineSelector.domElem[0].value);
                                 demo.classList.remove('demo_state_loading');
                                 demo.classList.add('demo_state_loaded');
                             };
