@@ -692,4 +692,13 @@ describe('BEMTREE engine tests', function() {
       { block: 'b1', elem: 'e', elemMods: { size: 'm', disabled: 'true' } });
     });
   });
+
+  describe('Special html field', function() {
+    it('should render as is', function() {
+      test(function() {},
+        { block: 'b1', content: { html: '<br>' } },
+        { block: 'b1', content: { html: '<br>' } }
+      );
+    });
+  });
 });
