@@ -1,5 +1,18 @@
 # BEM-XJST Changelog
 
+# 2017-01-10 [v7.6.4](https://github.com/bem/bem-xjst/compare/v7.6.3...v7.6.4), @miripiruni
+
+Fixed bug in BEMTREE: special html field render as it’s value.
+
+Example of BEMJSON: `{ block: 'b1', content: { html: '<br>' } }`
+
+Render result with v7.6.2 (before fix): `{ block: 'b1', content: '<br>' }`.
+Render result with v7.6.3 (after fix): `{ block: 'b1', content: { html: '<br>' } }`.
+
+Commits:
+* [[`1dc8b03f0b`](https://github.com/bem/bem-xjst/commit/1dc8b03f0b)] - **BEMTREE**: special unescaped html field from BEMJSON should render as is (miripiruni)
+
+
 # 2016-12-14 [v7.6.3](https://github.com/bem/bem-xjst/compare/v7.6.2...v7.6.3), @miripiruni
 
 Commits:
