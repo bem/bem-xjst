@@ -530,4 +530,13 @@ describe('BEMTREE engine tests', function() {
       null, '', undefined, { block: 'b1' }, undefined, 0
     ]);
   });
+
+  describe('Special html field', function() {
+    it('should render as is', function() {
+      test(function() {},
+        { block: 'b1', content: { html: '<br>' } },
+        { block: 'b1', content: { html: '<br>' } }
+      );
+    });
+  });
 });
