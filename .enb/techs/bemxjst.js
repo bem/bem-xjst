@@ -7,6 +7,7 @@ module.exports = require('enb/lib/build-flow').create()
     .target('target', '?.bemxjst.js')
     .builder(function() {
         return bemhtml.replace('api.exportApply(exports);', '')
-            .concat(bemtree).replace('api.exportApply(exports);', '');
+            .concat(bemtree).replace('api.exportApply(exports);', '')
+            .concat(require('./i18n'));
     })
     .createTech();
