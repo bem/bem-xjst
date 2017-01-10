@@ -1,5 +1,20 @@
 # BEM-XJST Changelog
 
+# 2016-01-10 [v8.5.2](https://github.com/bem/bem-xjst/compare/v8.5.1...v8.5.2), @miripiruni
+
+This release is port of v7.6.4.
+
+Fixed bug in BEMTREE: special html field render as it’s value.
+
+Example of BEMJSON: `{ block: 'b1', content: { html: '<br>' } }`
+
+Render result with v7.6.2 (before fix): `{ block: 'b1', content: '<br>' }`.
+Render result with v7.6.3 (after fix): `{ block: 'b1', content: { html: '<br>' } }`.
+
+Commits:
+* [[`f955d4080e`](https://github.com/bem/bem-xjst/commit/f955d4080e)] - **BEMTREE**: special unescaped html field from BEMJSON should render as is (miripiruni)
+
+
 # 2016-12-12 [v8.5.1](https://github.com/bem/bem-xjst/compare/v8.5.0...v8.5.1), @miripiruni
 
 Fixed bug: calculate position if block/elem was replaced via `replace()`. See [issue #394](https://github.com/bem/bem-xjst/issues/394).
