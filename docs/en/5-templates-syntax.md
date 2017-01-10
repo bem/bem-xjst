@@ -207,6 +207,8 @@ block('*').match(function() { return false; })(
 );
 ```
 
+Inside `match` callback function you can use [`apply()`](7-runtime.md#apply) to call any mode from this block.
+
 ### Subpredicate chains
 
 Subpredicates can be arranged as chains:
