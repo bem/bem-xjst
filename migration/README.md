@@ -12,6 +12,17 @@ where
 
 Notice that templates in `./path-to-templates` will be overwritten.
 
+## Codestyle config
+
+You can create json file with several
+[options](https://github.com/benjamn/recast/blob/52a7ec3eaaa37e78436841ed8afc948033a86252/lib/options.js#L1) that have recast.
+
+Using `config` option you can pass path to json config:
+
+`./migration/lib/index.js --input ./path-to-templates-dir --from 4 --to 8 --config ~/my-prj/config/codestyle-config.json`
+
+Notice: path to json config must be absolute.
+
 # Static Lint
 
 

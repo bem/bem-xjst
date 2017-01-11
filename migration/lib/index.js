@@ -29,6 +29,10 @@ var argv = require('yargs')
       default: false,
       alias: 'l'
     })
+    .option('config', {
+      describe: 'path to codestyle config for jscodeshift output',
+      alias: 'c'
+    })
     .help('h')
     .alias('help', 'h')
     .argv;
@@ -56,6 +60,18 @@ for (var i = 0; i < transformers.length; i++) {
 
   if (argv.lint)
     cmd.push('--lint=true');
+
+  if (argv.config) {
+    try {
+      var config = require(argv.config);
+    } catch(e) {
+      console.error('Error: cannot require config file from ' + argv.config);
+      console.error(e);
+      process.exit(1);
+    }
+
+    cmd.push('--config=' + argv.config);
+  }
 
   cmd = cmd.join(' ');
 
