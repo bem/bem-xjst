@@ -20,7 +20,12 @@ Transformer.prototype.run = function(file, api, opts) {
   var j = api.jscodeshift;
   var ret = this.find(file, j);
 
-  var config = require(opts.config);
+  var config;
+
+  if (opts.config)
+    config = require(opts.config);
+  else
+    config = {};
 
   if (!config.quote)
     config.quote = 'single';
