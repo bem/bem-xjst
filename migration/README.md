@@ -4,13 +4,13 @@
 
 `cd ../`
 
-`./bin/bem-xjst-migrate ./path-to-templates/ 7 8`
+`./migration/lib/index.js --input ./path-to-templates/ --from 7 --to 8`
 
 where
  * `7` is current bem-xjst version on your project
  * `8` is major version to migrate.
 
-Notice that templates in `./path-to-templates` will be overwritten.
+Notice that templates in `./path-to-templates/` will be overwritten.
 
 ## Codestyle config
 
@@ -25,12 +25,13 @@ Notice: path to json config must be absolute.
 
 # Static Lint
 
+Linting works the same way as migrate except you need add `lint` option.
 
 `cd migration/ && npm i`
 
 `cd ../`
 
-`./bin/bem-xjst-lint ./path-to-templates/ 0 8`
+`./migration/lib/index.js --lint --input ./path-to-templates/ --from 0 --to 8`
 
 where
  * `0` is major version from

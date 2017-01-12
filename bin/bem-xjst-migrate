@@ -1,8 +1,0 @@
-#!/usr/bin/env bash
-
-if [ "$#" -ne 3 ]; then
-    ./migration/lib/index.js
-    exit 1
-fi
-
-./migration/lib/index.js --input $1 --from $2 --to $3
