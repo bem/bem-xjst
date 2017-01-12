@@ -1,0 +1,8 @@
+{
+    "tabWidth": 4,
+    "usetabs": true,
+    "reuseWhitespace": true,
+    "wrapColumn": 120,
+    "quote": "single",
+    "trailingComma": false
+}

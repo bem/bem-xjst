@@ -23,6 +23,8 @@ Using `config` option you can pass path to json config:
 
 Notice: path to json config must be absolute.
 
+See example of codestyle config `sample-config.json` in this directory.
+
 # Static Lint
 
 Linting works the same way as migrate except you need add `lint` option.
