@@ -1,6 +1,6 @@
 # Runtime linter
 
-Runtime linter can be used for runtime check templates and BEMJSON.
+Runtime linter can be used for runtime check templates and BEMJSON. To use runtime linter you need to turn on [`runtimeLint` option](https://github.com/bem/bem-xjst/blob/master/docs/en/3-api.md#runtime-linting).
 
 List of checks:
 
