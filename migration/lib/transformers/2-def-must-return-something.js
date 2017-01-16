@@ -11,6 +11,9 @@ module.exports = function(file, api, opts) {
       .find(j.CallExpression, { callee: { callee: { property: { name: 'def', type: 'Identifier' } } } })
       .find(j.FunctionExpression)
       .filter(function(p) {
+        //if (get(p, 'parentPath.parentPath.value.callee.callee.property.name') === 'def')
+          //return false;
+
         var functionBody = p.node.body.body;
         var noReturn = function(item) {
           return item.type === 'ReturnStatement';

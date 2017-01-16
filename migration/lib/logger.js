@@ -8,7 +8,7 @@ module.exports = function logger(opts) {
     'BEM-XJST WARNING:',
     opts.descr,
     [ file.path, start.line, start.column ].join(':'),
-    file.source.slice(path.start, path.end),
+    file.source.slice(path.start - 5, path.end + 15),
     '\n'
-  ].join('\n>>>>'));
+  ].join('\n>>>> '));
 };

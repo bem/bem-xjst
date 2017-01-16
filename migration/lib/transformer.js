@@ -19,16 +19,9 @@ Transformer.prototype.find = function(file) {
 Transformer.prototype.run = function(file, api, opts) {
   var j = api.jscodeshift;
   var ret = this.find(file, j);
+  var config = opts.config ? require(opts.config) : {};
 
-  var config;
-
-  if (opts.config)
-    config = require(opts.config);
-  else
-    config = {};
-
-  if (!config.quote)
-    config.quote = 'single';
+  if (!config.quote) config.quote = 'single';
 
   if (opts.lint) {
     if (ret.length === 0) return;
@@ -40,10 +33,11 @@ Transformer.prototype.run = function(file, api, opts) {
 };
 
 Transformer.prototype.log = function(ret, file) {
+  var t = this;
 
   ret.forEach(function(p) {
     log({
-      descr: this.description,
+      descr: t.description,
       path: p.value,
       ret: ret,
       file: file

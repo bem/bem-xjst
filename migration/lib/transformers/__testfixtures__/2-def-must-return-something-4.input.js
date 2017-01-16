@@ -8,7 +8,6 @@ block('table').mod('theme', 'grey')(
     var defaultStylesConcated = '';
     Object.keys(defaultStyles).map(function() {
         defaultStylesConcated = defaultStylesConcated + defaultStyles[style];
-      return applyNext();
     });
 
     var style = defaultStylesConcated + (this.ctx.style || '');
