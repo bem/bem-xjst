@@ -38,8 +38,14 @@ var argv = require('yargs')
     .alias('help', 'h')
     .argv;
 
+var log = function log(arr) {
+  if (!Array.isArray(arr)) arr = [ arr ];
+  arr.push('\n');
+  console.log(arr.join('\n'));
+};
+
 if (argv.lint)
-  console.log('bem-xjst static linter started…');
+  log('bem-xjst static linter started…');
 
 var transformers = ls.filter(function(fileName) {
   var major = fileName[0];
@@ -47,16 +53,35 @@ var transformers = ls.filter(function(fileName) {
   return major > argv.from && major <= argv.to;
 })
 
-require('child_process').exec('find ' + argv.input + ' -iname "*.bemhtml.js" -o -iname "*.priv.js"', function(err, stdout, stderr) {
+var files = [ '*.bemhtml.js', '*.bemtree.js' ];
+
+var formatExtensions = function formatExtensions(arr) {
+  return arr
+    .map(function(mask) { return '-iname "' + mask + '"'; })
+    .join(' -o ');
+}
+
+var input = argv.input;
+
+if (input[input.length - 1] === '/')
+  input = input.substr(0, input.length - 1);
+
+var cmd = 'find ' + input + ' ' + formatExtensions(files);
+
+require('child_process').exec(cmd, function(err, stdout, stderr) {
   var cmd;
-  console.log('Process files:');
-  console.log(stdout);
+
+  if (stdout.length === 0) {
+    log('No ' + files.join(' or ') + ' files found.');
+    process.exit(1);
+  }
 
   for (var i = 0; i < transformers.length; i++) {
     cmd = [
       './migration/node_modules/jscodeshift/bin/jscodeshift.sh',
       '-t ' + trDir + transformers[i],
-      stdout.split('\n').join(' ')
+      stdout.split('\n').join(' '),
+      '--print'
     ];
 
     if (argv.lint)

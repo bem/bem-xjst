@@ -40,3 +40,5 @@ defineTest(__dirname, '8-chain-mix-to-chain-addmix', null, '8-chain-mix-to-chain
 defineTest(__dirname, '8-chain-mix-to-chain-addmix', null, '8-chain-mix-to-chain-addmix-2');
 defineTest(__dirname, '8-mix-to-addmix', null, '8-mix-to-addmix-1');
 defineTest(__dirname, '8-mix-to-addmix', null, '8-mix-to-addmix-2');
+defineTest(__dirname, '8-js-to-addjs', null, '8-js-to-addjs-1');
+defineTest(__dirname, '8-js-to-addjs', null, '8-js-to-addjs-2');
