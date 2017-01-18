@@ -101,6 +101,7 @@ require('child_process').exec(cmd, function(err, stdout, stderr) {
 
     cmd = cmd.join(' ');
 
+    log('Check rule: ' + transformers[i].replace(/^\d-/, '').replace(/-/g, ' ').replace(/\.js$/g, ''));
     execSync(cmd, { stdio: 'inherit', encoding: 'utf8' })
   }
 });
