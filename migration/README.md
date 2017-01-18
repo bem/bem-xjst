@@ -19,7 +19,7 @@ Result of linting is console warning like this:
 ```
 BEM-XJST WARNING:
 >>>> Function that returns a literal can be replaced with literal itself.
->>>> migration/tmpls/template.js:8
+>>>> migration/tmpls/template.js:8:1
 >>>> function() { return 42; }
 ```
 
@@ -72,7 +72,6 @@ See example of codestyle config `sample-config.json` in this directory.
  * `attrs()` to `addAttrs()`
  * `js()` to `addJs()`
  * `mix()` to `addMix()`
- * etc
 
 
 # Tests
