@@ -164,7 +164,7 @@ See [readme](https://github.com/bem/bem-xjst/tree/master/runtime-lint).
 
 ## Static linter and migration tool for templates
 
-See [readme](https://github.com/bem/bem-xjst/tree/static-analyze/migration).
+See [readme](https://github.com/bem/bem-xjst/tree/master/migration).
 
 ## Links
 
