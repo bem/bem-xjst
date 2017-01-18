@@ -6,10 +6,12 @@ Linting works the same way as migrate except you need add `lint` option.
 
 `cd ../`
 
-`./migration/lib/index.js --lint --input ./path-to-templates/ --from 0 --to 8`
+`./migration/lib/index.js --lint --input ./path-to-templates/ --from 7 --to 8`
 
 where
- * `0` is major version from
+ * `lint` lint option (if not present script will rewrite your templates)
+ * `input` path to templates (relative to current directory or absolute)
+ * `7` is major version from. If you specify `0` common check will be included.
  * `8` is major to lint.
 
 Result of linting is console warning like this:
@@ -47,6 +49,30 @@ Using `config` option you can pass path to json config:
 Notice: path to json config must be absolute.
 
 See example of codestyle config `sample-config.json` in this directory.
+
+# List of transformers (checks)
+
+ * Array to function generator
+ * Object to function generator
+ * Don’t check `this.elemMods`
+ * Don’t check `this.mods`
+ * If function generator return simple type rewrite this function to it’s return value
+ * Check for HTML entities. Warning about using UTF-8 symbols.
+ * def() must return something
+ * No empty mode call
+ * No empty mode
+ * No more `this.`.
+ * Apply call to apply
+ * API changed (require('bem-xjst').bemhtml)
+ * `elemMatch()` to `elem()` with `match()`
+ * `mods` value
+ * `once()` to `def()`
+ * `this.isArray()` to `Array.isArray()`
+ * `xhtml: true` option for backwards capability (from 6 to 7)
+ * `attrs()` to `addAttrs()`
+ * `js()` to `addJs()`
+ * `mix()` to `addMix()`
+ * etc
 
 
 # Tests
