@@ -188,7 +188,7 @@ npm install bem-xjst
 
 ## Статический линтер и автоматическая миграция шаблонов
 
-См. [readme](https://github.com/bem/bem-xjst/tree/static-analyze/migration).
+См. [readme](https://github.com/bem/bem-xjst/tree/master/migration).
 
 ## Ссылки
 
