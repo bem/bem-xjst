@@ -15,9 +15,7 @@
     "BEMTREE"
   ],
   "bin": {
-    "bem-xjst": "bin/bem-xjst",
-    "lint": "bin/bem-xjst-lint",
-    "migrate": "bin/bem-xjst-migrate"
+    "bem-xjst": "bin/bem-xjst"
   },
   "scripts": {
     "prepublish": "npm run make",
