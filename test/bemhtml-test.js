@@ -118,6 +118,12 @@ describe('BEMHTML engine tests', function() {
         .apply({ block: 'b', tag: 'br' })
         .should.equal('<br class="b">');
     });
+
+    it('should close short tags with xhtml: true', function() {
+      compile(function() {}, { xhtml: true })
+        .apply({ block: 'b', tag: 'br' })
+        .should.equal('<br class="b"/>');
+    });
   });
 
   describe('omitOptionalEndTags option', function() {
