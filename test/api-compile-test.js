@@ -146,5 +146,60 @@ describe('API compile', function() {
         template.apply({ block: 'b1' });
       });
     });
+
+    it('should throw bem-xjst error on template with no block', function() {
+      assert.throws(function() {
+        bemxjst.compile(function() {
+          attrs()(function() { return { a: 1 }; });
+        });
+      });
+    });
+  });
+
+  describe('Runtime lint mode', function() {
+    function captureStream(stream) {
+      var oldWrite = stream.write;
+      var buf = '';
+
+      stream.write = function(chunk) {
+        buf += chunk.toString();
+        oldWrite.apply(stream, arguments);
+      };
+
+      return {
+        unhook: function unhook() { stream.write = oldWrite; },
+        captured: function() { return buf; }
+      };
+    }
+
+    var hook;
+    beforeEach(function() { hook = captureStream(process.stderr); });
+    afterEach(function() { hook.unhook(); });
+
+    it('should work with runtimeLint option', function() {
+      var template = bemxjst.compile(function() {
+        block('b__e').content()('test');
+      }, { runtimeLint: true });
+
+      template.apply({ block: 'b__e' });
+
+      var stderr = hook.captured();
+      assert.equal(
+        stderr.substr(0, 17),
+        '\nBEM-XJST WARNING'
+      );
+    });
+  });
+
+  describe('context option', function() {
+    it('should work with context option', function() {
+      assert.doesNotThrow(function() {
+        var template = bemxjst.compile(function() {
+          block('b').content()('test');
+        }, { context: 'this' });
+
+        template.apply({ block: 'b' });
+      });
+    });
   });
 });

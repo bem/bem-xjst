@@ -76,6 +76,14 @@ describe('BEMJSON js', function() {
         'Nancy&#39;","b":"&#39;Tom&amp;Jerry&#39;"}}\'></div>');
   });
 
+  it('should render js data attribute in mixed', function() {
+    compile(function() {})
+      .apply({ block: 'b', mix: [ { block: 'a', js: { data: 1 } } ] })
+      .should
+        .equal('<div class="b a i-bem" ' +
+               'data-bem=\'{"a":{"data":1}}\'></div>');
+  });
+
   describe('elemJsInstances option', function() {
     it('should not render i-bem for elems be default', function() {
       compile('')
@@ -95,11 +103,11 @@ describe('BEMJSON js', function() {
 
       tmpls.apply({
           block: 'a',
-          js: true,
+          js: { data: 1 },
           mix: { block: 'b', elem: 'e', js: true }
         })
         .should.equal('<div class="a b__e i-bem"' +
-          ' data-bem=\'{"a":{},"b__e":{}}\'></div>');
+          ' data-bem=\'{"a":{"data":1},"b__e":{}}\'></div>');
 
       tmpls.apply({
         block: 'b',

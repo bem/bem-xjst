@@ -22,4 +22,10 @@ describe('BEMJSON tag', function() {
     test(function() {
     }, { tag: false, content: 'ok' }, 'ok');
   });
+
+  it('should render empty string ' +
+     'if block with no content and no tag', function() {
+    test(function() {
+    }, { block: 'test', tag: false }, '');
+  });
 });
