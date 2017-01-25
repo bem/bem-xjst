@@ -1,3 +1,4 @@
+module.exports = function(match, block, elem, mod, elemMod, oninit, xjstOptions, wrap, replace, extend, mode, def, content, appendContent, prependContent, attrs, addAttrs, js, addJs, mix, addMix, mods, addMods, addElemMods, elemMods, tag, cls, bem, local, applyCtx, applyNext, apply) {
 var collectMixes = function collectMixes(item, res, context) {
   res = res || [];
   if (!item)
@@ -320,3 +321,5 @@ block('*')(
     return applyNext();
   })
 );
+
+};
