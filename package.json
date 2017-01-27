@@ -59,11 +59,13 @@
   "directories": {
     "bin": "./bin",
     "doc": "./docs",
-    "lib": "./lib"
+    "lib": "./lib",
+    "migration": "./migration"
   },
   "files": [
     "bin/",
     "lib/",
+    "migration/",
     "runtime-lint/",
     "index.js",
     "CHANGELOG.md",
