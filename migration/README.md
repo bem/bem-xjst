@@ -6,13 +6,13 @@ Linting allows you see some warnings about template code in STDERR. List of chec
 
 `cd ../`
 
-`./migration/lib/index.js --lint --input ./path-to-templates/ --from 7 --to 8`
+`./migration/lib/index.js --lint --input ./path-to-templates/ --from 6 --to 7`
 
 where
  * `lint` lint option (if not present script will rewrite your templates)
  * `input` path to templates (relative to current directory or absolute)
- * `7` is major version from. If you specify `0` common check will be included.
- * `8` is major to lint.
+ * `6` is major version from. If you specify `0` common check will be included.
+ * `7` is major to lint.
 
 Result of linting is console warning like this:
 
@@ -31,11 +31,11 @@ Migration tool helps you migrate your project to next major version of bem-xjst.
 
 `cd ../`
 
-`./migration/lib/index.js --input ./path-to-templates/ --from 7 --to 8`
+`./migration/lib/index.js --input ./path-to-templates/ --from 6 --to 7`
 
 where
- * `7` is current bem-xjst version on your project
- * `8` is major version to migrate.
+ * `6` is current bem-xjst version on your project
+ * `7` is major version to migrate.
 
 Notice that templates in `./path-to-templates/` will be overwritten.
 
@@ -46,7 +46,7 @@ You can create json file with several
 
 Using `config` option you can pass path to json config:
 
-`./migration/lib/index.js --input ./path-to-templates-dir --from 4 --to 8 --config ~/my-prj/config/codestyle-config.json`
+`./migration/lib/index.js --input ./path-to-templates-dir --from 4 --to 7 --config ~/my-prj/config/codestyle-config.json`
 
 Notice: path to json config must be absolute.
 
@@ -71,9 +71,6 @@ See example of codestyle config `sample-config.json` in this directory.
  * `once()` to `def()`
  * `this.isArray()` to `Array.isArray()`
  * `xhtml: true` option for backwards capability (from 6 to 7)
- * `attrs()` to `addAttrs()`
- * `js()` to `addJs()`
- * `mix()` to `addMix()`
 
 
 # Tests
