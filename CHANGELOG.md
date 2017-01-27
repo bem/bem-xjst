@@ -1,5 +1,12 @@
 # BEM-XJST Changelog
 
+# 2017-01-27 [v7.7.0](https://github.com/bem/bem-xjst/compare/v7.6.4...v7.7.0), @miripiruni
+
+Migration tool and Static linter introduced. See [readme](https://github.com/bem/bem-xjst/blob/master/migration/README.md).
+
+Commits:
+* [[`216a987156`](https://github.com/Slava Oliyanchuk <miripiruni@gmail.com> (http://miripiruni.org/)/bem-xjst-static-analyzer/commit/216a987156)] - Static linter and migration tool for templates (#49 and #353 fixed) (miripiruni)
+
 # 2017-01-10 [v7.6.4](https://github.com/bem/bem-xjst/compare/v7.6.3...v7.6.4), @miripiruni
 
 Fixed bug in BEMTREE: special html field render as it’s value.
