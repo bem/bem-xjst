@@ -1,5 +1,20 @@
 # BEM-XJST Changelog
 
+# 2016-01-27 [v8.6.0](https://github.com/bem/bem-xjst/compare/v8.5.2...v8.6.0), @miripiruni
+
+Migration tool and Static linter introduced. See [readme](https://github.com/bem/bem-xjst/blob/master/migration/README.md).
+
+Commits:
+* [[`4ed06f1b84`](https://github.com/bem/bem-xjst/commit/4ed06f1b84)] - More tests (#405) (Slava Oliyanchuk)
+* [[`cebda10963`](https://github.com/bem/bem-xjst/commit/cebda10963)] - migrate bin removed (miripiruni)
+* [[`b9fd0c43ae`](https://github.com/bem/bem-xjst/commit/b9fd0c43ae)] - Line in lint report added (Slava Oliyanchuk)
+* [[`4c7b5ff259`](https://github.com/bem/bem-xjst/commit/4c7b5ff259)] - Link to migration readme fixed (Slava Oliyanchuk)
+* [[`97a6fe54c6`](https://github.com/bem/bem-xjst/commit/97a6fe54c6)] - Link to migration readme fixed (Slava Oliyanchuk)
+* [[`0b3b876b95`](https://github.com/bem/bem-xjst/commit/0b3b876b95)] - Static analyzer: migration and lint tool (fix for #49 and #353) (Slava Oliyanchuk)
+* [[`edac12fa4b`](https://github.com/bem/bem-xjst/commit/edac12fa4b)] - Link to option (Slava Oliyanchuk)
+* [[`960c604862`](https://github.com/bem/bem-xjst/commit/960c604862)] - Runtime lint readme (Slava Oliyanchuk)
+* [[`a4146c1c94`](https://github.com/bem/bem-xjst/commit/a4146c1c94)] - **Deps**: Throw away minimalistic-assert dependency (#398) (Slava Oliyanchuk)
+
 # 2016-01-10 [v8.5.2](https://github.com/bem/bem-xjst/compare/v8.5.1...v8.5.2), @miripiruni
 
 This release is port of v7.6.4.
