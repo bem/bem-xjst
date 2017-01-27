@@ -1,6 +1,6 @@
-# Static Lint
+# Static linter for templates
 
-Linting works the same way as migrate except you need add `lint` option.
+Linting allows you see some warnings about template code in STDERR. List of checks you can find in [migration guides](https://github.com/bem/bem-xjst/wiki/Migration-guides).
 
 `cd migration/ && npm i`
 
@@ -23,7 +23,9 @@ BEM-XJST WARNING:
 >>>> function() { return 42; }
 ```
 
-# Migration tool
+# Migration tool for templates
+
+Migration tool helps you migrate your project to next major version of bem-xjst.
 
 `cd migration/ && npm i`
 
