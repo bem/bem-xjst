@@ -38,6 +38,16 @@ describe('Templates syntax', function() {
       fixtures.compile(function() {
         // No block() subpredicate
         elem('e').tag()('b');
+        elemMod('m', 'v').tag()('b');
+      });
+    }, BEMXJSTError);
+  });
+
+  it('should throw error when no block custom subpredicate', function() {
+    assert.throws(function() {
+      fixtures.compile(function() {
+        // No block() subpredicate
+        match(function() { return 1; }).tag()('b');
       });
     }, BEMXJSTError);
   });

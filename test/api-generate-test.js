@@ -7,4 +7,10 @@ describe('API generate', function() {
 
     assert.equal(typeof bundle, 'string');
   });
+
+  it('should work with options', function() {
+    var bundle = bemxjst.generate('', { xhtml: true });
+
+    assert.equal(typeof bundle, 'string');
+  });
 });

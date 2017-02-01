@@ -1,6 +1,8 @@
 var assert = require('assert');
 var fixtures = require('./fixtures')('bemhtml');
 var test = fixtures.test;
+var bemtreeFixtures = require('./fixtures')('bemtree');
+var bemtreeTest = bemtreeFixtures.test;
 
 describe('Flush', function() {
   it('should not flush custom def() bodies', function() {
@@ -73,6 +75,48 @@ describe('Flush', function() {
         assert.deepEqual(template._buf, [
           '<a class="b1">',
           '</a>'
+        ]);
+      }
+    });
+  });
+
+  it('should use _flush function', function() {
+    test(function() {
+      block('b').tag()('span');
+      block('br').tag()('br');
+    },
+    {
+      block: 'b',
+      content: { block: 'br' }
+    },
+    '',
+    {
+      xhtml: true,
+      flush: true,
+      after: function after(template) {
+        assert.deepEqual(template._buf, [
+          '<span class="b">',
+          '<br class="br"/>',
+          '</span>'
+        ]);
+      }
+    });
+  });
+
+  it('should use flush function in bemtree', function() {
+    bemtreeTest(function() {},
+    [
+      { block: 'br' },
+      { block: 'br' }
+    ],
+    '',
+    {
+      engine: 'BEMTREE',
+      flush: true,
+      after: function after(template) {
+        assert.deepEqual(template._buf, [
+          { block: 'br' },
+          { block: 'br' }
         ]);
       }
     });
