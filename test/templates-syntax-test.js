@@ -33,6 +33,14 @@ describe('Templates syntax', function() {
     '<b></b>');
   });
 
+  it('should work with any subpredicate order', function() {
+    test(function() {
+      tag().block('b').mod('m', 'v')('b');
+    },
+    { block: 'b', mods: { m: 'v' } },
+    '<b class="b b_m_v"></b>');
+  });
+
   it('should throw error when no block subpredicate', function() {
     assert.throws(function() {
       fixtures.compile(function() {
