@@ -29,8 +29,8 @@
     "test:mocha": "mocha --reporter=spec test/*-test.js",
     "test:coverage": "./node_modules/.bin/istanbul cover -x '**/runtime-lint/**' ./node_modules/mocha/bin/_mocha -- -u bdd -R spec test/*-test.js",
     "size": "npm run size:bemhtml && npm run size:bemtree",
-    "size:bemhtml": "ls -ola ./lib/bemhtml/bundle.js | awk '{print \"BEMHTML Bundle Size:\", $4\" B\"}'",
-    "size:bemtree": "ls -ola ./lib/bemtree/bundle.js | awk '{print \"BEMTREE Bundle Size:\", $4\" B\"}'"
+    "size:bemhtml": "uglifyjs ./lib/bemhtml/bundle.js | gzip > ./bemhtml.gz && ls -ola ./bemhtml.gz | awk '{print \"BEMHTML Bundle Size:\", $4\" B\"}'",
+    "size:bemtree": "uglifyjs ./lib/bemtree/bundle.js | gzip > ./bemtree.gz && ls -ola ./bemtree.gz | awk '{print \"BEMTREE Bundle Size:\", $4\" B\"}'"
   },
   "repository": {
     "type": "git",
@@ -52,7 +52,8 @@
     "chai": "^3.5.0",
     "jscs": "^3.0.3",
     "jshint": "^2.7.0",
-    "mocha": "^3.0.2"
+    "mocha": "^3.0.2",
+    "uglify-js": "^2.7.5"
   },
   "author": "Fedor Indutny <fedor@indutny.com>",
   "maintainers": [
