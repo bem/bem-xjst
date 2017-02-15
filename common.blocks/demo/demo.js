@@ -91,7 +91,7 @@ modules.define('demo', [ 'i-bem__dom', 'pretty', 'functions__debounce' ], functi
                 this._templates.setValue(data.template);
             }
 
-            if (data.bemjson) {
+            if (typeof data.bemjson === 'string') {
                 this._bemjson.setValue(data.bemjson);
             }
 
@@ -115,7 +115,7 @@ modules.define('demo', [ 'i-bem__dom', 'pretty', 'functions__debounce' ], functi
             if (hash[0] === 'bemhtml') {
                 hash[0] = 'template';
             }
-            
+
             // Allow plus sign as a space
             ret[hash[0]] = decodeURIComponent(hash[1].replace(/\+/g, ' '));
         }
