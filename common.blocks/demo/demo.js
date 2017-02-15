@@ -87,7 +87,7 @@ modules.define('demo', [ 'i-bem__dom', 'pretty', 'functions__debounce' ], functi
                 return false;
             }
 
-            if (data.template) {
+            if (typeof data.template === 'string') {
                 this._templates.setValue(data.template);
             }
 
@@ -110,6 +110,12 @@ modules.define('demo', [ 'i-bem__dom', 'pretty', 'functions__debounce' ], functi
 
         for (var i = 0; i < hashes.length; i++) {
             hash = hashes[i].split('=');
+
+            // Support param 'bemhtml' as alias param 'template'
+            if (hash[0] === 'bemhtml') {
+                hash[0] = 'template';
+            }
+            
             // Allow plus sign as a space
             ret[hash[0]] = decodeURIComponent(hash[1].replace(/\+/g, ' '));
         }
