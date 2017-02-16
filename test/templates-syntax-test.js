@@ -33,12 +33,42 @@ describe('Templates syntax', function() {
     '<b></b>');
   });
 
+  it('should work with any subpredicate order', function() {
+    test(function() {
+      tag().block('b').mod('m', 'v')('b');
+    },
+    { block: 'b', mods: { m: 'v' } },
+    '<b class="b b_m_v"></b>');
+  });
+
   it('should throw error when no block subpredicate', function() {
     assert.throws(function() {
       fixtures.compile(function() {
         // No block() subpredicate
         elem('e').tag()('b');
+        elemMod('m', 'v').tag()('b');
       });
     }, BEMXJSTError);
+  });
+
+  it('should throw error when no block custom subpredicate', function() {
+    assert.throws(function() {
+      fixtures.compile(function() {
+        // No block() subpredicate
+        match(function() { return 1; }).tag()('b');
+      });
+    }, BEMXJSTError);
+  });
+
+  it('should work without Error.captureStackTrace', function() {
+    var captureStackTrace = Error.captureStackTrace;
+    assert.throws(function() {
+      fixtures.compile(function() {
+        Error.captureStackTrace = false;
+        // No block() subpredicate
+        match(function() { return 1; }).tag()('b');
+      });
+    }, BEMXJSTError);
+    Error.captureStackTrace = captureStackTrace;
   });
 });

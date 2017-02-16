@@ -48,7 +48,6 @@ describe('BEMJSON elemMods', function() {
       '<div class="b2__e1">yes</div></div></div>');
   });
 
-
   it('should not treat elemMods as mods', function() {
     test(function() {}, {
       block: 'b1',

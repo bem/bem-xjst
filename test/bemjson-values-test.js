@@ -7,6 +7,11 @@ describe('BEMJSON values', function() {
     }, '', '');
   });
 
+  it('should work with false input', function() {
+    test(function() {
+    }, false, '');
+  });
+
   it('should work with null input', function() {
     test(function() {
     }, null, '');
