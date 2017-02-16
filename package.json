@@ -8,7 +8,8 @@
   "scripts": {
     "prepublish": "make",
     "bundle": "echo \"var fs = require('fs'), xjst = require('bem-xjst'); fs.writeFileSync('bundle.js', xjst.generate(''));\" | node",
-    "test": "make && make lint && mocha --reporter=spec test/*-test.js"
+    "test": "make && make lint && mocha --reporter=spec test/*-test.js && npm run size",
+    "size": "uglifyjs ./lib/bemhtml/runtime/bundle.js | gzip > ./bemhtml.gz && ls -ola ./bemhtml.gz | awk '{print \"BEMHTML Bundle Size:\", $4\" B\"}'"
   },
   "repository": {
     "type": "git",
@@ -28,6 +29,7 @@
     "jshint": "^2.7.0",
     "mocha": "2.5.3",
     "chai": "3.5.0",
-    "utile": "~0.2.0"
+    "utile": "~0.2.0",
+    "uglify-js": "^2.7.5"
   }
 }
