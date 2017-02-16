@@ -59,4 +59,16 @@ describe('Templates syntax', function() {
       });
     }, BEMXJSTError);
   });
+
+  it('should work without Error.captureStackTrace', function() {
+    var captureStackTrace = Error.captureStackTrace;
+    assert.throws(function() {
+      fixtures.compile(function() {
+        Error.captureStackTrace = false;
+        // No block() subpredicate
+        match(function() { return 1; }).tag()('b');
+      });
+    }, BEMXJSTError);
+    Error.captureStackTrace = captureStackTrace;
+  });
 });
