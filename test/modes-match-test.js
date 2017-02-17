@@ -34,4 +34,28 @@ describe('Modes match', function() {
       block: 'bla'
     }, '<span class="bla"></span>');
   });
+
+  it('should work with apply() inside match()',
+    function() {
+    test(function() {
+      block('b')(
+        mode('test')(function() { return true; }),
+
+        match(function() { return apply('test'); })
+          .content()(function() { return 'OK'; })
+      );
+    }, { block: 'b' }, '<div class="b">OK</div>');
+  });
+
+  it('should work with apply() with changes inside match()',
+    function() {
+    test(function() {
+      block('b')(
+        mode('test')(function() { return this.changes; }),
+
+        match(function() { return apply('test', { changes: true }); })
+          .content()(function() { return 'OK'; })
+      );
+    }, { block: 'b' }, '<div class="b">OK</div>');
+  });
 });
