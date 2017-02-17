@@ -1,5 +1,11 @@
 # BEM-XJST Changelog
 
+# 2017-02-17 [v7.7.1](https://github.com/bem/bem-xjst/compare/v7.7.0...v7.7.1), @miripiruni
+
+Commits:
+* [[`87f3abe50c`](https://github.com/bem/bem-xjst/commit/87f3abe50c)] - Merge pull request #415 from bem/issue-404__bundle-size-v7.x (Slava Oliyanchuk)
+
+
 # 2017-01-27 [v7.7.0](https://github.com/bem/bem-xjst/compare/v7.6.4...v7.7.0), @miripiruni
 
 Migration tool and Static linter introduced. See [readme](https://github.com/bem/bem-xjst/blob/master/migration/README.md).
