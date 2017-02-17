@@ -1,5 +1,38 @@
 # BEM-XJST Changelog
 
+# 2016-02-17 [v8.6.1](https://github.com/bem/bem-xjst/compare/v8.6.0...v8.6.1), @miripiruni
+
+1. CI check: BEMHML and BEMTREE bundle size after gzip. Now you can see it in Travis log.
+2. Bundle size reduced (–6%).
+3. Now bem-xjst in Node.js used without bundling via browserify.
+4. BEMHTML.renderMix fixed.
+5. Coverage increased to 100%.
+
+Commits:
+* [[`91b5abea50`](https://github.com/bem/bem-xjst/commit/91b5abea50)] - **BEMXJST**: allow apply() inside match() (fix for #309) (miripiruni)
+* [[`4eabbfe5a8`](https://github.com/bem/bem-xjst/commit/4eabbfe5a8)] - **BEMXJST**: smaller runUnescaped (miripiruni)
+* [[`155fc64253`](https://github.com/bem/bem-xjst/commit/155fc64253)] - **ClassBuilder**: buildElemClass always used with modVal (miripiruni)
+* [[`06310a7b1d`](https://github.com/bem/bem-xjst/commit/06310a7b1d)] - More optimizations (miripiruni)
+* [[`8e6f1395a4`](https://github.com/bem/bem-xjst/commit/8e6f1395a4)] - **BEMHTML**: _shortTagCloser definition fix (miripiruni)
+* [[`feeb97192f`](https://github.com/bem/bem-xjst/commit/feeb97192f)] - **BEMXJST**: localBody fn compress; sharedContext compress (miripiruni)
+* [[`fb2b63f09d`](https://github.com/bem/bem-xjst/commit/fb2b63f09d)] - **CI**: bundle size after uglifyjs (miripiruni)
+* [[`b1e459fa17`](https://github.com/bem/bem-xjst/commit/b1e459fa17)] - **BEMHTML**: get rid of unused variable and curly brackets (miripiruni)
+* [[`3af967b7bf`](https://github.com/bem/bem-xjst/commit/3af967b7bf)] - **BEMHTML**: inline renderNoTag function (miripiruni)
+* [[`26361d748b`](https://github.com/bem/bem-xjst/commit/26361d748b)] - **Context**: Remove unused _onceRef (miripiruni)
+* [[`fc5b329ac4`](https://github.com/bem/bem-xjst/commit/fc5b329ac4)] - More squeeze (miripiruni)
+* [[`43a3cb71fd`](https://github.com/bem/bem-xjst/commit/43a3cb71fd)] - Compact utils.fnToString (miripiruni)
+* [[`a044604aba`](https://github.com/bem/bem-xjst/commit/a044604aba)] - Compact defaultBody function (miripiruni)
+* [[`7e49f78cad`](https://github.com/bem/bem-xjst/commit/7e49f78cad)] - Drop all optional function names (miripiruni)
+* [[`9ea4fa86ab`](https://github.com/bem/bem-xjst/commit/9ea4fa86ab)] - ***Revert*** "Error.captureStackTrace for IE" (miripiruni)
+* [[`ee703d61b3`](https://github.com/bem/bem-xjst/commit/ee703d61b3)] - More compress (miripiruni)
+* [[`529252328f`](https://github.com/bem/bem-xjst/commit/529252328f)] - **Tree**: minify method definition (miripiruni)
+* [[`40ca41d26c`](https://github.com/bem/bem-xjst/commit/40ca41d26c)] - **Tests**: case with any subpredicates order (miripiruni)
+* [[`0da1f697de`](https://github.com/bem/bem-xjst/commit/0da1f697de)] - Istanbul ignore else (miripiruni)
+* [[`6b91a4b1ba`](https://github.com/bem/bem-xjst/commit/6b91a4b1ba)] - **ExtendMatch**: removed unnecessary local call (miripiruni)
+* [[`ad9b2b7814`](https://github.com/bem/bem-xjst/commit/ad9b2b7814)] - More tests (miripiruni)
+* [[`a24357a0e9`](https://github.com/bem/bem-xjst/commit/a24357a0e9)] - **BEMHTML**: renderMix fixed (miripiruni)
+* [[`687969fb14`](https://github.com/bem/bem-xjst/commit/687969fb14)] - Use bem-xjst in Node.js without bundling via browserify (#407 and #408 fixed) (Slava Oliyanchuk)
+
 # 2016-01-27 [v8.6.0](https://github.com/bem/bem-xjst/compare/v8.5.2...v8.6.0), @miripiruni
 
 Migration tool and Static linter introduced. See [readme](https://github.com/bem/bem-xjst/blob/master/migration/README.md).
