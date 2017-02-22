@@ -17,6 +17,12 @@ describe('Modes match', function() {
     }, /Wrong.*match.*argument/);
   });
 
+  it('should’t work without match() argument', function() {
+    fail(function() {
+      block('b1').match()('123');
+    }, /.match.*must.*have.*argument/);
+  });
+
   it('should execute matches in right order', function() {
     test(function() {
       block('bla')(
