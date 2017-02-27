@@ -29,8 +29,8 @@
     "test:mocha": "mocha --reporter=spec test/*-test.js",
     "test:coverage": "./node_modules/.bin/istanbul cover -x '**/runtime-lint/**' ./node_modules/mocha/bin/_mocha -- -u bdd -R spec test/*-test.js",
     "size": "npm run size:bemhtml && npm run size:bemtree",
-    "size:bemhtml": "uglifyjs ./lib/bemhtml/bundle.js | gzip > ./bemhtml.gz && ls -ola ./bemhtml.gz | awk '{print \"BEMHTML Bundle Size:\", $4\" B\"}'",
-    "size:bemtree": "uglifyjs ./lib/bemtree/bundle.js | gzip > ./bemtree.gz && ls -ola ./bemtree.gz | awk '{print \"BEMTREE Bundle Size:\", $4\" B\"}'"
+    "size:bemhtml": "uglifyjs ./lib/bemhtml/bundle.js | gzip > ./bemhtml.gz && ls -ola ./bemhtml.gz | awk '{print \"BEMHTML Bundle Size:\", $4\" B\"}' && rm ./bemhtml.gz",
+    "size:bemtree": "uglifyjs ./lib/bemtree/bundle.js | gzip > ./bemtree.gz && ls -ola ./bemtree.gz | awk '{print \"BEMTREE Bundle Size:\", $4\" B\"}' && rm ./bemtree.gz"
   },
   "repository": {
     "type": "git",
