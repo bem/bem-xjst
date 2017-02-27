@@ -1,5 +1,15 @@
 # BEM-XJST Changelog
 
+# 2016-02-27 [v8.6.2](https://github.com/bem/bem-xjst/compare/v8.6.1...v8.6.2), @miripiruni
+
+Fixed bug with `match()` without argument. See issue [#418](https://github.com/bem/bem-xjst/issues/418).
+
+Commits:
+* [[`d6187fb28a`](https://github.com/bem/bem-xjst/commit/d6187fb28a)] - **TRIVIAL**: remove gziped artifacts after size test (miripiruni)
+* [[`0b5cb61800`](https://github.com/bem/bem-xjst/commit/0b5cb61800)] - Merge pull request #419 from bem/issue-418__match-argument (Slava Oliyanchuk)
+* [[`a834c30ddd`](https://github.com/bem/bem-xjst/commit/a834c30ddd)] - **TREE**: Match must have an argument (#418 fixed) (miripiruni)
+
+
 # 2016-02-17 [v8.6.1](https://github.com/bem/bem-xjst/compare/v8.6.0...v8.6.1), @miripiruni
 
 1. CI check: BEMHML and BEMTREE bundle size after gzip. Now you can see it in Travis log.
