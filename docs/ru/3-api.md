@@ -9,9 +9,10 @@
   - [Опциональные закрывающие теги](#Опциональные-закрывающие-теги)
   - [Атрибуты без кавычек](#Атрибуты-без-кавычек)
   - [Экранирование](#Экранирование)
-  - [Расширение BEMContext](#Расширение-bemcontext)
   - [Runtime проверки ошибок в шаблонах и входных данных](#runtime-проверки-ошибок-в-шаблонах-и-входных-данных)
   - [Режим production](#Режим-production)
+* [Подключение сторонних библиотек](#Подключение-сторонних-библиотек)
+* [Расширение BEMContext](#Расширение-bemcontext)
 * [Создание бандла](#Создание-бандла)
 
 ## Выбор движка, компиляция и применение шаблонов
@@ -341,39 +342,6 @@ var html = templates.apply(bemjson);
 
 Обратите внимание, что в `content.html` ожидается именно строка.
 
-### Расширение BEMContext
-
-Вы можете расширять `BEMContext`, чтобы использовать в теле шаблона пользовательские функции.
-
-```js
-var bemxjst = require('bem-xjst');
-var templates = bemxjst.bemhtml.compile('');
-
-// Расширяем прототип контекста
-templates.BEMContext.prototype.hi = function(name) {
-    return 'Hello, ' + name;
-};
-
-// Добавляем шаблоны
-templates.compile(function() {
-    block('b').content()(function() {
-        return this.hi('templates');
-    });
-});
-
-// Входные данные
-var bemjson = { block: 'b' };
-
-// Применяем шаблоны
-var html = templates.apply(bemjson);
-```
-
-В результате `html` будет содержать строку:
-
-```html
-<div class="b">Hello, templates</div>
-```
-
 ### Runtime проверки ошибок в шаблонах и входных данных
 
 Включив опцию `runtimeLint` вы можете отслеживать предупреждения о неправильных шаблонах и входных данных.
@@ -450,6 +418,111 @@ $ cat stderr.txt
 BEMXJST ERROR: cannot render block b1, elem undefined, mods {}, elemMods {} [TypeError: Cannot read property 'undef' of undefined]
 ```
 
+
+## Подключение сторонних библиотек
+
+Технологии [BEMTREE](api.ru.md#bemtree) и [BEMHTML](api.ru.md#bemhtml) поддерживают возможность подключения сторонних библиотек как глобально, так и для разных модульных систем с помощью опции [requires](api.ru.md#requires).
+
+Для подключения укажите название библиотеки и в зависимости от используемой модульной системы:
+
+* имя глобальной переменной;
+* имя модуля из YModules;
+* путь к модулю для CommonJS.
+
+```js
+{
+    requires: {
+        'lib-name': {
+            globals: 'libName',           // Название переменной в глобальной видимости
+            ym: 'lib-name',               // Имя модуля из YModules
+            commonJS: 'path/to/lib-name'  // Путь к модулю CommonJS относительно собираемого файла
+        }
+    }
+}
+```
+
+В шаблонах модули будут доступны с помощью метода `this.require`, например:
+
+```js
+block('button').content()(function () {
+    var lib = this.require('lib-name');
+
+    return lib.hello();
+});
+```
+
+Не обязательно указывать все модульные системы для подключения библиотеки.
+
+Например, можно указать зависимости глобально. В этом случае модуль всегда будет передаваться из глобальной переменной, даже если в среде исполнения будет модульная система.
+
+```js
+{
+    requires: {
+        'lib-name': {
+            globals: 'dependName' // Название переменной в глобальной видимости
+        }
+    }
+}
+```
+
+**Пример подключения библиотеки `moment`**
+
+Указывается путь к модулю:
+
+```js
+{
+    requires: {
+        moment: {
+            commonJS: 'moment',  // Путь к модулю CommonJS относительно собираемого файла
+        }
+    }
+}
+```
+
+В шаблонах модуль будет доступен с помощью метода `this.require('moment')`. Код шаблона пишется один раз, одинаково для исполнения в браузере и в `Node.js`:
+
+```js
+block('post').elem('data').content()(function() {
+    var moment = this.require('moment');  // Библиотека `moment`
+
+    return moment(this.ctx.date) // Время в ms, полученное с сервера
+        .format('YYYY-MM-DD HH:mm:ss');
+});
+```
+
+
+### Расширение BEMContext
+
+Вы можете расширять `BEMContext`, чтобы использовать в теле шаблона пользовательские функции.
+
+```js
+var bemxjst = require('bem-xjst');
+var templates = bemxjst.bemhtml.compile('');
+
+// Расширяем прототип контекста
+templates.BEMContext.prototype.hi = function(name) {
+    return 'Hello, ' + name;
+};
+
+// Добавляем шаблоны
+templates.compile(function() {
+    block('b').content()(function() {
+        return this.hi('templates');
+    });
+});
+
+// Входные данные
+var bemjson = { block: 'b' };
+
+// Применяем шаблоны
+var html = templates.apply(bemjson);
+```
+
+В результате `html` будет содержать строку:
+
+```html
+<div class="b">Hello, templates</div>
+```
 
 ## Создание бандла
 

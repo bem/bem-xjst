@@ -9,9 +9,10 @@
   - [Optional End Tags](#optional-end-tags)
   - [Unquoted attributes](#unquoted-attributes)
   - [Escaping](#escaping)
-  - [Extending BEMContext](#extending-bemcontext)
   - [Runtime linting](#runtime-linting)
   - [Production mode](#production-mode)
+* [Using thirdparty libraries](#using-thirdparty-libraries)
+* [Extending BEMContext](#extending-bemcontext)
 * [Bundling](#bundling)
 
 ## Choosing an engine, compiling and applying templates
@@ -347,39 +348,6 @@ In this case `content.html` will be rendered as is:
 
 Notice that in `content.html` expected only string type.
 
-### Extending BEMContext
-
-You can extend `BEMContext` in order to use user-defined functions in the template body.
-
-```js
-var bemxjst = require('bem-xjst');
-var templates = bemxjst.bemhtml.compile('');
-
-// Extend the context prototype
-templates.BEMContext.prototype.hi = function(name) {
-    return 'Hello, ' + name;
-};
-
-// Add templates
-templates.compile(function() {
-    block('b').content()(function() {
-        return this.hi('templates');
-    });
-});
-
-// Input data
-var bemjson = { block: 'b' };
-
-// Apply templates
-var html = templates.apply(bemjson);
-```
-
-The resulting `html` contains the string:
-
-```html
-<div class="b">Hello, templates</div>
-```
-
 ### Runtime linting
 
 By turning on `runtimeLint` option you can get warnings about wrong
@@ -454,6 +422,109 @@ $ cat stdout.txt
 
 $ cat stderr.txt
 BEMXJST ERROR: cannot render block b1, elem undefined, mods {}, elemMods {} [TypeError: Cannot read property 'undef' of undefined]
+```
+
+### Using thirdparty libraries
+
+BEMTREE and BEMHTML allows you using thirdparty libraries as well as a global
+dependencies and different modular systems.
+
+For example:
+
+```js
+{
+    requires: {
+        'lib-name': {
+            globals: 'libName',           // Variable name from global scope
+            ym: 'lib-name',               // Module name from YModules
+            commonJS: 'path/to/lib-name'  // path to CommonJS library
+        }
+    }
+}
+```
+
+`lib-name` module will be accessible in templates body like this:
+
+```js
+block('button').content()(function () {
+    var lib = this.require('lib-name');
+
+    return lib.hello();
+});
+```
+
+It’s necessary to specify each environment you want to expose library to.
+
+E.g. if you specify just global scope the library will only be available as global variable even though some module system will be present in runtime.
+
+```js
+{
+    requires: {
+        'lib-name': {
+            globals: 'dependName' // Variable name from global scope
+        }
+    }
+}
+```
+
+Example of using `moment.js` library:
+
+You don’t need to to provide path to module:
+
+```js
+{
+    requires: {
+        moment: {
+            commonJS: 'moment',  // path to CommonJS module, relative bundle file
+        }
+    }
+}
+```
+
+In templates body the module will be acessible as `this.require('moment')`.
+You can use the template in any browser or in `Node.js`:
+
+```js
+block('post').elem('data').content()(function() {
+    var moment = this.require('moment');
+
+    return moment(this.ctx.date) // Time in ms from server
+        .format('YYYY-MM-DD HH:mm:ss');
+});
+```
+
+
+### Extending BEMContext
+
+You can extend `BEMContext` in order to use user-defined functions in the template body.
+
+```js
+var bemxjst = require('bem-xjst');
+var templates = bemxjst.bemhtml.compile('');
+
+// Extend the context prototype
+templates.BEMContext.prototype.hi = function(name) {
+    return 'Hello, ' + name;
+};
+
+// Add templates
+templates.compile(function() {
+    block('b').content()(function() {
+        return this.hi('templates');
+    });
+});
+
+// Input data
+var bemjson = { block: 'b' };
+
+// Apply templates
+var html = templates.apply(bemjson);
+```
+
+The resulting `html` contains the string:
+
+```html
+<div class="b">Hello, templates</div>
 ```
 
 
