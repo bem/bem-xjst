@@ -39,4 +39,20 @@ describe('Modes prependContent', function() {
     { block: 'b', content: 'test' },
     '<div class="b">42</div>');
   });
+
+  it('should prepend non simple values to content', function() {
+    test(function() {
+      block('foo').prependContent()({ elem: 'test' });
+    },
+    { block: 'foo' },
+    '<div class="foo"><div class="foo__test"></div></div>');
+  });
+
+  it('should prepend function to content', function() {
+    test(function() {
+      block('foo').prependContent()(function() { return { elem: 'test' }; });
+    },
+    { block: 'foo' },
+    '<div class="foo"><div class="foo__test"></div></div>');
+  });
 });
