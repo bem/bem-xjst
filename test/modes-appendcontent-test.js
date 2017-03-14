@@ -40,4 +40,20 @@ describe('Modes appendContent', function() {
     { block: 'button', content: 'test' },
     '<div class="button"><span class="tmpl_1"></span>tmpl_2</div>');
   });
+
+  it('should append non simple values to content', function() {
+    test(function() {
+      block('foo').appendContent()({ elem: 'test' });
+    },
+    { block: 'foo' },
+    '<div class="foo"><div class="foo__test"></div></div>');
+  });
+
+  it('should append function to content', function() {
+    test(function() {
+      block('foo').appendContent()(function() { return { elem: 'test' }; });
+    },
+    { block: 'foo' },
+    '<div class="foo"><div class="foo__test"></div></div>');
+  });
 });
