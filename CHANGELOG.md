@@ -1,6 +1,16 @@
 # BEM-XJST Changelog
 
-# 2016-02-27 [v8.6.2](https://github.com/bem/bem-xjst/compare/v8.6.1...v8.6.2), @miripiruni
+# 2017-02-27 [v8.6.3](https://github.com/bem/bem-xjst/compare/v8.6.2...v8.6.3), @miripiruni
+
+Fixed bug with function template body and appendContent()/prependContent(). See issue #422.
+
+Commits:
+* [[`92ba4570eb`](https://github.com/bem/bem-xjst/commit/92ba4570eb)] - Merge pull request #425 from bem/issue-422__append-prepend-bug (Slava Oliyanchuk)
+* [[`79602b94f6`](https://github.com/bem/bem-xjst/commit/79602b94f6)] - **TREE**: fixed issue #422 append/prepend content with function body (miripiruni)
+* [[`4adfc677b0`](https://github.com/bem/bem-xjst/commit/4adfc677b0)] - **Trivial**: node 7 in Travis (miripiruni)
+
+
+# 2017-02-27 [v8.6.2](https://github.com/bem/bem-xjst/compare/v8.6.1...v8.6.2), @miripiruni
 
 Fixed bug with `match()` without argument. See issue [#418](https://github.com/bem/bem-xjst/issues/418).
 
@@ -10,7 +20,7 @@ Commits:
 * [[`a834c30ddd`](https://github.com/bem/bem-xjst/commit/a834c30ddd)] - **TREE**: Match must have an argument (#418 fixed) (miripiruni)
 
 
-# 2016-02-17 [v8.6.1](https://github.com/bem/bem-xjst/compare/v8.6.0...v8.6.1), @miripiruni
+# 2017-02-17 [v8.6.1](https://github.com/bem/bem-xjst/compare/v8.6.0...v8.6.1), @miripiruni
 
 1. CI check: BEMHML and BEMTREE bundle size after gzip. Now you can see it in Travis log.
 2. Bundle size reduced (–6%).
@@ -43,7 +53,7 @@ Commits:
 * [[`a24357a0e9`](https://github.com/bem/bem-xjst/commit/a24357a0e9)] - **BEMHTML**: renderMix fixed (miripiruni)
 * [[`687969fb14`](https://github.com/bem/bem-xjst/commit/687969fb14)] - Use bem-xjst in Node.js without bundling via browserify (#407 and #408 fixed) (Slava Oliyanchuk)
 
-# 2016-01-27 [v8.6.0](https://github.com/bem/bem-xjst/compare/v8.5.2...v8.6.0), @miripiruni
+# 2017-01-27 [v8.6.0](https://github.com/bem/bem-xjst/compare/v8.5.2...v8.6.0), @miripiruni
 
 Migration tool and Static linter introduced. See [readme](https://github.com/bem/bem-xjst/blob/master/migration/README.md).
 
@@ -58,7 +68,7 @@ Commits:
 * [[`960c604862`](https://github.com/bem/bem-xjst/commit/960c604862)] - Runtime lint readme (Slava Oliyanchuk)
 * [[`a4146c1c94`](https://github.com/bem/bem-xjst/commit/a4146c1c94)] - **Deps**: Throw away minimalistic-assert dependency (#398) (Slava Oliyanchuk)
 
-# 2016-01-10 [v8.5.2](https://github.com/bem/bem-xjst/compare/v8.5.1...v8.5.2), @miripiruni
+# 2017-01-10 [v8.5.2](https://github.com/bem/bem-xjst/compare/v8.5.1...v8.5.2), @miripiruni
 
 This release is port of v7.6.4.
 
