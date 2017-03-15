@@ -1,5 +1,12 @@
 # BEM-XJST Changelog
 
+# 2017-03-15 [v8.6.4](https://github.com/bem/bem-xjst/compare/v8.6.3...v8.6.4), @miripiruni
+
+Commits:
+* [[`96bcd16fcc`](https://github.com/bem/bem-xjst/commit/96bcd16fcc)] - Merge pull request #426 from bem/do-not-require-in-runtime (Slava Oliyanchuk)
+* [[`d6323faa7c`](https://github.com/bem/bem-xjst/commit/d6323faa7c)] - Compiler .generate(): do not require in runtime (miripiruni)
+
+
 # 2017-02-27 [v8.6.3](https://github.com/bem/bem-xjst/compare/v8.6.2...v8.6.3), @miripiruni
 
 Fixed bug with function template body and appendContent()/prependContent(). See issue #422.
