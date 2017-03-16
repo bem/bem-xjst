@@ -1,5 +1,11 @@
 # BEM-XJST Changelog
 
+# 2017-03-16 [v7.7.2](https://github.com/bem/bem-xjst/compare/v7.7.1...v7.7.2), @miripiruni
+
+Commits:
+* [[`9c6fe5cdb5`](https://github.com/bem/bem-xjst/commit/9c6fe5cdb5)] - **BEMHTML**: unquotedAttrs should escape attributes (miripiruni)
+
+
 # 2017-02-17 [v7.7.1](https://github.com/bem/bem-xjst/compare/v7.7.0...v7.7.1), @miripiruni
 
 Commits:
