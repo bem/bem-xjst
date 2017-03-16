@@ -1,5 +1,13 @@
 # BEM-XJST Changelog
 
+# 2017-03-16 [v8.6.5](https://github.com/bem/bem-xjst/compare/v8.6.4...v8.6.5), @miripiruni
+
+Fixed bug with `unquotedAttrs: true` option: BEMHTML should escape attributes.
+
+Commits:
+* [[`fa054d71a2d`](https://github.com/bem/bem-xjst/commit/fa054d71a2dc6365484f15e53e045dbdbcd2ec1a)] - **BEMHTML**: unquotedAttrs should escape attributes (miripiruni)
+
+
 # 2017-03-15 [v8.6.4](https://github.com/bem/bem-xjst/compare/v8.6.3...v8.6.4), @miripiruni
 
 Commits:
