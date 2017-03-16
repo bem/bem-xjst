@@ -197,5 +197,12 @@ describe('BEMHTML engine tests', function() {
         '<div class=test></div>',
         { unquotedAttrs: true });
     });
+
+    it('should escape attribute if unquotedAttrs: true', function() {
+      test(function() {},
+        { block: 'b', attrs: { test: '"escape"me"' } },
+        '<div class=b test="&quot;escape&quot;me&quot;"></div>',
+        { unquotedAttrs: true });
+    });
   });
 });
