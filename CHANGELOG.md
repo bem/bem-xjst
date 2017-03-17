@@ -1,5 +1,13 @@
 # BEM-XJST Changelog
 
+# 2017-03-17 [v8.6.6](https://github.com/bem/bem-xjst/compare/v8.6.5...v8.6.6), @miripiruni
+
+`oninit` fixed. It was broken after bundle minification (v8.6.1)
+
+Comment:
+* [[`5fc91cbf49`](https://github.com/bem/bem-xjst/commit/5fc91cbf49)] - **BEMXJST**: revert exportApply optimization (miripiruni)
+
+
 # 2017-03-16 [v8.6.5](https://github.com/bem/bem-xjst/compare/v8.6.4...v8.6.5), @miripiruni
 
 Fixed bug with `unquotedAttrs: true` option: BEMHTML should escape attributes.
