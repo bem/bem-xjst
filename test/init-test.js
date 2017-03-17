@@ -55,4 +55,16 @@ describe('oninit', function() {
       }
     }, '[4.[3.[0.<div class="b1">][2.[1.<div class="b2">]</div>]</div>]]');
   });
+
+  it('should use global object as `this`', function() {
+    test(function() {
+      oninit(function() {
+        this._something = { blah: 42 };
+      });
+      block('b1').replace()(function() {
+        /* global _something */
+        return _something.blah;
+      });
+    }, { block: 'b1' }, '42');
+  });
 });
