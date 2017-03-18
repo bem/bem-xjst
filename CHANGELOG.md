@@ -1,5 +1,13 @@
 # BEM-XJST Changelog
 
+# 2017-03-19 [v8.6.7](https://github.com/bem/bem-xjst/compare/v8.6.6...v8.6.7), @miripiruni
+
+Technical release. Rollback commit: https://github.com/bem/bem-xjst/pull/429/files
+
+Commits:
+* [[`4b09e72281`](https://github.com/bem/bem-xjst/commit/4b09e72281)] - Merge pull request #429 from bem/rollback-recompileInput (Slava Oliyanchuk)
+* [[`20236743ce`](https://github.com/bem/bem-xjst/commit/20236743ce)] - Rollback function reuse in recompileInput (Vladimir Grinenko)
+
 # 2017-03-17 [v8.6.6](https://github.com/bem/bem-xjst/compare/v8.6.5...v8.6.6), @miripiruni
 
 `oninit` fixed. It was broken after bundle minification (v8.6.1)
