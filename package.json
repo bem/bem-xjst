@@ -53,7 +53,7 @@
     "jscs": "^3.0.3",
     "jshint": "^2.7.0",
     "mocha": "^3.0.2",
-    "uglify-js": "^2.7.5"
+    "uglify-js": "^2.8.14"
   },
   "author": "Fedor Indutny <fedor@indutny.com>",
   "maintainers": [
