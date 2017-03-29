@@ -2,7 +2,7 @@
 
 ## Установка
 
-Для использования bem-xjst вам понадобится [Node.js](https://nodejs.org/) v0.10 и выше и [npm](https://www.npmjs.com/).
+Для использования bem-xjst вам понадобится [Node.js](https://nodejs.org/) v0.10 (рекомендуется v6.x) и выше и [npm](https://www.npmjs.com/).
 
 Установка:
 
