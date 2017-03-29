@@ -96,6 +96,16 @@ describe('BEMJSON attrs', function() {
       '"></div>');
   });
 
+  it('should escape the accent grave (`) in values', function() {
+    test(function() {
+      block('b').attrs()(function() {
+        return { attribute: '``onmouseover=alert(1)' };
+      });
+    },
+    { block: 'b' },
+    '<div class="b" attribute="&#96;&#96;onmouseover=alert(1)"></div>');
+  });
+
   // TODO: https://github.com/bem/bem-xjst/issues/188
   xit('should what?', function() {
     test(function() {
