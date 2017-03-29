@@ -1,4 +1,4 @@
-var utils = require('../lib/bemxjst/utils');
+var utils = require('../lib/bemxjst').utils;
 
 describe('Utils', function() {
 

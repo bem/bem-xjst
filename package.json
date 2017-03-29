@@ -29,8 +29,8 @@
     "test:mocha": "mocha --reporter=spec test/*-test.js",
     "test:coverage": "./node_modules/.bin/istanbul cover ./node_modules/mocha/bin/_mocha -- -u bdd -R spec test/*-test.js",
     "size": "npm run size:bemhtml && npm run size:bemtree",
-    "size:bemhtml": "uglifyjs ./lib/bemhtml/bundle.js | gzip > ./bemhtml.gz && ls -ola ./bemhtml.gz | awk '{print \"BEMHTML Bundle Size:\", $4\" B\"}'",
-    "size:bemtree": "uglifyjs ./lib/bemtree/bundle.js | gzip > ./bemtree.gz && ls -ola ./bemtree.gz | awk '{print \"BEMTREE Bundle Size:\", $4\" B\"}'"
+    "size:bemhtml": "uglifyjs ./lib/bemhtml/bundle.js | gzip > ./bemhtml.gz && ls -ola ./bemhtml.gz | awk '{print \"BEMHTML Bundle Size:\", $4\" B\"}' && rm ./bemhtml.gz",
+    "size:bemtree": "uglifyjs ./lib/bemtree/bundle.js | gzip > ./bemtree.gz && ls -ola ./bemtree.gz | awk '{print \"BEMTREE Bundle Size:\", $4\" B\"}' && rm ./bemtree.gz"
   },
   "repository": {
     "type": "git",
@@ -44,12 +44,12 @@
   "dependencies": {
     "coa": "^1.0.1",
     "inherits": "^2.0.1",
-    "minimalistic-assert": "^1.0.0",
     "q": "^2.0.3"
   },
   "devDependencies": {
     "browserify": "^13.0.1",
     "istanbul": "^0.4.4",
+    "uglify-js": "^2.7.5",
     "chai": "^3.5.0",
     "jscs": "^3.0.3",
     "jshint": "^2.7.0",
