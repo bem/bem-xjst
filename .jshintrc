@@ -91,6 +91,11 @@
     "globals"       : {
         "module": true,
         "test": true,
-        "BEMXJSTError": true
+        "BEMXJSTError": true,
+        "utils": true,
+        "BemxjstEntity": true,
+        "inherits": true,
+        "Match": true,
+        "BEMXJST": true
     }
 }

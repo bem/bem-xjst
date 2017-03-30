@@ -1,6 +1,6 @@
 {
   "name": "bem-xjst",
-  "version": "7.7.4-beta-6",
+  "version": "7.7.4-beta-7",
   "description": "Declarative Template Engine for the browser and server",
   "keywords": [
     "template",
@@ -21,8 +21,8 @@
     "prepublish": "npm run make",
     "preversion": "bash scripts/update-authors.sh && git add AUTHORS && git commit -m \"update AUTHORS\" || true",
     "make": "npm run make:bemhtml && npm run make:bemtree",
-    "make:bemhtml": "browserify --standalone bemhtml lib/bemhtml/index.js -o lib/bemhtml/bundle.js",
-    "make:bemtree": "browserify --standalone bemtree lib/bemtree/index.js -o lib/bemtree/bundle.js",
+    "make:bemhtml": "cat lib/bemxjst/index.js lib/bemhtml/index.js > lib/bemhtml/bundle.js",
+    "make:bemtree": "cat lib/bemxjst/index.js lib/bemtree/index.js > lib/bemtree/bundle.js",
     "clean": "rm -f lib/bem{html,tree}/bundle.js",
     "test": "npm run make && npm run test:lint && npm run test:coverage && npm run size",
     "test:lint": "jscs `ls lib/*.js lib/**/*.js test/*.js | grep -v bundle` && jshint `ls lib/*.js lib/**/*.js test/*.js | grep -v bundle`",
@@ -46,7 +46,6 @@
     "q": "^2.0.3"
   },
   "devDependencies": {
-    "browserify": "^13.0.1",
     "istanbul": "^0.4.4",
     "uglify-js": "^2.7.5",
     "chai": "^3.5.0",

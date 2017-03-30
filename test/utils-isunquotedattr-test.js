@@ -1,9 +1,18 @@
-var utils = require('../lib/bemxjst').utils;
+/**
+ * regexp for check may attribute be unquoted
+ *
+ * https://www.w3.org/TR/html4/intro/sgmltut.html#h-3.2.2
+ * https://www.w3.org/TR/html5/syntax.html#attributes
+ */
+var UNQUOTED_ATTR_REGEXP = /^[:\w.-]+$/;
+
+var isUnquotedAttr = function(str) {
+  return str && UNQUOTED_ATTR_REGEXP.exec(str);
+};
 
 describe('Utils', function() {
-
   var attrCheck = function attrCheck(str) {
-    return !!utils.isUnquotedAttr(str);
+    return !!isUnquotedAttr(str);
   };
   describe('isUnquotedAttr()', function() {
     it('should return true with simple class', function() {

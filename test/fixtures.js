@@ -12,7 +12,7 @@ module.exports = function(engine) {
     if (!options) options = {};
 
     var engineName = options.engine || 'BEMHTML';
-    var Engine = require('../lib/' + engineName.toLowerCase());
+    var Engine = require('../lib/' + engineName.toLowerCase() + '/bundle');
     var api = new Engine(options);
     var template = {};
 
