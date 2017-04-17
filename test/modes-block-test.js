@@ -1,5 +1,6 @@
 var fixtures = require('./fixtures')('bemhtml');
 var test = fixtures.test;
+var assert = require('assert');
 
 describe('Modes block(blockName)', function() {
   it('should support block() match', function () {
@@ -61,5 +62,13 @@ describe('Modes block(blockName)', function() {
     },
     { block: 'button', cls: 'foo' },
     '<div class="button foo12"></div>');
+  });
+
+  it('should throw error when block in block', function() {
+    assert.throws(function() {
+      fixtures.compile(function() {
+        block('a').block('b').js()('blah');
+      });
+    });
   });
 });
