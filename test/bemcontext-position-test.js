@@ -178,4 +178,19 @@ describe('BEMContext this.position', function() {
       '<div class="b b_last_yes p_3"></div>' +
     '</div>');
   });
+
+  it('should properly set position with applyCtx()', function() {
+    test(function() {
+      block('a')(
+        def()(function() {
+          applyCtx({ block: 'session' });
+          applyCtx({ block: 'session' });
+          return applyNext();
+        }),
+        cls()(function() { return this.position; })
+      );
+    },
+    [ { block: 'a' }, { block: 'a' }, { block: 'a' } ],
+    '<div class="a 1"></div><div class="a 2"></div><div class="a 3"></div>');
+  });
 });
