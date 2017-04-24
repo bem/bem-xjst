@@ -11,6 +11,7 @@
   - [Экранирование](#Экранирование)
   - [Runtime проверки ошибок в шаблонах и входных данных](#runtime-проверки-ошибок-в-шаблонах-и-входных-данных)
   - [Режим production](#Режим-production)
+  - [exportName](#Настройка-exportname)
 * [Подключение сторонних библиотек](#Подключение-сторонних-библиотек)
 * [Расширение BEMContext](#Расширение-bemcontext)
 * [Создание бандла](#Создание-бандла)
@@ -418,6 +419,13 @@ $ cat stderr.txt
 BEMXJST ERROR: cannot render block b1, elem undefined, mods {}, elemMods {} [TypeError: Cannot read property 'undef' of undefined]
 ```
 
+### Настройка exportName
+
+Вы можете использовать опцию `exportName` чтобы выбрать имя переменной, в
+которой будет храниться движок. По умолчанию движки хранятся в BEMHTML и BEMTREE.
+
+За примером обратитесь к следующему разделу, про создание бандла.
+
 
 ## Подключение сторонних библиотек
 
@@ -530,13 +538,27 @@ var html = templates.apply(bemjson);
 
 ```js
 var bemxjst = require('bem-xjst');
-var bundle = bemxjst.bemhtml.generate(function() {
+var bemhtml = bemxjst.bemhtml;
+
+var fs = require('fs');
+
+var bundle = bemhtml.generate(function() {
     // пользовательские шаблоны
     // ...
+
+}, { exportName: 'bemhtml8x' });
+
+// Записываем бандл на файловую систему
+fs.writeFile('bundle.js', bundle, function(err) {
+  if (err) return console.error(err);
+  console.log('Done');
 });
 ```
 
-В `bundle` будет строка, содержащая JS-код ядра BEMHTML и пользовательских шаблонов.
+В результате вы получите файл `bundle.js`, в котором будет лежать код движка и
+пользовательские шаблоны. Код движка будет доступен в переменной bemhtml8x и
+полностью готов к исполению в браузерах, node.js или любой виртуальной машине
+JS.
 
 ***
 
