@@ -43,4 +43,28 @@ describe('Modes attrs', function() {
     },
     '<div class="button" type="button" disabled></div>');
   });
+
+  it('should not modify state of bemxjst if attrs non simple', function() {
+    test(function() {
+      block('*')
+        .match(function() { return this.block; })
+        .def()(function(n) {
+          return n.block === 'ERROR' ?  ('Good: ' + n.block) : applyNext();
+        });
+
+      block('image').attrs()({ alt: [ 'Река Ока' ] });
+    },
+    [
+      {
+        block: 'a',
+        content: { block: 'image' }
+      },
+      {
+        block: 'b',
+        content: { block: 'error' }
+      }
+    ],
+    '<div class="a"><div class="image" alt="Река Ока"></div></div>' +
+      '<div class="b"><div class="error"></div></div>');
+  });
 });
