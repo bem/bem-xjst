@@ -27,6 +27,7 @@
     "test": "npm run make && npm run test:lint && npm run test:coverage && npm run size",
     "test:lint": "jscs `ls lib/*.js lib/**/*.js test/*.js | grep -v bundle` && jshint `ls lib/*.js lib/**/*.js test/*.js | grep -v bundle`",
     "test:mocha": "mocha --reporter=spec test/*-test.js",
+    "test:watch": "mocha -w -b --check-leaks --globals BEMXJSTError,_something --throw-deprecation",
     "test:coverage": "./node_modules/.bin/istanbul cover -x '**/runtime-lint/**' ./node_modules/mocha/bin/_mocha -- -u bdd -R spec test/*-test.js",
     "size": "npm run size:bemhtml && npm run size:bemtree",
     "size:bemhtml": "uglifyjs ./lib/bemhtml/bundle.js | gzip > ./bemhtml.gz && ls -ola ./bemhtml.gz | awk '{print \"BEMHTML Bundle Size:\", $4\" B\"}' && rm ./bemhtml.gz",
