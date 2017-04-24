@@ -119,4 +119,17 @@ describe('BEMJSON js', function() {
         ' data-bem=\'{"b__e":{},"a":{}}\'></div>');
     });
   });
+
+  it('should render i-bem when mixed with elem with js', function() {
+    compile(function() {}, { elemJsInstances: true })
+      .apply({
+        block: 'b',
+        content: {
+          elem: 'e1',
+          mix: { elem: 'e2', js: true }
+        }
+      })
+      .should.equal('<div class="b"><div class="b__e1 b__e2 i-bem" ' +
+                    'data-bem=\'{"b__e2":{}}\'></div></div>');
+  });
 });
