@@ -1,5 +1,20 @@
 # BEM-XJST Changelog
 
+# 2017-04-28 [v8.6.9](https://github.com/bem/bem-xjst/compare/v8.6.8...v8.6.9), @miripiruni
+
+Fixed several bugs:
+1. wrong depth calculation (see issue #439)
+2. Absent i-bem when mix elem with js (issue #441)
+3. ApplyCtx and wrong position value (issue #202)
+
+Commits:
+* [[`da1e3aa691`](https://github.com/bem/bem-xjst/commit/da1e3aa691)] - **BEMXJST**: run() should revert depth (fix #439) (miripiruni)
+* [[`a23e36c1cc`](https://github.com/bem/bem-xjst/commit/a23e36c1cc)] - mocha watch npm command (miripiruni)
+* [[`808469f270`](https://github.com/bem/bem-xjst/commit/808469f270)] - **BEMHTML**: fix render i-bem when mix elem with js (fix #441) (miripiruni)
+* [[`8afc3109a3`](https://github.com/bem/bem-xjst/commit/8afc3109a3)] - **Compiler**: exportName option (fix for #397) (miripiruni)
+* [[`578c89a204`](https://github.com/bem/bem-xjst/commit/578c89a204)] - **BEMXJST**: applyCtx should reset position (miripiruni)
+
+
 # 2017-04-28 [v8.6.8](https://github.com/bem/bem-xjst/compare/v8.6.7...v8.6.8), @miripiruni
 
 BEMTREE and BEMHTML allows you using thirdparty libraries as well as a global dependencies and YModules, CommonJS modules and global depsendencies.
