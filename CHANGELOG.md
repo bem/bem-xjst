@@ -1,5 +1,15 @@
 # BEM-XJST Changelog
 
+# 2017-04-28 [v8.6.10](https://github.com/bem/bem-xjst/compare/v8.6.9...v8.6.10), @miripiruni
+
+Memory lick fixed. See https://github.com/bem/bem-xjst/issues/433
+
+This release is port of v4.4.2
+
+Commits:
+* [[`876b5cbfd6`](https://github.com/bem/bem-xjst/commit/876b5cbfd6)] - **Match**: Fixed this.restoreDepth call possibly (issue #433) (miripiruni)
+
+
 # 2017-04-28 [v8.6.9](https://github.com/bem/bem-xjst/compare/v8.6.8...v8.6.9), @miripiruni
 
 Fixed several bugs:
