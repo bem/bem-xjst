@@ -1,5 +1,14 @@
 # BEM-XJST Changelog
 
+# 2017-04-28 [v8.6.8](https://github.com/bem/bem-xjst/compare/v8.6.7...v8.6.8), @miripiruni
+
+BEMTREE and BEMHTML allows you using thirdparty libraries as well as a global dependencies and YModules, CommonJS modules and global depsendencies.
+See [docs](https://github.com/bem/bem-xjst/blob/master/docs/en/3-api.md#using-thirdparty-libraries) for more information.
+
+Commits:
+* [[`45d841594b`](https://github.com/bem/bem-xjst/commit/45d841594b)] - Merge pull request #424 from bem/issue-375__modules (Slava Oliyanchuk)
+
+
 # 2017-03-19 [v8.6.7](https://github.com/bem/bem-xjst/compare/v8.6.6...v8.6.7), @miripiruni
 
 Technical release. Rollback commit: https://github.com/bem/bem-xjst/pull/429/files
