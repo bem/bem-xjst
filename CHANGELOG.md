@@ -1,5 +1,13 @@
 # BEM-XJST Changelog
 
+# 2017-04-28 [v8.6.11](https://github.com/bem/bem-xjst/compare/v8.6.10...v8.6.11), @miripiruni
+
+Fixed bug: now BEMXJST exec new oninit functions on every compile (see issue #356).
+
+Commits:
+* [[`4d164a5f56`](https://github.com/bem/bem-xjst/commit/4d164a5f56)] - Merge pull request #437 from bem/issue-356__oninit (Slava Oliyanchuk)
+
+
 # 2017-04-28 [v8.6.10](https://github.com/bem/bem-xjst/compare/v8.6.9...v8.6.10), @miripiruni
 
 Memory lick fixed. See https://github.com/bem/bem-xjst/issues/433
