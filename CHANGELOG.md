@@ -1,10 +1,18 @@
 # BEM-XJST Changelog
 
+# 2017-05-03 [v7.7.4](https://github.com/bem/bem-xjst/compare/v7.7.3...v7.7.4), @miripiruni
+
+Memory lick fixed. See #433. This release is port of v4.4.2 and v8.6.10.
+
+Commits:
+* [[`0ed5efdf69`](https://github.com/bem/bem-xjst/commit/0ed5efdf69)] - **Match**: Fixed this.restoreDepth call possibly (issue #433) (miripiruni)
+
+
 # 2017-03-17 [v7.7.3](https://github.com/bem/bem-xjst/compare/v7.7.2...v7.7.3), @miripiruni
 
 `oninit` fixed. It was broken after bundle minification (v7.7.1)
 
-Comments:
+Commits:
 * [[`af0fb5e1b1`](https://github.com/bem/bem-xjst/commit/af0fb5e1b1)] - Merge pull request #428 from bem/revert-exportApply-optimization@v7.x (Slava Oliyanchuk)
 * [[`b9f9002019`](https://github.com/bem/bem-xjst/commit/b9f9002019)] - Add test (Vladimir Grinenko)
 * [[`9295d197c2`](https://github.com/bem/bem-xjst/commit/9295d197c2)] - **BEMXJST**: Revert exportApply optimization (Vladimir Grinenko)
