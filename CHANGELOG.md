@@ -1,5 +1,13 @@
 # BEM-XJST Changelog
 
+# 2017-05-03 [v6.7.1](https://github.com/bem/bem-xjst/compare/v6.7.0...v6.7.1), @miripiruni
+
+Memory lick fixed. See #433. This release is port of v4.4.2, v8.6.10, v7.7.4.
+
+Commits:
+* [[`da12186d01`](https://github.com/bem/bem-xjst/commit/da12186d01)] - **Match**: Fixed this.restoreDepth call possibly (issue #433) (miripiruni)
+
+
 # 2016-10-10 [v6.7.0](https://github.com/bem/bem-xjst/compare/v6.6.0...v6.7.0), @miripiruni
 
 New option `production`. When it set to `true` bem-xjst will render bemjson even if one template contains error.
