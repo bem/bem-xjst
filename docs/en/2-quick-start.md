@@ -40,10 +40,6 @@ The resulting `html` contains this string:
 <span class="text">First</span><span class="text">Second</span>
 ```
 
-***
-
 [Online demo](https://bem.github.io/bem-xjst/).
-
-***
 
 Read next: [API](3-api.md)

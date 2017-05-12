@@ -4,13 +4,10 @@ User-defined templates are a major part of bem-xjst. Template contains [predicat
 
 ## Template predicate
 
-For each node of the input tree, the template engine checks the conditions
-specified in the templates. These conditions are called subpredicates. They make
+For each node of the input tree, the template engine checks the conditions specified in the templates. These conditions are called subpredicates. They make
 up the template predicate.
 
-Conditions can be simple, such as checking the name of the block or element.
-They can also be complex, such as checking the values of user-defined modes
-in the current BEMJSON node.
+Conditions can be simple, such as checking the name of the block or element. They can also be complex, such as checking the values of user-defined modes in the current BEMJSON node.
 
 ## List of subpredicates
 
@@ -33,7 +30,9 @@ The name can be specified as[`'*'`](7-runtime.md#templates-for-any-entities).
 
 Each template must contain the block name subpredicate. Otherwise, the template engine throws an error: `BEMHTML error: block('…') not found in one of the templates`.
 
-Example. Subpredicate for the `link` block:
+**Example**
+
+Subpredicate for the `link` block:
 
 ```js
 block('link')
@@ -79,7 +78,7 @@ Checking the value of the block modifier.
 
 Templates are applied on the node, both to the block and to the corresponding modifiers.
 
-Example:
+**Example**
 
 ```js
 { block: 'page', mods: { type: 'index' } }
@@ -92,13 +91,17 @@ block('page').tag()('body');
 block('page').mod('type', 'index').mix()({ block: 'mixed' });
 ```
 
-Both templates are applied. Result:
+Both templates are applied.
+
+*Result of templating:*
 
 ```html
 <body class="page page_type_index mixed"></body>
 ```
 
-`modVal` checked for compliance after converting to String. Example:
+`modVal` checked for compliance after converting to String.
+
+**Example**
 
 ```js
 {
@@ -117,7 +120,9 @@ block('item')
   .tag()('small');
 ```
 
-The template are applied. Result:
+The template are applied.
+
+*Result of templating:*
 
 ```html
 <small class="item item_size_1"></small>
@@ -129,9 +134,8 @@ non-empty value of modifier will be applied.
 ```js
 block('a').mod('size').tag()('span');
 ```
-Template will be applied to BEMJSON node if block equals to 'a' and
-'size' modifier exists (equals neither to `undefined` nor to `''` nor to `false`
-nor to `null`).
+
+Template will be applied to BEMJSON node if block equals to 'a' and 'size' modifier exists (equals neither to `undefined` nor to `''` nor to `false` nor to `null`).
 
 ```js
 { block: 'a', mods: { size: 's' } },
@@ -139,6 +143,7 @@ nor to `null`).
 ```
 
 But templates will not be applied to entities:
+
 ```js
 { block: 'a', mods: { size: '', theme: 'dark' } }
 { block: 'a', mods: { theme: 'dark' } },
@@ -160,7 +165,7 @@ Checking the value of the element modifier.
 
 Templates are applied on the node, both to the element and to the corresponding modifiers.
 
-Example:
+**Example**
 
 ```js
 { block: 'page', elem: 'content', elemMods: { type: 'index' } }
@@ -173,7 +178,9 @@ block('page').elem('content').tag()('body');
 block('page').elem('content').elemMod('type', 'index').mix()({ block: 'mixed' });
 ```
 
-Both templates are applied. Result:
+Both templates are applied.
+
+*Result of templating:*
 
 ```html
 <body class="page__content page__content_type_index mixed"></body>
@@ -309,7 +316,7 @@ block('link')(
 );
 ```
 
-Result of BEMHTML templating:
+*Result of templating:*
 
 ```html
 <a class="link" href="https://yandex.ru">Yandex</a>
@@ -401,7 +408,9 @@ block('quote')(
 ```js
 { block: 'quote', content: 'I came, I saw, I templated.' }
 ```
-Result:
+
+*Result of templating:*
+
 ```html
 <div class="quote">“I came, I saw, I templated.”<div class="link"></div></div>
 ```
@@ -466,7 +475,7 @@ mods()(mods)
 
 Hash for modifiers of block.
 
-Example:
+**Example**
 
 ```js
 block('link').mods()({ type: 'download' });
@@ -509,7 +518,7 @@ elemMods()(elemMods)
 
 Hash for modifiers of element.
 
-Example:
+**Example**
 
 ```js
 block('link').elemMods()({ type: 'download' });
@@ -534,6 +543,7 @@ The result is `{}`.
 
 You can use addElemMods mode to add modifiers for element. addElemMods is
 shortcut of elemMods:
+
 ```js
 addElemMods()({ theme: 'dark' }); // This is equivalent to following:
 elemMods()(function() {
@@ -594,7 +604,7 @@ block('link').tag()('a');
 block('resource').replace()({ block: 'link' });
 ```
 
-Result of BEMHTML templating:
+*Result of templating:*
 
 ```html
 <a class="link"></a>
@@ -606,7 +616,7 @@ You can’t use `replace` for self-substitution with a wrapper, or it will loop 
 
 Wrap the current node in additional markup.
 
-Example:
+**Example**
 
 ```js
 // BEMJSON
@@ -627,7 +637,7 @@ block('quote').wrap()(function() {
 });
 ```
 
-Result of BEMHTML templating:
+*Result of templating:*
 
 ```html
 <div class="wrap"><div class="quote">Docendo discimus</div></div>
@@ -637,7 +647,7 @@ Result of BEMHTML templating:
 
 `extend` mode allows you to extend context of template.
 
-Example:
+**Example**
 
 ```js
 // BEMJSON
@@ -653,7 +663,7 @@ block('action').content()(function() {
 });
 ```
 
-Result of BEMHTML apply:
+*Result of BEMHTML apply:*
 
 ```html
 <div class="action">Sale 50%</div>
@@ -661,7 +671,7 @@ Result of BEMHTML apply:
 
 `extend()` may used as a data proxy to all child nodes.
 
-Example:
+**Example**
 
 ```js
 // Templates
@@ -672,6 +682,7 @@ block('*').attrs()(function() { return { life: this.meaning }; });
 ```js
 // BEMJSON
 { block: 'page', content: { block: 'wrap', content: { block: 'para' } }
+}
 ```
 
 ```html
@@ -679,10 +690,11 @@ block('*').attrs()(function() { return { life: this.meaning }; });
 life="42"></div></div></div>
 ```
 
-
 ## User-defined modes
 
-You can define your own mode and use it in the template body. Example:
+You can define your own mode and use it in the template body.
+
+**Example**
 
 ```js
 // BEMJSON
@@ -715,7 +727,7 @@ block('control')(
 );
 ```
 
-Result of BEMHTML templating:
+*Result of templating:*
 
 ```html
 <div class="control">
@@ -731,8 +743,8 @@ More information about [apply()](7-runtime.md#apply).
 
 In BEMTREE engine only data related modes are avaliable: [def](#def), [js](#js), [mix](#mix),
 [mods](#mods), [elemMods](#elemmods), [content](#content), [replace](#replace),
-[extend](#extend) and [wrap](#wrap) modes are used by the BEMTREE engine. User-defined modes can also be used. The other modes described in the documentation above can only be used in BEMHTML.
+[extend](#extend) and [wrap](#wrap) modes are used by the BEMTREE engine.
 
-***
+User-defined modes can also be used. The other modes described in the documentation above can only be used in BEMHTML.
 
 Read next: [What is available in the template body?](6-templates-context.md)

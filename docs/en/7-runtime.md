@@ -1,11 +1,11 @@
 # Runtime
 
-- [How the template engine runtime works](#how-the-template-engine-runtime-works)
-- [Templates for any entities](#templates-for-any-entities)
-- [Instructions for controlling runtime](#instructions-for-controlling-runtime)
-  - [apply](#apply): call the specified mode
-  - [applyNext](#applynext): apply templates with lower priority than the current one to the node
-  - [applyCtx](#applyctx): apply templates to any BEMJSON
+* [How the template engine runtime works](#how-the-template-engine-runtime-works)
+* [Templates for any entities](#templates-for-any-entities)
+* [Instructions for controlling runtime](#instructions-for-controlling-runtime)
+  * [apply](#apply): call the specified mode
+  * [applyNext](#applynext): apply templates with lower priority than the current one to the node
+  * [applyCtx](#applyctx): apply templates to any BEMJSON
 
 ## How the template engine runtime works
 
@@ -49,7 +49,7 @@ block('*')
     })
 ```
 
-Result of HTML rendering:
+*Result of templating:*
 
 ```html
 <div class="header"></div>
@@ -97,7 +97,7 @@ block('button')(
 );
 ```
 
-Result of BEMHTML templating:
+*Result of templating:*
 
 ```html
 pingpong
@@ -126,7 +126,7 @@ block('header').tag()(function() {
 });
 ```
 
-Result of templating:
+*Result of templating:*
 
 ```html
 <header class="header"></header><div class="footer"></div>
@@ -145,7 +145,7 @@ applyNext(newctx)
 
 The `applyNext` construction returns the result of the next highest priority template in the current mode for the current node.
 
-Example:
+**Example**
 
 ```js
 block('link').tag()('a');
@@ -182,7 +182,8 @@ block('header').def()(function() {
     }));
 });
 ```
-Result of templating:
+
+*Result of templating:*
 
 ```html
 <div class="layout header sticky"></div>

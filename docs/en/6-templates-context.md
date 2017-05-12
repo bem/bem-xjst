@@ -25,6 +25,7 @@ The template engine normalizes data about the current BEM entity. The current BE
 ```
 
 Fields with normalized data:
+
 * `this.block {String}` — the block in the current node, or the block of the BEM entity that provides the context for the current node.
 * `this.elem {String}` — element in the current node
 * `this.mods {Object}` — block modifiers that are explicitly defined in the current node
@@ -62,7 +63,7 @@ block('link').attr()(function() {
 });
 ```
 
-Result of BEMHTML templating:
+*Result of templating:*
 
 ```html
 <div class="company" id="yandex" name="yandex"></div>
@@ -82,10 +83,7 @@ Result of BEMHTML templating:
 this.xmlEscape(str)
 ```
 
-Returns the passed `str` string with the following XML symbols escaped: `&`,
-`<`, `>`. Normaly, expected that `str` is a `String`. But if `str` is
-`undefined`, `Null` or `NaN` an empty string returned. If `str` is of any other
-type it will be casted to String before escaping.
+Returns the passed `str` string with the following XML symbols escaped: `&`, `<`, `>`. Normaly, expected that `str` is a `String`. But if `str` is `undefined`, `Null` or `NaN` an empty string returned. If `str` is of any other type it will be casted to String before escaping.
 
 Usage example:
 
@@ -101,7 +99,7 @@ block('button').def()(function() {
 });
 ```
 
-Result of BEMHTML templating:
+*Result of templating:*
 
 ```html
 &lt;b&gt;&amp;&lt;/b&gt;
@@ -117,11 +115,7 @@ Result of BEMHTML templating:
 this.attrEscape(str)
 ```
 
-Returns the passed `str` string with the following characters for XML and HTML
-attributes escaped: `"` and `&`. Normaly, expected that `str` is a `String`.
-But if `str` is `undefined`, `Null` or `NaN` type you get empty string.
-If `str` is any other type you get native casting from it type to `String`
-before escaping.
+Returns the passed `str` string with the following characters for XML and HTML attributes escaped: `"` and `&`. Normaly, expected that `str` is a `String`. But if `str` is `undefined`, `Null` or `NaN` type you get empty string. If `str` is any other type you get native casting from it type to `String` before escaping.
 
 #### jsAttrEscape
 
@@ -133,10 +127,7 @@ before escaping.
 this.jsAttrEscape(str)
 ```
 
-Returns the passed `str` string with the following characters escaped: `'` and
-`&`. Normaly, expected that `str` is a `String`. But if `str` is `undefined`,
-`Null` or `NaN` type you get empty string. If `str` is any other type you get
-native casting from it type to `String` before escaping.
+Returns the passed `str` string with the following characters escaped: `'` and `&`. Normaly, expected that `str` is a `String`. But if `str` is `undefined`, `Null` or `NaN` type you get empty string. If `str` is any other type you get native casting from it type to `String` before escaping.
 
 By default, input data from the [`js`](4-data.md#js) field and data from the [`js`](5-templates-syntax.md#js) mode are escaped using this function.
 
@@ -147,6 +138,7 @@ By default, input data from the [`js`](4-data.md#js) field and data from the [`j
 The position in the BEM tree (the `this.position` context field) is a natural number corresponding to the sequential number of the current (contextual) BEM entity in relation to its neighbors in the tree (peer entities).
 
 When calculating the position:
+
 * Numbering applies only to nodes of processed BEMJSON that correspond to BEM entities.
 * Other nodes are not given a position number.
 * Positions are numbered starting from 1.
@@ -248,7 +240,7 @@ block('input').content()(function() {
 });
 ```
 
-Result of BEMHTML templating:
+*Result of templating:*
 
 ```html
 <div class="input">
@@ -283,7 +275,7 @@ block('a').js()(function() {
 });
 ```
 
-Result of BEMHTML templating:
+*Result of templating:*
 
 ```html
 <div class="a i-bem" data-bem='{
@@ -359,14 +351,15 @@ As a result, `html` contains the string:
 
 The methods `apply`, `applyNext` and `applyCtx` are available in the body of templates. For more information, see the next section on [runtime](7-runtime.md).
 
-
 # Template function
 
 When body of template is function, it calls with two arguments:
+
 1. context of template (familiar to us as `this`)
 2. current BEMJSON node (familiar to us as `this.ctx`)
 
-Example:
+**Example**
+
 ```js
 block('link').attrs()(function(node, ctx) {
     return {
@@ -396,7 +389,5 @@ Moreover, template functions can be arrow functions:
 match((node, ctx) => (!node.mods.disabled && ctx.target))
 addAttrs()((node, ctx) => ({ href: ctx.url }))
 ```
-
-***
 
 Read next: [runtime](7-runtime.md)

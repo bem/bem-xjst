@@ -40,10 +40,6 @@ var html = templates.apply(bemjson);
 <span class="text">Первый</span><span class="text">Второй</span>
 ```
 
-***
-
 [Online демо](https://bem.github.io/bem-xjst/).
-
-***
 
 Читать далее: [API](3-api.md)

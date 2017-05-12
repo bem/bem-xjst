@@ -210,7 +210,7 @@ var bemjson = { tag: 'br' };
 var html = templates.apply(bemjson);
 ```
 
-Result:
+*Result of templating:*
 
 ```html
 <br>
@@ -249,7 +249,7 @@ var bemjson = {
 var html = templates.apply(bemjson);
 ```
 
-Result:
+*Result of templating:*
 
 ```html
 <table><tr><th>table header<td>table cell</table>
@@ -278,18 +278,17 @@ var bemjson = { block: 'b', attrs: { name: 'test' } };
 var html = templates.apply(bemjson);
 ```
 
-Result:
+*Result of templating:*
 
 ```html
 <div class=b name=test></div>
 ```
 
-
 ### Escaping
 
 You can set `escapeContent` option to `true` to escape string values of `content` field with [`xmlEscape`](6-templates-context.md#xmlescape).
 
-Example:
+**Example**
 
 ```js
 var bemxjst = require('bem-xjst');
@@ -310,7 +309,7 @@ var bemjson = {
 var html = templates.apply(bemjson);
 ```
 
-Result:
+*Result of templating:*
 
 ```html
 <div class="danger">&amp;nbsp;&lt;script src="alert()"&gt;&lt;/script&gt;</div>
@@ -318,7 +317,7 @@ Result:
 
 If you want avoid escaping in content [use special value](4-data.md#content): `{ html: '…' }`.
 
-Example:
+**Example**
 
 ```js
 var bemxjst = require('bem-xjst');
@@ -384,15 +383,18 @@ var html = templates.apply([
 
 As usual you get result of applying templates in `html` variable. But in
 addition of this you can catch wargings in STDERR:
-```
+
+```js
 BEM-XJST WARNING: boolean attribute value: true in BEMJSON: { block: 'b', attrs: { one: true, two: 'true' } }
+
 Notice what bem-xjst behaviour changed: https://github.com/bem/bem-xjst/releases/tag/v4.3.3
 
 BEM-XJST WARNING: mods for elem in BEMJSON: { block: 'c', elem: 'e', mods: { test: 'opa' } }
+
 Notice what bem-xjst behaviour changed: https://github.com/bem/bem-xjst/releases/tag/v5.0.0
 
-BEM-XJST WARNING: looks like someone changed ctx.mods in BEMJSON: { block: 'mods-changes', mods: { one: 2, two: '2' } }
-old value of ctx.mod.one was 1
+BEM-XJST WARNING: looks like someone changed ctx.mods in BEMJSON: { block: 'mods-changes', mods: { one: 2, two: '2' } } old value of ctx.mod.one was 1
+
 Notice that you should change this.mods instead of this.ctx.mods in templates
 ```
 
@@ -400,7 +402,8 @@ Notice that you should change this.mods instead of this.ctx.mods in templates
 
 You can use option `production` to render whole BEMJSON even if one template contains error.
 
-Example:
+**Example**
+
 ```js
 var template = bemxjst.compile(function() {
   block('b1').attrs()(function() {
@@ -411,6 +414,7 @@ var template = bemxjst.compile(function() {
 }, { production: true });
 var html = template.apply({ block: 'page', content: { block: 'b1' } });
 ```
+
 `html` will equals `<div class="page"></div>`.
 
 Also in production mode bem-xjst will produce error messages to STDERR.
@@ -435,8 +439,7 @@ For example read next.
 
 ### Using thirdparty libraries
 
-BEMTREE and BEMHTML allows you using thirdparty libraries as well as a global
-dependencies and different modular systems.
+BEMTREE and BEMHTML allows you using thirdparty libraries as well as a global dependencies and different modular systems.
 
 For example:
 
@@ -502,7 +505,6 @@ block('post').elem('data').content()(function() {
 });
 ```
 
-
 ### Extending BEMContext
 
 You can extend `BEMContext` in order to use user-defined functions in the template body.
@@ -536,7 +538,6 @@ The resulting `html` contains the string:
 <div class="b">Hello, templates</div>
 ```
 
-
 ## Bundling
 
 The `generate` method generates JavaScript code that can be passed and run in the
@@ -550,7 +551,5 @@ var bundle = bemxjst.bemhtml.generate(function() {
 });
 ```
 Now `bundle` has a string containing the JavaScript code of the BEMHTML core and the user-defined templates.
-
-***
 
 Read next: [Input data](4-data.md)

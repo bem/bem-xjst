@@ -28,7 +28,9 @@ block(name)
 
 Каждый шаблон должен содержать подпредикат имени блока, иначе шаблонизатор бросит ошибку: `BEMHTML error: block('…') not found in one of the templates`.
 
-Пример. Подпредикат блока `link`:
+**Пример**
+
+Подпредикат блока `link`:
 
 ```js
 block('link')
@@ -73,7 +75,7 @@ mod(modName, modVal)
 
 На узел применятся шаблоны: как на блок, так и на соответствующие модификаторы.
 
-Пример:
+**Пример**
 
 ```js
 { block: 'page', mods: { type: 'index' } }
@@ -86,13 +88,17 @@ block('page').tag()('body');
 block('page').mod('type', 'index').mix()({ block: 'mixed' });
 ```
 
-Оба шаблона будут применены. Результат будет:
+Оба шаблона будут применены.
+
+*Результат шаблонизации:*
 
 ```html
 <body class="page page_type_index mixed"></body>
 ```
 
-`modVal` проверяются на соответствие после приведения к строке. Пример:
+`modVal` проверяются на соответствие после приведения к строке.
+
+**Пример**
 
 ```js
 {
@@ -111,7 +117,9 @@ block('item')
   .tag()('small');
 ```
 
-Шаблон будет применен, так как bem-xjst проверит значения `modVal` на соответствие после приведения их к строке. Результат будет:
+Шаблон будет применен, так как bem-xjst проверит значения `modVal` на соответствие после приведения их к строке.
+
+*Результат шаблонизации:*
 
 ```html
 <small class="item item_size_1"></small>
@@ -133,13 +141,13 @@ block('a').mod('size').tag()('span');
 ```
 
 Но шаблоны не будут применены к узлам:
+
 ```js
 { block: 'a', mods: { size: '', theme: 'dark' } }
 { block: 'a', mods: { theme: 'dark' } },
 { block: 'a', mods: { size: undefined } },
 { block: 'a', mods: {} }
 ```
-
 
 ### elemMod
 
@@ -155,7 +163,7 @@ elemMod(elemModName, elemModVal)
 
 На узел применятся шаблоны: как на элемент, так и на соответствующие модификаторы.
 
-Пример:
+**Пример**
 
 ```js
 { block: 'page', elem: 'content', elemMods: { type: 'index' } }
@@ -168,7 +176,9 @@ block('page').elem('content').tag()('body');
 block('page').elem('content').elemMod('type', 'index').mix()({ block: 'mixed' });
 ```
 
-Оба шаблона будут применены. Результат будет:
+Оба шаблона будут применены.
+
+*Результат шаблонизации:*
 
 ```html
 <body class="page__content page__content_type_index mixed"></body>
@@ -303,7 +313,7 @@ block('link')(
 );
 ```
 
-Результат шаблонизации BEMHTML будет:
+*Результат шаблонизации:*
 
 ```html
 <a class="link" href="https://yandex.ru">Яндекс</a>
@@ -392,10 +402,13 @@ block('quote')(
     appendContent({ block: 'link' });
 );
 ```
+
 ```js
 { block: 'quote', content: 'Пришел, увидел, отшаблонизировал' }
 ```
-Результатом шаблонизации будет строка:
+
+*Результатом шаблонизации будет строка:*
+
 ```html
 <div class="quote">«Пришел, увидел, отшаблонизировал»<div class="link"></div></div>
 ```
@@ -450,7 +463,6 @@ mix()(function() {
 });
 ```
 
-
 #### mods
 
 ```js
@@ -495,7 +507,6 @@ mods()(function() {
 });
 ```
 
-
 #### elemMods
 
 ```js
@@ -507,7 +518,7 @@ elemMods()(elemMods)
 
 Хеш модификаторов элемента.
 
-Пример использования:
+**Пример**
 
 ```js
 block('link').elemMods()({ type: 'download' });
@@ -532,13 +543,14 @@ block('b').elem('e').def()(function() {
 
 Для того, чтобы добавить модификаторы, вы можете использовать режим addElemMods, который
 является сокращением режима elemMods и выглядит более лаконично:
+
 ```js
 addElemMods()({ theme: 'dark' }); // Это полностью эквивалентно следующему:
 elemMods()(function() {
     this.elemMods = this.extend(applyNext(), { theme: 'dark' });
     return this.elemMods;
+  });
 ```
-
 
 #### js
 
@@ -591,7 +603,7 @@ block('link').tag()('a');
 block('resource').replace()({ block: 'link' });
 ```
 
-Результат шаблонизации BEMHTML:
+*Результат шаблонизации:*
 
 ```html
 <a class="link"></a>
@@ -603,7 +615,7 @@ block('resource').replace()({ block: 'link' });
 
 Обернуть текущий узел в дополнительную разметку.
 
-Пример:
+**Пример**
 
 ```js
 // BEMJSON
@@ -624,7 +636,7 @@ block('quote').wrap()(function() {
 });
 ```
 
-Результат шаблонизации BEMHTML:
+*Результат шаблонизации:*
 
 ```html
 <div class="wrap">
@@ -636,7 +648,7 @@ block('quote').wrap()(function() {
 
 Доопределить контекст исполнения шаблонов.
 
-Пример:
+**Пример**
 
 ```js
 // BEMJSON
@@ -652,7 +664,7 @@ block('action').content()(function() {
 });
 ```
 
-Результат шаблонизации BEMHTML:
+*Результат шаблонизации:*
 
 ```html
 <div class="action">Sale 50%</div>
@@ -661,7 +673,7 @@ block('action').content()(function() {
 `extend()` может использоваться для прокидывания данных во все дочерние узлы
 через контекст выполнения шаблонов.
 
-Пример:
+**Пример**
 
 ```js
 block('page').extend()({ meaning: 42 });
@@ -671,6 +683,7 @@ block('*').attrs()(function() { return { life: this.meaning }; });
 ```js
 // BEMJSON
 { block: 'page', content: { block: 'wrap', content: { block: 'para' } }
+}
 ```
 
 ```html
@@ -681,6 +694,8 @@ life="42"></div></div></div>
 ## Пользовательские режимы
 
 Вы можете определить свой режим и использовать его в теле шаблона.
+
+**Пример**
 
 ```js
 // BEMJSON
@@ -713,7 +728,7 @@ block('control')(
 );
 ```
 
-Результат шаблонизации BEMHTML:
+*Результат шаблонизации:*
 
 ```html
 <div class="control">
@@ -729,9 +744,8 @@ block('control')(
 
 В движке BEMTREE используются только режимы ориентированные на данные: [def](#def), [js](#js), [mix](#mix), [mods](#mods), [elemMods](#elemmods), [content](#content) и
 режимы-хелперы [replace](#replace), [extend](#extend) и [wrap](#wrap).
+
 Пользовательские режимы тоже могут быть использованы. Остальные режимы,
 ориентированные на HTML, описанные в документации выше, применимы только к BEMHTML.
-
-***
 
 Читать далее: [что доступно в теле шаблона?](6-templates-context.md)

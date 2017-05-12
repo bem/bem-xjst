@@ -57,7 +57,6 @@ Commits:
 Comment:
 * [[`5fc91cbf49`](https://github.com/bem/bem-xjst/commit/5fc91cbf49)] - **BEMXJST**: revert exportApply optimization (miripiruni)
 
-
 # 2017-03-16 [v8.6.5](https://github.com/bem/bem-xjst/compare/v8.6.4...v8.6.5), @miripiruni
 
 Fixed bug with `unquotedAttrs: true` option: BEMHTML should escape attributes.
@@ -65,13 +64,11 @@ Fixed bug with `unquotedAttrs: true` option: BEMHTML should escape attributes.
 Commits:
 * [[`fa054d71a2d`](https://github.com/bem/bem-xjst/commit/fa054d71a2dc6365484f15e53e045dbdbcd2ec1a)] - **BEMHTML**: unquotedAttrs should escape attributes (miripiruni)
 
-
 # 2017-03-15 [v8.6.4](https://github.com/bem/bem-xjst/compare/v8.6.3...v8.6.4), @miripiruni
 
 Commits:
 * [[`96bcd16fcc`](https://github.com/bem/bem-xjst/commit/96bcd16fcc)] - Merge pull request #426 from bem/do-not-require-in-runtime (Slava Oliyanchuk)
 * [[`d6323faa7c`](https://github.com/bem/bem-xjst/commit/d6323faa7c)] - Compiler .generate(): do not require in runtime (miripiruni)
-
 
 # 2017-02-27 [v8.6.3](https://github.com/bem/bem-xjst/compare/v8.6.2...v8.6.3), @miripiruni
 
@@ -82,7 +79,6 @@ Commits:
 * [[`79602b94f6`](https://github.com/bem/bem-xjst/commit/79602b94f6)] - **TREE**: fixed issue #422 append/prepend content with function body (miripiruni)
 * [[`4adfc677b0`](https://github.com/bem/bem-xjst/commit/4adfc677b0)] - **Trivial**: node 7 in Travis (miripiruni)
 
-
 # 2017-02-27 [v8.6.2](https://github.com/bem/bem-xjst/compare/v8.6.1...v8.6.2), @miripiruni
 
 Fixed bug with `match()` without argument. See issue [#418](https://github.com/bem/bem-xjst/issues/418).
@@ -91,7 +87,6 @@ Commits:
 * [[`d6187fb28a`](https://github.com/bem/bem-xjst/commit/d6187fb28a)] - **TRIVIAL**: remove gziped artifacts after size test (miripiruni)
 * [[`0b5cb61800`](https://github.com/bem/bem-xjst/commit/0b5cb61800)] - Merge pull request #419 from bem/issue-418__match-argument (Slava Oliyanchuk)
 * [[`a834c30ddd`](https://github.com/bem/bem-xjst/commit/a834c30ddd)] - **TREE**: Match must have an argument (#418 fixed) (miripiruni)
-
 
 # 2017-02-17 [v8.6.1](https://github.com/bem/bem-xjst/compare/v8.6.0...v8.6.1), @miripiruni
 
@@ -155,7 +150,6 @@ Render result with v7.6.3 (after fix): `{ block: 'b1', content: { html: '<br>' }
 Commits:
 * [[`f955d4080e`](https://github.com/bem/bem-xjst/commit/f955d4080e)] - **BEMTREE**: special unescaped html field from BEMJSON should render as is (miripiruni)
 
-
 # 2016-12-12 [v8.5.1](https://github.com/bem/bem-xjst/compare/v8.5.0...v8.5.1), @miripiruni
 
 Fixed bug: calculate position if block/elem was replaced via `replace()`. See [issue #394](https://github.com/bem/bem-xjst/issues/394).
@@ -199,7 +193,6 @@ Commits:
 * [[`6a0ea778cf`](https://github.com/bem/bem-xjst/commit/6a0ea778cf)] - Merge pull request #386 from bem/issues/385 (Slava Oliyanchuk)
 * [[`21e5716819`](https://github.com/bem/bem-xjst/commit/21e5716819)] - Provide arguments for extend() mode (Vladimir Grinenko)
 
-
 # 2016-11-28 [v8.4.0](https://github.com/bem/bem-xjst/compare/v8.3.1...v8.4.0), @miripiruni
 
 New option `unquotedAttrs`. See [docs](https://github.com/bem/bem-xjst/blob/master/docs/en/3-api.md#unquoted-attributes).
@@ -210,15 +203,15 @@ Commits:
 * [[`85512601d9`](https://github.com/bem/bem-xjst/commit/85512601d9)] - **Docs**: write about template arguments and arrow function (fix for #367) (miripiruni)
 * [[`7efbc32ba0`](https://github.com/bem/bem-xjst/commit/7efbc32ba0)] - **Docs**: def() parameter in JSDoc changed (Slava Oliyanchuk)
 
-
 # 2016-10-20 [v8.3.1](https://github.com/bem/bem-xjst/compare/v8.3.0...v8.3.1), @miripiruni
 
 `extend()` mode fixed. Read [documentation](https://github.com/bem/bem-xjst/blob/master/docs/en/5-templates-syntax.md#extend).
 
 In documentation:
- — description about `this.extend(o1, o2)` added
- — spelling fixed
- — description about production mode added
+
+* description about `this.extend(o1, o2)` added
+* spelling fixed
+* description about production mode added
 
 Commits:
 * [[`19c4789a05`](https://github.com/bem/bem-xjst/commit/19c4789a05)] - **Docs**: describe this.extend() fix for #355 (miripiruni)
@@ -230,12 +223,12 @@ Commits:
 * [[`efa1d9a8c4`](https://github.com/bem/bem-xjst/commit/efa1d9a8c4)] - **Bench**: template for v7.x added (miripiruni)
 * [[`53db045a94`](https://github.com/bem/bem-xjst/commit/53db045a94)] - changelog updated (miripiruni)
 
-
 # 2016-10-10 [v8.3.0](https://github.com/bem/bem-xjst/compare/v8.2.0...v8.3.0), @miripiruni
 
 New option `production`. When it set to `true` bem-xjst will render bemjson even if one template contains error.
 
-Example:
+**Example**
+
 ```js
 var template = bemxjst.compile(function() {
   block('b1').attrs()(function() {
@@ -262,7 +255,6 @@ BEMXJST ERROR: cannot render block b1, elem undefined, mods {}, elemMods {} [Typ
 
 Commits:
 * [[`cb6f9dff62`](https://github.com/bem/bem-xjst/commit/cb6f9dff62)] - **BEMXJST**: production option (fix for #298) (miripiruni)
-
 
 # 2016-10-06 [v8.2.0](https://github.com/bem/bem-xjst/compare/v8.1.0...v8.2.0), @miripiruni
 
@@ -297,7 +289,7 @@ var bemjson = {
 var html = templates.apply(bemjson);
 ```
 
-Result:
+*Result of templating:*
 
 ```html
 <table><tr><th>table header<td>table cell</table>
@@ -306,7 +298,6 @@ Result:
 Commits:
 * [[`207b3733de`](https://github.com/bem/bem-xjst/commit/207b3733de)] - Merge pull request #361 from bem/issue-360__optional-closing-tags (Slava Oliyanchuk)
 * [[`042dcb1385`](https://github.com/bem/bem-xjst/commit/042dcb1385)] - **BEMHTML**: Omit optional closing tags (fix for #360) (miripiruni)
-
 
 # 2016-10-06 [v8.1.0](https://github.com/bem/bem-xjst/compare/v8.0.0...v8.1.0), @miripiruni
 
@@ -323,7 +314,7 @@ mods()(mods)
 
 Hash for modifiers of block.
 
-Example:
+**Example**
 
 ```js
 block('link').mods()({ type: 'download' });
@@ -366,7 +357,7 @@ elemMods()(elemMods)
 
 Hash for modifiers of element.
 
-Example:
+**Example**
 
 ```js
 block('link').elemMods()({ type: 'download' });
@@ -603,10 +594,13 @@ block('quote')(
     appendContent({ block: 'link' }); // add more content to the end
 );
 ```
+
 ```js
 { block: 'quote', content: 'I came, I saw, I templated.' }
 ```
-Result:
+
+*Result of templating:*
+
 ```html
 <div class="quote">“I came, I saw, I templated.”<div class="link"></div></div>
 ```
@@ -658,11 +652,9 @@ Commits:
 
 Fixed bug with `{ html: '' }`. In 7.0.2 result is `[object Object]`. In 7.0.3: `''`.
 
-
 Commits:
 * [[`bc28643520`](https://github.com/bem/bem-xjst/commit/bc28643520)] - **BEMXJST**: work with empty string in html field (miripiruni)
 * [[`5bd2476ae5`](https://github.com/bem/bem-xjst/commit/5bd2476ae5)] - **Docs**: variable name fixed (miripiruni)
-
 
 # 2016-07-15, [v7.0.2](https://github.com/bem/bem-xjst/compare/v7.0.1...v7.0.2), @miripiruni
 
@@ -676,11 +668,13 @@ Fixed case with `html` and `tag` fields.
 ```
 
 Result with v7.0.1:
+
 ```html
 [object Object]
 ```
 
 Result with v7.0.2:
+
 ```html
 <script>console.log("hello html");</script>
 ```
@@ -691,7 +685,6 @@ Commits:
 * [[`6362bd9d54`](https://github.com/bem/bem-xjst/commit/6362bd9d54)] - v7.0.0 is deprecated (Slava Oliyanchuk)
 * [[`4c54ada780`](https://github.com/bem/bem-xjst/commit/4c54ada780)] - Merge pull request #288 from vithar/docs-anchors (Slava Oliyanchuk)
 
-
 # 2016-07-07, [v7.0.1](https://github.com/bem/bem-xjst/compare/v7.0.0...v7.0.1), @miripiruni
 
 Fixed issue with undefined nested mix.
@@ -700,7 +693,6 @@ v7.0.0 marked as deprecated because of #303.
 
 Commits:
 * [[`3b9c4220c6`](https://github.com/bem/bem-xjst/commit/3b9c4220c6)] - **BEMHTML**: Fix for #303 undefined nested mix (miripiruni)
-
 
 # 2016-06-27, [v7.0.0](https://github.com/bem/bem-xjst/compare/v6.5.2...v7.0.0), @miripiruni
 
@@ -711,7 +703,6 @@ Breaking changes:
 2. No more `once()` mode. You dont need it at all.
 3. Now `xhtml` option default value is `false`. But you can set it to `true` manualy.
 4. `modVal` and `elemModVal` cast to String before checking to match. See docs for examples.
-
 
 Commits:
 
@@ -737,11 +728,13 @@ block('b1').def()(function() {
 ```
 
 Result before fix (v6.5.1):
+
 ```html
 // empty string
 ```
 
 Result after fix (v6.5.2):
+
 ```html
 a1
 ```
@@ -770,7 +763,9 @@ Commits:
 
 # 2016-05-20, [v6.5.1](https://github.com/bem/bem-xjst/compare/v6.5.0...v6.5.1), @miripiruni
 
-Now bem-xjst trim and escape cls. Example:
+Now bem-xjst trim and escape cls.
+
+**Example**
 
 ```js
 // Template:
@@ -788,17 +783,18 @@ block('b1').elem('e1').content()(function() {
 ```
 
 Result before fix (v6.5.0):
+
 ```html
 <div class="b ">"></div>
 <div class="   hello    "></div>
 ```
 
 Result after fix (v6.5.1):
+
 ```html
 <div class="b &quot;>"></div>
 <div class="hello"></div>
 ```
-
 
 # 2016-05-20, [v6.5.0](https://github.com/bem/bem-xjst/compare/v6.4.3...v6.5.0), @miripiruni
 
@@ -822,11 +818,11 @@ var myFunction = function() {
 var templates = bemhtml.compile(myFunction);
 ```
 
-
 # 2016-05-20, [v6.4.3](https://github.com/bem/bem-xjst/compare/v6.4.2...v6.4.3), @miripiruni
 
 bem-xjst should not render attrs if it’s not hash. Strings, arrays, and etc.
-Example:
+
+**Example**
 
 ```js
 // BEMJSON:
@@ -834,19 +830,22 @@ Example:
 ```
 
 Result before fix (v6.4.2):
+
 ```html
 <div class="b" 0="1" 1="2"></div>
 ```
 
 Result after fix (v6.4.3):
+
 ```html
 <div class="b"></div>
 ```
 
-
 # 2016-05-20, [v6.4.2](https://github.com/bem/bem-xjst/compare/v6.4.1...v6.4.2), @miripiruni
 
-bem-xjst should not inherit mods from namesake parent block. Example:
+bem-xjst should not inherit mods from namesake parent block.
+
+**Example**
 
 ```js
 // BEMJSON:
@@ -858,16 +857,20 @@ bem-xjst should not inherit mods from namesake parent block. Example:
 ```
 
 Result before fix (v6.4.1):
+
 ```html
 <div class="b1 b1_a_1"><div class="b1_a_1"></div></div>
 ```
 
 Result after fix (v6.4.2):
+
 ```html
 <div class="b1 b1_a_1"><div class="b1"></div></div>
 ```
 
-bem-xjst should not match on removed mods. Example:
+bem-xjst should not match on removed mods.
+
+**Example**
 
 ```js
 // Template:
@@ -890,10 +893,10 @@ block('b1').mod('a', 'b').replace()(function() {
 Result before fix (v6.4.1): endless loop :(
 
 Result after fix (v6.4.2):
+
 ```html
 <div class="b1">content</div>
 ```
-
 
 * [[`3451467c5d`](https://github.com/bem/bem-xjst/commit/3451467c5d)] - **bemxjst**: should not inherit `mods` from namesake parent block (Dmitry Starostin)
 * [[`c2f697f71a`](https://github.com/bem/bem-xjst/commit/c2f697f71a)] - We don’t need it anymore (Vasiliy Loginevskiy)
@@ -902,7 +905,9 @@ Result after fix (v6.4.2):
 
 # 2016-05-11, [v6.4.1](https://github.com/bem/bem-xjst/compare/v6.4.0...v6.4.1), @miripiruni
 
-Bug fixed: in case of same block `mods` disappearing. Now bem-xjst keep it. Example:
+Bug fixed: in case of same block `mods` disappearing. Now bem-xjst keep it.
+
+**Example**
 
 ```js
 // Template:
@@ -921,11 +926,13 @@ block('b1').elem('e1').content()(function() {
 ```
 
 Result before fix (v6.4.0):
+
 ```html
 <div class="b1 b1_a_1"><div class="b1__e1">{}</div></div>
 ```
 
 Result after fix (v6.4.1):
+
 ```html
 <div class="b1 b1_a_1"><div class="b1__e1">{"a":1}</div></div>
 ```
@@ -943,7 +950,7 @@ New option for content escaping: `escapeContent`.
 
 In v6.4.0 `escapeContent` is set to `false` by default but will be inverted in one of the next major versions.
 
-Example:
+**Example**
 
 You can set `escapeContent` option to `true` to escape string values of `content` field with [`xmlEscape`](6-templates-context.md#xmlescape).
 
@@ -966,13 +973,13 @@ var bemjson = {
 var html = templates.apply(bemjson);
 ```
 
-Result:
+*Result of templating:*
+
 ```html
 <div class="danger">&amp;nbsp;&lt;script src="alert()"&gt;&lt;/script&gt;</div>
 ```
 
 If you want avoid escaping in content [use special value](4-data#content): `{ html: '…' }`.
-
 
 * [[`9bdb20479a`](https://github.com/bem/bem-xjst/commit/9bdb20479a)] - Merge pull request #217 from bem/escaping2 (Slava Oliyanchuk)
 * [[`9cb7249d03`](https://github.com/bem/bem-xjst/commit/9cb7249d03)] - Package name fixed (Slava Oliyanchuk)
@@ -982,7 +989,7 @@ If you want avoid escaping in content [use special value](4-data#content): `{ ht
 
 Improved error message about no block subpredicate.
 
-Example:
+**Example**
 
 ```bash
 $cat noblock.js
@@ -991,7 +998,6 @@ var bemhtml = bemxjst.bemhtml;
 var templates = bemhtml.compile(function() {
     tag()('span');
 });
-
 
 $ node noblock.js
 /Users/miripiruni/Documents/www/bem-xjst-errors/lib/compiler.js:59
@@ -1010,7 +1016,6 @@ BEMXJSTError: block(…) subpredicate is not found.
 ```
 
 * [[`3362992103`](https://github.com/bem/bem-xjst/commit/3362992103)] - Merge pull request #207 from bem/error-no-block (Slava Oliyanchuk)
-
 
 # 2016-03-13, [v6.3.0](https://github.com/bem/bem-xjst/compare/v6.3.0...v6.2.1), @miripiruni
 
@@ -1038,11 +1043,13 @@ var html = templates.apply(bemjson);
 ```
 
 Result with v6.2.x:
+
 ```html
 <div class="b__e" data-bem='{"b__e":{}}'></div>
 ```
 
 Result with v6.3.0:
+
 ```html
 <div class="b__e i-bem" data-bem='{"b__e":{}}'></div>
 ```
@@ -1051,7 +1058,6 @@ Notice that `i-bem` was added.
 
 * [[`d9f79c1855`](https://github.com/bem/bem-xjst/commit/d9f79c1855)] - Introduce elemInstances option (Vladimir Grinenko)
 * [[`d35758d452`](https://github.com/bem/bem-xjst/commit/d35758d452)] - **Docs**: anchors fixed (Slava Oliyanchuk)
-
 
 # 2016-03-08, [v6.2.1](https://github.com/bem/bem-xjst/compare/v6.2.1...v6.2.0), @miripiruni
 
@@ -1092,14 +1098,17 @@ Example for v6.2.0:
  var html = templates.apply(bemjson);
  ```
 
-Result:
+*Result of templating:*
+
  ```html
  <br>
  ```
 
 # 2016-03-24, [v6.1.1](https://github.com/bem/bem-xjst/compare/v6.1.0...v6.1.1), @miripiruni
 
-Fix for calc position. Example:
+Fix for calc position.
+
+**Example**
 
 ```js
 // BEMJSON
@@ -1211,7 +1220,7 @@ Data:
 [ { block: 'b', tag: 'em' }, { block: 'b' } ]
 ```
 
-6.x result: 
+6.x result:
 ```html
 <em class="b"></em><strong class="b"></strong>
 ```
@@ -1223,14 +1232,14 @@ Related: https://github.com/bem/bem-core/pull/805
 +15 test cases
 –1 bug
 
-
 ## Fixed (degradation)
 
 ### 1. bemhtml should duplicate block class if mix several block with mods to elem in the same block.
 
 Because block class must have for mix block with mods to block elem.
 
-Example:
+**Example**
+
 ```js
 ({
     block: 'b',
@@ -1289,12 +1298,10 @@ Example:
 
 [demo](http://miripiruni.github.io/bem-xjst/?bemhtml=&bemjson=(%7B%0A%20%20%20%20block%3A%20%27b%27%2C%0A%20%20%20%20mix%3A%20%5B%0A%20%20%20%20%20%20%20%20%7B%20block%3A%20%27b%27%2C%20mods%3A%20%7B%20m1%3A%20%27v1%27%20%7D%20%7D%2C%0A%20%20%20%20%20%20%20%20%7B%20block%3A%20%27b%27%2C%20mods%3A%20%7B%20m2%3A%20%27v2%27%20%7D%20%7D%0A%20%20%20%20%5D%0A%7D)%3B)
 
-
 5.1.0 result:
 ```html
 <div class="b b_m1_v1 b_m2_v2"></div>
 ```
-
 
 ### 3. bemhtml should not duplicate elem class if mix is the same elem.
 
@@ -1392,8 +1399,6 @@ Weird case, but for completeness why not to check it.
 <div class="b"><div class="b__e"></div></div>
 ```
 
-
-
 ### 6. bemhtml should not duplicate elem class if mix is the same block elem with elemMods.
 
 ```js
@@ -1452,7 +1457,6 @@ Weird case, but for completeness why not to check it.
 <div class="b__e b__e_modname_modval"></div>
 ```
 
-
 ## “Who cares” cases (zero cost but enjoyable)
 
 Weird cases, but for completeness why not to check it.
@@ -1489,7 +1493,6 @@ I believe that developers should not want to do this.
 ```html
 <div class="b b_m_v b_m_v"></div>
 ```
-
 
 ### 9. bemhtml should duplicate elem elemMod class
 
@@ -1533,9 +1536,8 @@ I believe that developers should not want to do this.
 </div>
 ```
 
-
 # 2016-01-29, [v5.0.0](https://github.com/bem/bem-xjst/compare/v4.3.3...v5.0.0), @miripiruni
-**BEMHTML breaking changes**: behavior mods and elemMods BEMJSON fields are changed. 
+**BEMHTML breaking changes**: behavior mods and elemMods BEMJSON fields are changed.
 
 BEM-XJST now should not treat mods as elemMods if block exist.
 ```js
@@ -1599,8 +1601,10 @@ templates.apply({ block: 'b' });
 // Result: { block: 'b1', content: 'yay' }
 ```
 
+Now supports changing elemMods in runtime.
 
-Now supports changing elemMods in runtime. Example:
+**Example**
+
 ```js
 // Template
 block('b1').elem('e1').def()(function() {
@@ -1613,7 +1617,11 @@ block('b1').elem('e1').def()(function() {
 '<div class="b1__e1 b1__e1_a_b"</div>'
 ```
 
-BEMTREE will return Boolean as is. Example:
+BEMTREE will return Boolean as is.
+
+**Example**
+
+
 ```js
 // Input BEMJSON
 [
@@ -1660,7 +1668,6 @@ Skip mix item if falsy:
 '<div class="b1 b2"></div>'
 ```
 
-
 Commits:
 * [[`a48aeab5a6`](https://github.com/bem/bem-xjst/commit/a48aeab5a6)] - **BEMHTML**: should properly render attr values (miripiruni)
 * [[`e8e468dce7`](https://github.com/bem/bem-xjst/commit/e8e468dce7)] - **BEMHTML**: skip mix item if falsy (miripiruni)
@@ -1668,7 +1675,11 @@ Commits:
 ## 2016-01-19, [v4.3.2](https://github.com/bem/bem-xjst/compare/v4.3.1...v4.3.2), @miripiruni
 From this moment we have intelligible changelog. Hooray!
 
-`elem === ''` means no elem. Example:
+`elem === ''` means no elem.
+
+**Example**
+
+
 ```js
 // BEMJSON:
 { block: 'b2', elem: '' }
@@ -1676,7 +1687,10 @@ From this moment we have intelligible changelog. Hooray!
 '<div class="b2"></div>'
 ```
 
-Now BEM-XJST will ignore empty string as modName and elemModName. Example:
+Now BEM-XJST will ignore empty string as modName and elemModName.
+
+**Example**
+
 ```js
 // BEMJSON:
 { block: 'a', mods: { '': 'b' } }
@@ -1696,7 +1710,9 @@ Commits:
 * [[`74055c9e23`](https://github.com/bem/bem-xjst/commit/74055c9e23)] - **travis**: Run tests on node 4 (Vladimir Grinenko)
 
 ## 2015-12-23, [v4.3.1](https://github.com/bem/bem-xjst/compare/v4.3.0...v4.3.1), @miripiruni
-Order of execution `match`es was changed. Example:
+Order of execution `match`es was changed.
+
+**Example**
 
 ```js
 // BEMJSON: { block: 'b' }
@@ -1716,7 +1732,7 @@ block('b')(
 ```
 
 Commits:
-* [[`f61e647656`](https://github.com/bem/bem-xjst/commit/f61e647656)] - **bemxjst**: fix order of execution of `match`es (Fedor Indutny) 
+* [[`f61e647656`](https://github.com/bem/bem-xjst/commit/f61e647656)] - **bemxjst**: fix order of execution of `match`es (Fedor Indutny)
 
 ## 2015-12-23, [v4.3.0](https://github.com/bem/bem-xjst/compare/v4.2.7...v4.3.0), @miripiruni
 Now all shortcuts for predicates (attrs, bem, cls, content, js, mix, tag and etc) must have no arguments.
@@ -1729,274 +1745,274 @@ block('b').tag()('span');
 ```
 
 Commits:
-* [[`efa223d413`](https://github.com/bem/bem-xjst/commit/efa223d413)] - Throw error if args passed to shortcut predicates (Vladimir Grinenko) 
-* [[`059c0b9bfb`](https://github.com/bem/bem-xjst/commit/059c0b9bfb)] - **Context**: Remove unused BEM field (Vladimir Grinenko) 
-* [[`351896b840`](https://github.com/bem/bem-xjst/commit/351896b840)] - **util**: Remove unused NAME_PATTERN variable (Vladimir Grinenko) 
+* [[`efa223d413`](https://github.com/bem/bem-xjst/commit/efa223d413)] - Throw error if args passed to shortcut predicates (Vladimir Grinenko)
+* [[`059c0b9bfb`](https://github.com/bem/bem-xjst/commit/059c0b9bfb)] - **Context**: Remove unused BEM field (Vladimir Grinenko)
+* [[`351896b840`](https://github.com/bem/bem-xjst/commit/351896b840)] - **util**: Remove unused NAME_PATTERN variable (Vladimir Grinenko)
 
-## 2015-11-13, [v4.2.7](https://github.com/bem/bem-xjst/compare/v4.2.6...v4.2.7), Fedor Indutny 
-* [[`1ab21c3523`](https://github.com/bem/bem-xjst/commit/1ab21c3523)] - **match**: re-throw exceptions and restore state (sbmaxx) 
-* [[`c08cd5fc42`](https://github.com/bem/bem-xjst/commit/c08cd5fc42)] - fix generateId (sbmaxx) 
-* [[`cf8aea8382`](https://github.com/bem/bem-xjst/commit/cf8aea8382)] - refactoring for templates function reuse detection (Sergey Berezhnoy) 
+## 2015-11-13, [v4.2.7](https://github.com/bem/bem-xjst/compare/v4.2.6...v4.2.7), Fedor Indutny
+* [[`1ab21c3523`](https://github.com/bem/bem-xjst/commit/1ab21c3523)] - **match**: re-throw exceptions and restore state (sbmaxx)
+* [[`c08cd5fc42`](https://github.com/bem/bem-xjst/commit/c08cd5fc42)] - fix generateId (sbmaxx)
+* [[`cf8aea8382`](https://github.com/bem/bem-xjst/commit/cf8aea8382)] - refactoring for templates function reuse detection (Sergey Berezhnoy)
 
-## 2015-11-02, [v4.2.6](https://github.com/bem/bem-xjst/compare/v4.2.5...v4.2.6), Sergey Berezhnoy 
-* [[`c0aa4f9f95`](https://github.com/bem/bem-xjst/commit/c0aa4f9f95)] - close #101: \[4.x\] Compiled bundle is broken after minification. (Sergey Berezhnoy) 
-* [[`7baa64cffa`](https://github.com/bem/bem-xjst/commit/7baa64cffa)] - added editorconfig (sbmaxx) 
+## 2015-11-02, [v4.2.6](https://github.com/bem/bem-xjst/compare/v4.2.5...v4.2.6), Sergey Berezhnoy
+* [[`c0aa4f9f95`](https://github.com/bem/bem-xjst/commit/c0aa4f9f95)] - close #101: \[4.x\] Compiled bundle is broken after minification. (Sergey Berezhnoy)
+* [[`7baa64cffa`](https://github.com/bem/bem-xjst/commit/7baa64cffa)] - added editorconfig (sbmaxx)
 
-## 2015-10-22, [v4.2.5](https://github.com/bem/bem-xjst/compare/v4.2.4...v4.2.5), Fedor Indutny 
-* [[`9c34a371c4`](https://github.com/bem/bem-xjst/commit/9c34a371c4)] - **tree**: verify `.match()` arguments (Fedor Indutny) 
-* [[`657e6c1c47`](https://github.com/bem/bem-xjst/commit/657e6c1c47)] - **make**: browser bundle (Mikhail Troshev) 
+## 2015-10-22, [v4.2.5](https://github.com/bem/bem-xjst/compare/v4.2.4...v4.2.5), Fedor Indutny
+* [[`9c34a371c4`](https://github.com/bem/bem-xjst/commit/9c34a371c4)] - **tree**: verify `.match()` arguments (Fedor Indutny)
+* [[`657e6c1c47`](https://github.com/bem/bem-xjst/commit/657e6c1c47)] - **make**: browser bundle (Mikhail Troshev)
 
-## 2015-09-22, [v4.2.4](https://github.com/bem/bem-xjst/compare/v4.2.3...v4.2.4), Fedor Indutny 
-* [[`568af675dc`](https://github.com/bem/bem-xjst/commit/568af675dc)] - **bench**: update bem-xjst (Fedor Indutny) 
-* [[`8d41f98c8f`](https://github.com/bem/bem-xjst/commit/8d41f98c8f)] - **runtime**: escaping optimization (Mikhail Troshev) 
+## 2015-09-22, [v4.2.4](https://github.com/bem/bem-xjst/compare/v4.2.3...v4.2.4), Fedor Indutny
+* [[`568af675dc`](https://github.com/bem/bem-xjst/commit/568af675dc)] - **bench**: update bem-xjst (Fedor Indutny)
+* [[`8d41f98c8f`](https://github.com/bem/bem-xjst/commit/8d41f98c8f)] - **runtime**: escaping optimization (Mikhail Troshev)
 
-## 2015-09-04, [v4.2.3](https://github.com/bem/bem-xjst/compare/v4.2.2...v4.2.3), Fedor Indutny 
-* [[`fd19a48f4e`](https://github.com/bem/bem-xjst/commit/fd19a48f4e)] - **runtime**: fix list indexes for non-BEM entities (Fedor Indutny) 
+## 2015-09-04, [v4.2.3](https://github.com/bem/bem-xjst/compare/v4.2.2...v4.2.3), Fedor Indutny
+* [[`fd19a48f4e`](https://github.com/bem/bem-xjst/commit/fd19a48f4e)] - **runtime**: fix list indexes for non-BEM entities (Fedor Indutny)
 
-## 2015-08-19, [v4.2.2](https://github.com/bem/bem-xjst/compare/v4.2.1...v4.2.2), Fedor Indutny 
-* [[`dc627d968f`](https://github.com/bem/bem-xjst/commit/dc627d968f)] - **runtime**: restore `_currBlock` (Fedor Indutny) 
-* [[`f1d1798562`](https://github.com/bem/bem-xjst/commit/f1d1798562)] - add test for save context while render plain html items (Sergey Berezhnoy) 
+## 2015-08-19, [v4.2.2](https://github.com/bem/bem-xjst/compare/v4.2.1...v4.2.2), Fedor Indutny
+* [[`dc627d968f`](https://github.com/bem/bem-xjst/commit/dc627d968f)] - **runtime**: restore `_currBlock` (Fedor Indutny)
+* [[`f1d1798562`](https://github.com/bem/bem-xjst/commit/f1d1798562)] - add test for save context while render plain html items (Sergey Berezhnoy)
 
-## 2015-08-18, [v4.2.1](https://github.com/bem/bem-xjst/compare/v4.2.0...v4.2.1), Fedor Indutny 
-* [[`d469902e92`](https://github.com/bem/bem-xjst/commit/d469902e92)] - **runtime**: use ClassBuilder everywhere (Fedor Indutny) 
+## 2015-08-18, [v4.2.1](https://github.com/bem/bem-xjst/compare/v4.2.0...v4.2.1), Fedor Indutny
+* [[`d469902e92`](https://github.com/bem/bem-xjst/commit/d469902e92)] - **runtime**: use ClassBuilder everywhere (Fedor Indutny)
 
-## 2015-08-18, [v4.2.0](https://github.com/bem/bem-xjst/compare/v4.1.0...v4.2.0), Fedor Indutny 
-* [[`f5046467bc`](https://github.com/bem/bem-xjst/commit/f5046467bc)] - **api**: introduce `.compile(..., { naming: ... })` (Fedor Indutny) 
-* [[`bee0f0fca0`](https://github.com/bem/bem-xjst/commit/bee0f0fca0)] - **utils**: separate class builder instance (Fedor Indutny) 
+## 2015-08-18, [v4.2.0](https://github.com/bem/bem-xjst/compare/v4.1.0...v4.2.0), Fedor Indutny
+* [[`f5046467bc`](https://github.com/bem/bem-xjst/commit/f5046467bc)] - **api**: introduce `.compile(..., { naming: ... })` (Fedor Indutny)
+* [[`bee0f0fca0`](https://github.com/bem/bem-xjst/commit/bee0f0fca0)] - **utils**: separate class builder instance (Fedor Indutny)
 
-## 2015-08-17, [v4.1.0](https://github.com/bem/bem-xjst/compare/v4.0.2...v4.1.0), Fedor Indutny 
-* [[`6cb6f3b226`](https://github.com/bem/bem-xjst/commit/6cb6f3b226)] - **runtime**: wildcard elem templates (Fedor Indutny) 
+## 2015-08-17, [v4.1.0](https://github.com/bem/bem-xjst/compare/v4.0.2...v4.1.0), Fedor Indutny
+* [[`6cb6f3b226`](https://github.com/bem/bem-xjst/commit/6cb6f3b226)] - **runtime**: wildcard elem templates (Fedor Indutny)
 
-## 2015-08-11, [v4.0.2](https://github.com/bem/bem-xjst/compare/v4.0.1...v4.0.2), Fedor Indutny 
-* [[`1b62db8ef6`](https://github.com/bem/bem-xjst/commit/1b62db8ef6)] - **tree**: proper `extend()`/`replace()`/`wrap()` (Fedor Indutny) 
+## 2015-08-11, [v4.0.2](https://github.com/bem/bem-xjst/compare/v4.0.1...v4.0.2), Fedor Indutny
+* [[`1b62db8ef6`](https://github.com/bem/bem-xjst/commit/1b62db8ef6)] - **tree**: proper `extend()`/`replace()`/`wrap()` (Fedor Indutny)
 
-## 2015-08-04, [v4.0.1](https://github.com/bem/bem-xjst/compare/v4.0.0...v4.0.1), Fedor Indutny 
-* [[`b9a426d203`](https://github.com/bem/bem-xjst/commit/b9a426d203)] - **runtime**: do not propagate elem to JS params in mix (Fedor Indutny) 
-* [[`3c7f23994f`](https://github.com/bem/bem-xjst/commit/3c7f23994f)] - **runtime**: do not propagate default `mods` (Fedor Indutny) 
-* [[`6b9de40b71`](https://github.com/bem/bem-xjst/commit/6b9de40b71)] - **runtime**: support `0` input (Fedor Indutny) 
+## 2015-08-04, [v4.0.1](https://github.com/bem/bem-xjst/compare/v4.0.0...v4.0.1), Fedor Indutny
+* [[`b9a426d203`](https://github.com/bem/bem-xjst/commit/b9a426d203)] - **runtime**: do not propagate elem to JS params in mix (Fedor Indutny)
+* [[`3c7f23994f`](https://github.com/bem/bem-xjst/commit/3c7f23994f)] - **runtime**: do not propagate default `mods` (Fedor Indutny)
+* [[`6b9de40b71`](https://github.com/bem/bem-xjst/commit/6b9de40b71)] - **runtime**: support `0` input (Fedor Indutny)
 
-## 2015-07-31, [v4.0.0](https://github.com/bem/bem-xjst/compare/v3.1.1...v4.0.0), Fedor Indutny 
-* [[`0fd0a0722d`](https://github.com/bem/bem-xjst/commit/0fd0a0722d)] - **tree**: add syntax sugar to `.wrap()` (Fedor Indutny) 
+## 2015-07-31, [v4.0.0](https://github.com/bem/bem-xjst/compare/v3.1.1...v4.0.0), Fedor Indutny
+* [[`0fd0a0722d`](https://github.com/bem/bem-xjst/commit/0fd0a0722d)] - **tree**: add syntax sugar to `.wrap()` (Fedor Indutny)
 
-## 3.1.1 Fedor Indutny 
-* [[`20a94f45ea`](https://github.com/bem/bem-xjst/commit/20a94f45ea)] - **match**: fix early `once` / `wrap` (Fedor Indutny) 
+## 3.1.1 Fedor Indutny
+* [[`20a94f45ea`](https://github.com/bem/bem-xjst/commit/20a94f45ea)] - **match**: fix early `once` / `wrap` (Fedor Indutny)
 
-## 3.1.0 Fedor Indutny 
-* [[`7a89388869`](https://github.com/bem/bem-xjst/commit/7a89388869)] - **tree**: `.wrap()` method (Fedor Indutny) 
+## 3.1.0 Fedor Indutny
+* [[`7a89388869`](https://github.com/bem/bem-xjst/commit/7a89388869)] - **tree**: `.wrap()` method (Fedor Indutny)
 
-## 3.0.1 Fedor Indutny 
-* [[`56d9d5f8ed`](https://github.com/bem/bem-xjst/commit/56d9d5f8ed)] - **runtime**: allocate `mods`/`elemMods` once (Fedor Indutny) 
+## 3.0.1 Fedor Indutny
+* [[`56d9d5f8ed`](https://github.com/bem/bem-xjst/commit/56d9d5f8ed)] - **runtime**: allocate `mods`/`elemMods` once (Fedor Indutny)
 
-## 3.0.0 Fedor Indutny 
-* [[`4cc90a0e78`](https://github.com/bem/bem-xjst/commit/4cc90a0e78)] - **compiler**: enchance stack traces for basic compile (Fedor Indutny) 
-* [[`861beb1120`](https://github.com/bem/bem-xjst/commit/861beb1120)] - **runtime**: support mixing with block itself (Fedor Indutny) 
-* [[`51e468f8a1`](https://github.com/bem/bem-xjst/commit/51e468f8a1)] - **test**: do not use `.apply.call()` (Fedor Indutny) 
-* [[`6c50202514`](https://github.com/bem/bem-xjst/commit/6c50202514)] - **lib**: deprecate `BEMHTML.apply.call(BEMJSON)` (Fedor Indutny) 
-* [[`5a26b3205a`](https://github.com/bem/bem-xjst/commit/5a26b3205a)] - **runtime**: custom mode with local changes (Fedor Indutny) 
+## 3.0.0 Fedor Indutny
+* [[`4cc90a0e78`](https://github.com/bem/bem-xjst/commit/4cc90a0e78)] - **compiler**: enchance stack traces for basic compile (Fedor Indutny)
+* [[`861beb1120`](https://github.com/bem/bem-xjst/commit/861beb1120)] - **runtime**: support mixing with block itself (Fedor Indutny)
+* [[`51e468f8a1`](https://github.com/bem/bem-xjst/commit/51e468f8a1)] - **test**: do not use `.apply.call()` (Fedor Indutny)
+* [[`6c50202514`](https://github.com/bem/bem-xjst/commit/6c50202514)] - **lib**: deprecate `BEMHTML.apply.call(BEMJSON)` (Fedor Indutny)
+* [[`5a26b3205a`](https://github.com/bem/bem-xjst/commit/5a26b3205a)] - **runtime**: custom mode with local changes (Fedor Indutny)
 
-## 2.0.1 Fedor Indutny 
-* [[`640daa6f33`](https://github.com/bem/bem-xjst/commit/640daa6f33)] - **npm**: do not ignore bundle (Fedor Indutny) 
+## 2.0.1 Fedor Indutny
+* [[`640daa6f33`](https://github.com/bem/bem-xjst/commit/640daa6f33)] - **npm**: do not ignore bundle (Fedor Indutny)
 
-## 2.0.0 Fedor Indutny 
-* [[`43e827572b`](https://github.com/bem/bem-xjst/commit/43e827572b)] - **readme**: a bit of API documentation (Fedor Indutny) 
-* [[`8ee713e278`](https://github.com/bem/bem-xjst/commit/8ee713e278)] - **readme**: link to changes, license (Fedor Indutny) 
-* [[`bf895db486`](https://github.com/bem/bem-xjst/commit/bf895db486)] - **bench**: bump hash (Fedor Indutny) 
-* [[`9b547cd43a`](https://github.com/bem/bem-xjst/commit/9b547cd43a)] - **compiler**: support adding templates at runtime (Fedor Indutny) 
-* [[`fccd9d4121`](https://github.com/bem/bem-xjst/commit/fccd9d4121)] - **lib**: `xjstOptions({ flush: true })` (Fedor Indutny) 
-* [[`41baa6a296`](https://github.com/bem/bem-xjst/commit/41baa6a296)] - **tree**: `.xjstOptions({ ... })` for compiler options (Fedor Indutny) 
-* [[`678e33e19d`](https://github.com/bem/bem-xjst/commit/678e33e19d)] - **runtime**: skip flushing on overridden `.def()` (Fedor Indutny) 
-* [[`46860e95c2`](https://github.com/bem/bem-xjst/commit/46860e95c2)] - **runtime**: wildcard applies to default entities too (Fedor Indutny) 
-* [[`1140426b01`](https://github.com/bem/bem-xjst/commit/1140426b01)] - **runtime**: invalidate nested `applyNext()` (Fedor Indutny) 
-* [[`038303ad57`](https://github.com/bem/bem-xjst/commit/038303ad57)] - **bench**: log errors (Fedor Indutny) 
-* [[`555b00be20`](https://github.com/bem/bem-xjst/commit/555b00be20)] - **tree**: introduce `.once()` (Fedor Indutny) 
-* [[`32ac07086e`](https://github.com/bem/bem-xjst/commit/32ac07086e)] - **runtime**: put `BEMContext` to `sharedContext` too (Fedor Indutny) 
-* [[`93edc168a5`](https://github.com/bem/bem-xjst/commit/93edc168a5)] - **readme**: running benchmarks (Fedor Indutny) 
-* [[`071c231b61`](https://github.com/bem/bem-xjst/commit/071c231b61)] - **test**: `fail` in fixtures (Fedor Indutny) 
-* [[`8eab96ebe0`](https://github.com/bem/bem-xjst/commit/8eab96ebe0)] - **benchmarks**: bump bem-xjst version (Fedor Indutny) 
-* [[`51dee4762f`](https://github.com/bem/bem-xjst/commit/51dee4762f)] - **context**: `_flush` method (Fedor Indutny) 
-* [[`8d05d9a2d6`](https://github.com/bem/bem-xjst/commit/8d05d9a2d6)] - **benchmarks**: initial (Fedor Indutny) 
-* [[`c959d7014b`](https://github.com/bem/bem-xjst/commit/c959d7014b)] - **compiler**: support running in `this` context (Fedor Indutny) 
-* [[`0007fc0c6a`](https://github.com/bem/bem-xjst/commit/0007fc0c6a)] - **package**: revert `postinstall` changes (Fedor Indutny) 
-* [[`ad7b156f5c`](https://github.com/bem/bem-xjst/commit/ad7b156f5c)] - **make**: fix installation (Fedor Indutny) 
-* [[`cc0e595a7f`](https://github.com/bem/bem-xjst/commit/cc0e595a7f)] - **package**: hopefully `postinstall` is better (Fedor Indutny) 
-* [[`7210961de3`](https://github.com/bem/bem-xjst/commit/7210961de3)] - **package**: compile bundle on install too (Fedor Indutny) 
-* [[`b9ff3cb480`](https://github.com/bem/bem-xjst/commit/b9ff3cb480)] - **runtime**: support `undefined` mix (Fedor Indutny) 
-* [[`6d7606fb9a`](https://github.com/bem/bem-xjst/commit/6d7606fb9a)] - **runtime**: support `block('*')` (Fedor Indutny) 
-* [[`069ab0c2ee`](https://github.com/bem/bem-xjst/commit/069ab0c2ee)] - **runtime**: rename to `BEMContext` for compatibility (Fedor Indutny) 
-* [[`5b633f05cf`](https://github.com/bem/bem-xjst/commit/5b633f05cf)] - **runtime**: allow overriding BEMHTMLContext (Fedor Indutny) 
-* [[`ad085de169`](https://github.com/bem/bem-xjst/commit/ad085de169)] - **runtime**: support both changes and ctx in applyCtx (Fedor Indutny) 
-* [[`2f89bf6d54`](https://github.com/bem/bem-xjst/commit/2f89bf6d54)] - **tree**: support inline arg to `extend()`/`replace()` (Fedor Indutny) 
-* [[`21c05beaa8`](https://github.com/bem/bem-xjst/commit/21c05beaa8)] - **tree**: fix singular `replace()`/`extend()` (Fedor Indutny) 
-* [[`d9fa30df0a`](https://github.com/bem/bem-xjst/commit/d9fa30df0a)] - **tree**: propagate `this` to replace()/extend() (Fedor Indutny) 
-* [[`28cd78099e`](https://github.com/bem/bem-xjst/commit/28cd78099e)] - **runtime**: support string literal mix (Fedor Indutny) 
-* [[`ef0659d7ee`](https://github.com/bem/bem-xjst/commit/ef0659d7ee)] - **runtime**: fix elem in mix classes (Fedor Indutny) 
-* [[`ee7d1defa4`](https://github.com/bem/bem-xjst/commit/ee7d1defa4)] - **match**: store bitmask instead of `index` (Fedor Indutny) 
-* [[`04666caa7e`](https://github.com/bem/bem-xjst/commit/04666caa7e)] - **compiler**: make it work with `require(...)` (Fedor Indutny) 
-* [[`dbed08005a`](https://github.com/bem/bem-xjst/commit/dbed08005a)] - **context**: support `this.reapply()` (Fedor Indutny) 
-* [[`6d2621613b`](https://github.com/bem/bem-xjst/commit/6d2621613b)] - **tree**: revert useless changes (Fedor Indutny) 
-* [[`bc965af5ec`](https://github.com/bem/bem-xjst/commit/bc965af5ec)] - **runtime**: proper fix for #43 (Fedor Indutny) 
-* [[`acc7e6bd49`](https://github.com/bem/bem-xjst/commit/acc7e6bd49)] - **runtime**: inherit `mods` properly (Fedor Indutny) 
-* [[`43b5596bb7`](https://github.com/bem/bem-xjst/commit/43b5596bb7)] - **tree**: do not use `.map()` too (Fedor Indutny) 
-* [[`2c1db76676`](https://github.com/bem/bem-xjst/commit/2c1db76676)] - **tree**: remove `.forEach` for old browser support (Fedor Indutny) 
-* [[`42e235a14a`](https://github.com/bem/bem-xjst/commit/42e235a14a)] - **runtime**: take mods from the context too (Fedor Indutny) 
-* [[`57f0e4d066`](https://github.com/bem/bem-xjst/commit/57f0e4d066)] - **runtime**: fix mix in JSON (Fedor Indutny) 
-* [[`adf3216d8b`](https://github.com/bem/bem-xjst/commit/adf3216d8b)] - **runtime**: fix `mix` overwriting `jsParams` (Fedor Indutny) 
-* [[`8b8ab29813`](https://github.com/bem/bem-xjst/commit/8b8ab29813)] - **runtime**: lazily set mods (Fedor Indutny) 
-* [[`3f9e352da7`](https://github.com/bem/bem-xjst/commit/3f9e352da7)] - **runtime**: applyNext({ changes }) (Fedor Indutny) 
-* [[`321b135195`](https://github.com/bem/bem-xjst/commit/321b135195)] - **tree**: proper nesting (Fedor Indutny) 
-* [[`5ce73b1437`](https://github.com/bem/bem-xjst/commit/5ce73b1437)] - **test**: split into tree/runtime (Fedor Indutny) 
-* [[`e38d2d3f5e`](https://github.com/bem/bem-xjst/commit/e38d2d3f5e)] - **test**: `oninit()` test (Fedor Indutny) 
-* [[`0d9af0af69`](https://github.com/bem/bem-xjst/commit/0d9af0af69)] - **tree**: support `oninit()` (Fedor Indutny) 
-* [[`de1b33e1b4`](https://github.com/bem/bem-xjst/commit/de1b33e1b4)] - **runtime**: support mix (Fedor Indutny) 
-* [[`7eba120f1c`](https://github.com/bem/bem-xjst/commit/7eba120f1c)] - **runtime**: port over position/list stuff from i-bem (Fedor Indutny) 
-* [[`8684c66636`](https://github.com/bem/bem-xjst/commit/8684c66636)] - **context**: port over `extend` and friends (Fedor Indutny) 
-* [[`5462a46189`](https://github.com/bem/bem-xjst/commit/5462a46189)] - **runtime**: render without tag (Fedor Indutny) 
-* [[`3e8d1d86a9`](https://github.com/bem/bem-xjst/commit/3e8d1d86a9)] - **tree**: fix ordering of the subpredicates (Fedor Indutny) 
-* [[`ee3397128a`](https://github.com/bem/bem-xjst/commit/ee3397128a)] - **lib**: fix bug with grouping by elem (Fedor Indutny) 
-* [[`b2fac673fa`](https://github.com/bem/bem-xjst/commit/b2fac673fa)] - **lib**: preserve block until next BEM entity (Fedor Indutny) 
-* [[`cf0396218b`](https://github.com/bem/bem-xjst/commit/cf0396218b)] - **lib**: render attrs for non-bem entities (Fedor Indutny) 
-* [[`e21f60baeb`](https://github.com/bem/bem-xjst/commit/e21f60baeb)] - **lib**: set block/elem/mods properly (Fedor Indutny) 
-* [[`88f3160c37`](https://github.com/bem/bem-xjst/commit/88f3160c37)] - **lib**: do not render `undefined` (Fedor Indutny) 
-* [[`a40cf34ff3`](https://github.com/bem/bem-xjst/commit/a40cf34ff3)] - **lib**: restore block/mods/elemMods (Fedor Indutny) 
-* [[`3838318f3d`](https://github.com/bem/bem-xjst/commit/3838318f3d)] - **lib**: remove `bundle` file (Fedor Indutny) 
-* [[`b9cf698aa8`](https://github.com/bem/bem-xjst/commit/b9cf698aa8)] - **lib**: add missing file (Fedor Indutny) 
-* [[`152c6eb22c`](https://github.com/bem/bem-xjst/commit/152c6eb22c)] - **travis**: fix the build :) (Fedor Indutny) 
-* [[`0b408d8c84`](https://github.com/bem/bem-xjst/commit/0b408d8c84)] - **package**: run `make` on `npm test` (Fedor Indutny) 
-* [[`cf1c636a10`](https://github.com/bem/bem-xjst/commit/cf1c636a10)] - **lib**: jshint/jscs library (Fedor Indutny) 
-* [[`c444ad0197`](https://github.com/bem/bem-xjst/commit/c444ad0197)] - **lib**: support custom modes (Fedor Indutny) 
-* [[`298d2e2f04`](https://github.com/bem/bem-xjst/commit/298d2e2f04)] - **lib**: support elemMod/mod predicates (Fedor Indutny) 
-* [[`a60a13741a`](https://github.com/bem/bem-xjst/commit/a60a13741a)] - **lib**: support custom predicates (Fedor Indutny) 
-* [[`6d6bf43242`](https://github.com/bem/bem-xjst/commit/6d6bf43242)] - **compiler**: stub out new prototype (Fedor Indutny) 
+## 2.0.0 Fedor Indutny
+* [[`43e827572b`](https://github.com/bem/bem-xjst/commit/43e827572b)] - **readme**: a bit of API documentation (Fedor Indutny)
+* [[`8ee713e278`](https://github.com/bem/bem-xjst/commit/8ee713e278)] - **readme**: link to changes, license (Fedor Indutny)
+* [[`bf895db486`](https://github.com/bem/bem-xjst/commit/bf895db486)] - **bench**: bump hash (Fedor Indutny)
+* [[`9b547cd43a`](https://github.com/bem/bem-xjst/commit/9b547cd43a)] - **compiler**: support adding templates at runtime (Fedor Indutny)
+* [[`fccd9d4121`](https://github.com/bem/bem-xjst/commit/fccd9d4121)] - **lib**: `xjstOptions({ flush: true })` (Fedor Indutny)
+* [[`41baa6a296`](https://github.com/bem/bem-xjst/commit/41baa6a296)] - **tree**: `.xjstOptions({ ... })` for compiler options (Fedor Indutny)
+* [[`678e33e19d`](https://github.com/bem/bem-xjst/commit/678e33e19d)] - **runtime**: skip flushing on overridden `.def()` (Fedor Indutny)
+* [[`46860e95c2`](https://github.com/bem/bem-xjst/commit/46860e95c2)] - **runtime**: wildcard applies to default entities too (Fedor Indutny)
+* [[`1140426b01`](https://github.com/bem/bem-xjst/commit/1140426b01)] - **runtime**: invalidate nested `applyNext()` (Fedor Indutny)
+* [[`038303ad57`](https://github.com/bem/bem-xjst/commit/038303ad57)] - **bench**: log errors (Fedor Indutny)
+* [[`555b00be20`](https://github.com/bem/bem-xjst/commit/555b00be20)] - **tree**: introduce `.once()` (Fedor Indutny)
+* [[`32ac07086e`](https://github.com/bem/bem-xjst/commit/32ac07086e)] - **runtime**: put `BEMContext` to `sharedContext` too (Fedor Indutny)
+* [[`93edc168a5`](https://github.com/bem/bem-xjst/commit/93edc168a5)] - **readme**: running benchmarks (Fedor Indutny)
+* [[`071c231b61`](https://github.com/bem/bem-xjst/commit/071c231b61)] - **test**: `fail` in fixtures (Fedor Indutny)
+* [[`8eab96ebe0`](https://github.com/bem/bem-xjst/commit/8eab96ebe0)] - **benchmarks**: bump bem-xjst version (Fedor Indutny)
+* [[`51dee4762f`](https://github.com/bem/bem-xjst/commit/51dee4762f)] - **context**: `_flush` method (Fedor Indutny)
+* [[`8d05d9a2d6`](https://github.com/bem/bem-xjst/commit/8d05d9a2d6)] - **benchmarks**: initial (Fedor Indutny)
+* [[`c959d7014b`](https://github.com/bem/bem-xjst/commit/c959d7014b)] - **compiler**: support running in `this` context (Fedor Indutny)
+* [[`0007fc0c6a`](https://github.com/bem/bem-xjst/commit/0007fc0c6a)] - **package**: revert `postinstall` changes (Fedor Indutny)
+* [[`ad7b156f5c`](https://github.com/bem/bem-xjst/commit/ad7b156f5c)] - **make**: fix installation (Fedor Indutny)
+* [[`cc0e595a7f`](https://github.com/bem/bem-xjst/commit/cc0e595a7f)] - **package**: hopefully `postinstall` is better (Fedor Indutny)
+* [[`7210961de3`](https://github.com/bem/bem-xjst/commit/7210961de3)] - **package**: compile bundle on install too (Fedor Indutny)
+* [[`b9ff3cb480`](https://github.com/bem/bem-xjst/commit/b9ff3cb480)] - **runtime**: support `undefined` mix (Fedor Indutny)
+* [[`6d7606fb9a`](https://github.com/bem/bem-xjst/commit/6d7606fb9a)] - **runtime**: support `block('*')` (Fedor Indutny)
+* [[`069ab0c2ee`](https://github.com/bem/bem-xjst/commit/069ab0c2ee)] - **runtime**: rename to `BEMContext` for compatibility (Fedor Indutny)
+* [[`5b633f05cf`](https://github.com/bem/bem-xjst/commit/5b633f05cf)] - **runtime**: allow overriding BEMHTMLContext (Fedor Indutny)
+* [[`ad085de169`](https://github.com/bem/bem-xjst/commit/ad085de169)] - **runtime**: support both changes and ctx in applyCtx (Fedor Indutny)
+* [[`2f89bf6d54`](https://github.com/bem/bem-xjst/commit/2f89bf6d54)] - **tree**: support inline arg to `extend()`/`replace()` (Fedor Indutny)
+* [[`21c05beaa8`](https://github.com/bem/bem-xjst/commit/21c05beaa8)] - **tree**: fix singular `replace()`/`extend()` (Fedor Indutny)
+* [[`d9fa30df0a`](https://github.com/bem/bem-xjst/commit/d9fa30df0a)] - **tree**: propagate `this` to replace()/extend() (Fedor Indutny)
+* [[`28cd78099e`](https://github.com/bem/bem-xjst/commit/28cd78099e)] - **runtime**: support string literal mix (Fedor Indutny)
+* [[`ef0659d7ee`](https://github.com/bem/bem-xjst/commit/ef0659d7ee)] - **runtime**: fix elem in mix classes (Fedor Indutny)
+* [[`ee7d1defa4`](https://github.com/bem/bem-xjst/commit/ee7d1defa4)] - **match**: store bitmask instead of `index` (Fedor Indutny)
+* [[`04666caa7e`](https://github.com/bem/bem-xjst/commit/04666caa7e)] - **compiler**: make it work with `require(...)` (Fedor Indutny)
+* [[`dbed08005a`](https://github.com/bem/bem-xjst/commit/dbed08005a)] - **context**: support `this.reapply()` (Fedor Indutny)
+* [[`6d2621613b`](https://github.com/bem/bem-xjst/commit/6d2621613b)] - **tree**: revert useless changes (Fedor Indutny)
+* [[`bc965af5ec`](https://github.com/bem/bem-xjst/commit/bc965af5ec)] - **runtime**: proper fix for #43 (Fedor Indutny)
+* [[`acc7e6bd49`](https://github.com/bem/bem-xjst/commit/acc7e6bd49)] - **runtime**: inherit `mods` properly (Fedor Indutny)
+* [[`43b5596bb7`](https://github.com/bem/bem-xjst/commit/43b5596bb7)] - **tree**: do not use `.map()` too (Fedor Indutny)
+* [[`2c1db76676`](https://github.com/bem/bem-xjst/commit/2c1db76676)] - **tree**: remove `.forEach` for old browser support (Fedor Indutny)
+* [[`42e235a14a`](https://github.com/bem/bem-xjst/commit/42e235a14a)] - **runtime**: take mods from the context too (Fedor Indutny)
+* [[`57f0e4d066`](https://github.com/bem/bem-xjst/commit/57f0e4d066)] - **runtime**: fix mix in JSON (Fedor Indutny)
+* [[`adf3216d8b`](https://github.com/bem/bem-xjst/commit/adf3216d8b)] - **runtime**: fix `mix` overwriting `jsParams` (Fedor Indutny)
+* [[`8b8ab29813`](https://github.com/bem/bem-xjst/commit/8b8ab29813)] - **runtime**: lazily set mods (Fedor Indutny)
+* [[`3f9e352da7`](https://github.com/bem/bem-xjst/commit/3f9e352da7)] - **runtime**: applyNext({ changes }) (Fedor Indutny)
+* [[`321b135195`](https://github.com/bem/bem-xjst/commit/321b135195)] - **tree**: proper nesting (Fedor Indutny)
+* [[`5ce73b1437`](https://github.com/bem/bem-xjst/commit/5ce73b1437)] - **test**: split into tree/runtime (Fedor Indutny)
+* [[`e38d2d3f5e`](https://github.com/bem/bem-xjst/commit/e38d2d3f5e)] - **test**: `oninit()` test (Fedor Indutny)
+* [[`0d9af0af69`](https://github.com/bem/bem-xjst/commit/0d9af0af69)] - **tree**: support `oninit()` (Fedor Indutny)
+* [[`de1b33e1b4`](https://github.com/bem/bem-xjst/commit/de1b33e1b4)] - **runtime**: support mix (Fedor Indutny)
+* [[`7eba120f1c`](https://github.com/bem/bem-xjst/commit/7eba120f1c)] - **runtime**: port over position/list stuff from i-bem (Fedor Indutny)
+* [[`8684c66636`](https://github.com/bem/bem-xjst/commit/8684c66636)] - **context**: port over `extend` and friends (Fedor Indutny)
+* [[`5462a46189`](https://github.com/bem/bem-xjst/commit/5462a46189)] - **runtime**: render without tag (Fedor Indutny)
+* [[`3e8d1d86a9`](https://github.com/bem/bem-xjst/commit/3e8d1d86a9)] - **tree**: fix ordering of the subpredicates (Fedor Indutny)
+* [[`ee3397128a`](https://github.com/bem/bem-xjst/commit/ee3397128a)] - **lib**: fix bug with grouping by elem (Fedor Indutny)
+* [[`b2fac673fa`](https://github.com/bem/bem-xjst/commit/b2fac673fa)] - **lib**: preserve block until next BEM entity (Fedor Indutny)
+* [[`cf0396218b`](https://github.com/bem/bem-xjst/commit/cf0396218b)] - **lib**: render attrs for non-bem entities (Fedor Indutny)
+* [[`e21f60baeb`](https://github.com/bem/bem-xjst/commit/e21f60baeb)] - **lib**: set block/elem/mods properly (Fedor Indutny)
+* [[`88f3160c37`](https://github.com/bem/bem-xjst/commit/88f3160c37)] - **lib**: do not render `undefined` (Fedor Indutny)
+* [[`a40cf34ff3`](https://github.com/bem/bem-xjst/commit/a40cf34ff3)] - **lib**: restore block/mods/elemMods (Fedor Indutny)
+* [[`3838318f3d`](https://github.com/bem/bem-xjst/commit/3838318f3d)] - **lib**: remove `bundle` file (Fedor Indutny)
+* [[`b9cf698aa8`](https://github.com/bem/bem-xjst/commit/b9cf698aa8)] - **lib**: add missing file (Fedor Indutny)
+* [[`152c6eb22c`](https://github.com/bem/bem-xjst/commit/152c6eb22c)] - **travis**: fix the build :) (Fedor Indutny)
+* [[`0b408d8c84`](https://github.com/bem/bem-xjst/commit/0b408d8c84)] - **package**: run `make` on `npm test` (Fedor Indutny)
+* [[`cf1c636a10`](https://github.com/bem/bem-xjst/commit/cf1c636a10)] - **lib**: jshint/jscs library (Fedor Indutny)
+* [[`c444ad0197`](https://github.com/bem/bem-xjst/commit/c444ad0197)] - **lib**: support custom modes (Fedor Indutny)
+* [[`298d2e2f04`](https://github.com/bem/bem-xjst/commit/298d2e2f04)] - **lib**: support elemMod/mod predicates (Fedor Indutny)
+* [[`a60a13741a`](https://github.com/bem/bem-xjst/commit/a60a13741a)] - **lib**: support custom predicates (Fedor Indutny)
+* [[`6d6bf43242`](https://github.com/bem/bem-xjst/commit/6d6bf43242)] - **compiler**: stub out new prototype (Fedor Indutny)
 
-## 1.0.0 Fedor Indutny 
-* [[`1d859c734b`](https://github.com/bem/bem-xjst/commit/1d859c734b)] - **compiler**: replace()/extend() modes (vkz) 
-* [[`1995df639e`](https://github.com/bem/bem-xjst/commit/1995df639e)] - **test**: test runtime mode again (Fedor Indutny) 
+## 1.0.0 Fedor Indutny
+* [[`1d859c734b`](https://github.com/bem/bem-xjst/commit/1d859c734b)] - **compiler**: replace()/extend() modes (vkz)
+* [[`1995df639e`](https://github.com/bem/bem-xjst/commit/1995df639e)] - **test**: test runtime mode again (Fedor Indutny)
 
-## 0.9.0 Fedor Indutny 
-* [[`fcaf0514cb`](https://github.com/bem/bem-xjst/commit/fcaf0514cb)] - **compiler**: bump `this._mode` predicate (Fedor Indutny) 
+## 0.9.0 Fedor Indutny
+* [[`fcaf0514cb`](https://github.com/bem/bem-xjst/commit/fcaf0514cb)] - **compiler**: bump `this._mode` predicate (Fedor Indutny)
 
-## 0.8.3 Fedor Indutny 
-* [[`f1f6d60ee6`](https://github.com/bem/bem-xjst/commit/f1f6d60ee6)] - **compiler**: fix replacing context in maps (Fedor Indutny) 
+## 0.8.3 Fedor Indutny
+* [[`f1f6d60ee6`](https://github.com/bem/bem-xjst/commit/f1f6d60ee6)] - **compiler**: fix replacing context in maps (Fedor Indutny)
 
-## 0.8.2 Fedor Indutny 
-* [[`dc70685c99`](https://github.com/bem/bem-xjst/commit/dc70685c99)] - **compiler**: fix elem autoinsertion (Fedor Indutny) 
+## 0.8.2 Fedor Indutny
+* [[`dc70685c99`](https://github.com/bem/bem-xjst/commit/dc70685c99)] - **compiler**: fix elem autoinsertion (Fedor Indutny)
 
-## 0.8.1 Fedor Indutny 
-* [[`708f45b510`](https://github.com/bem/bem-xjst/commit/708f45b510)] - **bemhtml**: modulesProvidedDeps in scope for all envs (Vladimir Grinenko) 
+## 0.8.1 Fedor Indutny
+* [[`708f45b510`](https://github.com/bem/bem-xjst/commit/708f45b510)] - **bemhtml**: modulesProvidedDeps in scope for all envs (Vladimir Grinenko)
 
-## 0.8.0 Fedor Indutny 
-* [[`845b4dee26`](https://github.com/bem/bem-xjst/commit/845b4dee26)] - **deps**: bump xjst and add globalInit (Fedor Indutny) 
+## 0.8.0 Fedor Indutny
+* [[`845b4dee26`](https://github.com/bem/bem-xjst/commit/845b4dee26)] - **deps**: bump xjst and add globalInit (Fedor Indutny)
 
-## 0.7.1 Fedor Indutny 
-* [[`54a3165861`](https://github.com/bem/bem-xjst/commit/54a3165861)] - Fix modules deps in wrap method (Vladimir Grinenko) 
+## 0.7.1 Fedor Indutny
+* [[`54a3165861`](https://github.com/bem/bem-xjst/commit/54a3165861)] - Fix modules deps in wrap method (Vladimir Grinenko)
 
-## 0.7.0 Fedor Indutny 
-* [[`3574d12b71`](https://github.com/bem/bem-xjst/commit/3574d12b71)] - Pass modules deps to wrap method (Vladimir Grinenko) 
-* [[`fd5de7f4fc`](https://github.com/bem/bem-xjst/commit/fd5de7f4fc)] - AddedAdded russian README file (Dima Belitsky) 
-* [[`d7d3eff9d2`](https://github.com/bem/bem-xjst/commit/d7d3eff9d2)] - Remove ometajs from deps (closes #11) (Vladimir Grinenko) 
+## 0.7.0 Fedor Indutny
+* [[`3574d12b71`](https://github.com/bem/bem-xjst/commit/3574d12b71)] - Pass modules deps to wrap method (Vladimir Grinenko)
+* [[`fd5de7f4fc`](https://github.com/bem/bem-xjst/commit/fd5de7f4fc)] - AddedAdded russian README file (Dima Belitsky)
+* [[`d7d3eff9d2`](https://github.com/bem/bem-xjst/commit/d7d3eff9d2)] - Remove ometajs from deps (closes #11) (Vladimir Grinenko)
 
-## 0.6.1 Fedor Indutny 
-* [[`f20817ab17`](https://github.com/bem/bem-xjst/commit/f20817ab17)] - **package**: bump xjst version, better asserts (Fedor Indutny) 
+## 0.6.1 Fedor Indutny
+* [[`f20817ab17`](https://github.com/bem/bem-xjst/commit/f20817ab17)] - **package**: bump xjst version, better asserts (Fedor Indutny)
 
-## 0.6.0 Fedor Indutny 
-* [[`b1dbb2b193`](https://github.com/bem/bem-xjst/commit/b1dbb2b193)] - **package**: bump xjst (Fedor Indutny) 
+## 0.6.0 Fedor Indutny
+* [[`b1dbb2b193`](https://github.com/bem/bem-xjst/commit/b1dbb2b193)] - **package**: bump xjst (Fedor Indutny)
 
-## 0.5.0 Fedor Indutny 
-* [[`b089f6d96c`](https://github.com/bem/bem-xjst/commit/b089f6d96c)] - **compiler**: use global $$ vars (Fedor Indutny) 
-* [[`3222bb33fa`](https://github.com/bem/bem-xjst/commit/3222bb33fa)] - Update compiler.js (Sergey Berezhnoy) 
+## 0.5.0 Fedor Indutny
+* [[`b089f6d96c`](https://github.com/bem/bem-xjst/commit/b089f6d96c)] - **compiler**: use global $$ vars (Fedor Indutny)
+* [[`3222bb33fa`](https://github.com/bem/bem-xjst/commit/3222bb33fa)] - Update compiler.js (Sergey Berezhnoy)
 
-## 0.4.0 Fedor Indutny 
-* [[`c6fd078ccb`](https://github.com/bem/bem-xjst/commit/c6fd078ccb)] - **compiler**: introduce `wrap` option (Fedor Indutny) 
+## 0.4.0 Fedor Indutny
+* [[`c6fd078ccb`](https://github.com/bem/bem-xjst/commit/c6fd078ccb)] - **compiler**: introduce `wrap` option (Fedor Indutny)
 
-## 0.3.6 Fedor Indutny 
-* [[`7d8bf0363d`](https://github.com/bem/bem-xjst/commit/7d8bf0363d)] - **package**: fix dependencies (Fedor Indutny) 
-* [[`74b329c4ca`](https://github.com/bem/bem-xjst/commit/74b329c4ca)] - **package**: update xjst (Fedor Indutny) 
-* [[`2dc8582467`](https://github.com/bem/bem-xjst/commit/2dc8582467)] - **test**: fix API test (Fedor Indutny) 
+## 0.3.6 Fedor Indutny
+* [[`7d8bf0363d`](https://github.com/bem/bem-xjst/commit/7d8bf0363d)] - **package**: fix dependencies (Fedor Indutny)
+* [[`74b329c4ca`](https://github.com/bem/bem-xjst/commit/74b329c4ca)] - **package**: update xjst (Fedor Indutny)
+* [[`2dc8582467`](https://github.com/bem/bem-xjst/commit/2dc8582467)] - **test**: fix API test (Fedor Indutny)
 
-## 0.3.5 Fedor Indutny 
-* [[`fae6dfd4ad`](https://github.com/bem/bem-xjst/commit/fae6dfd4ad)] - **api**: support .elemMod('mod', 'value') (Fedor Indutny) 
+## 0.3.5 Fedor Indutny
+* [[`fae6dfd4ad`](https://github.com/bem/bem-xjst/commit/fae6dfd4ad)] - **api**: support .elemMod('mod', 'value') (Fedor Indutny)
 
-## 0.3.4 Fedor Indutny 
-* [[`8d9c8c4b03`](https://github.com/bem/bem-xjst/commit/8d9c8c4b03)] - **bemhtml**: forgot to expose methods (Fedor Indutny) 
+## 0.3.4 Fedor Indutny
+* [[`8d9c8c4b03`](https://github.com/bem/bem-xjst/commit/8d9c8c4b03)] - **bemhtml**: forgot to expose methods (Fedor Indutny)
 
-## 0.3.3 Fedor Indutny 
-* [[`de0e1bda2f`](https://github.com/bem/bem-xjst/commit/de0e1bda2f)] - **api**: new methods (Fedor Indutny) 
+## 0.3.3 Fedor Indutny
+* [[`de0e1bda2f`](https://github.com/bem/bem-xjst/commit/de0e1bda2f)] - **api**: new methods (Fedor Indutny)
 
-## 0.3.2 Fedor Indutny 
-* [[`b336c5b3ff`](https://github.com/bem/bem-xjst/commit/b336c5b3ff)] - **test**: add regression test for applyNext problem (Fedor Indutny) 
+## 0.3.2 Fedor Indutny
+* [[`b336c5b3ff`](https://github.com/bem/bem-xjst/commit/b336c5b3ff)] - **test**: add regression test for applyNext problem (Fedor Indutny)
 
-## 0.3.1 Fedor Indutny 
-* [[`962baa2fd2`](https://github.com/bem/bem-xjst/commit/962baa2fd2)] - **compiler**: add `!this.elem` only in correct places (Fedor Indutny) 
+## 0.3.1 Fedor Indutny
+* [[`962baa2fd2`](https://github.com/bem/bem-xjst/commit/962baa2fd2)] - **compiler**: add `!this.elem` only in correct places (Fedor Indutny)
 
-## 0.3.0 Fedor Indutny 
-* [[`5ed3f3a95b`](https://github.com/bem/bem-xjst/commit/5ed3f3a95b)] - **compiler**: introduce elemMatch (Fedor Indutny) 
-* [[`26c5322c70`](https://github.com/bem/bem-xjst/commit/26c5322c70)] - ***Revert*** "**test**: add test for !this.elem" (Fedor Indutny) 
-* [[`7c4e465f4f`](https://github.com/bem/bem-xjst/commit/7c4e465f4f)] - ***Revert*** "**compiler**: add !this.elem" (Fedor Indutny) 
-* [[`da65a0002f`](https://github.com/bem/bem-xjst/commit/da65a0002f)] - Add npm package version badge (Sergey Belov) 
+## 0.3.0 Fedor Indutny
+* [[`5ed3f3a95b`](https://github.com/bem/bem-xjst/commit/5ed3f3a95b)] - **compiler**: introduce elemMatch (Fedor Indutny)
+* [[`26c5322c70`](https://github.com/bem/bem-xjst/commit/26c5322c70)] - ***Revert*** "**test**: add test for !this.elem" (Fedor Indutny)
+* [[`7c4e465f4f`](https://github.com/bem/bem-xjst/commit/7c4e465f4f)] - ***Revert*** "**compiler**: add !this.elem" (Fedor Indutny)
+* [[`da65a0002f`](https://github.com/bem/bem-xjst/commit/da65a0002f)] - Add npm package version badge (Sergey Belov)
 
-## 0.2.5 Fedor Indutny 
-* [[`fd3042966b`](https://github.com/bem/bem-xjst/commit/fd3042966b)] - **compiler**: swap order of arguments in applyCtx (Fedor Indutny) 
+## 0.2.5 Fedor Indutny
+* [[`fd3042966b`](https://github.com/bem/bem-xjst/commit/fd3042966b)] - **compiler**: swap order of arguments in applyCtx (Fedor Indutny)
 
-## 0.2.4 Fedor Indutny 
-* [[`cb2b43789b`](https://github.com/bem/bem-xjst/commit/cb2b43789b)] - **compiler**: support multiple args for applyCtx (Fedor Indutny) 
-* [[`fec1ceebe2`](https://github.com/bem/bem-xjst/commit/fec1ceebe2)] - **test**: add test for !this.elem (Fedor Indutny) 
+## 0.2.4 Fedor Indutny
+* [[`cb2b43789b`](https://github.com/bem/bem-xjst/commit/cb2b43789b)] - **compiler**: support multiple args for applyCtx (Fedor Indutny)
+* [[`fec1ceebe2`](https://github.com/bem/bem-xjst/commit/fec1ceebe2)] - **test**: add test for !this.elem (Fedor Indutny)
 
-## 0.2.3 Fedor Indutny 
-* [[`8165a18039`](https://github.com/bem/bem-xjst/commit/8165a18039)] - **compiler**: add !this.elem (Fedor Indutny) 
+## 0.2.3 Fedor Indutny
+* [[`8165a18039`](https://github.com/bem/bem-xjst/commit/8165a18039)] - **compiler**: add !this.elem (Fedor Indutny)
 
-## 0.2.2 Fedor Indutny 
-* [[`28e2744539`](https://github.com/bem/bem-xjst/commit/28e2744539)] - **compiler**: applyCtx => applyNext(...), not apply() (Fedor Indutny) 
-* [[`4cbdf537d9`](https://github.com/bem/bem-xjst/commit/4cbdf537d9)] - Update README.md (Sergey Berezhnoy) 
+## 0.2.2 Fedor Indutny
+* [[`28e2744539`](https://github.com/bem/bem-xjst/commit/28e2744539)] - **compiler**: applyCtx => applyNext(...), not apply() (Fedor Indutny)
+* [[`4cbdf537d9`](https://github.com/bem/bem-xjst/commit/4cbdf537d9)] - Update README.md (Sergey Berezhnoy)
 
-## 0.2.1 Fedor Indutny 
-* [[`476e1d699f`](https://github.com/bem/bem-xjst/commit/476e1d699f)] - **compiler**: don't generate cache without changes (Fedor Indutny) 
+## 0.2.1 Fedor Indutny
+* [[`476e1d699f`](https://github.com/bem/bem-xjst/commit/476e1d699f)] - **compiler**: don't generate cache without changes (Fedor Indutny)
 
-## 0.2.0 Fedor Indutny 
-* [[`83f9c83d67`](https://github.com/bem/bem-xjst/commit/83f9c83d67)] - **cache**: split strings at compile time (Fedor Indutny) 
+## 0.2.0 Fedor Indutny
+* [[`83f9c83d67`](https://github.com/bem/bem-xjst/commit/83f9c83d67)] - **cache**: split strings at compile time (Fedor Indutny)
 
-## 0.1.5 Fedor Indutny 
-* [[`8b76f70c80`](https://github.com/bem/bem-xjst/commit/8b76f70c80)] - **compiler**: cache should work with __$history (Fedor Indutny) 
+## 0.1.5 Fedor Indutny
+* [[`8b76f70c80`](https://github.com/bem/bem-xjst/commit/8b76f70c80)] - **compiler**: cache should work with __$history (Fedor Indutny)
 
-## 0.1.4 Fedor Indutny 
-* [[`2c8d518470`](https://github.com/bem/bem-xjst/commit/2c8d518470)] - **compiler**: mark user and runtime code (Fedor Indutny) 
+## 0.1.4 Fedor Indutny
+* [[`2c8d518470`](https://github.com/bem/bem-xjst/commit/2c8d518470)] - **compiler**: mark user and runtime code (Fedor Indutny)
 
-## 0.1.3 Fedor Indutny 
-* [[`aee8aac588`](https://github.com/bem/bem-xjst/commit/aee8aac588)] - **compiler**: options.cache=true support (Fedor Indutny) 
+## 0.1.3 Fedor Indutny
+* [[`aee8aac588`](https://github.com/bem/bem-xjst/commit/aee8aac588)] - **compiler**: options.cache=true support (Fedor Indutny)
 
-## 0.1.2 Fedor Indutny 
-* [[`32eb32e052`](https://github.com/bem/bem-xjst/commit/32eb32e052)] - **package**: export cli (Fedor Indutny) 
+## 0.1.2 Fedor Indutny
+* [[`32eb32e052`](https://github.com/bem/bem-xjst/commit/32eb32e052)] - **package**: export cli (Fedor Indutny)
 
-## 0.1.1 Fedor Indutny 
-* [[`0210d0953b`](https://github.com/bem/bem-xjst/commit/0210d0953b)] - **cli**: initial (Fedor Indutny) 
+## 0.1.1 Fedor Indutny
+* [[`0210d0953b`](https://github.com/bem/bem-xjst/commit/0210d0953b)] - **cli**: initial (Fedor Indutny)
 
-## 0.1.0 Fedor Indutny 
-* [[`d68bae6dc1`](https://github.com/bem/bem-xjst/commit/d68bae6dc1)] - **test**: fix test (Fedor Indutny) 
-* [[`ac3d9fac3a`](https://github.com/bem/bem-xjst/commit/ac3d9fac3a)] - **package**: downgrade xjst version (Fedor Indutny) 
+## 0.1.0 Fedor Indutny
+* [[`d68bae6dc1`](https://github.com/bem/bem-xjst/commit/d68bae6dc1)] - **test**: fix test (Fedor Indutny)
+* [[`ac3d9fac3a`](https://github.com/bem/bem-xjst/commit/ac3d9fac3a)] - **package**: downgrade xjst version (Fedor Indutny)
 
-## 0.0.6 Fedor Indutny 
-* [[`788a866c66`](https://github.com/bem/bem-xjst/commit/788a866c66)] - **package**: update xjst (Fedor Indutny) 
+## 0.0.6 Fedor Indutny
+* [[`788a866c66`](https://github.com/bem/bem-xjst/commit/788a866c66)] - **package**: update xjst (Fedor Indutny)
 
-## 0.0.5 Fedor Indutny 
-* [[`3e73d250ca`](https://github.com/bem/bem-xjst/commit/3e73d250ca)] - **runtime**: fix working with uninitialized mods (Fedor Indutny) 
+## 0.0.5 Fedor Indutny
+* [[`3e73d250ca`](https://github.com/bem/bem-xjst/commit/3e73d250ca)] - **runtime**: fix working with uninitialized mods (Fedor Indutny)
 
-## 0.0.4 Fedor Indutny 
-* [[`489f6f21f3`](https://github.com/bem/bem-xjst/commit/489f6f21f3)] - **compiler**: add mod('key', 'value') predicate (Fedor Indutny) 
+## 0.0.4 Fedor Indutny
+* [[`489f6f21f3`](https://github.com/bem/bem-xjst/commit/489f6f21f3)] - **compiler**: add mod('key', 'value') predicate (Fedor Indutny)
 
-## 0.0.3 Fedor Indutny 
-* [[`9007b559d6`](https://github.com/bem/bem-xjst/commit/9007b559d6)] - **test**: fix tests after xjst update (Fedor Indutny) 
+## 0.0.3 Fedor Indutny
+* [[`9007b559d6`](https://github.com/bem/bem-xjst/commit/9007b559d6)] - **test**: fix tests after xjst update (Fedor Indutny)
 
-## 0.0.2 Fedor Indutny 
-* [[`869eb06674`](https://github.com/bem/bem-xjst/commit/869eb06674)] - **package**: change name (Fedor Indutny) 
-* [[`1ca290a389`](https://github.com/bem/bem-xjst/commit/1ca290a389)] - **lib**: re-release (Fedor Indutny) 
-* [[`798cc6f48a`](https://github.com/bem/bem-xjst/commit/798cc6f48a)] - **compiler**: remove explicit context (Fedor Indutny) 
-* [[`60b4543df1`](https://github.com/bem/bem-xjst/commit/60b4543df1)] - **travis**: fix (Fedor Indutny) 
-* [[`838a4f0be0`](https://github.com/bem/bem-xjst/commit/838a4f0be0)] - **readme**: example (Fedor Indutny) 
+## 0.0.2 Fedor Indutny
+* [[`869eb06674`](https://github.com/bem/bem-xjst/commit/869eb06674)] - **package**: change name (Fedor Indutny)
+* [[`1ca290a389`](https://github.com/bem/bem-xjst/commit/1ca290a389)] - **lib**: re-release (Fedor Indutny)
+* [[`798cc6f48a`](https://github.com/bem/bem-xjst/commit/798cc6f48a)] - **compiler**: remove explicit context (Fedor Indutny)
+* [[`60b4543df1`](https://github.com/bem/bem-xjst/commit/60b4543df1)] - **travis**: fix (Fedor Indutny)
+* [[`838a4f0be0`](https://github.com/bem/bem-xjst/commit/838a4f0be0)] - **readme**: example (Fedor Indutny)
 
-## 0.0.1 Fedor Indutny 
-* [[`69ebb0fb5e`](https://github.com/bem/bem-xjst/commit/69ebb0fb5e)] - **package**: add xjst dependency (Fedor Indutny) 
-* [[`c45dc59a99`](https://github.com/bem/bem-xjst/commit/c45dc59a99)] - **ibem**: fixes (Fedor Indutny) 
-* [[`28ebc48f72`](https://github.com/bem/bem-xjst/commit/28ebc48f72)] - **compiler**: do not beautify (Fedor Indutny) 
-* [[`982cf4b542`](https://github.com/bem/bem-xjst/commit/982cf4b542)] - **compiler**: ibem=false mode (Fedor Indutny) 
-* [[`9820cebe68`](https://github.com/bem/bem-xjst/commit/9820cebe68)] - **readme**: fix name (Fedor Indutny) 
-* [[`05b017f5ad`](https://github.com/bem/bem-xjst/commit/05b017f5ad)] - **compiler**: do not touch shared i-bem ast (Fedor Indutny) 
-* [[`08b6eafabd`](https://github.com/bem/bem-xjst/commit/08b6eafabd)] - initial (Fedor Indutny) 
+## 0.0.1 Fedor Indutny
+* [[`69ebb0fb5e`](https://github.com/bem/bem-xjst/commit/69ebb0fb5e)] - **package**: add xjst dependency (Fedor Indutny)
+* [[`c45dc59a99`](https://github.com/bem/bem-xjst/commit/c45dc59a99)] - **ibem**: fixes (Fedor Indutny)
+* [[`28ebc48f72`](https://github.com/bem/bem-xjst/commit/28ebc48f72)] - **compiler**: do not beautify (Fedor Indutny)
+* [[`982cf4b542`](https://github.com/bem/bem-xjst/commit/982cf4b542)] - **compiler**: ibem=false mode (Fedor Indutny)
+* [[`9820cebe68`](https://github.com/bem/bem-xjst/commit/9820cebe68)] - **readme**: fix name (Fedor Indutny)
+* [[`05b017f5ad`](https://github.com/bem/bem-xjst/commit/05b017f5ad)] - **compiler**: do not touch shared i-bem ast (Fedor Indutny)
+* [[`08b6eafabd`](https://github.com/bem/bem-xjst/commit/08b6eafabd)] - initial (Fedor Indutny)

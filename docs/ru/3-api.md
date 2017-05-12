@@ -3,15 +3,14 @@
 * [Выбор движка, компиляция и применение шаблонов](#Выбор-движка-компиляция-и-применение-шаблонов)
 * [Добавление шаблонов](#Добавление-шаблонов)
 * [Настройки](#Настройки)
-  - [Разделители в именовании БЭМ-сущностей](#Разделители-в-именовании-БЭМ-сущностей)
-  - [Поддержка JS-экземпляров для элементов (bem-core v4+)](#Поддержка-js-экземпляров-для-элементов-bem-core-v4)
-  - [Закрытие одиночных элементов](#Закрытие-одиночных-элементов)
-  - [Опциональные закрывающие теги](#Опциональные-закрывающие-теги)
-  - [Атрибуты без кавычек](#Атрибуты-без-кавычек)
-  - [Экранирование](#Экранирование)
-  - [Runtime проверки ошибок в шаблонах и входных данных](#runtime-проверки-ошибок-в-шаблонах-и-входных-данных)
-  - [Режим production](#Режим-production)
-  - [exportName](#Настройка-exportname)
+  * [Разделители в именовании БЭМ-сущностей](#Разделители-в-именовании-БЭМ-сущностей)
+  * [Поддержка JS-экземпляров для элементов (bem-core v4+)](#Поддержка-js-экземпляров-для-элементов-bem-core-v4)
+  * [Закрытие одиночных элементов](#Закрытие-одиночных-элементов)
+  * [Опциональные закрывающие теги](#Опциональные-закрывающие-теги)
+  * [Атрибуты без кавычек](#Атрибуты-без-кавычек)
+  * [Экранирование](#Экранирование)
+  * [Runtime проверки ошибок в шаблонах и входных данных](#runtime-проверки-ошибок-в-шаблонах-и-входных-данных)
+  * [Режим production](#Режим-production)
 * [Подключение сторонних библиотек](#Подключение-сторонних-библиотек)
 * [Расширение BEMContext](#Расширение-bemcontext)
 * [Создание бандла](#Создание-бандла)
@@ -253,13 +252,9 @@ var html = templates.apply(bemjson);
 <table><tr><th>table header<td>table cell</table>
 ```
 
-
 ### Атрибуты без кавычек
 
-Спецификация HTML позволяет опустить необязательные кавычки у атрибутов, которые
-не содержат пробелов и прочих специальных символов. Подробности читайте в
-спецификациях [HTML4](https://www.w3.org/TR/html4/intro/sgmltut.html#h-3.2.2) и
-[HTML5](https://www.w3.org/TR/html5/syntax.html#attributes).
+Спецификация HTML позволяет опустить необязательные кавычки у атрибутов, которые не содержат пробелов и прочих специальных символов. Подробности читайте в спецификациях [HTML4](https://www.w3.org/TR/html4/intro/sgmltut.html#h-3.2.2) и [HTML5](https://www.w3.org/TR/html5/syntax.html#attributes).
 
 С помощью опции `unquotedAttrs` вы можете включить такое поведение в рендеринге BEMHTML.
 
@@ -286,9 +281,7 @@ var html = templates.apply(bemjson);
 
 ### Экранирование
 
-Вы можете включить экранирование содержимого поля `content` опцией `escapeContent`.
-В этом случае ко всем строковым значениям `content` будет применена функция
-[`xmlEscape`](6-templates-context.md#xmlescape).
+Вы можете включить экранирование содержимого поля `content` опцией `escapeContent`. В этом случае ко всем строковым значениям `content` будет применена функция [`xmlEscape`](6-templates-context.md#xmlescape).
 
 ```js
 var bemxjst = require('bem-xjst');
@@ -314,8 +307,9 @@ var html = templates.apply(bemjson);
 <div class="danger">&amp;nbsp;&lt;script src="alert()"&gt;&lt;/script&gt;</div>
 ```
 
-Если вам нужно вывести строку без экранирования воспользуйтесь специальным
-значением поля `content`: `{ html: '…' }`. Пример:
+Если вам нужно вывести строку без экранирования воспользуйтесь [специальным значением поля `content`](4-data.md#content): `{ html: '…' }`.
+
+**Пример**
 
 ```js
 var bemxjst = require('bem-xjst');
@@ -376,24 +370,27 @@ var html = templates.apply([
 ```
 
 В результате выполнения этого кода в STDERR будут записаны предупреждения:
-```
+
+```js
 BEM-XJST WARNING: boolean attribute value: true in BEMJSON: { block: 'b', attrs: { one: true, two: 'true' } }
+
 Notice what bem-xjst behaviour changed: https://github.com/bem/bem-xjst/releases/tag/v4.3.3
 
 BEM-XJST WARNING: mods for elem in BEMJSON: { block: 'c', elem: 'e', mods: { test: 'opa' } }
+
 Notice what bem-xjst behaviour changed: https://github.com/bem/bem-xjst/releases/tag/v5.0.0
 
-BEM-XJST WARNING: looks like someone changed ctx.mods in BEMJSON: { block: 'mods-changes', mods: { one: 2, two: '2' } }
-old value of ctx.mod.one was 1
+BEM-XJST WARNING: looks like someone changed ctx.mods in BEMJSON: { block: 'mods-changes', mods: { one: 2, two: '2' } } old value of ctx.mod.one was 1
+
 Notice that you should change this.mods instead of this.ctx.mods in templates
 ```
 
 ### Режим production
 
-Вы можете использовать опцию `production`, чтобы отрендерить весь BEMJSON,
-даже если в одном из шаблонов произошла ошибка.
+Вы можете использовать опцию `production`, чтобы отрендерить весь BEMJSON, даже если в одном из шаблонов произошла ошибка.
 
-Пример:
+**Пример**
+
 ```js
 var template = bemxjst.compile(function() {
   block('b1').attrs()(function() {
@@ -404,6 +401,7 @@ var template = bemxjst.compile(function() {
 }, { production: true });
 var html = template.apply({ block: 'page', content: { block: 'b1' } });
 ```
+
 `html` будет содержать `<div class="page"></div>`.
 
 Если в результате выполнения шаблонов случится ошибка, то узел не будет отрендерен, но шаблонизатор продолжит
@@ -425,7 +423,6 @@ BEMXJST ERROR: cannot render block b1, elem undefined, mods {}, elemMods {} [Typ
 которой будет храниться движок. По умолчанию движки хранятся в BEMHTML и BEMTREE.
 
 За примером обратитесь к следующему разделу, про создание бандла.
-
 
 ## Подключение сторонних библиотек
 
@@ -498,7 +495,6 @@ block('post').elem('data').content()(function() {
 });
 ```
 
-
 ### Расширение BEMContext
 
 Вы можете расширять `BEMContext`, чтобы использовать в теле шаблона пользовательские функции.
@@ -559,7 +555,5 @@ fs.writeFile('bundle.js', bundle, function(err) {
 пользовательские шаблоны. Код движка будет доступен в переменной bemhtml8x и
 полностью готов к исполению в браузерах, node.js или любой виртуальной машине
 JS.
-
-***
 
 Читать далее: [входные данные](4-data.md)

@@ -16,7 +16,7 @@ The result is `index.html` file with markup of simple page on top of `data.js`.
 
 Project structure:
 
- * [index.js](index.js) — entry point.
- * [data.js](data.js) — typical data from any API or your backend.
- * [bemtree-templates.js](bemtree-templates.js) — templates to convert JSON to [BEMJSON](https://github.com/bem/bem-xjst/blob/master/docs/en/4-data.md).
- * [bemhtml-templates.js](bemhtml-templates.js) — templates to convert BEMJSON to HTML.
+* [index.js](index.js) — entry point.
+* [data.js](data.js) — typical data from any API or your backend.
+* [bemtree-templates.js](bemtree-templates.js) — templates to convert JSON to [BEMJSON](https://github.com/bem/bem-xjst/blob/master/docs/en/4-data.md).
+* [bemhtml-templates.js](bemhtml-templates.js) — templates to convert BEMJSON to HTML.
