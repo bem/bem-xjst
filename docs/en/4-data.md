@@ -2,8 +2,7 @@
 
 ## Overview
 
-Any JavaScript object can be considered BEMJSON. However, to control the
-templating result, we need the standard modes expected by [bem-xjst](1-about.md).
+Any JavaScript object can be considered BEMJSON. However, to control the templating result, we need the standard modes expected by [bem-xjst](1-about.md).
 
 ## Conventions for standard BEMJSON modes
 
@@ -57,7 +56,7 @@ templating result, we need the standard modes expected by [bem-xjst](1-about.md)
 }
 ```
 
-Result of BEMHTML templating:
+*Result of templating:*
 
 ```html
 <div class="tab tab_name_index tab_visible"></div>
@@ -76,7 +75,7 @@ Result of BEMHTML templating:
 }
 ```
 
-Result of BEMHTML templating:
+*Result of templating:*
 
 ```html
 <div class="control__input control__input_type_search"></div>
@@ -122,7 +121,7 @@ An object with `html` field is a special type of BEMJSON nodes. All other fields
 }
 ```
 
-Result of BEMHTML templating:
+*Result of templating:*
 
 ```html
 <div class="markup"><code>new Date();</code></div>
@@ -140,7 +139,7 @@ Result of BEMHTML templating:
 }
 ```
 
-Result of BEMHTML templating:
+*Result of templating:*
 
 ```html
 <div class="link controller"></div>
@@ -160,7 +159,7 @@ More information about [i-bem and JavaScript parameters](https://en.bem.info/pla
 }
 ```
 
-Result of BEMHTML templating:
+*Result of templating:*
 
 ```html
 <div class="link i-bem" data-bem='{"link":{}}'></div>
@@ -176,7 +175,7 @@ Values are escaped:
 }
 ```
 
-Result of BEMHTML templating:
+*Result of templating:*
 
 ```html
 <div class="link i-bem" data-bem='{"link":{title:"film &#39;Sid &amp; Nancy&#39;"}}'></div>
@@ -195,7 +194,7 @@ Result of BEMHTML templating:
 }
 ```
 
-Result of BEMHTML templating:
+*Result of templating:*
 
 ```html
 <div></div>
@@ -215,7 +214,7 @@ Result of BEMHTML templating:
 }
 ```
 
-Result of BEMHTML templating:
+*Result of templating:*
 
 ```html
 <div id="anchor" name="Cartoon &quot;Tom &amp; Jerry&quot;"></div>
@@ -234,7 +233,7 @@ Result of BEMHTML templating:
 }
 ```
 
-Result of BEMHTML templating:
+*Result of templating:*
 
 ```html
 <div class="user h-card p-name">Andrei Linde</div>
@@ -252,7 +251,7 @@ Result of BEMHTML templating:
 }
 ```
 
-Result of BEMHTML templating:
+*Result of templating:*
 
 ```html
 start
@@ -272,7 +271,5 @@ You can add any other data fields in order to later process them in the template
 ```
 
 For more information about how to process user-defined BEMJSON fields, see the section on [templates](5-templates-syntax.md).
-
-***
 
 Read next: [Template syntax](5-templates-syntax.md)
