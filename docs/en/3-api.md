@@ -15,6 +15,7 @@
 * [Using thirdparty libraries](#using-thirdparty-libraries)
 * [Extending BEMContext](#extending-bemcontext)
 * [Bundling](#bundling)
+* [Source maps](#source-maps)
 
 ## Choosing an engine, compiling and applying templates
 
@@ -551,5 +552,33 @@ var bundle = bemxjst.bemhtml.generate(function() {
 });
 ```
 Now `bundle` has a string containing the JavaScript code of the BEMHTML core and the user-defined templates.
+
+## Source maps
+
+There is options in `generate` method to use source maps.
+
+* `to` {String} — output bundle file name
+* `sourceMap.from` {String} — file name
+* `sourceMap.prev` {String|Function|SourceMapConsumer|SourceMapGenerator} —
+* previous source maps in any format
+
+Example of generating bundle with source maps:
+
+```js
+var fs = require('fs'),
+    bemxjst = require('bem-xjst').bemhtml,
+    tmpl = 'my-block-1.bemhtml.js',
+    bundle = 'bundle.bemhtml.js';
+
+var result = bemxjst.generate(fs.readFileSync(tmpl, 'utf8'), {
+    to: bundle,
+    sourceMap: { from: tmpl }
+});
+
+fs.writeFileSync(bundle, result);
+```
+
+Also [see examples](../../examples/source-maps/) about source maps and
+bem-xjst.
 
 Read next: [Input data](4-data.md)

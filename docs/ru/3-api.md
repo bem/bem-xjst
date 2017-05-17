@@ -14,6 +14,7 @@
 * [Подключение сторонних библиотек](#Подключение-сторонних-библиотек)
 * [Расширение BEMContext](#Расширение-bemcontext)
 * [Создание бандла](#Создание-бандла)
+* [Source maps](#source-maps)
 
 ## Выбор движка, компиляция и применение шаблонов
 
@@ -555,5 +556,31 @@ fs.writeFile('bundle.js', bundle, function(err) {
 пользовательские шаблоны. Код движка будет доступен в переменной bemhtml8x и
 полностью готов к исполению в браузерах, node.js или любой виртуальной машине
 JS.
+
+## Source maps
+
+В опциях шаблонизатора у вас есть возможность указать данные про карты кода
+
+* `to` {String} — имя выходного бандла-файла
+* `sourceMap.from` {String} — имя файла
+* `sourceMap.prev` {String|Function|SourceMapConsumer|SourceMapGenerator} — предыдущие карты кода в любом из перечисленных форматов
+
+Пример генерирования бандла с шаблонами и ядром bem-xjst с использованием карт кода:
+
+```js
+var fs = require('fs'),
+    bemxjst = require('bem-xjst').bemhtml,
+    tmpl = 'my-block-1.bemhtml.js',
+    bundle = 'bundle.bemhtml.js';
+
+var result = bemxjst.generate(fs.readFileSync(tmpl, 'utf8'), {
+    to: bundle,
+    sourceMap: { from: tmpl }
+});
+
+fs.writeFileSync(bundle, result);
+```
+
+Так же [смотрите примеры](../../examples/source-maps/) по использованию карт кода вместе с шаблонизатором.
 
 Читать далее: [входные данные](4-data.md)
