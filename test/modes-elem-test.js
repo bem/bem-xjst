@@ -31,6 +31,20 @@ describe('Modes elem(elemName)', function() {
       '<b class="b__inner">test</b></b>');
   });
 
+  it('apply template to all blocks and elems', function() {
+    test(function() {
+      var toAll = function() { return 'span'; };
+
+      block('*').tag()(toAll);
+      block('*').elem('*').tag()(toAll);
+    },
+    [
+      { block: 'a' },
+      { block: 'b', elem: 'e' }
+    ],
+    '<span class="a"></span><span class="b__e"></span>');
+  });
+
   it('elem(*) should be called before the matched templates',
     function() {
     test(function() {
