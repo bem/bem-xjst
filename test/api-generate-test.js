@@ -32,6 +32,19 @@ describe('API generate', function() {
       assert.equal(typeof sandbox[CUSTOM_NAME], 'object');
     });
 
+    it.only('as commonjs', function() {
+      var bundle = bemhtml.generate('');
+      var module = { exports: {} };
+      var sandbox = {
+        global: {},
+        module: module,
+        exports: module.exports
+      };
+      vm.runInNewContext(bundle, sandbox);
+      assert.deepEqual(sandbox.global, {}, 'Should not export to global in CommonJS context.');
+      assert.equal(typeof module.exports.apply, 'function');
+    });
+
     describe('requires option', function() {
       describe('global deps', function() {
         it('should get dependencies from global scope (Node.js for example)',
