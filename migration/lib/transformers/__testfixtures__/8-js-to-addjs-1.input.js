@@ -5,3 +5,9 @@ block('b')(
 
   content()('test')
 );
+
+block('b')(
+  js()(true),
+
+  content()('test')
+);
