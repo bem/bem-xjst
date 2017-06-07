@@ -1,5 +1,21 @@
 # BEM-XJST Changelog
 
+# 2017-06-07 [v8.6.12](https://github.com/bem/bem-xjst/compare/v8.6.11...v8.6.12), @miripiruni
+
+Dependency updated: vow and uglify-js.
+
+Commits:
+* [[`908c67d5ef`](https://github.com/bem/bem-xjst/commit/908c67d5ef)] - **Migration**: js() to addJs() tests added (miripiruni)
+* [[`f869eff854`](https://github.com/bem/bem-xjst/commit/f869eff854)] - Merge pull request #453 from bem/issue-449__bench-for-8x (Slava Oliyanchuk)
+* [[`88ea1bf670`](https://github.com/bem/bem-xjst/commit/88ea1bf670)] - Merge pull request #456 from bem/greenkeeper-vow-0.4.16 (Slava Oliyanchuk)
+* [[`f70449d2a5`](https://github.com/bem/bem-xjst/commit/f70449d2a5)] - chore(package): update vow to version 0.4.16 (greenkeeperio-bot)
+* [[`887c452615`](https://github.com/bem/bem-xjst/commit/887c452615)] - **Bench**: support v8.x (Fix #449) (miripiruni)
+* [[`b832e39287`](https://github.com/bem/bem-xjst/commit/b832e39287)] - Merge pull request #440 from bem/translation-review (Slava Oliyanchuk)
+* [[`745b2ffeb8`](https://github.com/bem/bem-xjst/commit/745b2ffeb8)] - fix syntax (Sergei Bocharov)
+* [[`a2d25efb5a`](https://github.com/bem/bem-xjst/commit/a2d25efb5a)] - Merge pull request #447 from bem/greenkeeper-uglify-js-3.0.3 (Slava Oliyanchuk)
+* [[`bad85fc45b`](https://github.com/bem/bem-xjst/commit/bad85fc45b)] - chore(package): update uglify-js to version 3.0.3 (greenkeeperio-bot)
+
+
 # 2017-04-28 [v8.6.11](https://github.com/bem/bem-xjst/compare/v8.6.10...v8.6.11), @miripiruni
 
 Fixed bug: now BEMXJST exec new oninit functions on every compile (see issue #356).
