@@ -29,24 +29,7 @@ modules.define('version-selector', [ 'i-bem__dom', 'querystring' ], function(pro
 
                     select.domElem.on('change', function(e) {
                         var val = e.target.value;
-                        var parseParams = function parseParams(params) {
-                                var ret = {},
-                                    hash,
-                                    hashes = params && params.split('&');
-
-                                if (!params) {
-                                    return;
-                                }
-
-                                for (var i = 0; i < hashes.length; i++) {
-                                    hash = hashes[i].split('=');
-                                    // Allow plus sign as a space
-                                    ret[hash[0]] = decodeURIComponent(hash[1].replace(/\+/g, ' '));
-                                }
-
-                                return ret;
-                            },
-                            freeze = function() {
+                        var freeze = function() {
                                 transport && d.getElementById(TRANSPORT_ID).remove();
                                 var demo = document.getElementsByClassName('demo')[0];
                                 demo.classList.remove('demo_state_loaded');
