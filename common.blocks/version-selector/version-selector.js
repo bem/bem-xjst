@@ -17,14 +17,14 @@ modules.define('version-selector', [ 'i-bem__dom', 'querystring' ], function(pro
                     var select = this;
 
                     window.onpopstate = function(event) {
-                        var ver = encodeURIComponent(qs.parse(location.href).bemxjst_version || '');
+                        var ver = encodeURIComponent(qs.parse(location.href).version || '');
 
                         if (!ver) {
                             ver = JSON.parse(select.dataset.bem);
                             ver = ver['version-selector'].default.hash;
                         }
 
-                        select.value = ver;
+                        select.setValue(ver);
                     };
 
                     select.domElem.on('change', function(e) {
