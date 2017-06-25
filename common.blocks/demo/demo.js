@@ -1,4 +1,4 @@
-modules.define('demo', [ 'i-bem__dom', 'pretty', 'functions__debounce' ], function(provide, BEMDOM, pretty, debounce) {
+modules.define('demo', [ 'i-bem__dom', 'pretty', 'functions__debounce', 'querystring' ], function(provide, BEMDOM, pretty, debounce, qs) {
 
     provide(BEMDOM.decl('demo', {
         onSetMod: {
@@ -65,36 +65,20 @@ modules.define('demo', [ 'i-bem__dom', 'pretty', 'functions__debounce' ], functi
             this._result.setValue(finalCode);
         },
         save: function() {
-            var template = this._getTemplate(),
-                bemjson = this._getBEMJSON(),
-                version = this._versionSelect.getValue(),
-                engine = this._engineSelect.getValue();
-
-            store.set('playground', {
-                version: version,
-                template: template,
-                bemjson: bemjson,
-                engine: engine
-            });
-
-            history.pushState({}, document.title, location.pathname + '?' + [
-                'template=' + encodeURIComponent(template),
-                'bemjson=' + encodeURIComponent(bemjson),
-                'version=' + encodeURIComponent(version),
-                'engine=' + encodeURIComponent(engine)
-            ].join('&'));
+            store.set('playground', this._getState());
+            history.pushState({}, document.title, location.pathname + '?' + qs.stringify(this._getState()));
         },
         _load: function() {
             var data = parseParams(location.search.split('?')[1]) ||
                 store.get('playground') ||
-                this._getDefaultState();
+                this._getState();
 
             this._templates.setValue(data.template);
             this._bemjson.setValue(data.bemjson);
             this._versionSelect.setValue(data.version);
             this._engineSelect.setValue(data.engine);
         },
-        _getDefaultState: function() {
+        _getState: function() {
             return {
                 template: this._getTemplate(),
                 bemjson: this._getBEMJSON(),
