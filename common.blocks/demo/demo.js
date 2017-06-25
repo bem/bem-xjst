@@ -4,30 +4,29 @@ modules.define('demo', [ 'i-bem__dom', 'pretty', 'functions__debounce' ], functi
         onSetMod: {
             js: {
                 inited: function() {
-
+                    
+                    var bPage = this.findBlockOutside('page');
+                    
+                    this._versionSelect = bPage.findBlockInside('version-selector');
+                    this._engineSelect = bPage.findBlockInside('engine-selector');
                     this._templates = this.findBlockOn('templates', 'editor');
                     this._bemjson = this.findBlockOn('bemjson', 'editor');
                     this._result = this.findBlockOn('result', 'editor');
-                    this._engine = BEMHTML;
                     this._debouncedOnChange = debounce(this._onChange, 150, this);
 
                     this._templates.on('change', this._debouncedOnChange);
                     this._bemjson.on('change', this._debouncedOnChange);
 
-                    this._load() || this._render();
-
-                    this.delMod('state');
-
-                    setTimeout(function() {
+                    this._versionSelect.on('ready', function() {
+                        this._load();
                         this.setMod('state', 'loaded');
-                    }.bind(this), 150);
-
+                    }, this);
                 }
             }
         },
         _onChange: function() {
             this._render();
-            this._save();
+            this.save();
         },
         _getTemplate: function() {
             return this._templates.getValue();
@@ -65,37 +64,43 @@ modules.define('demo', [ 'i-bem__dom', 'pretty', 'functions__debounce' ], functi
             }
             this._result.setValue(finalCode);
         },
-        _save: function() {
+        save: function() {
             var template = this._getTemplate(),
-                bemjson = this._getBEMJSON();
+                bemjson = this._getBEMJSON(),
+                version = this._versionSelect.getValue(),
+                engine = this._engineSelect.getValue();
 
             store.set('playground', {
-                version: this.params.version,
+                version: version,
                 template: template,
-                bemjson: bemjson
+                bemjson: bemjson,
+                engine: engine
             });
 
             history.pushState({}, document.title, location.pathname + '?' + [
                 'template=' + encodeURIComponent(template),
-                'bemjson=' + encodeURIComponent(bemjson)
+                'bemjson=' + encodeURIComponent(bemjson),
+                'version=' + encodeURIComponent(version),
+                'engine=' + encodeURIComponent(engine)
             ].join('&'));
         },
         _load: function() {
-            var data = parseParams(location.search.split('?')[1]) || store.get('playground');
+            var data = parseParams(location.search.split('?')[1]) ||
+                store.get('playground') ||
+                this._getDefaultState();
 
-            if (!data || (data.version && data.version !== this.params.version)) {
-                return false;
-            }
-
-            if (typeof data.template === 'string') {
-                this._templates.setValue(data.template);
-            }
-
-            if (typeof data.bemjson === 'string') {
-                this._bemjson.setValue(data.bemjson);
-            }
-
-            return !!(data.template || data.bemjson)
+            this._templates.setValue(data.template);
+            this._bemjson.setValue(data.bemjson);
+            this._versionSelect.setValue(data.version);
+            this._engineSelect.setValue(data.engine);
+        },
+        _getDefaultState: function() {
+            return {
+                template: this._getTemplate(),
+                bemjson: this._getBEMJSON(),
+                version: this._versionSelect.getValue(),
+                engine: this._engineSelect.getValue()
+            };
         }
     }, {}));
 

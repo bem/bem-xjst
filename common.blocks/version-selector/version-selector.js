@@ -14,11 +14,10 @@ modules.define('version-selector', [ 'i-bem__dom', 'querystring' ], function(pro
                     var URL = 'https://rawgit.com/miripiruni/bem-xjst/';
                     var FILE = '/xindex.browser.bemhtml.js';
                     var TRANSPORT_ID = 'transport';
-                    var select = d.getElementsByClassName('version-selector')[0];
+                    var select = this;
 
                     window.onpopstate = function(event) {
                         var ver = encodeURIComponent(qs.parse(location.href).bemxjst_version || '');
-                        var select = d.getElementsByClassName('version-selector')[0];
 
                         if (!ver) {
                             ver = JSON.parse(select.dataset.bem);
@@ -28,7 +27,7 @@ modules.define('version-selector', [ 'i-bem__dom', 'querystring' ], function(pro
                         select.value = ver;
                     };
 
-                    select.onchange = function onVersionChange(e) {
+                    select.domElem.on('change', function(e) {
                         var val = e.target.value;
                         var parseParams = function parseParams(params) {
                                 var ret = {},
@@ -75,24 +74,20 @@ modules.define('version-selector', [ 'i-bem__dom', 'querystring' ], function(pro
                             console.error('Unable to load ' + this.src);
                             unfreeze();
                         };
-
-                        var params = parseParams(location.search.replace('?', ''));
-                        // TODO (miripiruni): params.version = this.selectedOptions[0].innerText;
-                        params.toString = function() {
-                            var params = this;
-
-                            return Object.keys(this)
-                                .filter(function(p) { return p !== 'toString'; })
-                                .map(function(p) {
-                                    return p + '=' + encodeURIComponent(params[p]);
-                                }).join('&');
-                        };
-
-                        history.pushState({}, d.title, location.pathname + '?' + params.toString());
-                    };
-
+                        bDemo.save();
+                    });
+                    this.emit('ready');
                 }
             }
+        },
+
+        setValue: function(value) {
+            this.domElem.val(value).trigger('change');
+            return this;
+        },
+
+        getValue: function() {
+            return this.domElem.val();
         }
     }, {}));
 
