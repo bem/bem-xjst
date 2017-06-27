@@ -20,15 +20,15 @@ modules.define('version-selector', [ 'i-bem__dom', 'querystring' ], function(pro
                         var ver = encodeURIComponent(qs.parse(location.href).version || '');
 
                         if (!ver) {
-                            ver = JSON.parse(select.dataset.bem);
-                            ver = ver['version-selector'].default.hash;
+                            ver = select.params.default.name;
                         }
 
                         select.setValue(ver);
                     };
 
                     select.domElem.on('change', function(e) {
-                        var val = e.target.value;
+                        var name = e.target.value;
+                        var hash = select._getHashByVersion(name);
                         var freeze = function() {
                                 transport && d.getElementById(TRANSPORT_ID).remove();
                                 var demo = document.getElementsByClassName('demo')[0];
@@ -46,7 +46,7 @@ modules.define('version-selector', [ 'i-bem__dom', 'querystring' ], function(pro
 
                         transport = d.createElement('script');
                         transport.id = TRANSPORT_ID;
-                        transport.src = URL + val + FILE;
+                        transport.src = URL + hash + FILE;
                         d.body.appendChild(transport);
 
                         transport.onload = function() {
@@ -71,6 +71,16 @@ modules.define('version-selector', [ 'i-bem__dom', 'querystring' ], function(pro
 
         getValue: function() {
             return this.domElem.val();
+        },
+
+        _getHashByVersion: function(version) {
+            var item = this.params.versions.find(function(item) {
+                return item.name === version;
+            });
+            if (item) {
+                return item.hash;
+            }
+            return null;
         }
     }, {}));
 

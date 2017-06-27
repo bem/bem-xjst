@@ -80,10 +80,10 @@ modules.define('demo', [ 'i-bem__dom', 'pretty', 'functions__debounce', 'queryst
         },
         _getState: function() {
             return {
-                template: this._getTemplate(),
-                bemjson: this._getBEMJSON(),
                 version: this._versionSelect.getValue(),
-                engine: this._engineSelect.getValue()
+                engine: this._engineSelect.getValue(),
+                template: this._getTemplate(),
+                bemjson: this._getBEMJSON()
             };
         }
     }, {}));
