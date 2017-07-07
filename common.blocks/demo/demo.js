@@ -70,10 +70,20 @@ modules.define('demo', [ 'i-bem__dom', 'pretty', 'functions__debounce', 'queryst
         },
         _load: function() {
             var data = parseParams(location.search.split('?')[1]) ||
-                store.get('playground') ||
+                this._getStateFromCache() ||
                 this._getState();
 
             this._setState(data);
+        },
+        _getStateFromCache() {
+            var cache = store.get('playground') || {};
+
+            console.log(this.params.version, cache.version);
+
+            if (this.params.version !== cache.version) {
+                return null;
+            }
+            return cache;
         },
         _getState: function() {
             return {

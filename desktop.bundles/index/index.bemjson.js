@@ -1,4 +1,5 @@
 var package = require('../../package.json'),
+    BEMXJST_VERSION = package.version,
     GITHUB_URL = package.repository.url,
     fs = require('fs'),
     defaults = {
@@ -108,6 +109,9 @@ module.exports = {
         },
         {
             block: 'demo',
+            js: {
+                version: BEMXJST_VERSION
+            },
             mods: { state: 'loading' },
             content: [
                 {
