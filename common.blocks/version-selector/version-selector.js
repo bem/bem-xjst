@@ -27,8 +27,8 @@ modules.define('version-selector', [ 'i-bem__dom', 'querystring' ], function(pro
                     };
 
                     select.domElem.on('change', function(e) {
-                        var name = e.target.value;
-                        var hash = select._getHashByVersion(name);
+                        var version = e.target.value;
+                        var hash = select.params.versions.find(function(item) { return item.name === version; }).hash;
                         var freeze = function() {
                                 transport && d.getElementById(TRANSPORT_ID).remove();
                                 var demo = document.getElementsByClassName('demo')[0];
@@ -71,16 +71,6 @@ modules.define('version-selector', [ 'i-bem__dom', 'querystring' ], function(pro
 
         getValue: function() {
             return this.domElem.val();
-        },
-
-        _getHashByVersion: function(version) {
-            var item = this.params.versions.find(function(item) {
-                return item.name === version;
-            });
-            if (item) {
-                return item.hash;
-            }
-            return null;
         }
     }, {}));
 
