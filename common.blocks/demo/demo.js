@@ -73,10 +73,7 @@ modules.define('demo', [ 'i-bem__dom', 'pretty', 'functions__debounce', 'queryst
                 store.get('playground') ||
                 this._getState();
 
-            this._templates.setValue(data.template);
-            this._bemjson.setValue(data.bemjson);
-            this._versionSelect.setValue(data.version);
-            this._engineSelect.setValue(data.engine);
+            this._setState(data);
         },
         _getState: function() {
             return {
@@ -85,6 +82,12 @@ modules.define('demo', [ 'i-bem__dom', 'pretty', 'functions__debounce', 'queryst
                 template: this._getTemplate(),
                 bemjson: this._getBEMJSON()
             };
+        },
+        _setState: function(data) {
+            this._templates.setValue(data.template);
+            this._bemjson.setValue(data.bemjson);
+            this._versionSelect.setValue(data.version);
+            this._engineSelect.setValue(data.engine);
         }
     }, {}));
 
