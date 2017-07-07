@@ -9,14 +9,13 @@ var package = require('../../package.json'),
 
 module.exports = {
     block: 'page',
-    title: 'BEM-XJST ' + BEMXJST_VERSION + ' Demo',
+    title: 'BEM-XJST Demo',
     head: [
         { elem: 'meta', attrs: { name: 'viewport', content: 'width=device-width, initial-scale=1' } },
         { elem: 'css', url: 'xindex.css' }
     ],
     scripts: [
         { elem: 'js', url: 'xindex.js' },
-        { elem: 'js', url: 'xindex.browser.bemhtml.js' },
         { elem: 'js', url: 'https://cdnjs.cloudflare.com/ajax/libs/ace/1.2.2/ace.js' },
         { elem: 'js', url: 'https://apis.google.com/js/client.js' }
     ],
@@ -111,7 +110,7 @@ module.exports = {
         {
             block: 'demo',
             js: {
-                version: BEMXJST_VERSION + '_3' // инвалидация дефолтных значений
+                version: BEMXJST_VERSION
             },
             mods: { state: 'loading' },
             content: [

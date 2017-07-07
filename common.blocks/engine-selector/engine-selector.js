@@ -10,9 +10,18 @@ modules.define('engine-selector', [ 'i-bem__dom'], function(provide, BEMDOM) {
 
                     this.domElem[0].addEventListener('change', function(e){
                         this._bDemo.changeEngine(e.target.value);
+                        this._bDemo.save();
                     }.bind(this));
                 }
             }
+        },
+
+        setValue: function(value) {
+            this.domElem.val(value).trigger('change');
+        },
+
+        getValue: function() {
+            return this.domElem.val();
         }
     }, {}));
 

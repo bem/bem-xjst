@@ -3,7 +3,8 @@ block('version-selector')(
 
     js()(function() {
         return {
-            default: this.ctx.versions[0]
+            default: this.ctx.versions[0],
+            versions: this.ctx.versions
         };
     }),
 
@@ -11,7 +12,7 @@ block('version-selector')(
         return this.ctx.versions.map(function(item) {
             return {
                 tag: 'option',
-                attrs: { value: item.hash },
+                attrs: { value: item.name },
                 content: item.name
             };
         });
