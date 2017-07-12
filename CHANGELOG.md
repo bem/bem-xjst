@@ -1,5 +1,14 @@
 # BEM-XJST Changelog
 
+# 2017-07-13 [v8.6.13](https://github.com/bem/bem-xjst/compare/v8.6.12...v8.6.13), @miripiruni
+
+`generate()` method fixed: CommonJS variant should not affect global.
+
+Commits:
+* [[`64f1fef2b6`](https://github.com/bem/bem-xjst/commit/64f1fef2b6)] - Merge pull request #457 from bem/qfox.generate-commonjs-module (Slava Oliyanchuk)
+* [[`f12b428185`](https://github.com/bem/bem-xjst/commit/f12b428185)] - Merge pull request #463 from bem/greenkeeper-uglify-js-3.0.14 (Slava Oliyanchuk)
+
+
 # 2017-06-07 [v8.6.12](https://github.com/bem/bem-xjst/compare/v8.6.11...v8.6.12), @miripiruni
 
 Dependency updated: vow and uglify-js.
