@@ -11,3 +11,4 @@ List of checks:
 * `data-bem` attribute in `attrs` (recomend use `js`)
 * mix the same mod of elemMod (warning about useless operation)
 * wrong naming (elem delimeter in block names or mod delimeter in mod name and etc)
+* `mods` and `elemMods` values can’t be an Array type

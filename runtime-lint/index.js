@@ -319,6 +319,44 @@ block('*')(
     });
 
     return applyNext();
+  }),
+
+  def()(function(node, ctx) {
+    console.log(ctx);
+
+    if (ctx.mods) {
+      var mods = ctx.mods;
+
+      Object.keys(mods).forEach(function(mod) {
+        var val = mods[mod];
+
+        if (Array.isArray(val)) {
+          console.warn(
+            '\nBEM-XJST WARNING: wrong modifier value. ' +
+            '\nModifier value can be undefined, null, String, Number or Boolean. ' +
+            '\nctx: ' + JSON.stringify(ctx)
+          );
+        }
+      });
+    }
+
+    if (ctx.elemMods) {
+      var elemMods = ctx.elemMods;
+
+      Object.keys(elemMods).forEach(function(mod) {
+        var val = elemMods[mod];
+
+        if (Array.isArray(val)) {
+          console.warn(
+            '\nBEM-XJST WARNING: wrong element modifier value. ' +
+            '\nModifier value can be undefined, null, String, Number or Boolean. ' +
+            '\nctx: ' + JSON.stringify(ctx)
+          );
+        }
+      });
+    }
+
+    return applyNext();
   })
 );
 

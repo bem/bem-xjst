@@ -76,7 +76,11 @@ var html = templates.apply([
   { block: 'b', elem: 'e', elemMods: { mod_name: 'bad' } },
   { block: 'b', elem: 'e', elemMods: { mod__name: 'bad' } },
   { block: 'b', elem: 'e', elemMods: { modName: 'very_bad' } },
-  { block: 'b', elem: 'e', elemMods: { modName: 'very__bad' } }
+  { block: 'b', elem: 'e', elemMods: { modName: 'very__bad' } },
+
+  // Wrong mods/elemMods types
+  { block: 'b', mods: { test: [ 'a', 'b' ] } },
+  { block: 'b', elem: 'e', elemMods: { test: [ 'a', 'b' ] } }
 ]);
 
 console.log(html);
