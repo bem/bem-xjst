@@ -75,7 +75,7 @@ modules.define('demo', [ 'i-bem__dom', 'pretty', 'functions__debounce', 'queryst
 
             this._setState(data);
         },
-        _getStateFromCache() {
+        _getStateFromCache: function() {
             var cache = store.get('playground') || {};
 
             if (this.params.version !== cache.version) {
