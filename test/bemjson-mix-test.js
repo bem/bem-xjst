@@ -238,4 +238,48 @@ describe('BEMJSON mix', function() {
         'b__e_modname_modval"></div></div>');
     });
   });
+
+  describe('nested mixes', function() {
+    it('should support nested mix', function() {
+      test(function() {},
+      {
+        block: 'b1',
+        mix: {
+          block: 'b2',
+          elem: 'e',
+          mix: {
+            block: 'b3',
+            mods: { test: 'opa' },
+            mix: [
+              { block: 'b4' },
+              { block: 'b5' }
+            ]
+          }
+        }
+      },
+      '<div class="b1 b2__e b3 b3_test_opa b4 b5"></div>');
+    });
+
+    it('should support nested mix with js params', function() {
+      test(function() {},
+      {
+        block: 'b1',
+        mix: {
+          block: 'b2',
+          elem: 'e',
+          mix: {
+            block: 'b3',
+            mods: { test: 'opa' },
+            js: { data: '123' },
+            mix: [
+              { block: 'b4', js: { t: 1 } },
+              { block: 'b5' }
+            ]
+          }
+        }
+      },
+      '<div class="b1 b2__e b3 b3_test_opa b4 b5 i-bem" ' +
+        'data-bem=\'{"b3":{"data":"123"},"b4":{"t":1}}\'></div>');
+    });
+  });
 });
