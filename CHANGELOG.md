@@ -1,5 +1,16 @@
 # BEM-XJST Changelog
 
+# 2017-07-18 [v8.7.0](https://github.com/bem/bem-xjst/compare/v8.6.13...v8.7.0), @miripiruni
+
+* [Source map support added](https://github.com/bem/bem-xjst/blob/master/docs/en/3-api.md#source-maps).
+* Runtime line check: mods can’t be Array typed.
+
+Commits:
+* [[`83acd1491d`](https://github.com/bem/bem-xjst/commit/83acd1491d)] - Merge pull request #454 from bem/issue-108__source-maps (Slava Oliyanchuk)
+* [[`9167586c17`](https://github.com/bem/bem-xjst/commit/9167586c17)] - Source map support (issue #108) (miripiruni)
+* [[`f01daa92a1`](https://github.com/bem/bem-xjst/commit/f01daa92a1)] - Merge pull request #462 from bem/issue-420__runtime-lint-mods-value (Slava Oliyanchuk)
+
+
 # 2017-07-13 [v8.6.13](https://github.com/bem/bem-xjst/compare/v8.6.12...v8.6.13), @miripiruni
 
 `generate()` method fixed: CommonJS variant should not affect global.
