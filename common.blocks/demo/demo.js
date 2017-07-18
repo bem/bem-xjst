@@ -4,9 +4,9 @@ modules.define('demo', [ 'i-bem__dom', 'pretty', 'functions__debounce', 'queryst
         onSetMod: {
             js: {
                 inited: function() {
-                    
+
                     var bPage = this.findBlockOutside('page');
-                    
+
                     this._versionSelect = bPage.findBlockInside('version-selector');
                     this._engineSelect = bPage.findBlockInside('engine-selector');
                     this._templates = this.findBlockOn('templates', 'editor');
