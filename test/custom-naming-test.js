@@ -29,4 +29,21 @@ describe('Custom delimeters for BEM naming', function() {
       }
     });
   });
+
+  it('should support custom naming ' +
+    'for modName and modVal delimeters', function() {
+    test(function() {
+    }, [
+      {
+        block: 'b1',
+        elem: 'e1',
+        elemMods: { a: 'b' }
+      }
+    ], '<div class="b1__e1 b1__e1--a_b"></div>', {
+      naming: {
+        elem: '__',
+        mod: { name: '--', val: '_' }
+      }
+    });
+  });
 });

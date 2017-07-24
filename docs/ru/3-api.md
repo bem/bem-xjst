@@ -127,7 +127,7 @@ var templates = bemxjst.bemhtml.compile(function() {
         // Настройка БЭМ-нейминга
         naming: {
             elem: '__',
-            mod: '_'
+            mod: { name: '--', val: '_' }
         }
     });
 
@@ -146,8 +146,8 @@ var html = templates.apply(bemjson);
 В результате `html` будет содержать строку:
 
 ```html
-<div class="page page_theme_gray">
-    <div class="page__head page__head_type_short"></div>
+<div class="page page--theme_gray">
+    <div class="page__head page__head--type_short"></div>
 </div>
 ```
 
