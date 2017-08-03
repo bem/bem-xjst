@@ -1,5 +1,21 @@
 # BEM-XJST Changelog
 
+# 2017-08-03 [v7.7.5](https://github.com/bem/bem-xjst/compare/v7.7.4...v7.7.5), @miripiruni
+
+BEMHTML: OL and UL end tags was removed from list of optional tags. See #472.
+
+Commits:
+* [[`64d8fc4659`](https://github.com/bem/bem-xjst/commit/64d8fc4659)] - **BEMHTML**: Remove ul and ol from list of optional tags, they are NOT optional (miripiruni)
+
+
+# 2017-05-03 [v7.7.4](https://github.com/bem/bem-xjst/compare/v7.7.3...v7.7.4), @miripiruni
+
+Memory lick fixed. See #433. This release is port of v4.4.2 and v8.6.10.
+
+Commits:
+* [[`0ed5efdf69`](https://github.com/bem/bem-xjst/commit/0ed5efdf69)] - **Match**: Fixed this.restoreDepth call possibly (issue #433) (miripiruni)
+
+
 # 2017-03-17 [v7.7.3](https://github.com/bem/bem-xjst/compare/v7.7.2...v7.7.3), @miripiruni
 
 `oninit` fixed. It was broken after bundle minification (v7.7.1)
