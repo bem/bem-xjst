@@ -1,5 +1,29 @@
 # BEM-XJST Changelog
 
+# 2017-07-18 [v8.7.1](https://github.com/bem/bem-xjst/compare/v8.7.0...v8.7.1), @miripiruni
+
+Nested mixes is supported. It’s been worked in v1.x but then somehow was broken. Now you can use it again.
+
+```js
+{ block: 'b', mix: { block: 'c', mix: { block: 'nested-mix', js: true } } }
+```
+
+Will be rendered as:
+
+```html
+<div class="b c nexted-mix i-bem"></div>
+```
+
+BEMHTML: OL and UL end tags is not optional according to [W3C HTML4 spec](https://www.w3.org/TR/html4/index/elements.html).
+
+Commits:
+* [[`a2c71800c6`](https://github.com/bem/bem-xjst/commit/a2c71800c6)] - Merge pull request #473 from bem/issue-472 (Slava Oliyanchuk)
+* [[`3e777b797a`](https://github.com/bem/bem-xjst/commit/3e777b797a)] - Remove ul and ol from list of optional tags, they are NOT optional (Vitaly Harisov)
+* [[`58916ebf05`](https://github.com/bem/bem-xjst/commit/58916ebf05)] - Merge pull request #471 from gulalex181/prose-patch-1 (Slava Oliyanchuk)
+* [[`04374187b6`](https://github.com/bem/bem-xjst/commit/04374187b6)] - Пропущен предлог в "описано *в* разделе про режимы" (Alexander Gulnyashkin)
+* [[`1641c5b45c`](https://github.com/bem/bem-xjst/commit/1641c5b45c)] - Merge pull request #448 from bem/issue-241__nested-mixes-2 (Slava Oliyanchuk)
+
+
 # 2017-07-18 [v8.7.0](https://github.com/bem/bem-xjst/compare/v8.6.13...v8.7.0), @miripiruni
 
 * [Source map support added](https://github.com/bem/bem-xjst/blob/master/docs/en/3-api.md#source-maps).
