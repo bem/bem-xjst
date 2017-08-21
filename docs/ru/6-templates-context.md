@@ -296,7 +296,7 @@ var templates = bemxjst.bemhtml.compile(function() {
 
     // Внимание: oninit сработает только при первой компиляции шаблонов.
     oninit(function(exports, shared) {
-        shared.BEMContext.prototype.hi = function(name) {
+        shared.BEMContext.prototype.hi = function(username) {
             return 'Hello, ' + username;
         };
     });
