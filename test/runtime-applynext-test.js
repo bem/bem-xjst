@@ -13,7 +13,7 @@ describe('Runtime applyNext()', function() {
     }, { block: 'b1', content: 'ohai' }, '<div class="b1">{%ohai%}</div>');
   });
 
-  it('should support applyNext({ ... }) with changes', function() {
+  it('should support changes', function() {
     test(function() {
       block('b1').content()(function() {
         return '%' + this.wtf + applyNext() + '%';
@@ -22,6 +22,16 @@ describe('Runtime applyNext()', function() {
         return '{' + applyNext({ wtf: 'no ' }) + '}';
       });
     }, { block: 'b1', content: 'ohai' }, '<div class="b1">{%no ohai%}</div>');
+  });
+
+  it('should support changes for ctx', function() {
+    test(function() {
+      block('b1').def()(function() {
+        return applyNext({ 'ctx.attrs': { id: 'test' } });
+      });
+    },
+    { block: 'b1', content: 'ohai' },
+    '<div class="b1" id="test">ohai</div>');
   });
 
   it('should support > 31 templates (because of the bit mask)', function() {
