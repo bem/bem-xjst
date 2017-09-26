@@ -1,5 +1,27 @@
 # BEM-XJST Changelog
 
+# 2017-09-26 [v8.8.0](https://github.com/bem/bem-xjst/compare/v8.7.1...v8.8.0), @miripiruni
+
+When you use `production` option with `true` value you can define function for custom error logging. This function will be used instead of regilar `console.error`. Custom function will be filled with two arguments:
+
+1) Object with block, element and modifiers fields where error occurred.
+2) Original JS error.
+
+You can define custom `onError` function by extending prototype of `BEMContext`. For example:
+
+```js
+var bemxjst = require('bem-xjst');
+var templates = bemxjst.bemhtml.compile('', { production: true });
+
+templates.BEMContext.prototype.onError = function(msg, err) { … };
+```
+
+
+Commits:
+* [[`3d818a7548`](https://github.com/bem/bem-xjst/commit/3d818a7548)] - **BEMXJST**: API for custom error logger (fix for #475) (miripiruni)
+* [[`3ad1d8b513`](https://github.com/bem/bem-xjst/commit/3ad1d8b513)] - **Trivial**: test for applyNext changes in this.ctx (miripiruni)
+* [[`738ee7a71c`](https://github.com/bem/bem-xjst/commit/738ee7a71c)] - Fix username in the example (baymer)
+
 # 2017-07-18 [v8.7.1](https://github.com/bem/bem-xjst/compare/v8.7.0...v8.7.1), @miripiruni
 
 Nested mixes is supported. It’s been worked in v1.x but then somehow was broken. Now you can use it again.
