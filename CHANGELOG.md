@@ -1,5 +1,14 @@
 # BEM-XJST Changelog
 
+# 2017-09-26 [v8.8.1](https://github.com/bem/bem-xjst/compare/v8.8.0...v8.8.1), @miripiruni
+
+Custom naming improved: `mods` can be object `{ name: '...', val: '...' }`. Backward capability is supported.
+
+Commits:
+* [[`85a5f41570`](https://github.com/bem/bem-xjst/commit/85a5f41570)] - Merge pull request #470 from bem/issue-469__mod-val-setting (Slava Oliyanchuk)
+* [[`8e4a9e3459`](https://github.com/bem/bem-xjst/commit/8e4a9e3459)] - **Docs**: fix argument name (miripiruni)
+
+
 # 2017-09-26 [v8.8.0](https://github.com/bem/bem-xjst/compare/v8.7.1...v8.8.0), @miripiruni
 
 When you use `production` option with `true` value you can define function for custom error logging. This function will be used instead of regilar `console.error`. Custom function will be filled with two arguments:
