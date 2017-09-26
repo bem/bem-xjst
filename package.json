@@ -53,6 +53,7 @@
     "istanbul": "^0.4.4",
     "chai": "^3.5.0",
     "chai-as-promised": "^6.0.0",
+    "sinon": "^2.4.1",
     "jscs": "^3.0.3",
     "jshint": "^2.7.0",
     "mocha": "^3.0.2",

@@ -430,10 +430,23 @@ $ cat stderr.txt
 BEMXJST ERROR: cannot render block b1, elem undefined, mods {}, elemMods {} [TypeError: Cannot read property 'undef' of undefined]
 ```
 
+When you use `production` option with `true` value you can define function for custom error logging. This function will be used instead of regilar `console.error`. Custom function will be filled with two arguments:
+
+1) Object with block, element and modifiers fields where error occurred.
+2) Original JS error.
+
+You can define custom `onError` function by extending prototype of `BEMContext`. For example:
+
+```js
+var bemxjst = require('bem-xjst');
+var templates = bemxjst.bemhtml.compile('', { production: true });
+
+templates.BEMContext.prototype.onError = function(msg, err) { … };
+```
+
 ### exportName option
 
-You can use `exportName` option for choose name of variable where engine will
-be exported. By default it’s BEMHTML or BEMTREE.
+You can use `exportName` option for choose name of variable where engine will be exported. By default it’s BEMHTML or BEMTREE.
 
 For example read next.
 

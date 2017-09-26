@@ -418,6 +418,21 @@ $ cat stderr.txt
 BEMXJST ERROR: cannot render block b1, elem undefined, mods {}, elemMods {} [TypeError: Cannot read property 'undef' of undefined]
 ```
 
+При использовании опции `production` со значением `true` вы можете определить свою собственную реализацию функции логирования ошибок взамен стандартному `console.error`. В этом случае в вашу кастомную функцию будут переданы два аргумента:
+
+1) Объект с указанием блока, элемента и модификаторов где произошла
+ошибка.
+2) Перехваченная оригинальная JS-ошибка.
+
+Определить свою реализацию `onError` можно любым способом расширив прототип `BEMContext`. Например так:
+
+```js
+var bemxjst = require('bem-xjst');
+var templates = bemxjst.bemhtml.compile('', { production: true });
+
+templates.BEMContext.prototype.onError = function(msg, err) { … };
+```
+
 ### Настройка exportName
 
 Вы можете использовать опцию `exportName` чтобы выбрать имя переменной, в
