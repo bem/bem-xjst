@@ -441,7 +441,7 @@ You can define custom `onError` function by extending prototype of `BEMContext`.
 var bemxjst = require('bem-xjst');
 var templates = bemxjst.bemhtml.compile('', { production: true });
 
-templates.BEMContext.prototype.onError = function(msg, err) { … };
+templates.BEMContext.prototype.onError = function(context, err) { … };
 ```
 
 ### exportName option

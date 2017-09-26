@@ -430,7 +430,7 @@ BEMXJST ERROR: cannot render block b1, elem undefined, mods {}, elemMods {} [Typ
 var bemxjst = require('bem-xjst');
 var templates = bemxjst.bemhtml.compile('', { production: true });
 
-templates.BEMContext.prototype.onError = function(msg, err) { … };
+templates.BEMContext.prototype.onError = function(context, err) { … };
 ```
 
 ### Настройка exportName
