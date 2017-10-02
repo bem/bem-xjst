@@ -1,5 +1,13 @@
 # BEM-XJST Changelog
 
+# 2017-09-26 [v8.8.2](https://github.com/bem/bem-xjst/compare/v8.8.1...v8.8.2), @miripiruni
+
+Fix: generate() exports to commonJS
+
+Commits:
+* [[`45cff63b77`](https://github.com/bem/bem-xjst/commit/45cff63b77)] - **compiler**: use exp var instead of global to export (Alexandr Shleyko)
+* [[`d459327fe1`](https://github.com/bem/bem-xjst/commit/d459327fe1)] - **Examples**: source maps in Node.js (miripiruni)
+
 # 2017-09-26 [v8.8.1](https://github.com/bem/bem-xjst/compare/v8.8.0...v8.8.1), @miripiruni
 
 Custom naming improved: `mods` can be object `{ name: '...', val: '...' }`. Backward capability is supported.
