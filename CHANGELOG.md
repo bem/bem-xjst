@@ -10,7 +10,7 @@ Commits:
 
 # 2017-09-26 [v8.8.1](https://github.com/bem/bem-xjst/compare/v8.8.0...v8.8.1), @miripiruni
 
-Custom naming improved: `mods` can be object `{ name: '...', val: '...' }`. Backward capability is supported.
+Custom naming improved: `mods` can be an object `{ name: '...', val: '...' }`. Backward capability is supported.
 
 Commits:
 * [[`85a5f41570`](https://github.com/bem/bem-xjst/commit/85a5f41570)] - Merge pull request #470 from bem/issue-469__mod-val-setting (Slava Oliyanchuk)
@@ -19,7 +19,7 @@ Commits:
 
 # 2017-09-26 [v8.8.0](https://github.com/bem/bem-xjst/compare/v8.7.1...v8.8.0), @miripiruni
 
-When you use `production` option with `true` value you can define function for custom error logging. This function will be used instead of regilar `console.error`. Custom function will be filled with two arguments:
+When you use `production` option with `true` value you can define function for custom error logging. This function will be used instead of regular `console.error`. Custom function will be filled with two arguments:
 
 1) Object with block, element and modifiers fields where error occurred.
 2) Original JS error.
@@ -41,7 +41,7 @@ Commits:
 
 # 2017-07-18 [v8.7.1](https://github.com/bem/bem-xjst/compare/v8.7.0...v8.7.1), @miripiruni
 
-Nested mixes is supported. It’s been worked in v1.x but then somehow was broken. Now you can use it again.
+Nested mixes are supported. This functionality has been worked in v1.x but then somehow was broken. Now you can use it again.
 
 ```js
 { block: 'b', mix: { block: 'c', mix: { block: 'nested-mix', js: true } } }
