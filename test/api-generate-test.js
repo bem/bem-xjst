@@ -60,7 +60,7 @@ describe('API generate', function() {
           var TEXT = 'Hello templates!';
           var code = 'window.text = "' + TEXT + '";';
           var bundle = bemhtml.generate('', {
-            requires: { text: { globals: 'text' } }
+            requires: { textModule: { globals: 'text' } }
           });
           var sandbox = { window: {} };
 
@@ -68,7 +68,7 @@ describe('API generate', function() {
 
           var result = sandbox.bemhtml.compile(function() {
             block('b').def()(function() {
-              return this.require('text');
+              return this.require('textModule');
             });
           }).apply({ block: 'b' });
 
@@ -80,14 +80,15 @@ describe('API generate', function() {
         it('must get dependency from global scope ' +
           'if it also is presented in YModule', function() {
           var TEXT = 'Hello templates!';
-          var fakeModule = 'modules.define("fake", [], function(provide) {' +
+          var fakeModule = 'modules.define(' +
+            '"fakeModule", [], function(provide) {' +
             'provide("' + TEXT + '");});';
           var bundle = bemhtml.generate(function() {
             block('b').def()(function() {
-              return this.require('fake').getText();
+              return this.require('fakeReq').getText();
             });
           }, {
-            requires: { fake: { globals: 'fake', ym: 'fake' } }
+            requires: { fakeReq: { globals: 'fakeVar', ym: 'fakeModule' } }
           });
           var sandbox = {
             global: {},
@@ -98,7 +99,7 @@ describe('API generate', function() {
           sandbox.module = { exports: sandbox.exports };
 
           vm.runInNewContext(
-            'window.fake = { getText: function() { return "globals"; } };' +
+            'window.fakeVar = { getText: function() { return "globals"; } };' +
             EOL +
             fakeModule +
             EOL +
@@ -114,24 +115,26 @@ describe('API generate', function() {
           'if it also is presented in CommonJS', function() {
           var bundle = bemhtml.generate('', {
             commonJSModules: FAKE_COMMON_MODULE,
-            requires: { fake: { globals: 'fake', commonJS: 'no-module' } }
+            requires: { fakeReq: { globals: 'fakeVar', commonJS: 'no-module' } }
           });
 
           var sandbox = { global: {}, exports: {}, window: {} };
           sandbox.module = { exports: sandbox.exports };
 
           vm.runInNewContext(
-            'window.fake = { getText: function() { return "globals"; } };' +
+            'window.fakeVar = { getText: function() { return "globals"; } };' +
             EOL +
             bundle, sandbox);
 
-          assert.equal(sandbox.exports.bemhtml.libs.fake.getText(), 'globals');
+          assert.equal(
+            sandbox.exports.bemhtml.libs.fakeReq.getText(), 'globals'
+          );
         });
 
         it('as commonjs', function() {
           var bundle = bemhtml.generate('', {
             commonJSModules: FAKE_COMMON_MODULE,
-            requires: { fake: { globals: 'fake', commonJS: 'no-module' } }
+            requires: { fakeReq: { globals: 'fake', commonJS: 'no-module' } }
           });
           var module = { exports: {} };
           var sandbox = {
@@ -151,14 +154,14 @@ describe('API generate', function() {
           var TEXT = 'Hello templates!';
           var bundle = bemhtml.generate('', {
             commonJSModules: FAKE_COMMON_MODULE,
-            requires: { fake: { commonJS: 'fake' } }
+            requires: { fakeReq: { commonJS: 'fake' } }
           });
 
           var sandbox = { global: {}, exports: {} };
           sandbox.module = { exports: sandbox.exports };
           vm.runInNewContext(bundle, sandbox);
 
-          assert.equal(sandbox.exports.bemhtml.libs.fake.getText(), TEXT);
+          assert.equal(sandbox.exports.bemhtml.libs.fakeReq.getText(), TEXT);
           assert.deepEqual(sandbox.global, {},
                            'Should not export to global in CommonJS context.');
         });
