@@ -1,5 +1,14 @@
 # BEM-XJST Changelog
 
+# 2017-10-13 [v8.8.3](https://github.com/bem/bem-xjst/compare/v8.8.2...v8.8.3), @miripiruni
+
+Patch version for several fixes in `generate()` method.
+
+Commits:
+* [[`2eb33ddeec`](https://github.com/bem/bem-xjst/commit/2eb33ddeec)] - **Compiler**: several require fixes (#481) (dustyo-O)
+* [[`739ba5aa06`](https://github.com/bem/bem-xjst/commit/739ba5aa06)] - Merge pull request #483 from innabelaya/master (Slava Oliyanchuk)
+* [[`fa096983bb`](https://github.com/bem/bem-xjst/commit/fa096983bb)] - fix typo (Inna Belaya)
+
 # 2017-09-26 [v8.8.2](https://github.com/bem/bem-xjst/compare/v8.8.1...v8.8.2), @miripiruni
 
 Fix: generate() exports to commonJS
