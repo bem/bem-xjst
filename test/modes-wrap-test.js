@@ -49,12 +49,25 @@ describe('Modes wrap', function() {
     } ], '<div class="wrap"><a class="b1"></a></div>');
   });
 
-  it('should protected from infinite loop', function () {
+  it('should protected from infinite loop', function() {
     test(function() {
       block('b1').wrap()(function() {
         return { block: 'b2' };
       });
       block('b2').wrap()({ block: 'b1' });
     }, { block: 'b1' }, '<div class="b1"></div>');
+  });
+
+
+  it('should use current context (with simple value)', function() {
+    test(function() {
+      block('page').wrap()([ { elem: 'head' } ]);
+    }, { block: 'page' }, '<div class="page__head"></div>');
+  });
+
+  it('should use current context (with function)', function() {
+    test(function() {
+      block('page').wrap()(function() { return [ { elem: 'head' } ]; });
+    }, { block: 'page' }, '<div class="page__head"></div>');
   });
 });
