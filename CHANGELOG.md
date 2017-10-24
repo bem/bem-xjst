@@ -1,5 +1,14 @@
 # BEM-XJST Changelog
 
+# 2017-10-24 [v8.8.4](https://github.com/bem/bem-xjst/compare/v8.8.3...v8.8.4), @miripiruni
+
+Fixed #484 Wrap should save BEMContext.
+
+Commits:
+* [[`309a9d1d37`](https://github.com/bem/bem-xjst/commit/309a9d1d37)] - Merge pull request #485 from bem/issue-484__wrap-bug (Slava Oliyanchuk)
+* [[`070701f3ad`](https://github.com/bem/bem-xjst/commit/070701f3ad)] - **bem-xjst**: Wrap should save BEMContext (miripiruni)
+
+
 # 2017-10-13 [v8.8.3](https://github.com/bem/bem-xjst/compare/v8.8.2...v8.8.3), @miripiruni
 
 Patch version for several fixes in `generate()` method.
