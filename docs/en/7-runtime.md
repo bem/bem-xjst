@@ -132,6 +132,28 @@ block('header').tag()(function() {
 <header class="header"></header><div class="footer"></div>
 ```
 
+If you try to call `apply()` for mode without templates, engine will lookup a
+value of the corresponding field from current BEMJSON node.
+
+```js
+// BEMJSON
+{ block: 'animal', type: 'cat' }
+```
+
+Template:
+
+```js
+block('animal').content()(function() {
+    return apply('type');
+});
+```
+
+*Result of templating:*
+
+```html
+<div class="animal">cat</div>
+```
+
 ### applyNext
 
 ```js
