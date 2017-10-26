@@ -94,4 +94,13 @@ describe('Runtime apply()', function() {
     }, { block: 'b' },
     undefined);
   });
+
+  it('apply(\'\') should lookup field from bemjson by default', function() {
+    test(function() {
+      block('b').def()(function() {
+        return apply('test');
+      });
+    }, { block: 'b', test: 'bemjson' },
+    'bemjson');
+  });
 });
