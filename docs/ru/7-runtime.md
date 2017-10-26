@@ -132,6 +132,29 @@ block('header').tag()(function() {
 <div class="footer"></div>
 ```
 
+Если будет вызван `apply()` для режима для которого нет шаблонов, то
+шаблонизатор попытается извлечь значение поля с соответствующим названием из
+текущего узла BEMJSON-а.
+
+```js
+// BEMJSON
+{ block: 'animal', type: 'cat' }
+```
+
+Шаблон:
+
+```js
+block('animal').content()(function() {
+    return apply('type');
+});
+```
+
+*Результат шаблонизации:*
+
+```html
+<div class="animal">cat</div>
+```
+
 ### applyNext
 
 ```js
