@@ -350,7 +350,7 @@ def()(value)
 
 The `def` mode (short for "default") has a special status. It is responsible for generating the result as a whole. This mode defines the list of other modes and the order to go through them, as well as the build procedure for getting the final representation of the HTML element or BEMJSON from the parts generated in the other modes.
 
-This is a special mode that shouldn’t be used unless truly necessary. A user-defined template that redefines `def` disables calls of the other modes by default.
+This is a special mode that shouldn’t be used unless truly necessary. A user-defined template that redefines `def` disables calls of the other modes by default, except `mods`, `elemMods`, `addMods` and `addElemMods`.
 
 #### tag
 
