@@ -572,8 +572,7 @@ There is options in `generate` method to use source maps.
 
 * `to` {String} — output bundle file name
 * `sourceMap.from` {String} — file name
-* `sourceMap.prev` {String|Function|SourceMapConsumer|SourceMapGenerator} —
-* previous source maps in any format
+* `sourceMap.prev` {Object} — previous source map object
 
 Example of generating bundle with source maps:
 
