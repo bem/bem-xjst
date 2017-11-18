@@ -578,7 +578,7 @@ JS.
 
 * `to` {String} — имя выходного бандла-файла
 * `sourceMap.from` {String} — имя файла
-* `sourceMap.prev` {String|Function|SourceMapConsumer|SourceMapGenerator} — предыдущие карты кода в любом из перечисленных форматов
+* `sourceMap.prev` {Object} — предыдущие карты кода
 
 Пример генерирования бандла с шаблонами и ядром bem-xjst с использованием карт кода:
 
