@@ -1,5 +1,15 @@
 # BEM-XJST Changelog
 
+# 2017-11-18 [v8.8.5](https://github.com/bem/bem-xjst/compare/v8.8.4...v8.8.5), @miripiruni
+
+Previous source maps support fixed.
+
+Commits:
+* [[`ba102b752a`](https://github.com/bem/bem-xjst/commit/ba102b752a)] - Merge pull request #488 from bem/issue-487_apply (Slava Oliyanchuk)
+* [[`e3d1bddc5f`](https://github.com/bem/bem-xjst/commit/e3d1bddc5f)] - **Tests**: apply() should lookup field from bemjson by default (miripiruni)
+* [[`e7b7d13a7c`](https://github.com/bem/bem-xjst/commit/e7b7d13a7c)] - **Docs**: apply mode without templates (fix for #487) (miripiruni)
+* [[`0f01a86f0e`](https://github.com/bem/bem-xjst/commit/0f01a86f0e)] - тся/ться (DoctorDee)
+
 # 2017-10-24 [v8.8.4](https://github.com/bem/bem-xjst/compare/v8.8.3...v8.8.4), @miripiruni
 
 Fixed #484 Wrap should save BEMContext.
