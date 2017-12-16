@@ -402,7 +402,7 @@ content.
 block('quote')(
     prependContent()('“'), // add some things before actual content
     appendContent()('”'), // add content to the end
-    appendContent({ block: 'link' }); // add more content to the end
+    appendContent()({ block: 'link' }) // add more content to the end
 );
 ```
 ```js
