@@ -399,7 +399,7 @@ content()(value)
 block('quote')(
     prependContent()('«'),
     appendContent()('»'),
-    appendContent({ block: 'link' });
+    appendContent()({ block: 'link' })
 );
 ```
 
