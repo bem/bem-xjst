@@ -58,6 +58,30 @@ describe('Modes wrap', function() {
     }, { block: 'b1' }, '<div class="b1"></div>');
   });
 
+  it('should work with several apply() calls', function() {
+    var bemjson = { block: 'b1' };
+    var expected = '<div class="b2"><div class="b1"></div></div>';
+    var tmpl = fixtures.compile(function() {
+      block('b1').wrap()(function() {
+        return {
+          block: 'b2',
+          content: this.ctx
+        };
+      });
+    });
+
+    assert.equal(
+      tmpl.apply(bemjson),
+      expected,
+      'first apply() call returns not expected value'
+    );
+
+    assert.equal(
+      tmpl.apply(bemjson),
+      expected,
+      'second apply() call returns not expected value'
+    );
+  });
 
   it('should use current context (with simple value)', function() {
     test(function() {
