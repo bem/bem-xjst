@@ -40,7 +40,7 @@ block('page').match(function() {
 
     // Sufficient:
     return this.mods.type === 'index' && this.ctx.weather;
-}).def()(function() { return … });
+})({ default: function() { return … } });
 ```
 
 ## Current BEMJSON node
@@ -55,11 +55,13 @@ The current BEMJSON node is available in the `this.ctx` field.
 ```
 
 ```js
-block('link').attr()(function() {
-    return {
-        id: this.ctx.name,
-        name: this.ctx.name
-    };
+block('link')({
+    attrs: function() {
+        return {
+            id: this.ctx.name,
+            name: this.ctx.name
+        };
+    }
 });
 ```
 
@@ -94,8 +96,10 @@ Usage example:
 Template:
 
 ```js
-block('button').def()(function() {
-    return this.xmlEscape('<b>&</b>');
+block('button')({
+    default: function() {
+        return this.xmlEscape('<b>&</b>');
+    }
 });
 ```
 
@@ -169,13 +173,13 @@ The BEM tree may be filled in as templates are executing, by using templates in 
 The `isLast` function for determining the last BEM entity among peers returns `false` if the last element in the array containing the nodes is not a BEM entity.
 
 ```js
-block('list')(
-    content()([
+block('list')({
+    content: [
         { block: 'item1' },
         { block: 'item2' }, // this.isLast() === false
         'text'
-    ])
-);
+    ]
+});
 ```
 
 This behavior is explained by the fact that for optimization purposes, BEMHTML does not perform a preliminary traversal of the BEM tree. This means that at the time when the `item2` block is processed, the length of the array is already known (`item2` is not the last element). However, it is not yet known that the last element is not a BEM element and won’t get a position number.
@@ -220,23 +224,25 @@ Usage example:
 Template
 
 ```js
-block('input').content()(function() {
-    var id = this.generateId();
-
-    return [
-        {
-            tag: 'label',
-            attrs: { for: id },
-            content: this.ctx.label
-        },
-        {
-            tag: 'input',
-            attrs: {
-                id: id,
-                value: this.ctx.value
+block('input')({
+    content: function() {
+        var id = this.generateId();
+    
+        return [
+            {
+                tag: 'label',
+                attrs: { for: id },
+                content: this.ctx.label
+            },
+            {
+                tag: 'input',
+                attrs: {
+                    id: id,
+                    value: this.ctx.value
+                }
             }
-        }
-    ];
+        ];
+    }
 });
 ```
 
@@ -268,10 +274,12 @@ BEMJSON:
 Template:
 
 ```js
-block('a').js()(function() {
-    return {
-        template: this.reapply({ block: 'b', mods: { m: 'v' } })
-    };
+block('a')({
+    js: function() {
+        return {
+            template: this.reapply({ block: 'b', mods: { m: 'v' } })
+        };
+    }
 });
 ```
 
@@ -300,8 +308,10 @@ var templates = bemxjst.bemhtml.compile(function() {
         };
     });
 
-    block('b').content()(function() {
-        return this.hi('username');
+    block('b')({
+        content: function() {
+            return this.hi('username');
+        }
     });
 });
 
@@ -330,15 +340,17 @@ templates.BEMContext.prototype.hi = function(name) {
 
 // Adding templates
 templates.compile(function() {
-    block('b').content()(function() {
-        return this.hi('templates');
+    block('b')({
+        content: function() {
+            return this.hi('templates');
+        }
     });
 });
 
 var bemjson = { block: 'b' };
 
 // Applying templates
-var html = templates.apply(bemjson));
+var html = templates.apply(bemjson);
 ```
 
 As a result, `html` contains the string:
@@ -361,14 +373,16 @@ When body of template is function, it calls with two arguments:
 **Example**
 
 ```js
-block('link').attrs()(function(node, ctx) {
-    return {
-        // the same as this.ctx.url
-        href: ctx.url,
-
-        // the same as this.position
-        'data-position': node.position
-    };
+block('link')({
+    attrs: function(node, ctx) {
+        return {
+            // the same as this.ctx.url
+            href: ctx.url,
+    
+            // the same as this.position
+            'data-position': node.position
+        };
+    }
 });
 ```
 
@@ -386,8 +400,8 @@ match(function(node, ctx) {
 Moreover, template functions can be arrow functions:
 
 ```js
-match((node, ctx) => (!node.mods.disabled && ctx.target))
-addAttrs()((node, ctx) => ({ href: ctx.url }))
+match((node, ctx) => ctx.target)
+addAttrs: (node, ctx) => { href: ctx.url }
 ```
 
 Read next: [runtime](7-runtime.md)

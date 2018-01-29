@@ -41,11 +41,10 @@
 
 ```js
 block('*')
-    .match(function() {
-        return this.ctx.counter;
-    })
-    .mix()(function() {
-        return { block: 'counter', js: { id: this.ctx.counter } }
+    .match(function() { return this.ctx.counter; })({
+        mix: function() {
+            return { block: 'counter', js: { id: this.ctx.counter } }
+        }
     })
 ```
 
@@ -84,17 +83,17 @@ apply(modeName, assignObj)
 Шаблон:
 
 ```js
-block('button')(
-    mode('test')(function() {
+block('button')({
+    test: function() {
         return this.tmp + this.ctx.foo;
-    }),
-    def()(function() {
+    },
+    default: function() {
         return apply('test', {
             tmp: 'ping',
             'ctx.foo': 'pong'
         });
-    })
-);
+    }
+});
 ```
 
 *Результат шаблонизации:*
@@ -116,12 +115,14 @@ pingpong
 Шаблон:
 
 ```js
-block('footer').mode('custom')('footer');
-block('header').mode('custom')('header');
-block('header').tag()(function() {
-    // не смотря на то, что вторым аргументом apply явно указан блок footer
-    // будет вызван пользовательский режим блока `header`.
-    return apply('custom', { block: 'footer' });
+block('footer')({ custom: 'footer' });
+block('header')({
+    custom: 'header',
+    tag: function() {
+        // не смотря на то, что вторым аргументом apply явно указан блок footer
+        // будет вызван пользовательский режим блока `header`.
+        return apply('custom', { block: 'footer' });
+    }
 });
 ```
 
@@ -144,8 +145,10 @@ block('header').tag()(function() {
 Шаблон:
 
 ```js
-block('animal').content()(function() {
-    return apply('type');
+block('animal')({
+    content: function() {
+        return apply('type');
+    }
 });
 ```
 
@@ -171,10 +174,12 @@ applyNext(newctx)
 **Пример**
 
 ```js
-block('link').tag()('a');
-block('link').tag()(function() {
-    var res = applyNext(); // res === 'a'
-    return res;
+block('link')({ tag: 'a' });
+block('link')({
+    tag: function() {
+        var res = applyNext(); // res === 'a'
+        return res;
+    }
 });
 ```
 
@@ -198,11 +203,13 @@ applyCtx(bemjson, newctx)
 Шаблон:
 
 ```js
-block('header').def()(function() {
-    return applyCtx(this.extend(this.ctx, {
-        block: 'layout',
-        mix: [{ block: 'header' }].concat(this.ctx.mix || [])
-    }));
+block('header')({
+    default: function() {
+        return applyCtx(this.extend(this.ctx, {
+            block: 'layout',
+            mix: [{ block: 'header' }].concat(this.ctx.mix || [])
+        }));
+    }
 });
 ```
 
