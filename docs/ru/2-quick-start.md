@@ -21,7 +21,7 @@ var bemhtml = bemxjst.bemhtml;
 
 // Добавляем шаблоны с помощью метода compile
 var templates = bemhtml.compile(function() {
-    block('text').tag()('span');
+    block('text')({ tag: 'span' });
 });
 
 // Добавляем данные в формате BEMJSON

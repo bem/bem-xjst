@@ -27,7 +27,7 @@ var bemhtml = bemxjst.bemhtml;
 
 // Add a template
 var templates = bemhtml.compile(function() {
-    block('quote').tag()('q');
+    block('quote')({ tag: 'q' });
 });
 
 // Add data
@@ -51,13 +51,15 @@ var bemtree = bemxjst.bemtree;
 
 // Add a template
 var templates = bemtree.compile(function() {
-    block('phone').content()({ mask: '8-800-×××-××-××', mandatory: true });
+    block('phone')({ content: { mask: '8-800-×××-××-××', mandatory: true } });
 
-    block('page').content()([
-        { block: 'header' },
-        { block: 'body' },
-        { block: 'footer' }
-    ]);
+    block('page')({
+        content: [
+            { block: 'header' }
+            { block: 'body' },
+            { block: 'footer' }
+        ]
+    });
 });
 
 // Add data
@@ -94,7 +96,7 @@ var bemxjst = require('bem-xjst');
 
 // Instantiating the 'templates' class
 var templates = bemxjst.bemhtml.compile(function() {
-    block('header').tag()('h1');
+    block('header')({ tag: 'h1' });
 });
 
 // Add data
@@ -105,7 +107,7 @@ var html = templates.apply(bemjson);
 
 // Add templates to the created instance of the 'templates' class
 templates.compile(function() {
-    block('header').tag()('h2');
+    block('header')({ tag: 'h2' });
 });
 
 html = templates.apply(bemjson);
@@ -360,11 +362,13 @@ var bemxjst = require('bem-xjst');
 var bemhtml = bemxjst.bemhtml;
 
 var templates = bemhtml.compile(function() {
-  block('b').content()('yay');
+  block('b')({ content: 'yay' });
 
-  block('mods-changes').def()(function() {
-    this.ctx.mods.one = 2;
-    return applyNext();
+  block('mods-changes')({
+      default: function() {
+          this.ctx.mods.one = 2;
+          return applyNext();
+      }
   });
 }, { runtimeLint: true });
 
@@ -407,10 +411,12 @@ You can use option `production` to render whole BEMJSON even if one template con
 
 ```js
 var template = bemxjst.compile(function() {
-  block('b1').attrs()(function() {
-    var attrs = applyNext();
-    attrs.undef.foo = 'bar';
-    return attrs;
+  block('b1')({
+      attrs: function() {
+          var attrs = applyNext();
+          attrs.undef.foo = 'bar';
+          return attrs;
+      }
   });
 }, { production: true });
 var html = template.apply({ block: 'page', content: { block: 'b1' } });
@@ -472,10 +478,12 @@ For example:
 `lib-name` module will be accessible in templates body like this:
 
 ```js
-block('button').content()(function () {
-    var lib = this.require('lib-name');
+block('button')({
+    content: function () {
+        var lib = this.require('lib-name');
 
-    return lib.hello();
+        return lib.hello();
+    }
 });
 ```
 
@@ -521,11 +529,13 @@ In templates body the module will be acessible as `this.require('moment')`.
 You can use the template in any browser or in `Node.js`:
 
 ```js
-block('post').elem('data').content()(function() {
-    var moment = this.require('moment');
-
-    return moment(this.ctx.date) // Time in ms from server
-        .format('YYYY-MM-DD HH:mm:ss');
+block('post').elem('data')({
+    content: function() {
+        var moment = this.require('moment');
+    
+        return moment(this.ctx.date) // Time in ms from server
+            .format('YYYY-MM-DD HH:mm:ss');
+    }
 });
 ```
 
@@ -544,8 +554,10 @@ templates.BEMContext.prototype.hi = function(name) {
 
 // Add templates
 templates.compile(function() {
-    block('b').content()(function() {
-        return this.hi('templates');
+    block('b')({
+        content: function() {
+            return this.hi('templates');
+        }
     });
 });
 

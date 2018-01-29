@@ -39,7 +39,7 @@ block('page').match(function() {
 
     // Достаточно:
     return this.mods.type === 'index' && this.ctx.weather;
-}).def()(function() { return … });
+})({ default: function() { return … } });
 ```
 
 ## Текущий узел BEMJSON
@@ -54,11 +54,13 @@ block('page').match(function() {
 ```
 
 ```js
-block('company').attr()(function() {
-    return {
-        id: this.ctx.name,
-        name: this.ctx.name
-    };
+block('company')({
+    attrs: function() {
+        return {
+            id: this.ctx.name,
+            name: this.ctx.name
+        };
+    }
 });
 ```
 
@@ -93,8 +95,10 @@ this.xmlEscape(str)
 Шаблон:
 
 ```js
-block('button').def()(function() {
-    return this.xmlEscape('<b>&</b>');
+block('button')({
+    default: function() {
+        return this.xmlEscape('<b>&</b>');
+    }
 });
 ```
 
@@ -168,13 +172,13 @@ this.jsAttrEscape(str)
 Функция определения последней БЭМ-сущности среди соседей `isLast` возвратит `false`, если в массиве, содержащем узлы, последний элемент не является БЭМ-сущностью.
 
 ```js
-block('list')(
-    content()([
+block('list')({
+    content: [
         { block: 'item1' },
         { block: 'item2' }, // this.isLast() === false
         'text'
-    ])
-);
+    ]
+});
 ```
 
 Такое поведение объясняется тем, что в целях оптимизации BEMHTML не выполняет
@@ -221,23 +225,25 @@ this.isLast()
 Шаблон:
 
 ```js
-block('input').content()(function() {
-    var id = this.generateId();
-
-    return [
-        {
-            tag: 'label',
-            attrs: { for: id },
-            content: this.ctx.label
-        },
-        {
-            tag: 'input',
-            attrs: {
-                id: id,
-                value: this.ctx.value
+block('input')({
+    content: function() {
+        var id = this.generateId();
+    
+        return [
+            {
+                tag: 'label',
+                attrs: { for: id },
+                content: this.ctx.label
+            },
+            {
+                tag: 'input',
+                attrs: {
+                    id: id,
+                    value: this.ctx.value
+                }
             }
-        }
-    ];
+        ];
+    }
 });
 ```
 
@@ -269,10 +275,12 @@ BEMJSON:
 Шаблон:
 
 ```js
-block('a').js()(function() {
-    return {
-        template: this.reapply({ block: 'b', mods: { m: 'v' } })
-    };
+block('a')({
+    js: function() {
+        return {
+            template: this.reapply({ block: 'b', mods: { m: 'v' } })
+        };
+    }
 });
 ```
 
@@ -301,8 +309,10 @@ var templates = bemxjst.bemhtml.compile(function() {
         };
     });
 
-    block('b').content()(function() {
-        return this.hi('username');
+    block('b')({
+        content: function() {
+            return this.hi('username');
+        }
     });
 });
 
@@ -331,15 +341,17 @@ templates.BEMContext.prototype.hi = function(name) {
 
 // Добавляем шаблоны
 templates.compile(function() {
-    block('b').content()(function() {
-        return this.hi('templates');
+    block('b')({
+        content: function() {
+            return this.hi('templates');
+        }
     });
 });
 
 var bemjson = { block: 'b' };
 
 // Применяем шаблоны
-var html = templates.apply(bemjson));
+var html = templates.apply(bemjson);
 ```
 
 В результате `html` будет содержать строку:
@@ -363,14 +375,16 @@ var html = templates.apply(bemjson));
 **Пример**
 
 ```js
-block('link').attrs()(function(node, ctx) {
-    return {
-        // тоже самое что и this.ctx.url
-        href: ctx.url,
-
-        // тоже самое что и this.position
-        'data-position': node.position
-    };
+block('link')({
+    attrs: function(node, ctx) {
+        return {
+            // тоже самое что и this.ctx.url
+            href: ctx.url,
+    
+            // тоже самое что и this.position
+            'data-position': node.position
+        };
+    }
 });
 ```
 
@@ -388,8 +402,8 @@ match(function(node, ctx) {
 Кроме того, функции шаблонов поддерживают ES6 arrow functions, поэтому вы можете писать везде в таком стиле:
 
 ```js
-match((node, ctx) => (!node.mods.disabled && ctx.target))
-addAttrs()((node, ctx) => ({ href: ctx.url }))
+match((node, ctx) => ctx.target)
+addAttrs: (node, ctx) => { href: ctx.url }
 ```
 
 Читать далее: [runtime](7-runtime.md)

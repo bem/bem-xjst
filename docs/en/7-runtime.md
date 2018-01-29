@@ -44,8 +44,10 @@ block('*')
     .match(function() {
         return this.ctx.counter;
     })
-    .mix()(function() {
-        return { block: 'counter', js: { id: this.ctx.counter } }
+    ({
+        mix: function() {
+            return { block: 'counter', js: { id: this.ctx.counter } }
+        }
     })
 ```
 
@@ -84,17 +86,17 @@ Used for calling a standard or user-defined mode of the current node.
 Template:
 
 ```js
-block('button')(
-    mode('test')(function() {
+block('button')({
+    test: function() {
         return this.tmp + this.ctx.foo;
-    }),
-    def()(function() {
+    },
+    default: function() {
         return apply('test', {
             tmp: 'ping',
             'ctx.foo': 'pong'
         });
-    })
-);
+    }
+});
 ```
 
 *Result of templating:*
@@ -116,13 +118,15 @@ You can’t use `apply` to call user-defined modes for other blocks.
 Template:
 
 ```js
-block('footer').mode('custom')('footer');
-block('header').mode('custom')('header');
-block('header').tag()(function() {
-    // despite the fact that the second 'apply' argument explicitly
-    // specifies the 'footer' block,
-    // the user-defined mode of the 'header' block will be called.
-    return apply('custom', { block: 'footer' });
+block('footer')({ custom: 'footer' });
+block('header')({
+    custom: 'header',
+    tag: function() {
+        // despite the fact that the second 'apply' argument explicitly
+        // specifies the 'footer' block,
+        // the user-defined mode of the 'header' block will be called.
+        return apply('custom', { block: 'footer' });
+    }
 });
 ```
 
@@ -143,8 +147,10 @@ value of the corresponding field from current BEMJSON node.
 Template:
 
 ```js
-block('animal').content()(function() {
-    return apply('type');
+block('animal')({
+    content: function() {
+        return apply('type');
+    }
 });
 ```
 
@@ -170,10 +176,12 @@ The `applyNext` construction returns the result of the next highest priority tem
 **Example**
 
 ```js
-block('link').tag()('a');
-block('link').tag()(function() {
-    var res = applyNext(); // res === 'a'
-    return res;
+block('link')({ tag: 'a' });
+block('link')({
+    tag: function() {
+        var res = applyNext(); // res === 'a'
+        return res;
+    }
 });
 ```
 
@@ -197,11 +205,13 @@ Use the `applyCtx` construction for modifying the current fragment of the BEM tr
 Template:
 
 ```js
-block('header').def()(function() {
-    return applyCtx(this.extend(this.ctx, {
-        block: 'layout',
-        mix: [{ block: 'header' }].concat(this.ctx.mix || [])
-    }));
+block('header')({
+    default: function() {
+        return applyCtx(this.extend(this.ctx, {
+            block: 'layout',
+            mix: [{ block: 'header' }].concat(this.ctx.mix || [])
+        }));
+    }
 });
 ```
 
