@@ -38,4 +38,18 @@ describe('Modes bem', function() {
     { block: 'button' },
     '<div class="button"></div>');
   });
+
+  it('should output cls value if bem:false', function() {
+    test(function() {
+        block('b')(
+          bem()(false),
+          js()(true)
+        );
+      },
+      [
+        { block: 'b', cls: 'anything' },
+        { block: 'b' }
+      ],
+      '<div class="anything"></div><div></div>');
+  });
 });
