@@ -3,6 +3,7 @@ var test = fixtures.test;
 var assert = require('assert');
 var BEMXJSTError = require('../lib/bemxjst/error').BEMXJSTError;
 var bemhtml = require('../').bemhtml;
+var bemtree = require('../').bemtree;
 
 describe('Templates syntax', function() {
   it('should support block without mode()', function() {
@@ -73,8 +74,19 @@ describe('Templates syntax', function() {
     Error.captureStackTrace = captureStackTrace;
   });
 
-  it('should return null if null passed', function() {
+  it('bemhtml should return null if null passed', function() {
     var templates = bemhtml.compile(function() {
+      block('b')(null);
+    });
+
+    assert.equal(
+      templates.apply({ block: 'b' }),
+      null
+    );
+  });
+
+  it('bemtree should return null if null passed', function() {
+    var templates = bemtree.compile(function() {
       block('b')(null);
     });
 
