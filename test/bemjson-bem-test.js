@@ -68,4 +68,15 @@ describe('BEMJSON bem', function() {
       { block: 'b', bem: [ 1, 2 ] },
       '<div class="b"></div>');
   });
+
+  it('should output cls value if bem:false', function() {
+    test(function() {
+        block('b').js()(true);
+      },
+      [
+        { block: 'b', bem: false, cls: 'anything' },
+        { block: 'b', bem: false }
+      ],
+      '<div class="anything"></div><div></div>');
+  });
 });
