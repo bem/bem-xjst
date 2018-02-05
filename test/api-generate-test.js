@@ -6,8 +6,10 @@ var vow = require('vow');
 /* jscs:disable */
 // fake commonJS module after browserify
 var FAKE_COMMON_MODULE = 'var require=(function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return a(o,!0);if(i)return i(o,!0);var f=new Error("Cannot find module \'"+o+"\'");throw f.code="MODULE_NOT_FOUND",f}var l=n[o]={exports:{}};t[o][0].call(l.exports,function(e){var n=t[o][1][e];return s(n?n:e)},l,l.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s})({"fake":[function(require,module,exports){ module.exports = { getText: function() { return "Hello templates!"; } }; },{}]},{},[]);';
+var FAKE_COMMON_2MODULES = 'var require=(function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return a(o,!0);if(i)return i(o,!0);var f=new Error("Cannot find module \'"+o+"\'");throw f.code="MODULE_NOT_FOUND",f}var l=n[o]={exports:{}};t[o][0].call(l.exports,function(e){var n=t[o][1][e];return s(n?n:e)},l,l.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s})({"fake":[function(require,module,exports){ module.exports = { getText: function() { return "Hello templates!"; } }; },{}], "fake1":[function(require,module,exports){ module.exports = { getText: function() { return "Good-bye templates...."; } }; },{}]},{},[]);';
 /* jscs:enable */
 var TEXT = 'Hello templates!';
+var TEXT1 = 'Good-bye templates....';
 var chai = require('chai');
 var chaiAsPromised = require('chai-as-promised');
 chai.use(chaiAsPromised);
@@ -55,6 +57,31 @@ describe('API generate', function() {
           assert.equal(result, TEXT);
         });
 
+        it('should get multiple dependencies from global scope ' +
+          '(Node.js for example)',
+          function() {
+          var code = 'global.text = "' + TEXT + '";global.text1 = "' + TEXT1 +
+            '";';
+          var bundle = bemhtml.generate('', {
+            requires: {
+              textModule: { globals: 'text' },
+              textModule1: { globals: 'text1' }
+            }
+          });
+          var sandbox = { global: {}, exports: {} };
+          sandbox.module = { exports: sandbox.exports };
+
+          vm.runInNewContext(code + EOL + bundle, sandbox);
+
+          var result = sandbox.exports.bemhtml.compile(function() {
+            block('b').def()(function() {
+              return this.require('textModule') + this.require('textModule1');
+            });
+          }).apply({ block: 'b' });
+
+          assert.equal(result, TEXT + TEXT1);
+        });
+
         it('should get dependencies from window scope (any browser)',
           function() {
           var code = 'window.text = "' + TEXT + '";';
@@ -73,7 +100,52 @@ describe('API generate', function() {
 
           assert.equal(result, TEXT);
         });
+
+        it('should get multiple dependencies from window scope (any browser)',
+          function() {
+          var code = 'window.text = "' + TEXT + '";' +
+            'window.text1 = "' + TEXT1 + '";';
+          var bundle = bemhtml.generate('', {
+            requires: {
+              textModule: { globals: 'text' },
+              textModule1: { globals: 'text1' }
+            }
+          });
+          var sandbox = { window: {} };
+
+          vm.runInNewContext(code + EOL + bundle, sandbox);
+
+          var result = sandbox.bemhtml.compile(function() {
+            block('b').def()(function() {
+              return this.require('textModule') + this.require('textModule1');
+            });
+          }).apply({ block: 'b' });
+
+          assert.equal(result, TEXT + TEXT1);
+        });
+
+        it('should prefer dependencies from window scope rather then from' +
+          ' globals (if any)',
+          function() {
+          var code = 'window.text = "' + TEXT + '";' +
+            'var global = {};global.text = "' + TEXT1 + '";';
+          var bundle = bemhtml.generate('', {
+            requires: { textModule: { globals: 'text' } }
+          });
+          var sandbox = { window: {} };
+
+          vm.runInNewContext(code + EOL + bundle, sandbox);
+
+          var result = sandbox.bemhtml.compile(function() {
+            block('b').def()(function() {
+              return this.require('textModule');
+            });
+          }).apply({ block: 'b' });
+
+          assert.equal(result, TEXT);
+        });
       });
+
       describe('global deps over YModule', function() {
         it('must get dependency from global scope ' +
           'if it also is presented in YModule', function() {
@@ -168,6 +240,67 @@ describe('API generate', function() {
           assert.deepEqual(sandbox.global, {},
                            'Should not export to global in CommonJS context.');
         });
+
+        it('should require module from CommonJS', function() {
+          var bundle = bemhtml.generate('', {
+            commonJSModules: FAKE_COMMON_MODULE,
+            requires: { fakeReq: { commonJS: 'fake' } }
+          });
+
+          var sandbox = { global: {}, exports: {} };
+          sandbox.module = { exports: sandbox.exports };
+          vm.runInNewContext(bundle, sandbox);
+
+          var result = sandbox.bemhtml.compile(function() {
+            block('b').def()(function() {
+              return this.require('fakeReq').getText();
+            });
+          }).apply({ block: 'b' });
+
+          assert.equal(result, TEXT);
+        });
+
+        it('should get multiple modules from CommonJS', function() {
+          var bundle = bemhtml.generate('', {
+            commonJSModules: FAKE_COMMON_2MODULES,
+            requires: {
+              fakeReq: { commonJS: 'fake' },
+              fakeReq1: { commonJS: 'fake1' }
+            }
+          });
+
+          var sandbox = { global: {}, exports: {} };
+          sandbox.module = { exports: sandbox.exports };
+          vm.runInNewContext(bundle, sandbox);
+
+          assert.equal(sandbox.exports.bemhtml.libs.fakeReq.getText() +
+            sandbox.exports.bemhtml.libs.fakeReq1.getText(), TEXT + TEXT1);
+          assert.deepEqual(sandbox.global, {},
+            'Should not export to global in CommonJS context.');
+        });
+
+        it('should require multiple modules from CommonJS', function() {
+          var bundle = bemhtml.generate('', {
+            commonJSModules: FAKE_COMMON_2MODULES,
+            requires: {
+              fakeReq: { commonJS: 'fake' },
+              fakeReq1: { commonJS: 'fake1' }
+            }
+          });
+
+          var sandbox = { global: {}, exports: {} };
+          sandbox.module = { exports: sandbox.exports };
+          vm.runInNewContext(bundle, sandbox);
+
+          var result = sandbox.bemhtml.compile(function() {
+            block('b').def()(function() {
+              return this.require('fakeReq').getText() +
+                this.require('fakeReq1').getText();
+            });
+          }).apply({ block: 'b' });
+
+          assert.equal(result, TEXT + TEXT1);
+        });
       });
 
       describe('YModules deps', function() {
@@ -237,7 +370,9 @@ describe('API generate', function() {
             'modules.define("text1", [], function(provide) {' +
             'provide("' + TEXT1 + '");});';
           var bundle = bemhtml.generate(function() {
-            block('b').def()(function() { return this.require('textModule'); });
+            block('b').def()(function() {
+              return this.require('textModule');
+            });
           }, {
               requires: {
                 textModule: { ym: 'text' },
@@ -271,7 +406,10 @@ describe('API generate', function() {
             'modules.define("text1", [], function(provide) {' +
             'provide("' + TEXT1 + '");});';
           var bundle = bemhtml.generate('', {
-            requires: { textModule: { ym: 'text' }, textModule1: { ym: 'text1' } }
+            requires: {
+              textModule: { ym: 'text' },
+              textModule1: { ym: 'text1' }
+            }
           });
 
           var sandbox = {
