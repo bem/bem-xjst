@@ -1,5 +1,13 @@
 # BEM-XJST Changelog
 
+# 2018-02-05 [v8.8.7](https://github.com/bem/bem-xjst/compare/v8.8.6...v8.8.7), @miripiruni
+
+Dependency enb/enb-source-map updated to v1.12.0.
+
+Commits:
+* [[`2ac8eb7339`](https://github.com/bem/bem-xjst/commit/2ac8eb7339)] - **Deps**: enb/enb-source-map 1.12.0 (miripiruni)
+
+
 # 2018-02-01 [v8.8.6](https://github.com/bem/bem-xjst/compare/v8.8.5...v8.8.6), @miripiruni
 
 * Don't output `i-bem` html class if `cls()` and `bem:false` (issue #499)
