@@ -365,8 +365,8 @@ var templates = bemhtml.compile(function() {
   block('b')({ content: 'yay' });
 
   block('mods-changes')({
-      default: function() {
-          this.ctx.mods.one = 2;
+      default(ctx, json) {
+          json.mods.one = 2;
           return applyNext();
       }
   });
@@ -412,7 +412,7 @@ You can use option `production` to render whole BEMJSON even if one template con
 ```js
 var template = bemxjst.compile(function() {
   block('b1')({
-      attrs: function() {
+      attrs() {
           var attrs = applyNext();
           attrs.undef.foo = 'bar';
           return attrs;
@@ -479,7 +479,7 @@ For example:
 
 ```js
 block('button')({
-    content: function () {
+    content() {
         var lib = this.require('lib-name');
 
         return lib.hello();
@@ -519,7 +519,7 @@ You don’t need to to provide path to module:
 {
     requires: {
         moment: {
-            commonJS: 'moment',  // path to CommonJS module, relative bundle file
+            commonJS: 'moment'  // path to CommonJS module, relative bundle file
         }
     }
 }
@@ -530,7 +530,7 @@ You can use the template in any browser or in `Node.js`:
 
 ```js
 block('post').elem('data')({
-    content: function() {
+    content() {
         var moment = this.require('moment');
     
         return moment(this.ctx.date) // Time in ms from server
@@ -555,7 +555,7 @@ templates.BEMContext.prototype.hi = function(name) {
 // Add templates
 templates.compile(function() {
     block('b')({
-        content: function() {
+        content() {
             return this.hi('templates');
         }
     });

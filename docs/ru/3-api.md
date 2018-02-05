@@ -355,8 +355,8 @@ var templates = bemhtml.compile(function() {
   block('b')({ content: 'yay' });
 
   block('mods-changes')({
-    default: function() {
-      this.ctx.mods.one = 2;
+    default(node, json) {
+      json.mods.one = 2;
       return applyNext();
     }
   });
@@ -474,7 +474,7 @@ templates.BEMContext.prototype.onError = function(context, err) { … };
 
 ```js
 block('button')({
-    content: function() {
+    content() {
       var lib = this.require('lib-name');
       return lib.hello();
     }
@@ -523,7 +523,7 @@ block('button')({
 
 ```js
 block('post').elem('data')({
-    content: function() {
+    content() {
         var moment = this.require('moment');  // Библиотека `moment`
         return moment(this.ctx.date) // Время в ms, полученное с сервера
             .format('YYYY-MM-DD HH:mm:ss');
@@ -547,7 +547,7 @@ templates.BEMContext.prototype.hi = function(name) {
 // Добавляем шаблоны
 templates.compile(function() {
     block('b')({
-        content: function() {
+        content() {
             return this.hi('templates');
         }
     });
