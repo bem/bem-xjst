@@ -1,5 +1,11 @@
 # BEM-XJST Changelog
 
+# 2018-02-01 [v8.8.6](https://github.com/bem/bem-xjst/compare/v8.8.5...v8.8.6), @miripiruni
+
+* Don't output `i-bem` html class if `cls()` and `bem:false` (issue #499)
+* Documentation: minor codestyle issues fixed
+
+
 # 2017-11-18 [v8.8.5](https://github.com/bem/bem-xjst/compare/v8.8.4...v8.8.5), @miripiruni
 
 Previous source maps support fixed.
