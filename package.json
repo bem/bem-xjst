@@ -44,7 +44,7 @@
   "license": "MPL-2.0",
   "dependencies": {
     "coa": "^1.0.1",
-    "enb-source-map": "github:enb/enb-source-map#prev-source-maps-support",
+    "enb-source-map": "1.12.0",
     "inherits": "^2.0.1",
     "q": "^2.0.3"
   },
