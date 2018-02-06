@@ -109,9 +109,17 @@ describe('Templates syntax', function() {
           '<button class="button mixed"></button>');
       });
 
-      it('def() mode', function() {
+      it('def() mode as default shortcut', function() {
         test(function() {
             block('b')({ default: 'result' });
+          },
+          { block: 'b' },
+          'result');
+      });
+
+      it('def() mode as def shortcut', function() {
+        test(function() {
+            block('b')({ def: 'result' });
           },
           { block: 'b' },
           'result');
