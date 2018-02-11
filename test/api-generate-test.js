@@ -57,6 +57,28 @@ describe('API generate', function() {
           assert.equal(result, TEXT);
         });
 
+        it('should get dependencies from global scope to module named' +
+          ' with special symbols',
+          function() {
+          var code = 'global.text = "' + TEXT + '";';
+          var bundle = bemhtml.generate('', {
+            requires: { '!#^*\u0007-+': { globals: 'text' } }
+          });
+
+          var sandbox = { global: {}, exports: {} };
+          sandbox.module = { exports: sandbox.exports };
+
+          vm.runInNewContext(code + EOL + bundle, sandbox);
+
+          var result = sandbox.exports.bemhtml.compile(function() {
+            block('b').def()(function() {
+              return this.require('!#^*\u0007-+');
+            });
+          }).apply({ block: 'b' });
+
+          assert.equal(result, TEXT);
+        });
+
         it('should get multiple dependencies from global scope ' +
           '(Node.js for example)',
           function() {
@@ -95,6 +117,26 @@ describe('API generate', function() {
           var result = sandbox.bemhtml.compile(function() {
             block('b').def()(function() {
               return this.require('textModule');
+            });
+          }).apply({ block: 'b' });
+
+          assert.equal(result, TEXT);
+        });
+
+        it('should get dependencies from window scope to module named' +
+        ' with special symbols',
+        function() {
+          var code = 'window.text = "' + TEXT + '";';
+          var bundle = bemhtml.generate('', {
+            requires: { '!#^*\u0007-+': { globals: 'text' } }
+          });
+          var sandbox = { window: {} };
+
+          vm.runInNewContext(code + EOL + bundle, sandbox);
+
+          var result = sandbox.bemhtml.compile(function() {
+            block('b').def()(function() {
+              return this.require('!#^*\u0007-+');
             });
           }).apply({ block: 'b' });
 
@@ -260,6 +302,26 @@ describe('API generate', function() {
           assert.equal(result, TEXT);
         });
 
+        it('should require from CommonJS to module named with special symbols',
+        function() {
+          var bundle = bemhtml.generate('', {
+            commonJSModules: FAKE_COMMON_MODULE,
+            requires: { '!#^*\u0007-+': { commonJS: 'fake' } }
+          });
+
+          var sandbox = { global: {}, exports: {} };
+          sandbox.module = { exports: sandbox.exports };
+          vm.runInNewContext(bundle, sandbox);
+
+          var result = sandbox.bemhtml.compile(function() {
+            block('b').def()(function() {
+              return this.require('!#^*\u0007-+').getText();
+            });
+          }).apply({ block: 'b' });
+
+          assert.equal(result, TEXT);
+        });
+
         it('should get multiple modules from CommonJS', function() {
           var bundle = bemhtml.generate('', {
             commonJSModules: FAKE_COMMON_2MODULES,
@@ -353,6 +415,39 @@ describe('API generate', function() {
                 resolve(bemhtml.compile(function() {
                   block('b').def()(function() {
                     return this.require('textModule');
+                  });
+                }).apply({ block: 'b' }));
+              });
+            });
+          };
+
+          return getLibs().then(function(res) {
+            return assert.equal(res, TEXT);
+          });
+        });
+
+        it('must require dependency from ym to module named with' +
+        ' special symbols',
+        function() {
+          var fakeModule = 'modules.define("text", [], function(provide) {' +
+            'provide("' + TEXT + '");});';
+          var bundle = bemhtml.generate('', {
+            requires: { '!#^*\u0007-+': { ym: 'text' } }
+          });
+
+          var sandbox = {
+            modules: require('ym'),
+            window: {}
+          };
+
+          vm.runInNewContext(fakeModule + EOL + bundle, sandbox);
+
+          var getLibs = function() {
+            return new vow.Promise(function(resolve) {
+              sandbox.modules.require('bemhtml', function(bemhtml) {
+                resolve(bemhtml.compile(function() {
+                  block('b').def()(function() {
+                    return this.require('!#^*\u0007-+');
                   });
                 }).apply({ block: 'b' }));
               });
