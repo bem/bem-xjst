@@ -462,8 +462,8 @@ For example:
     requires: {
         'lib-name': {
             globals: 'libName',           // Variable name from global scope
-            ym: 'lib-name',               // Module name from YModules
-            commonJS: 'path/to/lib-name'  // path to CommonJS library
+            commonJS: 'path/to/lib-name', // path to CommonJS library
+            ym: 'lib-name'                // Module name from YModules
         }
     }
 }
@@ -492,6 +492,16 @@ E.g. if you specify just global scope the library will only be available as glob
     }
 }
 ```
+
+In other case, if you specify multiple modular systems, template will attempt to get it from them in this order:
+1) global
+2) CommonJS
+3) YModules (if available)
+If required module was found on some step, next steps will be ignored and template will use that first retrieved module.
+
+Thus, if module available in global variable, its value will be provided inside template, in spite of module avialability in CommonJS/YModules.
+
+Same way, CommonJS module is more prior to YModules one.
 
 Example of using `moment.js` library:
 
