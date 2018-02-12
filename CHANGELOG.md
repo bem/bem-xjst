@@ -1,5 +1,26 @@
 # BEM-XJST Changelog
 
+# 2018-02-12 [v8.8.8](https://github.com/bem/bem-xjst/compare/v8.8.7...v8.8.8), @miripiruni
+
+Module require resolving refactor. See
+[docs](https://github.com/bem/bem-xjst/blob/v8.8.8/docs/en/3-api.md#using-thirdparty-libraries).
+
+In other case, if you specify multiple modular systems, template will attempt to
+get it from them in this order:
+
+1. Global
+2. CommonJS
+2. YModules (if available)
+
+If required module was found on some step, next steps will be ignored and template will use that first retrieved module.
+
+Thus, if module available in global variable, its value will be provided inside template, in spite of module avialability in CommonJS/YModules.
+
+Same way, CommonJS module is more prior to YModules one.
+
+Commits:
+* [[`4b1b87c427`](https://github.com/bem/bem-xjst/commit/4b1b87c427f7d0ad5ca143717030d4c94ba78845)] - Module require resolving refactor (#493)
+
 # 2018-02-05 [v8.8.7](https://github.com/bem/bem-xjst/compare/v8.8.6...v8.8.7), @miripiruni
 
 Dependency enb/enb-source-map updated to v1.12.0.
