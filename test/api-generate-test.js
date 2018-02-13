@@ -57,6 +57,27 @@ describe('API generate', function() {
           assert.equal(result, TEXT);
         });
 
+        it('should get dependencies from global scope using dot-delimited key',
+        function () {
+          var code = 'global.text = {}; global.text.value = "' + TEXT + '";';
+          var bundle = bemhtml.generate('', {
+            requires: { textModule: { globals: 'text.value' } }
+          });
+
+          var sandbox = { global: {}, exports: {} };
+          sandbox.module = { exports: sandbox.exports };
+
+          vm.runInNewContext(code + EOL + bundle, sandbox);
+
+          var result = sandbox.exports.bemhtml.compile(function () {
+            block('b').def()(function () {
+              return this.require('textModule');
+            });
+          }).apply({ block: 'b' });
+
+          assert.equal(result, TEXT);
+        });
+
         it('should get dependencies from global scope to module named' +
           ' with special symbols',
           function() {
@@ -116,6 +137,25 @@ describe('API generate', function() {
 
           var result = sandbox.bemhtml.compile(function() {
             block('b').def()(function() {
+              return this.require('textModule');
+            });
+          }).apply({ block: 'b' });
+
+          assert.equal(result, TEXT);
+        });
+
+        it('should get dependencies from window scope (any browser)',
+        function () {
+          var code = 'window.text = {}; window.text.value = "' + TEXT + '";';
+          var bundle = bemhtml.generate('', {
+            requires: { textModule: { globals: 'text.value' } }
+          });
+          var sandbox = { window: {} };
+
+          vm.runInNewContext(code + EOL + bundle, sandbox);
+
+          var result = sandbox.bemhtml.compile(function () {
+            block('b').def()(function () {
               return this.require('textModule');
             });
           }).apply({ block: 'b' });
@@ -223,6 +263,45 @@ describe('API generate', function() {
           };
 
           return getLibs().then(function(res) {
+            return assert.equal(res.fakeReq.getText(), 'globals');
+          });
+        });
+
+        it('must get dependency from global scope with dot-delimited key' +
+        'if it also is presented in YModule', function () {
+          var fakeModule = 'modules.define(' +
+            '"fakeModule", [], function(provide) {' +
+            'provide("' + TEXT + '");});';
+          var bundle = bemhtml.generate(function () {
+            block('b').def()(function () {
+              return this.require('fakeReq').getText();
+            });
+          }, {
+              requires: { fakeReq: { globals: 'f.akeVar', ym: 'fakeModule' } }
+            });
+          var sandbox = {
+            global: {},
+            window: {},
+            modules: require('ym')
+          };
+
+          vm.runInNewContext(
+            'window.f = ' +
+            '{ akeVar: { getText: function() { return "globals"; } } };' +
+            EOL +
+            fakeModule +
+            EOL +
+            bundle, sandbox);
+
+          var getLibs = function () {
+            return new vow.Promise(function (resolve) {
+              sandbox.modules.require('bemhtml', function (bemhtml) {
+                resolve(bemhtml.libs);
+              });
+            });
+          };
+
+          return getLibs().then(function (res) {
             return assert.equal(res.fakeReq.getText(), 'globals');
           });
         });
@@ -589,6 +668,42 @@ describe('API generate', function() {
           };
 
           return getLibs().then(function(res) {
+            return assert.equal(res, TEXT + TEXT1);
+          });
+        });
+
+        it('must require global using dot-delimited key + ym', function () {
+          var fakeModule = 'var global = {};global.text = {};' +
+            'global.text.value = "' + TEXT +
+            '";modules.define("text1", [], function(provide) {' +
+            'provide("' + TEXT1 + '");});';
+          var bundle = bemhtml.generate('', {
+            requires: {
+              textModule: { globals: 'text.value' },
+              textModule1: { ym: 'text1' }
+            }
+          });
+
+          var sandbox = {
+            modules: require('ym')
+          };
+
+          vm.runInNewContext(fakeModule + EOL + bundle, sandbox);
+
+          var getLibs = function () {
+            return new vow.Promise(function (resolve) {
+              sandbox.modules.require('bemhtml', function (bemhtml) {
+                resolve(bemhtml.compile(function () {
+                  block('b').def()(function () {
+                    return this.require('textModule') +
+                      this.require('textModule1');
+                  });
+                }).apply({ block: 'b' }));
+              });
+            });
+          };
+
+          return getLibs().then(function (res) {
             return assert.equal(res, TEXT + TEXT1);
           });
         });
