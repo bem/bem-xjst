@@ -87,8 +87,8 @@ Templates are applied on the node, both to the block and to the corresponding mo
 Templates:
 
 ```js
-block('page').tag()('body');
-block('page').mod('type', 'index').mix()({ block: 'mixed' });
+block('page')({ tag: 'body' });
+block('page').mod('type', 'index')({ mix: { block: 'mixed' } });
 ```
 
 Both templates are applied.
@@ -117,7 +117,7 @@ Template:
 ```js
 block('item')
   .mod('size', '1') // Notice that value is String
-  .tag()('small');
+  ({ tag: 'small' });
 ```
 
 The template are applied.
@@ -132,7 +132,7 @@ If second argument of `mod()` was omited then templates with any
 non-empty value of modifier will be applied.
 
 ```js
-block('a').mod('size').tag()('span');
+block('a').mod('size')({ tag: 'span' });
 ```
 
 Template will be applied to BEMJSON node if block equals to 'a' and 'size' modifier exists (equals neither to `undefined` nor to `''` nor to `false` nor to `null`).
@@ -174,8 +174,8 @@ Templates are applied on the node, both to the element and to the corresponding 
 Templates:
 
 ```js
-block('page').elem('content').tag()('body');
-block('page').elem('content').elemMod('type', 'index').mix()({ block: 'mixed' });
+block('page').elem('content')({ tag: 'body' });
+block('page').elem('content').elemMod('type', 'index')({ mix: { block: 'mixed' } });
 ```
 
 Both templates are applied.
@@ -199,7 +199,7 @@ The templates will be applied to BEMJSON nodes with modifier with any value.
  * @param {Function} Checking a custom condition.
  *                   The result is converted to `Boolean`.
  */
-match(function() { return … })
+match((node, ctx) { return … })
 ```
 
 Checking a custom condition. In the context of the function, all s are accessible that are [accessible in the template](6-templates-context.md). The result of the function is converted to `Boolean`.
@@ -207,7 +207,7 @@ Checking a custom condition. In the context of the function, all s are accessibl
 The order for checking `match` is guaranteed. The order for checking the other predicates isn’t important.
 
 ```js
-block('*').match(function() { return false; })(
+block('*').match(() => false)(
     // The body of this template won’t be called because the condition
     // returned `false`
     // …
@@ -224,9 +224,7 @@ Subpredicates can be arranged as chains:
 block('page')
     .mod('theme', 'white')
     .elem('content')
-    .match(function() {
-        return this.ctx.weather === 'hot';
-    })
+    .match((node, ctx) => ctx.weather === 'hot')
 ```
 
 The following two templates are the same in bem-xjst terms:
@@ -299,6 +297,13 @@ block('b').content('test');
 block('b').content()('test');
 ```
 
+Much more easy to use object-like shortcut syntax for modes:
+
+```js
+// Object-like shortcut syntax:
+block('b')({ content: 'test' });
+``` 
+
 For input data:
 
 ```js
@@ -308,12 +313,10 @@ For input data:
 And for the template:
 
 ```js
-block('link')(
-    tag()('a'),
-    attrs()(function() {
-        return { href: this.ctx.url };
-    })
-);
+block('link')({
+    tag: 'a',
+    attrs: (node, ctx) => ({ href: ctx.url })
+});
 ```
 
 *Result of templating:*
@@ -345,10 +348,10 @@ block('link')(
 /**
  * @param {function|Array|Object[]} value
  */
-def()(value)
+def: value
 ```
 
-The `def` mode (short for "default") has a special status. It is responsible for generating the result as a whole. This mode defines the list of other modes and the order to go through them, as well as the build procedure for getting the final representation of the HTML element or BEMJSON from the parts generated in the other modes.
+The `def` mode has a special status. It is responsible for generating the result as a whole. This mode defines the list of other modes and the order to go through them, as well as the build procedure for getting the final representation of the HTML element or BEMJSON from the parts generated in the other modes.
 
 This is a special mode that shouldn’t be used unless truly necessary. A user-defined template that redefines `def` disables calls of the other modes by default.
 
@@ -358,7 +361,7 @@ This is a special mode that shouldn’t be used unless truly necessary. A user-d
 /**
  * @param {Function|String} name
  */
-tag()(name)
+tag: name
 ```
 
 HTML tag. `false` or `''` tells the BEMHTML engine to skip the HTML tag generation stage. Default: `div`.
@@ -369,19 +372,19 @@ HTML tag. `false` or `''` tells the BEMHTML engine to skip the HTML tag generati
 /**
  * @param {function|Object} value
  */
-attrs()(value)
+attrs: value
 ```
 
 Hash with HTML attributes. The attribute values [are escaped using the attrEscape function](6-templates-context.md#attrescape).
 
-You can use `addAttrs()` mode to add attributes. `addAttrs()` is shortcut of `attrs()` mode:
+You can use `addAttrs` mode to add attributes. `addAttrs` is shortcut of `attrs` mode:
 ```js
-addAttrs()({ id: 'test', name: 'test' });
+addAttrs: { id: 'test', name: 'test' }
 // This is equivalent to following:
-attrs()(function() {
+attrs: (node) => {
     var attrs = applyNext() || {}; // Get attrs from previous templates
-    return this.extend(attrs, { id: 'test', name: 'test' });
-});
+    return node.extend(attrs, { id: 'test', name: 'test' });
+}
 ```
 
 #### content
@@ -390,7 +393,7 @@ attrs()(function() {
 /**
  * @param {*} value
  */
-content()(value)
+content: value
 ```
 
 Child nodes. By default, it is taken from the `content` of the current BEMJSON node.
@@ -399,11 +402,11 @@ You can use `appendContent` and `prependContent` modes to add child nodes to
 content.
 
 ```js
-block('quote')(
-    prependContent()('“'), // add some things before actual content
-    appendContent()('”'), // add content to the end
-    appendContent()({ block: 'link' }) // add more content to the end
-);
+block('quote')({
+    prependContent: '“', // add some things before actual content
+    appendContent: '”', // add content to the end
+    appendContent: { block: 'link' } // add more content to the end
+})
 ```
 ```js
 { block: 'quote', content: 'I came, I saw, I templated.' }
@@ -415,24 +418,20 @@ block('quote')(
 <div class="quote">“I came, I saw, I templated.”<div class="link"></div></div>
 ```
 
-`appendContent()` and `prependContent()` is a shortcuts to `content()` + `applyNext()`:
+`appendContent` and `prependContent` is a shortcuts to `content` + `applyNext()`:
 
 ```js
-// appendContent()('additional content') is the same as:
-content()(function() {
-    return [
-        applyNext(),
-        'additional content'
-    ];
-});
+// appendContent: 'additional content' is the same as:
+content: () => [
+    applyNext(),
+    'additional content'
+]
 
-// prependContent()('additional content') is the same as:
-content()(function() {
-    return [
-        'additional content',
-        applyNext()
-    ];
-});
+// prependContent: 'additional content' is the same as:
+content: () => [
+    'additional content',
+    applyNext()
+]
 ```
 
 #### mix
@@ -441,7 +440,7 @@ content()(function() {
 /**
  * @param {function|Object|Object[]|String} mixed
  */
-mix()(mixed)
+mix: mixed
 ```
 
 BEM entities to [mix](https://en.bem.info/method/key-concepts/#mix) with the current one.
@@ -449,19 +448,19 @@ BEM entities to [mix](https://en.bem.info/method/key-concepts/#mix) with the cur
 Usage example:
 
 ```js
-block('link').mix()({ block: 'mixed' });
-block('button').mix()([ { block: 'mixed' }, { block: 'control' } ]);
-block('header').mix()(function() { return { block: 'mixed' }; });
+block('link')({ mix: { block: 'mixed' } });
+block('button')({ mix: [ { block: 'mixed' }, { block: 'control' } ] });
+block('header')({ mix: () => ({ block: 'mixed' }) });
 ```
 
-You can use `addMix()` mode to add mix. `addMix()` is shortcut of `mix()`:
+You can use `addMix` mode to add mix. `addMix` is shortcut of `mix`:
 ```js
-addMix()('my_new_mix'); // This is equivalent to following:
-mix()(function() {
+addMix: 'my_new_mix' // This is equivalent to following:
+mix: () => {
     var mixes = applyNext();
     if (!Array.isArray(mixes)) mixes = [ mixes ];
     return mixes.concat('my_new_mix');
-});
+}
 ```
 
 #### mods
@@ -470,7 +469,7 @@ mix()(function() {
 /**
  * @param {function|Object} mods
  */
-mods()(mods)
+mods: mods
 ```
 
 Hash for modifiers of block.
@@ -478,11 +477,11 @@ Hash for modifiers of block.
 **Example**
 
 ```js
-block('link').mods()({ type: 'download' });
-block('link').mods()(function() { return { type: 'download' }; });
+block('link')({ mods: { type: 'download' } });
+block('link')({ mods: () => ({ type: 'download' }) });
 ```
 
-Value from `mods()` mode rewrite value from BEMJSON.
+Value from `mods` mode rewrite value from BEMJSON.
 
 By default returns `this.mods`.
 
@@ -491,20 +490,20 @@ By default returns `this.mods`.
 { block: 'b' }
 
 // Template:
-block('b').def()(function() {
-    return apply('mods');
+block('b')({
+    def: () => apply('mods')
 });
 ```
 
 The result is `{}`.
 
-You can use `addMods()` mode to add modifiers. `addMods()` is shortcut of `mods()`:
+You can use `addMods` mode to add modifiers. `addMods` is shortcut of `mods`:
 ```js
-addMods()({ theme: 'dark' }); // This is equivalent to following:
-mods()(function() {
-    this.mods = this.extend(applyNext(), { theme: 'dark' });
-    return this.mods;
-});
+addMods: { theme: 'dark' } // This is equivalent to following:
+mods: (node) => {
+    node.mods = node.extend(applyNext(), { theme: 'dark' });
+    return node.mods;
+}
 ```
 
 #### elemMods
@@ -513,7 +512,7 @@ mods()(function() {
 /**
  * @param {function|Object} elemMods
  */
-elemMods()(elemMods)
+elemMods: elemMods
 ```
 
 Hash for modifiers of element.
@@ -521,11 +520,11 @@ Hash for modifiers of element.
 **Example**
 
 ```js
-block('link').elemMods()({ type: 'download' });
-block('link').elemMods()(function() { return { type: 'download' }; });
+block('link')({ elemMods: { type: 'download' } });
+block('link')({ elemMods: () => ({ type: 'download' }) });
 ```
 
-Value from `elemMods()` mode rewrite value from BEMJSON.
+Value from `elemMods` mode rewrite value from BEMJSON.
 
 By default returns `this.mods`.
 
@@ -534,8 +533,8 @@ By default returns `this.mods`.
 { block: 'b', elem: 'e' }
 
 // Template:
-block('b').elem('e').def()(function() {
-    return apply('mods');
+block('b').elem('e')({
+    def: () => apply('mods')
 });
 ```
 
@@ -545,11 +544,11 @@ You can use addElemMods mode to add modifiers for element. addElemMods is
 shortcut of elemMods:
 
 ```js
-addElemMods()({ theme: 'dark' }); // This is equivalent to following:
-elemMods()(function() {
-    this.elemMods = this.extend(applyNext(), { theme: 'dark' });
-    return this.elemMods;
-});
+addElemMods: { theme: 'dark' } // This is equivalent to following:
+elemMods: (node) => {
+    node.elemMods = node.extend(applyNext(), { theme: 'dark' });
+    return node.elemMods;
+}
 ```
 
 #### js
@@ -558,7 +557,7 @@ elemMods()(function() {
 /**
  * @param {function|Boolean|Object} value
  */
-js()(value)
+js: value
 ```
 
 JavaScript parameters. If the value isn’t falsy, it mixes `i-bem` and adds the
@@ -570,7 +569,7 @@ content to Javacript parameters. More information about [i-bem and JavaScript pa
 /**
  * @param {function|Boolean} value
  */
-bem()(value)
+bem: value
 ```
 
 Tells the template engine whether to add classes and JavaScript parameters for the BEM entity and its mixes. Default: `true`.
@@ -581,7 +580,7 @@ Tells the template engine whether to add classes and JavaScript parameters for t
 /**
  * @param {function|String} value
  */
-cls()(value)
+cls: value
 ```
 
 Adds an HTML class unrelated to the BEM subject domain.
@@ -600,8 +599,8 @@ For replacing the current node (matching the node and rendering some other entit
 Templates:
 
 ```js
-block('link').tag()('a');
-block('resource').replace()({ block: 'link' });
+block('link')({ tag: 'a' });
+block('resource')({ replace: { block: 'link' } });
 ```
 
 *Result of templating:*
@@ -629,11 +628,11 @@ Wrap the current node in additional markup.
 Template:
 
 ```js
-block('quote').wrap()(function() {
-    return {
+block('quote')({
+    wrap: (node, ctx) => ({
         block: 'wrap',
-        content: this.ctx
-    };
+        content: ctx
+    })
 });
 ```
 
@@ -657,9 +656,9 @@ block('quote').wrap()(function() {
 Templates:
 
 ```js
-block('action').extend()({ 'ctx.type': 'Sale', sale: '50%' });
-block('action').content()(function() {
-    return this.ctx.type + ' ' + this.sale;
+block('action')({
+    extend: { 'ctx.type': 'Sale', sale: '50%' },
+    content: (node, ctx) => ctx.type + ' ' + node.sale
 });
 ```
 
@@ -669,14 +668,14 @@ block('action').content()(function() {
 <div class="action">Sale 50%</div>
 ```
 
-`extend()` may used as a data proxy to all child nodes.
+`extend` may used as a data proxy to all child nodes.
 
 **Example**
 
 ```js
 // Templates
-block('page').extend()({ meaning: 42 });
-block('*').attrs()(function() { return { life: this.meaning }; });
+block('page')({ extend: { meaning: 42 } });
+block('*')({ attrs: (node) => ({ life: node.meaning }) });
 ```
 
 ```js
@@ -705,25 +704,27 @@ Template:
 
 ```js
 block('control')(
-    mode('id')('username-control'), // User-defined mode named "id"
-    content()(function() {
-        return [
-            {
-                elem: 'label',
-                attrs: { for: apply('id') } // Calling the user-defined mode
-            },
-            {
-                elem: 'input',
-                attrs: {
-                    name: this.ctx.name,
-                    value: this.ctx.value,
-                    id: apply('id'),  // Calling the user-defined mode
+    {
+        id: 'username-control', // User-defined mode named "id"
+        content: (node, ctx) => {
+            return [
+                {
+                    elem: 'label',
+                    attrs: { for: apply('id') } // Calling the user-defined mode
+                },
+                {
+                    elem: 'input',
+                    attrs: {
+                        name: ctx.name,
+                        value: ctx.value,
+                        id: apply('id')  // Calling the user-defined mode
+                    }
                 }
-            }
-        ];
-    }),
-    elem('input').tag()('input'),
-    elem('label').tag()('label')
+            ];
+        },
+    },
+    elem('input')({ tag: 'input' }),
+    elem('label')({ tag: 'label' })
 );
 ```
 

@@ -17,12 +17,12 @@ redefinition via new templates but also using ‘modes’. E.g. it may be a tag 
 or its content.
 
 ```js
-block('link').tag()('span');
+block('link')({ tag: 'span' });
 // The template sets tag to `span` for all `link` blocks.
-// And tag() mode can be redefined if any condition passed.
+// And tag mode can be redefined if any condition passed.
 
-block('link').match(function(node, ctx) { return ctx.url; }).tag()('a');
-// The template sets tag to `a` only if block `link` have `url` field. 
+block('link').match((node, ctx) => ctx.url)({ tag: 'a' });
+// The template sets tag to `a` only if block `link` have `url` field.
 // Otherwise tag will be ‘span’ as previous template says.
 ```
 
@@ -31,8 +31,8 @@ block('link').match(function(node, ctx) { return ctx.url; }).tag()('a');
 Templates are written using [pattern matching](/docs/en/7-runtime.md#how-templates-are-selected-and-applied) for the values and structure of input data
 
 ```js
-block('list').tag()('ul');
-block('item').tag()('li');
+block('list')({ tag: 'ul' });
+block('item')({ tag: 'li' });
 ```
 
 We can apply these two declarative-style templates templates to data:

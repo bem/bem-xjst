@@ -31,10 +31,10 @@ module.exports = function(engine) {
   /**
    * test helper
    *
-   * @param {?Function} fn - matchers
-   * @param {BEMJSON} data - incoming bemjson
+   * @param {?Function} [fn] - matchers
+   * @param {Object} data - incoming bemjson
    * @param {String} expected - expected resulting html
-   * @param {?Object} options - compiler options
+   * @param {?Object} [options] - compiler options
    */
   function test(fn, data, expected, options) {
     if (typeof fn !== 'function') {

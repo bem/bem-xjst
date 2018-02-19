@@ -8,6 +8,48 @@
 * [кастомные пользовательские поля](#Кастомные-пользовательские-поля)
 * [методы для управления шаблонизацией](#Методы-для-управления-шаблонизацией)
 
+# Функции шаблонов
+
+В случае, когда тело шаблона является функцией, она вызывается с двумя аргументами:
+
+1. контекст выполнения шаблона (доступный как `this` в теле шаблона);
+2. текущий узел BEMJSON, на который сматчился шаблон (доступный в теле шаблона
+как `this.ctx`).
+
+**Пример**
+
+```js
+block('link')({
+    attrs: function(node, ctx) {
+        return {
+            // тоже самое что и this.ctx.url
+            href: ctx.url,
+
+            // тоже самое что и this.position
+            'data-position': node.position
+        };
+    }
+});
+```
+
+Такие же аргументы доступны в функции подпредикате `match()`.
+
+```js
+match(function(node, ctx) {
+    // тоже самое что и this.mods.disabled
+    return !node.mods.disabled &&
+        // тоже самое что и this.ctx.target
+        ctx.target;
+})
+```
+
+Кроме того, функции шаблонов поддерживают ES6 arrow functions, поэтому вы можете писать везде в таком стиле:
+
+```js
+match((node, ctx) => ctx.target)
+addAttrs: (node, ctx) => ({ href: ctx.url })
+```
+
 ## Нормализованные сведения о текущей БЭМ-сущности
 
 Шаблонизатор нормализует сведения о текущей БЭМ-сущности. В текущем BEMJSON-узле могут быть неполные сведения о БЭМ-сущности:
@@ -33,13 +75,13 @@
 Обратите внимание, что объекты `this.mods` и `this.elemMods` всегда присутствуют, поэтому проверки на их наличие в теле шаблона избыточные:
 
 ```js
-block('page').match(function() {
+block('page').match((node, ctx) => {
     // Избыточно:
-    return this.mods && this.mods.type === 'index' && this.ctx.weather;
+    return node.mods && node.mods.type === 'index' && ctx.weather;
 
     // Достаточно:
-    return this.mods.type === 'index' && this.ctx.weather;
-}).def()(function() { return … });
+    return node.mods.type === 'index' && ctx.weather;
+})({ def: () => ({ … }) });
 ```
 
 ## Текущий узел BEMJSON
@@ -54,11 +96,11 @@ block('page').match(function() {
 ```
 
 ```js
-block('company').attr()(function() {
-    return {
-        id: this.ctx.name,
-        name: this.ctx.name
-    };
+block('company')({
+    attrs: (node, ctx) => ({
+        id: ctx.name,
+        name: ctx.name
+    })
 });
 ```
 
@@ -93,8 +135,8 @@ this.xmlEscape(str)
 Шаблон:
 
 ```js
-block('button').def()(function() {
-    return this.xmlEscape('<b>&</b>');
+block('button')({
+    def: (node) => node.xmlEscape('<b>&</b>')
 });
 ```
 
@@ -168,13 +210,13 @@ this.jsAttrEscape(str)
 Функция определения последней БЭМ-сущности среди соседей `isLast` возвратит `false`, если в массиве, содержащем узлы, последний элемент не является БЭМ-сущностью.
 
 ```js
-block('list')(
-    content()([
+block('list')({
+    content: [
         { block: 'item1' },
         { block: 'item2' }, // this.isLast() === false
         'text'
-    ])
-);
+    ]
+});
 ```
 
 Такое поведение объясняется тем, что в целях оптимизации BEMHTML не выполняет
@@ -221,23 +263,25 @@ this.isLast()
 Шаблон:
 
 ```js
-block('input').content()(function() {
-    var id = this.generateId();
+block('input')({
+    content: (node, ctx) => {
+        var id = node.generateId();
 
-    return [
-        {
-            tag: 'label',
-            attrs: { for: id },
-            content: this.ctx.label
-        },
-        {
-            tag: 'input',
-            attrs: {
-                id: id,
-                value: this.ctx.value
+        return [
+            {
+                tag: 'label',
+                attrs: { for: id },
+                content: ctx.label
+            },
+            {
+                tag: 'input',
+                attrs: {
+                    id: id,
+                    value: ctx.value
+                }
             }
-        }
-    ];
+        ];
+    }
 });
 ```
 
@@ -269,10 +313,10 @@ BEMJSON:
 Шаблон:
 
 ```js
-block('a').js()(function() {
-    return {
-        template: this.reapply({ block: 'b', mods: { m: 'v' } })
-    };
+block('a')({
+    js: (node) => ({
+        template: node.reapply({ block: 'b', mods: { m: 'v' } })
+    })
 });
 ```
 
@@ -292,17 +336,17 @@ block('a').js()(function() {
 ```js
 var bemxjst = require('bem-xjst');
 
-var templates = bemxjst.bemhtml.compile(function() {
+var templates = bemxjst.bemhtml.compile(() => {
 
     // Внимание: oninit сработает только при первой компиляции шаблонов.
-    oninit(function(exports, shared) {
+    oninit((exports, shared) => {
         shared.BEMContext.prototype.hi = function(username) {
             return 'Hello, ' + username;
         };
     });
 
-    block('b').content()(function() {
-        return this.hi('username');
+    block('b')({
+        content: (node) => node.hi('username')
     });
 });
 
@@ -330,16 +374,16 @@ templates.BEMContext.prototype.hi = function(name) {
 };
 
 // Добавляем шаблоны
-templates.compile(function() {
-    block('b').content()(function() {
-        return this.hi('templates');
+templates.compile(() => {
+    block('b')({
+        content: (node) => node.hi('templates')
     });
 });
 
 var bemjson = { block: 'b' };
 
 // Применяем шаблоны
-var html = templates.apply(bemjson));
+var html = templates.apply(bemjson);
 ```
 
 В результате `html` будет содержать строку:
@@ -351,45 +395,5 @@ var html = templates.apply(bemjson));
 ## Методы для управления шаблонизацией
 
 В теле шаблонов доступны методы `apply`, `applyNext` и `applyCtx`. Подробнее о них читайте в следующей секции про [runtime](7-runtime.md).
-
-# Функции шаблонов
-
-В случае, когда тело шаблона является функцией, она вызывается с двумя аргументами:
-
-1. контекст выполнения шаблона (доступный как `this` в теле шаблона);
-2. текущий узел BEMJSON, на который сматчился шаблон (доступный в теле шаблона
-как `this.ctx`).
-
-**Пример**
-
-```js
-block('link').attrs()(function(node, ctx) {
-    return {
-        // тоже самое что и this.ctx.url
-        href: ctx.url,
-
-        // тоже самое что и this.position
-        'data-position': node.position
-    };
-});
-```
-
-Такие же аргументы доступны в функции подпредикате `match()`.
-
-```js
-match(function(node, ctx) {
-    // тоже самое что и this.mods.disabled
-    return !node.mods.disabled &&
-        // тоже самое что и this.ctx.target
-        ctx.target;
-})
-```
-
-Кроме того, функции шаблонов поддерживают ES6 arrow functions, поэтому вы можете писать везде в таком стиле:
-
-```js
-match((node, ctx) => (!node.mods.disabled && ctx.target))
-addAttrs()((node, ctx) => ({ href: ctx.url }))
-```
 
 Читать далее: [runtime](7-runtime.md)

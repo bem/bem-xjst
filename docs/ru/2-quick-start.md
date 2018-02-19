@@ -20,8 +20,8 @@ var bemxjst = require('bem-xjst');
 var bemhtml = bemxjst.bemhtml;
 
 // Добавляем шаблоны с помощью метода compile
-var templates = bemhtml.compile(function() {
-    block('text').tag()('span');
+var templates = bemhtml.compile(() => {
+    block('text')({ tag: 'span' });
 });
 
 // Добавляем данные в формате BEMJSON

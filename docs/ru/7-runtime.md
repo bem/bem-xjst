@@ -41,11 +41,10 @@
 
 ```js
 block('*')
-    .match(function() {
-        return this.ctx.counter;
-    })
-    .mix()(function() {
-        return { block: 'counter', js: { id: this.ctx.counter } }
+    .match((node, ctx) => ctx.counter)({
+        mix: (node, ctx) => ({
+            block: 'counter', js: { id: ctx.counter }
+        })
     })
 ```
 
@@ -84,17 +83,13 @@ apply(modeName, assignObj)
 Шаблон:
 
 ```js
-block('button')(
-    mode('test')(function() {
-        return this.tmp + this.ctx.foo;
-    }),
-    def()(function() {
-        return apply('test', {
-            tmp: 'ping',
-            'ctx.foo': 'pong'
-        });
+block('button')({
+    test: (node, ctx) => node.tmp + ctx.foo,
+    def: () => apply('test', {
+        tmp: 'ping',
+        'ctx.foo': 'pong'
     })
-);
+});
 ```
 
 *Результат шаблонизации:*
@@ -116,12 +111,13 @@ pingpong
 Шаблон:
 
 ```js
-block('footer').mode('custom')('footer');
-block('header').mode('custom')('header');
-block('header').tag()(function() {
+block('footer')({ custom: 'footer' });
+block('header')({
+    custom: 'header',
+
     // не смотря на то, что вторым аргументом apply явно указан блок footer
     // будет вызван пользовательский режим блока `header`.
-    return apply('custom', { block: 'footer' });
+    tag: () => apply('custom', { block: 'footer' })
 });
 ```
 
@@ -144,8 +140,8 @@ block('header').tag()(function() {
 Шаблон:
 
 ```js
-block('animal').content()(function() {
-    return apply('type');
+block('animal')({
+    content: () => apply('type')
 });
 ```
 
@@ -171,10 +167,12 @@ applyNext(newctx)
 **Пример**
 
 ```js
-block('link').tag()('a');
-block('link').tag()(function() {
-    var res = applyNext(); // res === 'a'
-    return res;
+block('link')({ tag: 'a' });
+block('link')({
+    tag: () => {
+        var res = applyNext(); // res === 'a'
+        return res;
+    }
 });
 ```
 
@@ -198,10 +196,10 @@ applyCtx(bemjson, newctx)
 Шаблон:
 
 ```js
-block('header').def()(function() {
-    return applyCtx(this.extend(this.ctx, {
+block('header')({
+    def: (node, ctx) => applyCtx(node.extend(ctx, {
         block: 'layout',
-        mix: [{ block: 'header' }].concat(this.ctx.mix || [])
+        mix: [{ block: 'header' }].concat(ctx.mix || [])
     }));
 });
 ```

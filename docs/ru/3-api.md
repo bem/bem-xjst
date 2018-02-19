@@ -25,8 +25,8 @@ var bemxjst = require('bem-xjst');
 var bemhtml = bemxjst.bemhtml;
 
 // Добавляем шаблон
-var templates = bemhtml.compile(function() {
-    block('quote').tag()('q');
+var templates = bemhtml.compile(() => {
+    block('quote')({ tag: 'q' });
 });
 
 // Добавляем данные
@@ -49,14 +49,18 @@ var bemxjst = require('bem-xjst');
 var bemtree = bemxjst.bemtree;
 
 // Добавляем шаблон
-var templates = bemtree.compile(function() {
-    block('phone').content()({ mask: '8-800-×××-××-××', mandatory: true });
+var templates = bemtree.compile(() => {
+    block('phone')({
+        content: { mask: '8-800-×××-××-××', mandatory: true }
+    });
 
-    block('page').content()([
-        { block: 'header' },
-        { block: 'body' },
-        { block: 'footer' }
-    ]);
+    block('page')({
+        content: [
+            { block: 'header' },
+            { block: 'body' },
+            { block: 'footer' }
+        ]
+    });
 });
 
 // Добавляем данные
@@ -92,8 +96,8 @@ var result = templates.apply(bemjson);
 var bemxjst = require('bem-xjst');
 
 // Создаём экземпляр класса templates
-var templates = bemxjst.bemhtml.compile(function() {
-    block('header').tag()('h1');
+var templates = bemxjst.bemhtml.compile(() => {
+    block('header')({ tag: 'h1' });
 });
 
 // Добавляем данные
@@ -103,8 +107,8 @@ var html = templates.apply(bemjson);
 // html: '<h1 class="header">Документация</h1>'
 
 // Добавляем шаблоны к уже созданному экземпляру класса templates
-templates.compile(function() {
-    block('header').tag()('h2');
+templates.compile(() => {
+    block('header')({ tag: 'h2' });
 });
 
 html = templates.apply(bemjson);
@@ -120,7 +124,7 @@ html = templates.apply(bemjson);
 
 ```js
 var bemxjst = require('bem-xjst');
-var templates = bemxjst.bemhtml.compile(function() {
+var templates = bemxjst.bemhtml.compile(() => {
     // В этом примере мы не добавляем пользовательских шаблонов.
     // Для рендеринга HTML будет использовано поведение шаблонизатора по умолчанию.
     }, {
@@ -163,7 +167,7 @@ var html = templates.apply(bemjson);
 
 ```js
 var bemxjst = require('bem-xjst');
-var templates = bemxjst.bemhtml.compile(function() {
+var templates = bemxjst.bemhtml.compile(() => {
     // В этом примере мы не добавляем пользовательских шаблонов.
     // Для рендеринга HTML будет использовано поведение шаблонизатора по умолчанию.
     }, {
@@ -193,7 +197,7 @@ var html = templates.apply(bemjson);
 
 ```js
 var bemxjst = require('bem-xjst');
-var templates = bemxjst.bemhtml.compile(function() {
+var templates = bemxjst.bemhtml.compile(() => {
     // В этом примере мы не добавляем пользовательских шаблонов.
     // Для рендеринга HTML будет использовано поведение шаблонизатора по умолчанию.
     }, {
@@ -225,7 +229,7 @@ var html = templates.apply(bemjson);
 
 ```js
 var bemxjst = require('bem-xjst');
-var templates = bemxjst.bemhtml.compile(function() {
+var templates = bemxjst.bemhtml.compile(() => {
     // В этом примере мы не добавляем пользовательских шаблонов.
     // Для рендеринга HTML будет использовано поведение шаблонизатора по умолчанию.
     }, {
@@ -261,7 +265,7 @@ var html = templates.apply(bemjson);
 
 ```js
 var bemxjst = require('bem-xjst');
-var templates = bemxjst.bemhtml.compile(function() {
+var templates = bemxjst.bemhtml.compile(() => {
     // В этом примере мы не добавляем пользовательских шаблонов.
     // Для рендеринга HTML будет использовано поведение шаблонизатора по умолчанию.
     }, {
@@ -286,7 +290,7 @@ var html = templates.apply(bemjson);
 
 ```js
 var bemxjst = require('bem-xjst');
-var templates = bemxjst.bemhtml.compile(function() {
+var templates = bemxjst.bemhtml.compile(() => {
     // В этом примере мы не добавляем пользовательских шаблонов.
     // Для рендеринга HTML будет использовано поведение шаблонизатора по умолчанию.
     }, {
@@ -314,7 +318,7 @@ var html = templates.apply(bemjson);
 
 ```js
 var bemxjst = require('bem-xjst');
-var templates = bemxjst.bemhtml.compile(function() {
+var templates = bemxjst.bemhtml.compile(() => {
     // В этом примере мы не добавляем пользовательских шаблонов.
     // Для рендеринга HTML будет использовано поведение шаблонизатора по умолчанию.
     }, {
@@ -347,12 +351,14 @@ var html = templates.apply(bemjson);
 var bemxjst = require('bem-xjst');
 var bemhtml = bemxjst.bemhtml;
 
-var templates = bemhtml.compile(function() {
-  block('b').content()('yay');
+var templates = bemhtml.compile(() => {
+  block('b')({ content: 'yay' });
 
-  block('mods-changes').def()(function() {
-    this.ctx.mods.one = 2;
-    return applyNext();
+  block('mods-changes')({
+    def: (node, json) => {
+      json.mods.one = 2;
+      return applyNext();
+    }
   });
 }, { runtimeLint: true });
 
@@ -393,11 +399,13 @@ Notice that you should change this.mods instead of this.ctx.mods in templates
 **Пример**
 
 ```js
-var template = bemxjst.compile(function() {
-  block('b1').attrs()(function() {
-    var attrs = applyNext();
-    attrs.undef.foo = 'bar';
-    return attrs;
+var template = bemxjst.compile(() => {
+  block('b1')({
+      attrs: () => {
+        var attrs = applyNext();
+        attrs.undef.foo = 'bar';
+        return attrs;
+      }
   });
 }, { production: true });
 var html = template.apply({ block: 'page', content: { block: 'b1' } });
@@ -465,10 +473,11 @@ templates.BEMContext.prototype.onError = function(context, err) { … };
 В шаблонах модули будут доступны с помощью метода `this.require`, например:
 
 ```js
-block('button').content()(function () {
-    var lib = this.require('lib-name');
-
-    return lib.hello();
+block('button')({
+    content() {
+      var lib = this.require('lib-name');
+      return lib.hello();
+    }
 });
 ```
 
@@ -504,7 +513,7 @@ block('button').content()(function () {
 {
     requires: {
         moment: {
-            commonJS: 'moment',  // Путь к модулю CommonJS относительно собираемого файла
+            commonJS: 'moment'  // Путь к модулю CommonJS относительно собираемого файла
         }
     }
 }
@@ -513,11 +522,12 @@ block('button').content()(function () {
 В шаблонах модуль будет доступен с помощью метода `this.require('moment')`. Код шаблона пишется один раз, одинаково для исполнения в браузере и в `Node.js`:
 
 ```js
-block('post').elem('data').content()(function() {
-    var moment = this.require('moment');  // Библиотека `moment`
-
-    return moment(this.ctx.date) // Время в ms, полученное с сервера
-        .format('YYYY-MM-DD HH:mm:ss');
+block('post').elem('data')({
+    content() {
+        var moment = this.require('moment');  // Библиотека `moment`
+        return moment(this.ctx.date) // Время в ms, полученное с сервера
+            .format('YYYY-MM-DD HH:mm:ss');
+    }
 });
 ```
 
@@ -535,9 +545,9 @@ templates.BEMContext.prototype.hi = function(name) {
 };
 
 // Добавляем шаблоны
-templates.compile(function() {
-    block('b').content()(function() {
-        return this.hi('templates');
+templates.compile(() => {
+    block('b')({
+        content: (node) => node.hi('templates')
     });
 });
 
@@ -564,14 +574,14 @@ var bemhtml = bemxjst.bemhtml;
 
 var fs = require('fs');
 
-var bundle = bemhtml.generate(function() {
+var bundle = bemhtml.generate(() => {
     // пользовательские шаблоны
     // ...
 
 }, { exportName: 'bemhtml8x' });
 
 // Записываем бандл на файловую систему
-fs.writeFile('bundle.js', bundle, function(err) {
+fs.writeFile('bundle.js', bundle, (err) => {
   if (err) return console.error(err);
   console.log('Done');
 });

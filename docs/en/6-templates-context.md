@@ -8,6 +8,47 @@ While traversing input data, bem-xjst builds a context, which contains:
 * [user-defined custom fields](#user-defined-custom-fields)
 * [methods for controlling the templating process](#methods-for-controlling-the-templating-process)
 
+# Template function
+
+When body of template is function, it calls with two arguments:
+
+1. context of template (familiar to us as `this`)
+2. current BEMJSON node (familiar to us as `this.ctx`)
+
+**Example**
+
+```js
+block('link')({
+    attrs: function(node, ctx) {
+        return {
+            // the same as this.ctx.url
+            href: ctx.url,
+
+            // the same as this.position
+            'data-position': node.position
+        };
+    }
+});
+```
+
+The same arguments available in function of `match()`.
+
+```js
+match(function(node, ctx) {
+    // the same as this.mods.disabled
+    return !node.mods.disabled &&
+        // the same as this.ctx.target
+        ctx.target;
+})
+```
+
+Moreover, template functions can be arrow functions:
+
+```js
+match((node, ctx) => ctx.target)
+addAttrs: (node, ctx) => ({ href: ctx.url })
+```
+
 ## Normalized information about the current BEM entity
 
 The template engine normalizes data about the current BEM entity. The current BEMJSON node might have incomplete information about the BEM entity. For example:
@@ -34,13 +75,13 @@ Fields with normalized data:
 Note that the `this.mods` and `this.elemMods` objects always exist, so checking for their presence in the template body is redundant:
 
 ```js
-block('page').match(function() {
+block('page').match((node, ctx) => {
     // Redundant:
-    return this.mods && this.mods.type === 'index' && this.ctx.weather;
+    return node.mods && node.mods.type === 'index' && ctx.weather;
 
     // Sufficient:
-    return this.mods.type === 'index' && this.ctx.weather;
-}).def()(function() { return … });
+    return node.mods.type === 'index' && ctx.weather;
+})({ def: () => ({ … }) });
 ```
 
 ## Current BEMJSON node
@@ -55,11 +96,11 @@ The current BEMJSON node is available in the `this.ctx` field.
 ```
 
 ```js
-block('link').attr()(function() {
-    return {
-        id: this.ctx.name,
-        name: this.ctx.name
-    };
+block('link')({
+    attrs: (node, ctx) => ({
+        id: ctx.name,
+        name: ctx.name
+    })
 });
 ```
 
@@ -94,8 +135,8 @@ Usage example:
 Template:
 
 ```js
-block('button').def()(function() {
-    return this.xmlEscape('<b>&</b>');
+block('button')({
+    def: (node) => node.xmlEscape('<b>&</b>')
 });
 ```
 
@@ -169,13 +210,13 @@ The BEM tree may be filled in as templates are executing, by using templates in 
 The `isLast` function for determining the last BEM entity among peers returns `false` if the last element in the array containing the nodes is not a BEM entity.
 
 ```js
-block('list')(
-    content()([
+block('list')({
+    content: [
         { block: 'item1' },
         { block: 'item2' }, // this.isLast() === false
         'text'
-    ])
-);
+    ]
+});
 ```
 
 This behavior is explained by the fact that for optimization purposes, BEMHTML does not perform a preliminary traversal of the BEM tree. This means that at the time when the `item2` block is processed, the length of the array is already known (`item2` is not the last element). However, it is not yet known that the last element is not a BEM element and won’t get a position number.
@@ -220,23 +261,25 @@ Usage example:
 Template
 
 ```js
-block('input').content()(function() {
-    var id = this.generateId();
+block('input')({
+    content: (node, ctx) => {
+        var id = node.generateId();
 
-    return [
-        {
-            tag: 'label',
-            attrs: { for: id },
-            content: this.ctx.label
-        },
-        {
-            tag: 'input',
-            attrs: {
-                id: id,
-                value: this.ctx.value
+        return [
+            {
+                tag: 'label',
+                attrs: { for: id },
+                content: ctx.label
+            },
+            {
+                tag: 'input',
+                attrs: {
+                    id: id,
+                    value: ctx.value
+                }
             }
-        }
-    ];
+        ];
+    }
 });
 ```
 
@@ -268,10 +311,10 @@ BEMJSON:
 Template:
 
 ```js
-block('a').js()(function() {
-    return {
-        template: this.reapply({ block: 'b', mods: { m: 'v' } })
-    };
+block('a')({
+    js: (node) => ({
+        template: node.reapply({ block: 'b', mods: { m: 'v' } })
+    })
 });
 ```
 
@@ -291,17 +334,17 @@ Using the `oninit` function in the template code:
 ```js
 var bemxjst = require('bem-xjst');
 
-var templates = bemxjst.bemhtml.compile(function() {
+var templates = bemxjst.bemhtml.compile(() => {
 
     // Note: oninit only works for the first template compilation.
-    oninit(function(exports, shared) {
+    oninit((exports, shared) => {
         shared.BEMContext.prototype.hi = function(username) {
             return 'Hello, ' + username;
         };
     });
 
-    block('b').content()(function() {
-        return this.hi('username');
+    block('b')({
+        content: (node) => node.hi('username')
     });
 });
 
@@ -329,16 +372,16 @@ templates.BEMContext.prototype.hi = function(name) {
 };
 
 // Adding templates
-templates.compile(function() {
-    block('b').content()(function() {
-        return this.hi('templates');
+templates.compile(() => {
+    block('b')({
+        content: (node) => node.hi('templates')
     });
 });
 
 var bemjson = { block: 'b' };
 
 // Applying templates
-var html = templates.apply(bemjson));
+var html = templates.apply(bemjson);
 ```
 
 As a result, `html` contains the string:
@@ -350,44 +393,5 @@ As a result, `html` contains the string:
 ## Methods for controlling the templating process
 
 The methods `apply`, `applyNext` and `applyCtx` are available in the body of templates. For more information, see the next section on [runtime](7-runtime.md).
-
-# Template function
-
-When body of template is function, it calls with two arguments:
-
-1. context of template (familiar to us as `this`)
-2. current BEMJSON node (familiar to us as `this.ctx`)
-
-**Example**
-
-```js
-block('link').attrs()(function(node, ctx) {
-    return {
-        // the same as this.ctx.url
-        href: ctx.url,
-
-        // the same as this.position
-        'data-position': node.position
-    };
-});
-```
-
-The same arguments available in function of `match()`.
-
-```js
-match(function(node, ctx) {
-    // the same as this.mods.disabled
-    return !node.mods.disabled &&
-        // the same as this.ctx.target
-        ctx.target;
-})
-```
-
-Moreover, template functions can be arrow functions:
-
-```js
-match((node, ctx) => (!node.mods.disabled && ctx.target))
-addAttrs()((node, ctx) => ({ href: ctx.url }))
-```
 
 Read next: [runtime](7-runtime.md)
