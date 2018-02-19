@@ -1,5 +1,10 @@
 # BEM-XJST Changelog
 
+# 2018-02-20 [v8.9.0](https://github.com/bem/bem-xjst/compare/v8.8.8...v8.9.0), @miripiruni
+
+Brand new object-like shortcut syntax. See docs for examples.
+
+
 # 2018-02-12 [v8.8.8](https://github.com/bem/bem-xjst/compare/v8.8.7...v8.8.8), @miripiruni
 
 Module require resolving refactor. See
