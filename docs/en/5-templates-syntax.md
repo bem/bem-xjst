@@ -199,7 +199,7 @@ The templates will be applied to BEMJSON nodes with modifier with any value.
  * @param {Function} Checking a custom condition.
  *                   The result is converted to `Boolean`.
  */
-match(function() { return … })
+match((node, ctx) { return … })
 ```
 
 Checking a custom condition. In the context of the function, all s are accessible that are [accessible in the template](6-templates-context.md). The result of the function is converted to `Boolean`.
@@ -207,7 +207,7 @@ Checking a custom condition. In the context of the function, all s are accessibl
 The order for checking `match` is guaranteed. The order for checking the other predicates isn’t important.
 
 ```js
-block('*').match(function() { return false; })(
+block('*').match(() => false)(
     // The body of this template won’t be called because the condition
     // returned `false`
     // …
@@ -224,9 +224,7 @@ Subpredicates can be arranged as chains:
 block('page')
     .mod('theme', 'white')
     .elem('content')
-    .match(function() {
-        return this.ctx.weather === 'hot';
-    })
+    .match((node, ctx) => ctx.weather === 'hot')
 ```
 
 The following two templates are the same in bem-xjst terms:
@@ -317,9 +315,7 @@ And for the template:
 ```js
 block('link')({
     tag: 'a',
-    attrs: function() {
-        return { href: this.ctx.url };
-    }
+    attrs: (node, ctx) => ({ href: ctx.url })
 });
 ```
 
@@ -352,12 +348,12 @@ block('link')({
 /**
  * @param {function|Array|Object[]} value
  */
-default: value
+def: value
 ```
 
-The `defautl` mode has a special status. It is responsible for generating the result as a whole. This mode defines the list of other modes and the order to go through them, as well as the build procedure for getting the final representation of the HTML element or BEMJSON from the parts generated in the other modes.
+The `def` mode has a special status. It is responsible for generating the result as a whole. This mode defines the list of other modes and the order to go through them, as well as the build procedure for getting the final representation of the HTML element or BEMJSON from the parts generated in the other modes.
 
-This is a special mode that shouldn’t be used unless truly necessary. A user-defined template that redefines `defautl` disables calls of the other modes by default.
+This is a special mode that shouldn’t be used unless truly necessary. A user-defined template that redefines `def` disables calls of the other modes by default.
 
 #### tag
 
@@ -385,9 +381,9 @@ You can use `addAttrs` mode to add attributes. `addAttrs` is shortcut of `attrs`
 ```js
 addAttrs: { id: 'test', name: 'test' }
 // This is equivalent to following:
-attrs: function() {
+attrs: (node) => {
     var attrs = applyNext() || {}; // Get attrs from previous templates
-    return this.extend(attrs, { id: 'test', name: 'test' });
+    return node.extend(attrs, { id: 'test', name: 'test' });
 }
 ```
 
@@ -426,20 +422,16 @@ block('quote')({
 
 ```js
 // appendContent: 'additional content' is the same as:
-content: function() {
-    return [
-        applyNext(),
-        'additional content'
-    ];
-}
+content: () => [
+    applyNext(),
+    'additional content'
+]
 
 // prependContent: 'additional content' is the same as:
-content: function() {
-    return [
-        'additional content',
-        applyNext()
-    ];
-}
+content: () => [
+    'additional content',
+    applyNext()
+]
 ```
 
 #### mix
@@ -458,13 +450,13 @@ Usage example:
 ```js
 block('link')({ mix: { block: 'mixed' } });
 block('button')({ mix: [ { block: 'mixed' }, { block: 'control' } ] });
-block('header')({ mix: function() { return { block: 'mixed' }; } });
+block('header')({ mix: () => ({ block: 'mixed' }) });
 ```
 
 You can use `addMix` mode to add mix. `addMix` is shortcut of `mix`:
 ```js
 addMix: 'my_new_mix' // This is equivalent to following:
-mix: function() {
+mix: () => {
     var mixes = applyNext();
     if (!Array.isArray(mixes)) mixes = [ mixes ];
     return mixes.concat('my_new_mix');
@@ -486,7 +478,7 @@ Hash for modifiers of block.
 
 ```js
 block('link')({ mods: { type: 'download' } });
-block('link')({ mods: function() { return { type: 'download' }; } });
+block('link')({ mods: () => ({ type: 'download' }) });
 ```
 
 Value from `mods` mode rewrite value from BEMJSON.
@@ -499,9 +491,7 @@ By default returns `this.mods`.
 
 // Template:
 block('b')({
-    default: function() {
-        return apply('mods');
-    }
+    def: () => apply('mods')
 });
 ```
 
@@ -510,9 +500,9 @@ The result is `{}`.
 You can use `addMods` mode to add modifiers. `addMods` is shortcut of `mods`:
 ```js
 addMods: { theme: 'dark' } // This is equivalent to following:
-mods: function() {
-    this.mods = this.extend(applyNext(), { theme: 'dark' });
-    return this.mods;
+mods: (node) => {
+    node.mods = node.extend(applyNext(), { theme: 'dark' });
+    return node.mods;
 }
 ```
 
@@ -531,7 +521,7 @@ Hash for modifiers of element.
 
 ```js
 block('link')({ elemMods: { type: 'download' } });
-block('link')({ elemMods: function() { return { type: 'download' }; } });
+block('link')({ elemMods: () => ({ type: 'download' }) });
 ```
 
 Value from `elemMods` mode rewrite value from BEMJSON.
@@ -544,9 +534,7 @@ By default returns `this.mods`.
 
 // Template:
 block('b').elem('e')({
-    default: function() {
-        return apply('mods');
-    }
+    def: () => apply('mods')
 });
 ```
 
@@ -557,9 +545,9 @@ shortcut of elemMods:
 
 ```js
 addElemMods: { theme: 'dark' } // This is equivalent to following:
-elemMods: function() {
-    this.elemMods = this.extend(applyNext(), { theme: 'dark' });
-    return this.elemMods;
+elemMods: (node) => {
+    node.elemMods = node.extend(applyNext(), { theme: 'dark' });
+    return node.elemMods;
 }
 ```
 
@@ -641,12 +629,10 @@ Template:
 
 ```js
 block('quote')({
-    wrap: function() {
-        return {
-            block: 'wrap',
-            content: this.ctx
-        };
-    }
+    wrap: (node, ctx) => ({
+        block: 'wrap',
+        content: ctx
+    })
 });
 ```
 
@@ -672,9 +658,7 @@ Templates:
 ```js
 block('action')({
     extend: { 'ctx.type': 'Sale', sale: '50%' },
-    content: function() {
-        return this.ctx.type + ' ' + this.sale;
-    }
+    content: (node, ctx) => ctx.type + ' ' + node.sale
 });
 ```
 
@@ -691,7 +675,7 @@ block('action')({
 ```js
 // Templates
 block('page')({ extend: { meaning: 42 } });
-block('*')({ attrs: function() { return { life: this.meaning }; } });
+block('*')({ attrs: (node) => ({ life: node.meaning }) });
 ```
 
 ```js
@@ -722,7 +706,7 @@ Template:
 block('control')(
     {
         id: 'username-control', // User-defined mode named "id"
-        content: function() {
+        content: (node, ctx) => {
             return [
                 {
                     elem: 'label',
@@ -731,8 +715,8 @@ block('control')(
                 {
                     elem: 'input',
                     attrs: {
-                        name: this.ctx.name,
-                        value: this.ctx.value,
+                        name: ctx.name,
+                        value: ctx.value,
                         id: apply('id')  // Calling the user-defined mode
                     }
                 }

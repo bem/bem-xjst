@@ -40,15 +40,9 @@ BEMJSON input:
 Template:
 
 ```js
-block('*')
-    .match(function() {
-        return this.ctx.counter;
-    })
-    ({
-        mix: function() {
-            return { block: 'counter', js: { id: this.ctx.counter } }
-        }
-    })
+block('*').match((node, ctx) => ctx.counter)({
+    mix: () => ({ block: 'counter', js: { id: this.ctx.counter } })
+})
 ```
 
 *Result of templating:*
@@ -87,15 +81,11 @@ Template:
 
 ```js
 block('button')({
-    test: function() {
-        return this.tmp + this.ctx.foo;
-    },
-    default: function() {
-        return apply('test', {
-            tmp: 'ping',
-            'ctx.foo': 'pong'
-        });
-    }
+    test: (node, ctx) => this.tmp + this.ctx.foo,
+    def: () => apply('test', {
+        tmp: 'ping',
+        'ctx.foo': 'pong'
+    })
 });
 ```
 
@@ -121,12 +111,11 @@ Template:
 block('footer')({ custom: 'footer' });
 block('header')({
     custom: 'header',
-    tag: function() {
-        // despite the fact that the second 'apply' argument explicitly
-        // specifies the 'footer' block,
-        // the user-defined mode of the 'header' block will be called.
-        return apply('custom', { block: 'footer' });
-    }
+
+    // despite the fact that the second 'apply' argument explicitly
+    // specifies the 'footer' block,
+    // the user-defined mode of the 'header' block will be called.
+    tag: () => apply('custom', { block: 'footer' })
 });
 ```
 
@@ -148,9 +137,7 @@ Template:
 
 ```js
 block('animal')({
-    content: function() {
-        return apply('type');
-    }
+    content: () => apply('type')
 });
 ```
 
@@ -178,7 +165,7 @@ The `applyNext` construction returns the result of the next highest priority tem
 ```js
 block('link')({ tag: 'a' });
 block('link')({
-    tag: function() {
+    tag: () => {
         var res = applyNext(); // res === 'a'
         return res;
     }
@@ -206,12 +193,10 @@ Template:
 
 ```js
 block('header')({
-    default: function() {
-        return applyCtx(this.extend(this.ctx, {
-            block: 'layout',
-            mix: [{ block: 'header' }].concat(this.ctx.mix || [])
-        }));
-    }
+    def: (node, ctx) => applyCtx(node.extend(ctx, {
+        block: 'layout',
+        mix: [{ block: 'header' }].concat(ctx.mix || [])
+    }))
 });
 ```
 

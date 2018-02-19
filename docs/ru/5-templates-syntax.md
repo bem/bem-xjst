@@ -196,7 +196,7 @@ block('page').elem('content').elemMod('type', 'index')({ mix: { block: 'mixed' }
  * @param {Function} Проверка произвольного условия.
  *                   Результат будет приведен к `Boolean`.
  */
-match(function() { return … })
+match((node, ctx) => { return … })
 ```
 
 Проверка произвольного условия. В контексте функции будут доступны все [поля, доступные в теле шаблона](6-templates-context.md). Результат выполнения функции будет приведён к `Boolean`.
@@ -204,7 +204,7 @@ match(function() { return … })
 Порядок проверки `match` гарантируется. Порядок проверки остальных предикатов не важен.
 
 ```js
-block('*').match(function() { return false; })(
+block('*').match(() => false)(
     // Тело этого шаблона не будет вызвано, потому что условие возвратило `false`
     ...
 );
@@ -221,9 +221,7 @@ block('*').match(function() { return false; })(
 block('page')
     .mod('theme', 'white')
     .elem('content')
-    .match(function() {
-        return this.ctx.weather === 'hot';
-    })
+    .match((node, ctx) => ctx.weather === 'hot')
 ```
 
 Следующие два шаблона эквивалентны с точки зрения bem-xjst:
@@ -315,9 +313,7 @@ block('b')({ content: 'test' });
 ```js
 block('link')({
     tag: 'a',
-    attrs: function() {
-        return { href: this.ctx.url };
-    }
+    attrs: (node, ctx) => ({ href: ctx.url })
 });
 ```
 
@@ -350,12 +346,12 @@ block('link')({
 /**
  * @param {*} value
  */
-default: value
+def: value
 ```
 
-Особый статус имеет режим `default`, который отвечает за генерацию результата в целом. В рамках этого режима задан набор и порядок прохождения остальных режимов, а также определена процедура сборки финального представления HTML-элемента или BEMJSON из фрагментов, сгенерированных в остальных режимах.
+Особый статус имеет режим `def`, который отвечает за генерацию результата в целом. В рамках этого режима задан набор и порядок прохождения остальных режимов, а также определена процедура сборки финального представления HTML-элемента или BEMJSON из фрагментов, сгенерированных в остальных режимах.
 
-Режим является особым и не стоит использовать его без особой надобности. Пользовательский шаблон, переопределяющий `default`, отключает вызовы остальных режимов по умолчанию.
+Режим является особым и не стоит использовать его без особой надобности. Пользовательский шаблон, переопределяющий `def`, отключает вызовы остальных режимов по умолчанию.
 
 #### tag
 
@@ -383,9 +379,9 @@ attrs: value
 является сокращением режима `attrs` и выглядит более лаконично:
 ```js
 addAttrs: { id: 'test', name: 'test' } // Это полностью эквивалентно следующему:
-attrs: function() {
+attrs: (node) => {
     var attrs = applyNext() || {}; // атрибуты из предыдущих шаблонов или BEMJSON-а
-    return this.extend(attrs, { id: 'test', name: 'test' });
+    return node.extend(attrs, { id: 'test', name: 'test' });
 }
 ```
 
@@ -410,7 +406,7 @@ block('quote')(
         appendContent: '»'
     },
     {
-        appendContent: function() { return { block: 'link' }; }
+        appendContent: () => ({ block: 'link' })
     }
 );
 ```
@@ -429,20 +425,16 @@ block('quote')(
 
 ```js
 // appendContent: 'еще' тоже самое что и:
-content: function() {
-    return [
-        applyNext(),
-        'еще'
-    ];
-}
+content: () => [
+    applyNext(),
+    'еще'
+]
 
 // prependContent: 'еще' тоже самое что и:
-content: function() {
-    return [
-        'еще',
-        applyNext()
-    ];
-}
+content: () => [
+    'еще',
+    applyNext()
+]
 ```
 
 #### mix
@@ -461,14 +453,14 @@ mix: mixed
 ```js
 block('link')({ mix: { block: 'mixed' } });
 block('button')({ mix: [ { block: 'mixed' }, { block: 'control' } ] });
-block('header')({ mix: function() { return { block: 'mixed' }; } });
+block('header')({ mix: () => ({ block: 'mixed' }));
 ```
 
 Для того, чтобы добавить `mix`, вы можете использовать режим `addMix`, который
 является сокращением режима `mix` и выглядит более лаконично:
 ```js
 addMix: 'my-new-mix' // Это полностью эквивалентно следующему:
-mix: function() {
+mix: () => {
     var mixes = applyNext();
     if (!Array.isArray(mixes)) mixes = [ mixes ];
     return mixes.concat('my-new-mix');
@@ -490,7 +482,7 @@ mods: mods
 
 ```js
 block('link')({ mods: { type: 'download' } });
-block('link')({ mods: function() { return { type: 'download' }; } });
+block('link')({ mods: () => ({ type: 'download' }) });
 ```
 
 Значение, вычисленное в режиме `mods`, переопределит значение, указанное в BEMJSON-е.
@@ -503,9 +495,7 @@ block('link')({ mods: function() { return { type: 'download' }; } });
 
 // Шаблон:
 block('b')({
-    default: function() {
-        return apply('mods');
-    }
+    def: () => apply('mods')
 });
 ```
 
@@ -515,9 +505,9 @@ block('b')({
 является сокращением режима mods и выглядит более лаконично:
 ```js
 addMods: { theme: 'dark' } // Это полностью эквивалентно следующему:
-mods: function() {
-    this.mods = this.extend(applyNext(), { theme: 'dark' });
-    return this.mods;
+mods: (node) => {
+    node.mods = node.extend(applyNext(), { theme: 'dark' });
+    return node.mods;
 }
 ```
 
@@ -536,7 +526,7 @@ elemMods: elemMods
 
 ```js
 block('link')({ elemMods: { type: 'download' } });
-block('link')({ elemMods: function() { return { type: 'download' }; } });
+block('link')({ elemMods: () => ({ type: 'download' }) });
 ```
 
 Значение, вычисленное в режиме `elemMods`, переопределит значение, указанное в BEMJSON-е.
@@ -549,9 +539,7 @@ block('link')({ elemMods: function() { return { type: 'download' }; } });
 
 // Шаблон:
 block('b').elem('e')({
-    default: function() {
-        return apply('elemMods');
-    }
+    def: () => apply('elemMods')
 });
 ```
 
@@ -562,9 +550,9 @@ block('b').elem('e')({
 
 ```js
 addElemMods: { theme: 'dark' } // Это полностью эквивалентно следующему:
-elemMods: function() {
-    this.elemMods = this.extend(applyNext(), { theme: 'dark' });
-    return this.elemMods;
+elemMods: (node) => {
+    node.elemMods = node.extend(applyNext(), { theme: 'dark' });
+    return node.elemMods;
 }
 ```
 
@@ -645,12 +633,10 @@ block('resource')({ replace: { block: 'link' } });
 
 ```js
 block('quote')({
-    wrap: function() {
-        return {
-            block: 'wrap',
-            content: this.ctx
-        };
-    }
+    wrap: (node, ctx) => ({
+        block: 'wrap',
+        content: ctx
+    })
 });
 ```
 
@@ -680,9 +666,7 @@ block('action')({
     extend: { 'ctx.type': 'Sale', sale: '50%' }
 });
 block('action')({
-    content: function() {
-        return this.ctx.type + ' ' + this.sale;
-    }
+    content: (node, ctx) => ctx.type + ' ' + node.sale
 });
 ```
 
@@ -699,7 +683,7 @@ block('action')({
 
 ```js
 block('page')({ extend: { meaning: 42 } });
-block('*')({ attrs: function() { return { life: this.meaning }; } });
+block('*')({ attrs: (node) => ({ life: node.meaning }) });
 ```
 
 ```js
@@ -730,7 +714,7 @@ life="42"></div></div></div>
 block('control')(
     {
         id: 'username-control', // Пользовательский режим с именем id
-        content: function() {
+        content: (node, ctx) => {
             return [
                 {
                     elem: 'label',
@@ -739,8 +723,8 @@ block('control')(
                 {
                     elem: 'input',
                     attrs: {
-                        name: this.ctx.name,
-                        value: this.ctx.value,
+                        name: ctx.name,
+                        value: ctx.value,
                         id: apply('id')  // Вызов пользовательского режима
                     }
                 }

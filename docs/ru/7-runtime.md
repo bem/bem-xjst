@@ -41,10 +41,10 @@
 
 ```js
 block('*')
-    .match(function() { return this.ctx.counter; })({
-        mix: function() {
-            return { block: 'counter', js: { id: this.ctx.counter } }
-        }
+    .match((node, ctx) => ctx.counter)({
+        mix: (node, ctx) => ({
+            block: 'counter', js: { id: ctx.counter }
+        })
     })
 ```
 
@@ -84,15 +84,11 @@ apply(modeName, assignObj)
 
 ```js
 block('button')({
-    test: function() {
-        return this.tmp + this.ctx.foo;
-    },
-    default: function() {
-        return apply('test', {
-            tmp: 'ping',
-            'ctx.foo': 'pong'
-        });
-    }
+    test: (node, ctx) => node.tmp + ctx.foo,
+    def: () => apply('test', {
+        tmp: 'ping',
+        'ctx.foo': 'pong'
+    })
 });
 ```
 
@@ -118,11 +114,10 @@ pingpong
 block('footer')({ custom: 'footer' });
 block('header')({
     custom: 'header',
-    tag: function() {
-        // не смотря на то, что вторым аргументом apply явно указан блок footer
-        // будет вызван пользовательский режим блока `header`.
-        return apply('custom', { block: 'footer' });
-    }
+
+    // не смотря на то, что вторым аргументом apply явно указан блок footer
+    // будет вызван пользовательский режим блока `header`.
+    tag: () => apply('custom', { block: 'footer' })
 });
 ```
 
@@ -146,9 +141,7 @@ block('header')({
 
 ```js
 block('animal')({
-    content: function() {
-        return apply('type');
-    }
+    content: () => apply('type')
 });
 ```
 
@@ -176,7 +169,7 @@ applyNext(newctx)
 ```js
 block('link')({ tag: 'a' });
 block('link')({
-    tag: function() {
+    tag: () => {
         var res = applyNext(); // res === 'a'
         return res;
     }
@@ -204,12 +197,10 @@ applyCtx(bemjson, newctx)
 
 ```js
 block('header')({
-    default: function() {
-        return applyCtx(this.extend(this.ctx, {
-            block: 'layout',
-            mix: [{ block: 'header' }].concat(this.ctx.mix || [])
-        }));
-    }
+    def: (node, ctx) => applyCtx(node.extend(ctx, {
+        block: 'layout',
+        mix: [{ block: 'header' }].concat(ctx.mix || [])
+    }));
 });
 ```
 

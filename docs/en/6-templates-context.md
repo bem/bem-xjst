@@ -8,6 +8,47 @@ While traversing input data, bem-xjst builds a context, which contains:
 * [user-defined custom fields](#user-defined-custom-fields)
 * [methods for controlling the templating process](#methods-for-controlling-the-templating-process)
 
+# Template function
+
+When body of template is function, it calls with two arguments:
+
+1. context of template (familiar to us as `this`)
+2. current BEMJSON node (familiar to us as `this.ctx`)
+
+**Example**
+
+```js
+block('link')({
+    attrs: function(node, ctx) {
+        return {
+            // the same as this.ctx.url
+            href: ctx.url,
+
+            // the same as this.position
+            'data-position': node.position
+        };
+    }
+});
+```
+
+The same arguments available in function of `match()`.
+
+```js
+match(function(node, ctx) {
+    // the same as this.mods.disabled
+    return !node.mods.disabled &&
+        // the same as this.ctx.target
+        ctx.target;
+})
+```
+
+Moreover, template functions can be arrow functions:
+
+```js
+match((node, ctx) => ctx.target)
+addAttrs: (node, ctx) => ({ href: ctx.url })
+```
+
 ## Normalized information about the current BEM entity
 
 The template engine normalizes data about the current BEM entity. The current BEMJSON node might have incomplete information about the BEM entity. For example:
@@ -34,13 +75,13 @@ Fields with normalized data:
 Note that the `this.mods` and `this.elemMods` objects always exist, so checking for their presence in the template body is redundant:
 
 ```js
-block('page').match(function() {
+block('page').match((node, ctx) => {
     // Redundant:
-    return this.mods && this.mods.type === 'index' && this.ctx.weather;
+    return node.mods && node.mods.type === 'index' && ctx.weather;
 
     // Sufficient:
-    return this.mods.type === 'index' && this.ctx.weather;
-})({ default: function() { return … } });
+    return node.mods.type === 'index' && ctx.weather;
+})({ def: () => ({ … }) });
 ```
 
 ## Current BEMJSON node
@@ -56,12 +97,10 @@ The current BEMJSON node is available in the `this.ctx` field.
 
 ```js
 block('link')({
-    attrs: function() {
-        return {
-            id: this.ctx.name,
-            name: this.ctx.name
-        };
-    }
+    attrs: (node, ctx) => ({
+        id: ctx.name,
+        name: ctx.name
+    })
 });
 ```
 
@@ -97,9 +136,7 @@ Template:
 
 ```js
 block('button')({
-    default: function() {
-        return this.xmlEscape('<b>&</b>');
-    }
+    def: (node) => node.xmlEscape('<b>&</b>')
 });
 ```
 
@@ -225,20 +262,20 @@ Template
 
 ```js
 block('input')({
-    content: function() {
-        var id = this.generateId();
-    
+    content: (node, ctx) => {
+        var id = node.generateId();
+
         return [
             {
                 tag: 'label',
                 attrs: { for: id },
-                content: this.ctx.label
+                content: ctx.label
             },
             {
                 tag: 'input',
                 attrs: {
                     id: id,
-                    value: this.ctx.value
+                    value: ctx.value
                 }
             }
         ];
@@ -275,11 +312,9 @@ Template:
 
 ```js
 block('a')({
-    js: function() {
-        return {
-            template: this.reapply({ block: 'b', mods: { m: 'v' } })
-        };
-    }
+    js: (node) => ({
+        template: node.reapply({ block: 'b', mods: { m: 'v' } })
+    })
 });
 ```
 
@@ -299,19 +334,17 @@ Using the `oninit` function in the template code:
 ```js
 var bemxjst = require('bem-xjst');
 
-var templates = bemxjst.bemhtml.compile(function() {
+var templates = bemxjst.bemhtml.compile(() => {
 
     // Note: oninit only works for the first template compilation.
-    oninit(function(exports, shared) {
+    oninit((exports, shared) => {
         shared.BEMContext.prototype.hi = function(username) {
             return 'Hello, ' + username;
         };
     });
 
     block('b')({
-        content: function() {
-            return this.hi('username');
-        }
+        content: (node) => node.hi('username')
     });
 });
 
@@ -339,11 +372,9 @@ templates.BEMContext.prototype.hi = function(name) {
 };
 
 // Adding templates
-templates.compile(function() {
+templates.compile(() => {
     block('b')({
-        content: function() {
-            return this.hi('templates');
-        }
+        content: (node) => node.hi('templates')
     });
 });
 
@@ -362,46 +393,5 @@ As a result, `html` contains the string:
 ## Methods for controlling the templating process
 
 The methods `apply`, `applyNext` and `applyCtx` are available in the body of templates. For more information, see the next section on [runtime](7-runtime.md).
-
-# Template function
-
-When body of template is function, it calls with two arguments:
-
-1. context of template (familiar to us as `this`)
-2. current BEMJSON node (familiar to us as `this.ctx`)
-
-**Example**
-
-```js
-block('link')({
-    attrs: function(node, ctx) {
-        return {
-            // the same as this.ctx.url
-            href: ctx.url,
-    
-            // the same as this.position
-            'data-position': node.position
-        };
-    }
-});
-```
-
-The same arguments available in function of `match()`.
-
-```js
-match(function(node, ctx) {
-    // the same as this.mods.disabled
-    return !node.mods.disabled &&
-        // the same as this.ctx.target
-        ctx.target;
-})
-```
-
-Moreover, template functions can be arrow functions:
-
-```js
-match((node, ctx) => ctx.target)
-addAttrs: (node, ctx) => { href: ctx.url }
-```
 
 Read next: [runtime](7-runtime.md)

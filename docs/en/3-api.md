@@ -26,7 +26,7 @@ var bemxjst = require('bem-xjst');
 var bemhtml = bemxjst.bemhtml;
 
 // Add a template
-var templates = bemhtml.compile(function() {
+var templates = bemhtml.compile(() => {
     block('quote')({ tag: 'q' });
 });
 
@@ -50,7 +50,7 @@ var bemxjst = require('bem-xjst');
 var bemtree = bemxjst.bemtree;
 
 // Add a template
-var templates = bemtree.compile(function() {
+var templates = bemtree.compile(() => {
     block('phone')({ content: { mask: '8-800-×××-××-××', mandatory: true } });
 
     block('page')({
@@ -95,7 +95,7 @@ To add templates to the `templates` instance, use the `compile` method.
 var bemxjst = require('bem-xjst');
 
 // Instantiating the 'templates' class
-var templates = bemxjst.bemhtml.compile(function() {
+var templates = bemxjst.bemhtml.compile(() => {
     block('header')({ tag: 'h1' });
 });
 
@@ -123,7 +123,7 @@ If you need to [bundle](https://en.bem.info/methodology/build/#build-results) al
 
 ```js
 var bemxjst = require('bem-xjst');
-var templates = bemxjst.bemhtml.compile(function() {
+var templates = bemxjst.bemhtml.compile(() => {
     // This example doesn’t add any templates.
     // HTML will be rendered using the default behavior of the template engine.
     }, {
@@ -160,7 +160,7 @@ bem-xjst have `elemJsInstances` option for support JS instances for elems ([bem-
 
 ```js
 var bemxjst = require('bem-xjst');
-var templates = bemxjst.bemhtml.compile(function() {
+var templates = bemxjst.bemhtml.compile(() => {
     // In this example we will add no templates.
     // Default behaviour is used for HTML rendering.
     }, {
@@ -201,7 +201,7 @@ Example for v6.2.0:
 
 ```js
 var bemxjst = require('bem-xjst');
-var templates = bemxjst.bemhtml.compile(function() {
+var templates = bemxjst.bemhtml.compile(() => {
     // In this example we didn’t add templates
     // bem-xjst will render by default
     }, {
@@ -230,7 +230,7 @@ You can find list of optional end tags in specifications:
 
 ```js
 var bemxjst = require('bem-xjst');
-var templates = bemxjst.bemhtml.compile(function() {
+var templates = bemxjst.bemhtml.compile(() => {
     // In this example we will add no templates.
     // Default behaviour is used for HTML rendering.
     }, {
@@ -268,7 +268,7 @@ You can use `unquotedAttrs` option to do so.
 
 ```js
 var bemxjst = require('bem-xjst');
-var templates = bemxjst.bemhtml.compile(function() {
+var templates = bemxjst.bemhtml.compile(() => {
     // In this example we will add no templates.
     // Default behaviour is used for HTML rendering.
     }, {
@@ -295,7 +295,7 @@ You can set `escapeContent` option to `true` to escape string values of `content
 
 ```js
 var bemxjst = require('bem-xjst');
-var templates = bemxjst.bemhtml.compile(function() {
+var templates = bemxjst.bemhtml.compile(() => {
     // In this example we will add no templates.
     // Default behaviour is used for HTML rendering.
     }, {
@@ -324,7 +324,7 @@ If you want avoid escaping in content [use special value](4-data.md#content): `{
 
 ```js
 var bemxjst = require('bem-xjst');
-var templates = bemxjst.bemhtml.compile(function() {
+var templates = bemxjst.bemhtml.compile(() => {
     // In this example we will add no templates.
     // Default behaviour is used for HTML rendering.
     }, {
@@ -361,11 +361,11 @@ About these warnings you can read [migration guide](https://github.com/bem/bem-x
 var bemxjst = require('bem-xjst');
 var bemhtml = bemxjst.bemhtml;
 
-var templates = bemhtml.compile(function() {
+var templates = bemhtml.compile(() => {
   block('b')({ content: 'yay' });
 
   block('mods-changes')({
-      default(ctx, json) {
+      def: (ctx, json) => {
           json.mods.one = 2;
           return applyNext();
       }
@@ -410,9 +410,9 @@ You can use option `production` to render whole BEMJSON even if one template con
 **Example**
 
 ```js
-var template = bemxjst.compile(function() {
+var template = bemxjst.compile(() => {
   block('b1')({
-      attrs() {
+      attrs: () => {
           var attrs = applyNext();
           attrs.undef.foo = 'bar';
           return attrs;
@@ -479,8 +479,8 @@ For example:
 
 ```js
 block('button')({
-    content() {
-        var lib = this.require('lib-name');
+    content: (node) => {
+        var lib = node.require('lib-name');
 
         return lib.hello();
     }
@@ -530,10 +530,10 @@ You can use the template in any browser or in `Node.js`:
 
 ```js
 block('post').elem('data')({
-    content() {
-        var moment = this.require('moment');
-    
-        return moment(this.ctx.date) // Time in ms from server
+    content: (node, ctx) => {
+        var moment = node.require('moment');
+
+        return moment(ctx.date) // Time in ms from server
             .format('YYYY-MM-DD HH:mm:ss');
     }
 });
@@ -553,11 +553,9 @@ templates.BEMContext.prototype.hi = function(name) {
 };
 
 // Add templates
-templates.compile(function() {
+templates.compile(() => {
     block('b')({
-        content() {
-            return this.hi('templates');
-        }
+        content: (node) => node.hi('templates')
     });
 });
 
@@ -581,7 +579,7 @@ browser to get the `templates` object.
 
 ```js
 var bemxjst = require('bem-xjst');
-var bundle = bemxjst.bemhtml.generate(function() {
+var bundle = bemxjst.bemhtml.generate(() => {
     // user-defined templates
     // …
 });
