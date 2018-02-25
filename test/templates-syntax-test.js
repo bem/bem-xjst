@@ -369,7 +369,7 @@ describe('Templates syntax', function() {
             });
           },
           { block: 'b', attrs: { 'data-test': 'one-two' } },
-          '<div class="b" data-test="one-two" ' +
+          '<div class="b" data-test=\'one-two\' ' +
             'mix="doesnt-work-as-mix-for-block-b"></div>');
       });
 
