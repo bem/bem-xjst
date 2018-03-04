@@ -293,7 +293,7 @@ block('header').mix()(function() { return { block: 'mixed' }; });
  */
 js()(value)
 ```
-JS-параметры. Если значение не falsy, то миксует `i-bem` и добавляет содержимое в JS-параметры. [Подробнее про i-bem и JS-параметры](https://ru.bem.info/technology/i-bem/v2/i-bem-js-params/#Синтаксис-передачи-параметров).  Данные [будут экранированны функцией jsAttrEscape](6-templates-context.md#jsattrescape).
+JS-параметры. Если значение не false, то миксует `i-bem` и добавляет содержимое в JS-параметры. [Подробнее про i-bem и JS-параметры](https://ru.bem.info/technology/i-bem/v2/i-bem-js-params/#Синтаксис-передачи-параметров).  Данные [будут экранированны функцией jsAttrEscape](6-templates-context.md#jsattrescape).
 
 
 #### `bem`
