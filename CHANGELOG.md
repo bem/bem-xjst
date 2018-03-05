@@ -1,5 +1,20 @@
 # BEM-XJST Changelog
 
+# 2018-03-05 [v8.9.1](https://github.com/bem/bem-xjst/compare/v8.9.0...v8.9.1), @miripiruni
+
+Bug fixed: dot-delimited dependencies from global scope in object notation.
+
+Example:
+
+```js
+var bundle = bemhtml.generate('', { requires: { i18n: { globals: 'BEM.I18N' } } });
+```
+
+Notation with dot (`BEM.I18N`) did not work from v8.6.7 to v8.9.0. Now this bug fixed.
+
+Commits:
+* [[`fc7b19fc4f`](https://github.com/bem/bem-xjst/commit/fc7b19fc4f)] - Merge pull request #501 from dustyo-O/global-dot-delimited-deps (Slava Oliyanchuk)
+
 # 2018-02-20 [v8.9.0](https://github.com/bem/bem-xjst/compare/v8.8.8...v8.9.0), @miripiruni
 
 Brand new object-like shortcut syntax. See docs for examples.
