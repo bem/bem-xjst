@@ -95,6 +95,32 @@ block('button')({
 pingpong
 ```
 
+You can use custom mode (with name `size` for example) and it’s call `apply('size')` for redefininig on different levels or different conditions (with `match`).
+
+Suppose you have different levels: common, touch and desktop. On common level you write:
+
+```js
+block('my-block')({
+    size: 'm',
+    content: () => ({
+        block: 'button',
+        size: apply('size')
+    })
+});
+
+On touch level:
+
+```js
+block('my-block').mode('size')('l');
+```
+
+And on desktop level:
+
+```js
+block('my-block').mode('size')('s');
+```
+
+
 You can’t use `apply` to call user-defined modes for other blocks.
 
 ```js
