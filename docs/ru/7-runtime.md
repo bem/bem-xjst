@@ -67,11 +67,10 @@ block('*')
 ```js
 /**
  * @params {String} modeName название режима
- * @params {Object} [assignObj] объект, поля которого будут доступны
- *                              в this в теле шаблона
+ * @params {Object} [changes] объект, которым будет расширен BEMContext контекст выполнения шаблонов
  * @returns {*} Возвращает результат работы режима
  */
-apply(modeName, assignObj)
+apply(modeName, changes)
 ```
 
 Применяется для вызова стандартного или пользовательского режима текущего узла.
@@ -180,11 +179,10 @@ block('animal')({
 
 ```js
 /**
- * @param {Object} [newctx] объект, ключи которого становятся полями
- *                          контекста при выполнении шаблона
+ * @param {Object} [changes] объект, которым будет расширен BEMContext шаблонов
  * @returns {*}
  */
-applyNext(newctx)
+applyNext(changes)
 ```
 
 Конструкция `applyNext` возвращает результат работы следующего по приоритету шаблона в текущем режиме для текущего узла.
@@ -201,15 +199,34 @@ block('link')({
 });
 ```
 
+Аргумент `changes` позволяет изменить контекст выполнения шаблонов для всех
+дочерних узлов.
+
+```js
+block('page')({ content: (node) => node._type });
+block('page')({
+    // здесь applyNext вызовет предыдущий шаблон с _type в контексте
+    content: () => applyNext({ _type: '404' })
+});
+```
+
+Для BEMJSON-а `{ block: 'page' }` результат применения этих шаблонов будет:
+
+```html
+<div class="page">404</div>
+```
+
+Так же вы можете пробросить любые данные для шаблонов дочерних узлов. См. [пример](6-templates-context.md#Таннелинг-флагов-или-любых-данных-шаблонам-дочерних-узлов)
+
 ### applyCtx
 
 ```js
 /**
  * @param {BEMJSON} bemjson входные данные
- * @param {Object} [newctx]
+ * @param {Object} [changes] объект, которым будет расширен BEMContenxt шаблонов
  * @returns {String}
  */
-applyCtx(bemjson, newctx)
+applyCtx(bemjson, changes)
 ```
 
 Конструкция `applyCtx` предназначена для модификации текущего фрагмента БЭМ-дерева `this.ctx` с вызовом процедуры применения шаблонов `apply()`.

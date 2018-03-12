@@ -6,6 +6,7 @@ While traversing input data, bem-xjst builds a context, which contains:
 * [the current BEMJSON node](#current-bemjson-node)
 * [helpers](#helpers)
 * [user-defined custom fields](#user-defined-custom-fields)
+  * [Data tunneling for child’s templates](#data-tunneling-for-child’s-templates)
 * [methods for controlling the templating process](#methods-for-controlling-the-templating-process)
 
 # Template function
@@ -388,6 +389,48 @@ As a result, `html` contains the string:
 
 ```html
 <div class="b">Hello, templates</div>
+```
+
+### Data tunneling for child’s templates
+
+Suppose we want provide to all child node templates some data from parent node. Let's say flag `_inQaForm` to all `input` blocks inside `qa-form` block.
+
+```js
+[
+  {
+      block: 'qa-form',
+      content: [
+          { block: 'input' },
+          …
+      ]
+  },
+  { block: 'input' }
+]
+```
+
+We can extend context of templates:
+
+```js
+// Set _inQaForm flag, which would be avaliable in qa-form child nodes
+block('qa-form')({ extend: { _inQaForm: true } });
+```
+
+At least check that flag in subpredicate `match`:
+
+```js
+block('input')
+  // check if the flag exists
+  .match((node) => node._inQaForm)
+  .mix()({ mods: { inside: 'qa' } });
+```
+
+Result of templating:
+
+```html
+<div class="qa-form">
+    <div class="input input_inside_qa"></div>
+</div>
+<div class="input"></div>
 ```
 
 ## Methods for controlling the templating process
