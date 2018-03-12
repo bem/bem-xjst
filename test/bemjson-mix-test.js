@@ -281,5 +281,14 @@ describe('BEMJSON mix', function() {
       '<div class="b1 b2__e b3 b3_test_opa b4 b5 i-bem" ' +
         'data-bem=\'{"b3":{"data":"123"},"b4":{"t":1}}\'></div>');
     });
+
+    it('should not dublicate html classes from mix', function() {
+      test(function() {},
+      {
+        block: 'i-bem',
+        mix: [ 'i-bem', { block: 'i-bem' } ]
+      },
+      '<div class="i-bem"></div>');
+    });
   });
 });
