@@ -64,11 +64,11 @@ A subpredicate for a `*` block is true for an empty object.
 ```js
 /**
  * @params {String} modeName mode name
- * @params {Object} [assignObj] object whose fields will be available
+ * @params {Object} [changes] object whose fields will be available
  *                              in 'this' in the template body
  * @returns {*} Returns the result of running the mode
  */
-apply(modeName, assignObj)
+apply(modeName, changes)
 ```
 
 Used for calling a standard or user-defined mode of the current node.
@@ -177,11 +177,11 @@ block('animal')({
 
 ```js
 /**
- * @param {Object} [newctx] the object whose keys become fields
+ * @param {Object} [changes] the object whose keys become fields
  * of the context when executing the template
  * @returns {*}
  */
-applyNext(newctx)
+applyNext(changes)
 ```
 
 The `applyNext` construction returns the result of the next highest priority template in the current mode for the current node.
@@ -198,15 +198,33 @@ block('link')({
 });
 ```
 
+Argument `changes` allows you extend BEMContext for child nodes templates.
+
+```js
+block('page')({ content: (node) => node._type });
+block('page')({
+    // here applyNext calls previous template with _type in BEMContext
+    content: () => applyNext({ _type: '404' })
+});
+```
+
+For BEMJSON `{ block: 'page' }` result of templating is:
+
+```html
+<div class="page">404</div>
+```
+
+Also you can assign any data for child nodes templates. See [example](6-templates-context.md#data-tunneling-for-child’s-templates)
+
 ### applyCtx
 
 ```js
 /**
  * @param {BEMJSON} bemjson input data
- * @param {Object} [newctx]
+ * @param {Object} [changes]
  * @returns {String}
  */
-applyCtx(bemjson, newctx)
+applyCtx(bemjson, changes)
 ```
 
 Use the `applyCtx` construction for modifying the current fragment of the BEM tree `this.ctx` and calling `apply()` to apply templates.
