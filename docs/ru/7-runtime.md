@@ -139,7 +139,7 @@ block('footer')({ custom: 'footer' });
 block('header')({
     custom: 'header',
 
-    // не смотря на то, что вторым аргументом apply явно указан блок footer
+    // несмотря на то, что вторым аргументом apply явно указан блок footer
     // будет вызван пользовательский режим блока `header`.
     tag: () => apply('custom', { block: 'footer' })
 });
