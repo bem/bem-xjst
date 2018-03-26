@@ -393,7 +393,7 @@ As a result, `html` contains the string:
 
 ### Data tunneling for child’s templates
 
-Suppose we want provide to all child node templates some data from parent node. Let's say flag `_inQaForm` to all `input` blocks inside `qa-form` block.
+Suppose we want to provide some data from parent node to all child templates. E.g. provide `_inQaForm` flag to all `input` blocks inside `qa-form` block.
 
 ```js
 [
@@ -411,11 +411,11 @@ Suppose we want provide to all child node templates some data from parent node. 
 We can extend context of templates:
 
 ```js
-// Set _inQaForm flag, which would be avaliable in qa-form child nodes
+// Set _inQaForm flag, which will be avaliable in qa-form child nodes
 block('qa-form')({ extend: { _inQaForm: true } });
 ```
 
-At least check that flag in subpredicate `match`:
+And check that the flag exists in `match` subpredicate:
 
 ```js
 block('input')

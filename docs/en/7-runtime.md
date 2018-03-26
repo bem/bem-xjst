@@ -198,7 +198,7 @@ block('link')({
 });
 ```
 
-Argument `changes` allows you extend BEMContext for child nodes templates.
+`changes` argument allows you to extend BEMContext for child nodes templates.
 
 ```js
 block('page')({ content: (node) => node._type });
