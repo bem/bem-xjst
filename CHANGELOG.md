@@ -1,5 +1,13 @@
 # BEM-XJST Changelog
 
+# 2018-03-26 [v7.7.6](https://github.com/bem/bem-xjst/compare/v7.7.6...v7.7.7), @miripiruni
+
+Compiler: runtime lint path fixed (issue #502).
+
+Commits:
+* [[`dd1545acd0`](https://github.com/bem/bem-xjst/commit/dd1545acd0)] - Merge pull request #513 from bem/issue-502__runtime-path-in-7.x (Slava Oliyanchuk)
+
+
 # 2017-08-03 [v7.7.5](https://github.com/bem/bem-xjst/compare/v7.7.4...v7.7.5), @miripiruni
 
 BEMHTML: OL and UL end tags was removed from list of optional tags. See #472.
