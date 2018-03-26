@@ -1,5 +1,13 @@
 # BEM-XJST Changelog
 
+# 2018-03-26 [v6.7.2](https://github.com/bem/bem-xjst/compare/v6.7.1...v6.7.2), @miripiruni
+
+Compiler: runtime lint path fixed (issue #502).
+
+Commits:
+* [[`33106ae8e3`](https://github.com/bem/bem-xjst/commit/33106ae8e3)] - **Compiler**: runtime lint path fixed (issue #502) (miripiruni)
+
+
 # 2017-05-03 [v6.7.1](https://github.com/bem/bem-xjst/compare/v6.7.0...v6.7.1), @miripiruni
 
 Memory lick fixed. See #433. This release is port of v4.4.2, v8.6.10, v7.7.4.
