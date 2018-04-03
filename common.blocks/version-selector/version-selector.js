@@ -11,7 +11,7 @@ modules.define('version-selector', [ 'i-bem__dom', 'querystring' ], function(pro
                     var d = document;
                     var selector = this.params;
                     var transport;
-                    var URL = 'https://rawgit.com/miripiruni/bem-xjst/';
+                    var URL = 'https://rawgit.com/bem/bem-xjst/';
                     var FILE = '/xindex.browser.bemhtml.js';
                     var TRANSPORT_ID = 'transport';
                     var select = this;
@@ -47,6 +47,8 @@ modules.define('version-selector', [ 'i-bem__dom', 'querystring' ], function(pro
                         transport = d.createElement('script');
                         transport.id = TRANSPORT_ID;
                         transport.src = URL + hash + FILE;
+                        // Hack for local development
+                        //transport.src = '/desktop.bundles/index' + FILE;
                         d.body.appendChild(transport);
 
                         transport.onload = function() {
