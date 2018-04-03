@@ -39,7 +39,19 @@ modules.define('demo', [ 'i-bem__dom', 'pretty', 'functions__debounce', 'queryst
             this._render();
         },
 
-        _render: function() {
+        _getTemplateNew: function() {
+            try {
+                var template = this._engine(window);
+                template.compile(this._getTemplate());
+            } catch(e) {
+                this._result.setValue('Template error: ' + e.message + '\n' + e.stack);
+                return;
+            }
+
+            return template;
+        },
+
+        _getTemplateOld: function() {
             try {
                 var api = new this._engine({}),
                     template = {};
@@ -50,6 +62,15 @@ modules.define('demo', [ 'i-bem__dom', 'pretty', 'functions__debounce', 'queryst
                 this._result.setValue('Template error: ' + e.message + '\n' + e.stack);
                 return;
             }
+
+            return template;
+        },
+
+        _render: function() {
+            debugger;
+            var template = typeof this._engine === 'function' ?
+                this._getTemplateNew() :
+                this._getTemplateOld();
 
             var BEMJSON = safeEval(this._getBEMJSON());
 

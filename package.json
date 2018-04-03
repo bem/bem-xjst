@@ -9,14 +9,14 @@
   ],
   "license": "MPL-2.0",
   "name": "bem-xjst-online-demo",
-  "version": "8.6.13",
+  "version": "8.9.1",
   "repository": {
     "type": "git",
     "url": "https://github.com/bem/bem-xjst.git"
   },
   "dependencies": {
     "bem": "^0.10.0",
-    "bem-xjst": "8.6.13",
+    "bem-xjst": "8.9.1",
     "bower": "^1.6.5",
     "enb": "^1.0.1",
     "enb-bem-techs": "^2.0.1",
