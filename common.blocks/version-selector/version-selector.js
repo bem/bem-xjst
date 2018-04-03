@@ -48,7 +48,7 @@ modules.define('version-selector', [ 'i-bem__dom', 'querystring' ], function(pro
                         transport.id = TRANSPORT_ID;
                         transport.src = URL + hash + FILE;
                         // Hack for local development
-                        transport.src = '/desktop.bundles/index' + FILE;
+                        //transport.src = '/desktop.bundles/index' + FILE;
                         d.body.appendChild(transport);
 
                         transport.onload = function() {
