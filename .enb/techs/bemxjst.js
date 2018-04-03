@@ -1,5 +1,5 @@
 var xjst = require('bem-xjst');
-var bemhtml = xjst.bemhtml.generate();
+var bemhtml = xjst.bemhtml.generate('', { exportName: 'BEMHTML' });
 var bemtree = xjst.bemtree.generate('', { exportName: 'BEMTREE' });
 
 module.exports = require('enb/lib/build-flow').create()
