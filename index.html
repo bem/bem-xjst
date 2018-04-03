@@ -7,27 +7,31 @@
   { tag: 'br' },
   { block: 'link', mods: { disabled: true }, url: '/' }
 ]);
-</div></div><div class="editor demo__templates i-bem" data-bem='{"editor":{}}'><div class="editor__textarea">block('link')(
-  // Default tag
-  tag()('span'),
+</div></div><div class="editor demo__templates i-bem" data-bem='{"editor":{}}'><div class="editor__textarea">// Default tag
+block('link')({ tag:'span' });
 
-  // If url exists in BEMJSON
-  match(function (context, json) { return json.url; })(
-    // Then set a tag
-    tag()('a'),
-    // and set href HTML attribute
-    addAttrs()((context, json) => ({ href: json.url }))
-    // P.S. Arrow functions are supported as you can see
-  ),
+block('link')(
+    // If url exists in BEMJSON
+    match((context, json) => json.url)({
+        // Then set a tag
+        tag: 'a',
 
-  // If target blank exists in BEMJSON
-  match((context, json) => json.target === '_blank')
-    // add rel attribute
-    .addAttrs()({ rel: 'noopener' }),
+        // and set href HTML attribute
+        addAttrs: (context, json) => ({ href: json.url })
+    })
+),
 
-  // If "disabled" modifier exist
-  match(context => context.mods.disabled)
-    // add aria attribute
-    .addAttrs()({ 'aria-disabled': 'true' })
+block('link')(
+    // If target blank exists in BEMJSON
+    match((context, json) => json.target === '_blank')({
+        // add rel attribute
+        addAttrs: { rel: 'noopener' }
+    }),
+
+    // If "disabled" modifier exist
+    match(context => context.mods.disabled)({
+        // add aria attribute
+        addAttrs: { 'aria-disabled': 'true' }
+    })
 );
 </div></div></div><div class="demo__bottom"><div class="editor demo__result i-bem" data-bem='{"editor":{"readOnly":true,"showInvisibles":true,"mode":"ace/mode/html","showGutter":false}}'><div class="editor__textarea"></div></div></div></div><div class="demo__paranja"><div class="demo__spinner"><div class="spin spin_visible"></div></div></div></div><script src="xindex.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.2.2/ace.js"></script><script src="https://apis.google.com/js/client.js"></script></body></html>
