@@ -145,7 +145,7 @@
 
 ### js
 
-`{Boolean|Object}` JS-параметры. Если значение не falsy, то миксует `i-bem` и добавляет содержимое в JS-параметры. По умолчанию `undefined`.
+`{Boolean|Object}` JS-параметры. Если значение не false, то миксует `i-bem` и добавляет содержимое в JS-параметры. По умолчанию `undefined`.
 
 Подробнее про [i-bem и JS-параметры](https://ru.bem.info/platform/i-bem/parameters/).
 
