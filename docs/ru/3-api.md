@@ -284,6 +284,52 @@ var html = templates.apply(bemjson);
 <div class=b name=test></div>
 ```
 
+### data-атрибуты с одиночными кавычками
+
+По умолчанию значение data-атрибутов заключено в двойные кавычки. Например, для данных:
+
+```js
+{
+  block: 'b',
+  attrs: {
+    id: 'without-changes',
+    'data-test': '{"reqid":"42"}'
+  }
+}
+```
+
+*Результат шаблонизации по умолчанию будет:*
+
+```html
+<div class="b" id="without-changes" data-test="{&quot;reqid&quot;:&quot;42&quot;}"></div>
+```
+
+Это приводит к экранированию всех двойных кавычек внутри атрибута. Это может быть неудобно при шаблонизации JSON-данных в data-атрибут. Опция `singleQuotesForDataAttrs` указывает что для data-аттрибутов будет использоваться одиночная кавычка, а двойные не нужно экранировать.
+
+```js
+var bemxjst = require('bem-xjst');
+var templates = bemxjst.bemhtml.compile(() => {
+    // В этом примере мы не добавляем пользовательских шаблонов.
+        // Для рендеринга HTML будет использовано поведение шаблонизатора по умолчанию.
+        }, {
+        // использовать одиночные кавычки для data-атрибутов
+        singleQuotesForDataAttrs: true
+    });
+
+var bemjson = { block: 'b', attrs: {
+  id: 'without-changes',
+  'data-test': '{"reqid":"42"}'
+} };
+
+var html = templates.apply(bemjson);
+```
+
+*Результат шаблонизации с опцией будет:*
+
+```html
+<div class="b" id="without-changes" data-test='{"reqid":"42"}'></div>
+```
+
 ### Экранирование
 
 Вы можете включить экранирование содержимого поля `content` опцией `escapeContent`. В этом случае ко всем строковым значениям `content` будет применена функция [`xmlEscape`](6-templates-context.md#xmlescape).

@@ -8,6 +8,7 @@
   - [XHTML option](#xhtml-option)
   - [Optional End Tags](#optional-end-tags)
   - [Unquoted attributes](#unquoted-attributes)
+  - [singleQuotesForDataAttrs option](#singlequotesfordataattrs-option)
   - [Escaping](#escaping)
   - [Runtime linting](#runtime-linting)
   - [Production mode](#production-mode)
@@ -285,6 +286,52 @@ var html = templates.apply(bemjson);
 
 ```html
 <div class=b name=test></div>
+```
+
+### singleQuotesForDataAttrs option
+
+By default data-attributes values will be marked with double quotes. For BEMJSON:
+
+```js
+{
+  block: 'b',
+  attrs: {
+    id: 'without-changes',
+    'data-test': '{"reqid":"42"}'
+  }
+}
+```
+
+*Result of templating:*
+
+```html
+<div class="b" id="without-changes" data-test="{&quot;reqid&quot;:&quot;42&quot;}"></div>
+```
+
+All double quotes inside `data-test` value was escaped. If you want to avoid such behaviour you can use `singleQuotesForDataAttrs` option.
+
+```js
+var bemxjst = require('bem-xjst');
+var templates = bemxjst.bemhtml.compile(() => {
+    // In this example we will add no templates.
+    // Default behaviour is used for HTML rendering.
+    }, {
+        // use single quotes for data-* attributes
+        singleQuotesForDataAttrs: true
+    });
+
+var bemjson = { block: 'b', attrs: {
+  id: 'without-changes',
+  'data-test': '{"reqid":"42"}'
+} };
+
+var html = templates.apply(bemjson);
+```
+
+*Result of templating with option:*
+
+```html
+<div class="b" id="without-changes" data-test='{"reqid":"42"}'></div>
 ```
 
 ### Escaping
