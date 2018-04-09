@@ -3,14 +3,6 @@ var bemhtml = bemxjst.bemhtml;
 
 var templates = bemhtml.compile(function() {
   block('b').content()('yay');
-   block('mods-changes').def()(function() {
-    this.ctx.mods.one = 2;
-    return applyNext();
-  });
-   block('mods-changes2').def()(function() {
-    this.ctx.mods.three = 3;
-    return applyNext();
-  });
 
   block('class-attr-tmpl').attrs()(function() {
     return { class: 'wrong' };
@@ -37,12 +29,6 @@ var html = templates.apply([
 
   // mods for elem
   { block: 'c', elem: 'e', mods: { test: 'opa' } },
-
-  // changes in ctx.mods
-  { block: 'mods-changes', mods: { one: '1', two: '2' } },
-
-  // additions in ctx.mods
-  { block: 'mods-changes2', mods: { one: '1', two: '2' } },
 
   // class in attrs
   { block: 'class-attr-bemjson', attrs: { id: 'test', class: 'jquery' } },
