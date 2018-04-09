@@ -219,6 +219,37 @@
 <div id="anchor" name="Мультфильм &quot;Tom &amp; Jerry&quot;"></div>
 ```
 
+Если любое поле объекта `attrs` содержит БЭМ-cущность (в данном случае просто объект с полями `block`/`elem`/`mods`/`elemMods`), то для такого объекта шаблонизатор попробует применить шаблоны. Пример:
+
+```js
+// BEMJSON
+{
+    block: 'button',
+    attrs: {
+        'data-text': {
+            block: 'i-bem',
+            elem: 'i18n',
+            key: 'button-success'
+        }
+    }
+}
+```
+
+```js
+// Шаблон
+block('i-bem').elem('i18n')({
+  // Здесь I18N.get просто метод, который возвратит строку
+  def: (node, ctx) => node.I18N.get(ctx.key)
+});
+```
+
+*Результат шаблонизации:*
+
+```html
+<div id="button" data-text="Поздравляем!"></div>
+```
+
+
 ### cls
 
 `{String}` HTML-класс или классы (через пробел), не принадлежащие к предметной области БЭМ. Например, применение [микроформатов](http://microformats.org/) или семантической разметки из [schema.org](https://schema.org/).
