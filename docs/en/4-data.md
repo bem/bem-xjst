@@ -220,6 +220,37 @@ Values are escaped:
 <div id="anchor" name="Cartoon &quot;Tom &amp; Jerry&quot;"></div>
 ```
 
+For any field value in `attrs` object templates will be applied. Example:
+
+```js
+// BEMJSON
+{
+    block: 'button',
+    attrs: {
+        'data-text': {
+            block: 'i-bem',
+            elem: 'i18n',
+            key: 'button-success'
+        }
+    }
+}
+```
+
+```js
+// Template
+block('i-bem').elem('i18n')({
+  // Here I18N.get it’s just method which returns some string
+  def: (node, ctx) => node.I18N.get(ctx.key)
+});
+```
+
+*Result of templating:*
+
+```html
+<div id="button" data-text="Congratulations!"></div>
+```
+
+
 ### cls
 
 `{String}` HTML class or classes (separated by spaces) that do not belong to the BEM subject domain. For example, the use of [microformats](http://microformats.org/) or semantic markup from [schema.org](https://schema.org/).
