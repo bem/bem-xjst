@@ -1,4 +1,19 @@
 module.exports = function(match, block, elem, mod, elemMod, oninit, xjstOptions, wrap, replace, extend, mode, def, content, appendContent, prependContent, attrs, addAttrs, js, addJs, mix, addMix, mods, addMods, addElemMods, elemMods, tag, cls, bem, local, applyCtx, applyNext, apply) {
+
+var stringify = function(v) {
+  var cache = [];
+  return JSON.stringify(v, function(key, value) {
+    if (typeof value === 'object' && value !== null) {
+      if (cache.indexOf(value) !== -1) {
+        // Circular reference found, discard key
+        return;
+      }
+      cache.push(value);
+    }
+    return value;
+  });
+};
+
 var collectMixes = function collectMixes(item, res, context) {
   res = res || [];
   if (!item)
@@ -65,8 +80,8 @@ var checkMixes = function checkMixes(mix, ctx, mixesFromTmpls) {
               } else {
                 console.warn(
                   '\nBEM-XJST WARNING: you’re trying to mix block with mods to the same block with the same mods. ' +
-                  '\nctx: ' + JSON.stringify(ctx) +
-                  (mixesFromTmpls ? '\nmixes from templates: ' + JSON.stringify(mixesFromTmpls) : '')
+                  '\nctx: ' + stringify(ctx) +
+                  (mixesFromTmpls ? '\nmixes from templates: ' + stringify(mixesFromTmpls) : '')
                 );
               }
             });
@@ -85,8 +100,8 @@ var checkMixes = function checkMixes(mix, ctx, mixesFromTmpls) {
               } else {
                 console.warn(
                   '\nBEM-XJST WARNING: you’re trying to mix block with mods to the same block with the same mods. ' +
-                  '\nctx: ' + JSON.stringify(ctx) +
-                  (mixesFromTmpls ? '\nmixes from templates: ' + JSON.stringify(mixesFromTmpls) : '')
+                  '\nctx: ' + stringify(ctx) +
+                  (mixesFromTmpls ? '\nmixes from templates: ' + stringify(mixesFromTmpls) : '')
                 );
               }
             });
@@ -111,7 +126,7 @@ block('*')(
             '\nBEM-XJST WARNING: boolean attribute value: ' +
             attrs[key] +
             ' in BEMJSON: ' +
-            JSON.stringify(ctx)
+            stringify(ctx)
           );
           console.warn('Notice what bem-xjst behaviour changed: https://github.com/bem/bem-xjst/releases/tag/v4.3.3');
         }
@@ -129,7 +144,7 @@ block('*')(
     if (ctx.mods && ctx.elem && !ctx.elemMods) {
         console.warn(
           '\nBEM-XJST WARNING: mods for elem in BEMJSON: ' +
-          JSON.stringify(ctx)
+          stringify(ctx)
         );
         console.warn('Notice what bem-xjst behaviour changed: https://github.com/bem/bem-xjst/releases/tag/v5.0.0');
     }
@@ -151,12 +166,12 @@ block('*')(
     ret = applyNext();
     var after = getMods(mods);
 
-    if (JSON.stringify(before) !== JSON.stringify(after)) {
+    if (stringify(before) !== stringify(after)) {
         console.warn(
           '\nBEM-XJST WARNING: looks like someone changed ctx.mods in BEMJSON: ' +
-          JSON.stringify(ctx) +
-          '\nold value of ctx.mods was: ' + JSON.stringify(before) +
-          '\nnew value of ctx.mods was: ' + JSON.stringify(after) +
+          stringify(ctx) +
+          '\nold value of ctx.mods was: ' + stringify(before) +
+          '\nnew value of ctx.mods was: ' + stringify(after) +
           '\nNotice that you should change this.mods instead of this.ctx.mods in templates'
         );
     }
@@ -172,8 +187,8 @@ block('*')(
         console.warn(
           '\nBEM-XJST WARNING: looks like you’re trying to set HTML class from attrs field in BEMJSON. ' +
           'Please use cls() mode for it. See documentation: https://github.com/bem/bem-xjst/blob/master/docs/en/5-templates-syntax.md#cls' +
-          '\nctx: ' + JSON.stringify(ctx) +
-          '\nattrs: ' + JSON.stringify(attrs)
+          '\nctx: ' + stringify(ctx) +
+          '\nattrs: ' + stringify(attrs)
         );
     }
 
@@ -182,8 +197,8 @@ block('*')(
         console.warn(
           '\nBEM-XJST WARNING: looks like you’re trying to set data-bem attribute from attrs field in BEMJSON. ' +
           'Please use js() mode for it. See documentation: https://github.com/bem/bem-xjst/blob/master/docs/en/5-templates-syntax.md#js' +
-          '\nctx: ' + JSON.stringify(ctx) +
-          '\nattrs: ' + JSON.stringify(attrs)
+          '\nctx: ' + stringify(ctx) +
+          '\nattrs: ' + stringify(attrs)
         );
     }
   }),
@@ -260,7 +275,7 @@ block('*')(
         '\nBEM-XJST WARNING: wrong block name. ' +
         '\nBlock name can not contain modifier delimeter nor elem delimeter. ' +
         '\nblock: ' + this.block +
-        '\nctx: ' + JSON.stringify(ctx)
+        '\nctx: ' + stringify(ctx)
       );
     }
 
@@ -269,7 +284,7 @@ block('*')(
         '\nBEM-XJST WARNING: wrong elem name. ' +
         '\nElement name can not contain modifier delimeter nor elem delimeter. ' +
         '\nelem: ' + this.elem +
-        '\nctx: ' + JSON.stringify(ctx)
+        '\nctx: ' + stringify(ctx)
       );
     }
 
@@ -279,8 +294,8 @@ block('*')(
         console.warn(
           '\nBEM-XJST WARNING: wrong modifier name. ' +
           '\nModifier name can not contain modifier delimeter nor elem delimeter. ' +
-          '\nmods: ' + JSON.stringify(_this.mods) +
-          '\nctx: ' + JSON.stringify(ctx)
+          '\nmods: ' + stringify(_this.mods) +
+          '\nctx: ' + stringify(ctx)
         );
       }
 
@@ -289,8 +304,8 @@ block('*')(
         console.warn(
           '\nBEM-XJST WARNING: wrong modifier value. ' +
           '\nModifier value can not contain modifier delimeter nor elem delimeter. ' +
-          '\nmods: ' + JSON.stringify(_this.mods) +
-          '\nctx: ' + JSON.stringify(ctx)
+          '\nmods: ' + stringify(_this.mods) +
+          '\nctx: ' + stringify(ctx)
         );
       }
     });
@@ -302,8 +317,8 @@ block('*')(
         console.warn(
           '\nBEM-XJST WARNING: wrong element modifier name. ' +
           '\nModifier name can not contain modifier delimeter nor elem delimeter. ' +
-          '\nelemMods: ' + JSON.stringify(_this.elemMods) +
-          '\nctx: ' + JSON.stringify(ctx)
+          '\nelemMods: ' + stringify(_this.elemMods) +
+          '\nctx: ' + stringify(ctx)
         );
       }
 
@@ -312,8 +327,8 @@ block('*')(
         console.warn(
           '\nBEM-XJST WARNING: wrong element modifier value. ' +
           '\nModifier value can not contain modifier delimeter nor elem delimeter. ' +
-          '\nelemMods: ' + JSON.stringify(_this.elemMods) +
-          '\nctx: ' + JSON.stringify(ctx)
+          '\nelemMods: ' + stringify(_this.elemMods) +
+          '\nctx: ' + stringify(ctx)
         );
       }
     });
@@ -334,7 +349,7 @@ block('*')(
           console.warn(
             '\nBEM-XJST WARNING: wrong modifier value. ' +
             '\nModifier value can be undefined, null, String, Number or Boolean. ' +
-            '\nctx: ' + JSON.stringify(ctx)
+            '\nctx: ' + stringify(ctx)
           );
         }
       });
@@ -350,7 +365,7 @@ block('*')(
           console.warn(
             '\nBEM-XJST WARNING: wrong element modifier value. ' +
             '\nModifier value can be undefined, null, String, Number or Boolean. ' +
-            '\nctx: ' + JSON.stringify(ctx)
+            '\nctx: ' + stringify(ctx)
           );
         }
       });
