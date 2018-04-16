@@ -48,7 +48,7 @@ describe('API generate', function() {
 
           vm.runInNewContext(code + EOL + bundle, sandbox);
 
-          var result = sandbox.exports.bemhtml.compile(function() {
+          var result = sandbox.exports.BEMHTML.compile(function() {
             block('b').def()(function() {
               return this.require('textModule');
             });
@@ -69,7 +69,7 @@ describe('API generate', function() {
 
           vm.runInNewContext(code + EOL + bundle, sandbox);
 
-          var result = sandbox.exports.bemhtml.compile(function () {
+          var result = sandbox.exports.BEMHTML.compile(function () {
             block('b').def()(function () {
               return this.require('textModule');
             });
@@ -91,7 +91,7 @@ describe('API generate', function() {
 
           vm.runInNewContext(code + EOL + bundle, sandbox);
 
-          var result = sandbox.exports.bemhtml.compile(function() {
+          var result = sandbox.exports.BEMHTML.compile(function() {
             block('b').def()(function() {
               return this.require('!#^*\u0007-+');
             });
@@ -116,7 +116,7 @@ describe('API generate', function() {
 
           vm.runInNewContext(code + EOL + bundle, sandbox);
 
-          var result = sandbox.exports.bemhtml.compile(function() {
+          var result = sandbox.exports.BEMHTML.compile(function() {
             block('b').def()(function() {
               return this.require('textModule') + this.require('textModule1');
             });
@@ -135,7 +135,7 @@ describe('API generate', function() {
 
           vm.runInNewContext(code + EOL + bundle, sandbox);
 
-          var result = sandbox.bemhtml.compile(function() {
+          var result = sandbox.BEMHTML.compile(function() {
             block('b').def()(function() {
               return this.require('textModule');
             });
@@ -154,7 +154,7 @@ describe('API generate', function() {
 
           vm.runInNewContext(code + EOL + bundle, sandbox);
 
-          var result = sandbox.bemhtml.compile(function () {
+          var result = sandbox.BEMHTML.compile(function () {
             block('b').def()(function () {
               return this.require('textModule');
             });
@@ -174,7 +174,7 @@ describe('API generate', function() {
 
           vm.runInNewContext(code + EOL + bundle, sandbox);
 
-          var result = sandbox.bemhtml.compile(function() {
+          var result = sandbox.BEMHTML.compile(function() {
             block('b').def()(function() {
               return this.require('!#^*\u0007-+');
             });
@@ -197,7 +197,7 @@ describe('API generate', function() {
 
           vm.runInNewContext(code + EOL + bundle, sandbox);
 
-          var result = sandbox.bemhtml.compile(function() {
+          var result = sandbox.BEMHTML.compile(function() {
             block('b').def()(function() {
               return this.require('textModule') + this.require('textModule1');
             });
@@ -218,7 +218,7 @@ describe('API generate', function() {
 
           vm.runInNewContext(code + EOL + bundle, sandbox);
 
-          var result = sandbox.bemhtml.compile(function() {
+          var result = sandbox.BEMHTML.compile(function() {
             block('b').def()(function() {
               return this.require('textModule');
             });
@@ -256,7 +256,7 @@ describe('API generate', function() {
 
           var getLibs = function() {
             return new vow.Promise(function(resolve) {
-              sandbox.modules.require('bemhtml', function(bemhtml) {
+              sandbox.modules.require('BEMHTML', function(bemhtml) {
                 resolve(bemhtml.libs);
               });
             });
@@ -295,7 +295,7 @@ describe('API generate', function() {
 
           var getLibs = function () {
             return new vow.Promise(function (resolve) {
-              sandbox.modules.require('bemhtml', function (bemhtml) {
+              sandbox.modules.require('BEMHTML', function (bemhtml) {
                 resolve(bemhtml.libs);
               });
             });
@@ -324,7 +324,7 @@ describe('API generate', function() {
             bundle, sandbox);
 
           assert.equal(
-            sandbox.exports.bemhtml.libs.fakeReq.getText(), 'globals'
+            sandbox.exports.BEMHTML.libs.fakeReq.getText(), 'globals'
           );
         });
 
@@ -342,7 +342,7 @@ describe('API generate', function() {
           vm.runInNewContext(bundle, sandbox);
           assert.deepEqual(sandbox.global, {},
                            'Should not export to global in CommonJS context.');
-          assert.equal(typeof module.exports.bemhtml.apply, 'function');
+          assert.equal(typeof module.exports.BEMHTML.apply, 'function');
         });
       });
 
@@ -357,7 +357,7 @@ describe('API generate', function() {
           sandbox.module = { exports: sandbox.exports };
           vm.runInNewContext(bundle, sandbox);
 
-          assert.equal(sandbox.exports.bemhtml.libs.fakeReq.getText(), TEXT);
+          assert.equal(sandbox.exports.BEMHTML.libs.fakeReq.getText(), TEXT);
           assert.deepEqual(sandbox.global, {},
                            'Should not export to global in CommonJS context.');
         });
@@ -372,7 +372,7 @@ describe('API generate', function() {
           sandbox.module = { exports: sandbox.exports };
           vm.runInNewContext(bundle, sandbox);
 
-          var result = sandbox.bemhtml.compile(function() {
+          var result = sandbox.BEMHTML.compile(function() {
             block('b').def()(function() {
               return this.require('fakeReq').getText();
             });
@@ -392,7 +392,7 @@ describe('API generate', function() {
           sandbox.module = { exports: sandbox.exports };
           vm.runInNewContext(bundle, sandbox);
 
-          var result = sandbox.bemhtml.compile(function() {
+          var result = sandbox.BEMHTML.compile(function() {
             block('b').def()(function() {
               return this.require('!#^*\u0007-+').getText();
             });
@@ -414,8 +414,8 @@ describe('API generate', function() {
           sandbox.module = { exports: sandbox.exports };
           vm.runInNewContext(bundle, sandbox);
 
-          assert.equal(sandbox.exports.bemhtml.libs.fakeReq.getText() +
-            sandbox.exports.bemhtml.libs.fakeReq1.getText(), TEXT + TEXT1);
+          assert.equal(sandbox.exports.BEMHTML.libs.fakeReq.getText() +
+            sandbox.exports.BEMHTML.libs.fakeReq1.getText(), TEXT + TEXT1);
           assert.deepEqual(sandbox.global, {},
             'Should not export to global in CommonJS context.');
         });
@@ -433,7 +433,7 @@ describe('API generate', function() {
           sandbox.module = { exports: sandbox.exports };
           vm.runInNewContext(bundle, sandbox);
 
-          var result = sandbox.bemhtml.compile(function() {
+          var result = sandbox.BEMHTML.compile(function() {
             block('b').def()(function() {
               return this.require('fakeReq').getText() +
                 this.require('fakeReq1').getText();
@@ -463,7 +463,7 @@ describe('API generate', function() {
 
           var getLibs = function() {
             return new vow.Promise(function(resolve) {
-              sandbox.modules.require('bemhtml', function(bemhtml) {
+              sandbox.modules.require('BEMHTML', function(bemhtml) {
                 resolve(bemhtml.libs);
               });
             });
@@ -490,7 +490,7 @@ describe('API generate', function() {
 
           var getLibs = function() {
             return new vow.Promise(function(resolve) {
-              sandbox.modules.require('bemhtml', function(bemhtml) {
+              sandbox.modules.require('BEMHTML', function(bemhtml) {
                 resolve(bemhtml.compile(function() {
                   block('b').def()(function() {
                     return this.require('textModule');
@@ -523,7 +523,7 @@ describe('API generate', function() {
 
           var getLibs = function() {
             return new vow.Promise(function(resolve) {
-              sandbox.modules.require('bemhtml', function(bemhtml) {
+              sandbox.modules.require('BEMHTML', function(bemhtml) {
                 resolve(bemhtml.compile(function() {
                   block('b').def()(function() {
                     return this.require('!#^*\u0007-+');
@@ -563,7 +563,7 @@ describe('API generate', function() {
 
           var getLibs = function() {
             return new vow.Promise(function(resolve) {
-              sandbox.modules.require('bemhtml', function(bemhtml) {
+              sandbox.modules.require('BEMHTML', function(bemhtml) {
                 resolve(bemhtml.libs);
               });
             });
@@ -595,7 +595,7 @@ describe('API generate', function() {
 
           var getLibs = function() {
             return new vow.Promise(function(resolve) {
-              sandbox.modules.require('bemhtml', function(bemhtml) {
+              sandbox.modules.require('BEMHTML', function(bemhtml) {
                 resolve(bemhtml.compile(function() {
                   block('b').def()(function() {
                     return this.require('textModule') +
@@ -627,7 +627,7 @@ describe('API generate', function() {
           sandbox.module = { exports: sandbox.exports };
           vm.runInNewContext(code + EOL + bundle, sandbox);
 
-          var result = sandbox.bemhtml.compile(function() {
+          var result = sandbox.BEMHTML.compile(function() {
             block('b').def()(function() {
               return this.require('textModule') +
                 this.require('textModule1').getText();
@@ -656,7 +656,7 @@ describe('API generate', function() {
 
           var getLibs = function() {
             return new vow.Promise(function(resolve) {
-              sandbox.modules.require('bemhtml', function(bemhtml) {
+              sandbox.modules.require('BEMHTML', function(bemhtml) {
                 resolve(bemhtml.compile(function() {
                   block('b').def()(function() {
                     return this.require('textModule') +
@@ -692,7 +692,7 @@ describe('API generate', function() {
 
           var getLibs = function () {
             return new vow.Promise(function (resolve) {
-              sandbox.modules.require('bemhtml', function (bemhtml) {
+              sandbox.modules.require('BEMHTML', function (bemhtml) {
                 resolve(bemhtml.compile(function () {
                   block('b').def()(function () {
                     return this.require('textModule') +
@@ -730,7 +730,7 @@ describe('API generate', function() {
 
           var getLibs = function() {
             return new vow.Promise(function(resolve) {
-              sandbox.modules.require('bemhtml', function(bemhtml) {
+              sandbox.modules.require('BEMHTML', function(bemhtml) {
                 resolve(bemhtml.compile(function() {
                   block('b').def()(function() {
                     return this.require('textModule').getText() +
