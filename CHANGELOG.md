@@ -1,5 +1,13 @@
 # BEM-XJST Changelog
 
+# 2018-04-17 [v8.9.3](https://github.com/bem/bem-xjst/compare/v8.9.2...v8.9.3), @miripiruni
+
+From v8.6.8 exportName [was in lower case](https://github.com/bem/bem-xjst/commit/b20bb52bfd9d73f81e13f7164c21104b7f4fdc64#diff-ee97c5091b89979aace94674818996baL32) (`bemhtml` or `bemtree`). Now this degradation fixed.
+
+Commits:
+* [[`2cbdb1635a`](https://github.com/bem/bem-xjst/commit/2cbdb1635a)] - Merge pull request #517 from bem/issue-516_export-name (Slava Oliyanchuk)
+
+
 # 2018-04-16 [v8.9.2](https://github.com/bem/bem-xjst/compare/v8.9.1...v8.9.2), @miripiruni
 
 1) New `singleQuotesInJsAttrs` option. Read [documentation](https://github.com/bem/bem-xjst/blob/master/docs/en/3-api.md#singlequotesfordataattrs-option).
