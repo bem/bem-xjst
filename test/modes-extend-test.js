@@ -81,4 +81,24 @@ describe('Modes extend', function() {
     }, { block: 'b', foo: 'This is' },
     '<div class="b">This is ContextChild</div>');
   });
+
+  it('should work with several apply() calls', function() {
+    var bemjson = { block: 'b1' };
+    var expected = '<div class="b1">42</div>';
+    var tmpl = fixtures.compile(function() {
+      block('b1').extend()({ 'ctx.content': 42 });
+    });
+
+    assert.equal(
+      tmpl.apply(bemjson),
+      expected,
+      'first apply() call returns not expected value'
+    );
+
+    assert.equal(
+      tmpl.apply(bemjson),
+      expected,
+      'second apply() call returns not expected value'
+    );
+  });
 });

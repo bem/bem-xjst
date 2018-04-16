@@ -1,5 +1,10 @@
 # BEM-XJST Changelog
 
+# 2018-04-16 [v8.9.2-rc.1](https://github.com/bem/bem-xjst/compare/v8.9.1...v8.9.2-rc.1), @miripiruni
+
+Release candidate from https://github.com/bem/bem-xjst/pull/496 to check benchmarks on real project.
+
+
 # 2018-03-05 [v8.9.1](https://github.com/bem/bem-xjst/compare/v8.9.0...v8.9.1), @miripiruni
 
 Bug fixed: dot-delimited dependencies from global scope in object notation.
