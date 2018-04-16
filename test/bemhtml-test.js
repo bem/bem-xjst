@@ -211,4 +211,29 @@ describe('BEMHTML engine tests', function() {
         { unquotedAttrs: true });
     });
   });
+
+  describe('singleQuotesForDataAttrs option', function() {
+    it('should render data-attr value using double quotes by default',
+    function() {
+      test(function() {},
+        { block: 'b', attrs: {
+          id: 'without-changes',
+          'data-test': '{"reqid":"42"}'
+        } },
+        '<div class="b" id="without-changes" ' +
+        'data-test="{&quot;reqid&quot;:&quot;42&quot;}"></div>');
+    });
+
+    it('should render data-attr value using single quotes if option true',
+    function() {
+      test(function() {},
+        { block: 'b', attrs: {
+          id: 'without-changes',
+          'data-test': '{"reqid":"42"}'
+        } },
+        '<div class="b" id="without-changes" ' +
+        'data-test=\'{"reqid":"42"}\'></div>',
+        { singleQuotesForDataAttrs: true });
+    });
+  });
 });
