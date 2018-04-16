@@ -1,5 +1,30 @@
 # BEM-XJST Changelog
 
+# 2018-04-16 [v8.9.2](https://github.com/bem/bem-xjst/compare/v8.9.1...v8.9.2), @miripiruni
+
+1) New `singleQuotesInJsAttrs` option. Read [documentation](https://github.com/bem/bem-xjst/blob/master/docs/en/3-api.md#singlequotesfordataattrs-option).
+
+2) Fixed bug with runtime lint and circular json in stack trace.
+
+3) Documentation updated: templates will be applyed for any `attrs` field with BEM-entities.
+
+
+Commits:
+* [[`b314d859a3`](https://github.com/bem/bem-xjst/commit/b314d859a3)] - Merge pull request #518 from bem/singleQuotesInJsAttrs (Slava Oliyanchuk)
+* [[`28a0a4ad37`](https://github.com/bem/bem-xjst/commit/28a0a4ad37)] - Merge pull request #519 from bem/issue-474__circular-json (Slava Oliyanchuk)
+* [[`d520b6624b`](https://github.com/bem/bem-xjst/commit/d520b6624b)] - Merge pull request #521 from bem/issue-423__attrs-apply (Slava Oliyanchuk)
+* [[`ae23db1828`](https://github.com/bem/bem-xjst/commit/ae23db1828)] - **Docs**: attrs templating hidden feature (for #423) (miripiruni)
+* [[`26b3ea543c`](https://github.com/bem/bem-xjst/commit/26b3ea543c)] - Merge pull request #515 from bem/tadatuta-patch-1 (Slava Oliyanchuk)
+* [[`63c31acf6c`](https://github.com/bem/bem-xjst/commit/63c31acf6c)] - Merge pull request #522 from vrozaev/prose-patch-1 (Slava Oliyanchuk)
+* [[`87ca06be5f`](https://github.com/bem/bem-xjst/commit/87ca06be5f)] - соркащенный =\> сокращенный (Rozaev Viktor)
+* [[`3152b1f85f`](https://github.com/bem/bem-xjst/commit/3152b1f85f)] - Runtime lint: custom stringify function (fix for #474) (miripiruni)
+* [[`0c15b96ddc`](https://github.com/bem/bem-xjst/commit/0c15b96ddc)] - **BEMHTML**: singleQuotesForDataAttrs option (miripiruni)
+* [[`d5c13102a1`](https://github.com/bem/bem-xjst/commit/d5c13102a1)] - Single quotes for data-attrs (sbmaxx)
+* [[`d407a669d2`](https://github.com/bem/bem-xjst/commit/d407a669d2)] - fixup (miripiruni)
+* [[`ed90694d97`](https://github.com/bem/bem-xjst/commit/ed90694d97)] - Update 3-api.md (Vladimir Grinenko)
+* [[`e87712b141`](https://github.com/bem/bem-xjst/commit/e87712b141)] - **Docs**: Add anchor (Vladimir Grinenko)
+
+
 # 2018-03-05 [v8.9.1](https://github.com/bem/bem-xjst/compare/v8.9.0...v8.9.1), @miripiruni
 
 Bug fixed: dot-delimited dependencies from global scope in object notation.
