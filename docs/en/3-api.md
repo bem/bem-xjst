@@ -454,7 +454,7 @@ templates.BEMContext.prototype.onError = function(context, err) { … };
 
 You can use `exportName` option for choose name of variable where engine will be exported. By default it’s BEMHTML or BEMTREE.
 
-For example read next.
+For example read [bundling section](#bundling).
 
 
 ### Using thirdparty libraries
