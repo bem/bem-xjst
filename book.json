@@ -1,0 +1,11 @@
+{
+    "description":"bem-xjst",
+    "root": "./docs",
+    "plugins":[
+        "comment",
+        "theme-api",
+        "-sharing",
+        "search",
+        "collapsible-menu"
+    ]
+}
