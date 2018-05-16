@@ -1,7 +1,7 @@
 var fixtures = require('./fixtures')('bemhtml');
 var test = fixtures.test;
 var assert = require('assert');
-var BEMXJSTError = require('../lib/bemxjst').BEMXJSTError;
+var BEMXJSTError = require('../lib/bemhtml/bundle').BEMXJSTError;
 
 describe('Templates syntax', function() {
   it('should support block without mode()', function() {
