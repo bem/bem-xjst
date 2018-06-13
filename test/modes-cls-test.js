@@ -43,6 +43,6 @@ describe('Modes cls', function() {
       block('button').cls()('">');
     })
       .apply({ block: 'button' })
-      .should.equal('<div class="button &quot;>"></div>');
+      .should.equal('<div class="button &quot;&gt;"></div>');
   });
 });
