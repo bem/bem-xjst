@@ -122,4 +122,17 @@ describe('BEMContext ctx object: tests for expected fields', function() {
     { block: 'b', user: 'omg' },
     'omg');
   });
+
+  it('should support custom fields with stringified number in this.ctx',
+    function() {
+    test(function() {
+      block('b').def()(function() {
+        return this.ctx['55'];
+      });
+    },
+    // jscs: disable disallowQuotedKeysInObjects
+    { block: 'b', '55': 'omg' },
+    // jscs: enable disallowQuotedKeysInObjects
+    'omg');
+  });
 });
