@@ -92,7 +92,7 @@ describe('BEMJSON attrs', function() {
       block('b').attrs()(function() {
         return { attribute: '"tom&jerry"' };
       });
-    }, { block: 'b' }, '<div class="b" attribute="&quot;tom&amp;jerry&quot;' +
+    }, { block: 'b' }, '<div class="b" attribute="&quot;tom&jerry&quot;' +
       '"></div>');
   });
 

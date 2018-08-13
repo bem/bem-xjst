@@ -157,7 +157,7 @@ block('button')({
 this.attrEscape(str)
 ```
 
-Returns the passed `str` string with the following characters for XML and HTML attributes escaped: `"` and `&`. Normaly, expected that `str` is a `String`. But if `str` is `undefined`, `Null` or `NaN` type you get empty string. If `str` is any other type you get native casting from it type to `String` before escaping.
+Returns the passed `str` string with the `"` escaped characters for XML and HTML attributes. Normaly, expected that `str` is a `String`. But if `str` is `undefined`, `Null` or `NaN` type you get empty string. If `str` is any other type you get native casting from it type to `String` before escaping.
 
 #### jsAttrEscape
 
