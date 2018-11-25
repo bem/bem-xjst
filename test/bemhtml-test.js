@@ -1,8 +1,8 @@
 var fixtures = require('./fixtures')('bemhtml');
-var test = fixtures.test;
+var test = fixtures.testWarmed;
 var compile = fixtures.compile;
 
-describe('BEMHTML engine tests', function() {
+describe.only('BEMHTML engine tests', function() {
   it('should compile example code', function() {
     test(function() {
       block('b1').tag()(
@@ -16,7 +16,7 @@ describe('BEMHTML engine tests', function() {
     }, { block: 'b1', elem: 'e1' }, '<a class="b1__e1"></a>');
   });
 
-  it('should auto-insert !this.elem properly', function() {
+  it.only('should auto-insert !this.elem properly', function() {
     test(function() {
       block('b1').content()({
         elem: 'e1'
@@ -38,7 +38,7 @@ describe('BEMHTML engine tests', function() {
       block('b15').content()('b15');
       block('b16').content()('b16');
       block('b17').content()('b17');
-    }, { block: 'b1' }, '<div class="b1"><div class="b1__e1"></div></div>');
+    }, { block: 'b1' }, '<div class="b1"><div class="b1__e1"></div></div>', { count: 100000 });
   });
 
   it('should replace this.elem properly in hashmaps', function() {
@@ -99,11 +99,11 @@ describe('BEMHTML engine tests', function() {
   it('should support `.xjstOptions()`', function() {
     test(function() {
       block('b1').xjstOptions({ who: 'cares' }).content()(function() {
-        return 'ok';
+        return 'nobody';
       });
     }, {
       block: 'b1'
-    }, '<div class="b1">ok</div>');
+    }, '<div class="b1">nobody</div>');
   });
 
   describe('xhtml option', function() {
@@ -148,14 +148,14 @@ describe('BEMHTML engine tests', function() {
 
     it('should omit optional end tags from templates with option', function() {
       compile(function() { block('para').tag()('p'); },
-        { omitOptionalEndTags: true })
+        { omitOptionalEndTags: true }, { block: 'para', content: 'test' })
         .apply({ block: 'para', content: 'test' })
         .should.equal('<p class="para">test');
     });
 
     it('should’t omit optional end tags from templates w/o option', function() {
       compile(function() { block('para').tag()('p'); })
-        .apply({ block: 'para', content: 'test' })
+        .apply({ block: 'para', content: 'test' }, { block: 'para', content: 'test' })
         .should.equal('<p class="para">test</p>');
     });
 
