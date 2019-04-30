@@ -2,3 +2,5 @@ lib/bem*/bundle.js
 /node_modules/
 _book
 npm-debug.log
+/.idea/
+/coverage/
