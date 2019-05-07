@@ -1,5 +1,9 @@
 # BEM-XJST Changelog
 
+# 2018-05-07 [v8.9.4](https://github.com/bem/bem-xjst/compare/v8.9.3...v8.9.4), @tadatuta
+
+Performance: optimization in BEMHTML.prototype.renderMix
+
 # 2018-04-17 [v8.9.3](https://github.com/bem/bem-xjst/compare/v8.9.2...v8.9.3), @miripiruni
 
 From v8.6.8 exportName [was in lower case](https://github.com/bem/bem-xjst/commit/b20bb52bfd9d73f81e13f7164c21104b7f4fdc64#diff-ee97c5091b89979aace94674818996baL32) (`bemhtml` or `bemtree`). Now this degradation fixed.
