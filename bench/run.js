@@ -51,6 +51,7 @@ util._extend(benchmark.options, {
   minSamples: (argv['min-samples'] | 0) || 50,
   maxTime: (argv['max-time'] | 0) || 2
 });
+
 var suite = new benchmark.Suite();
 
 function both(callback) {
@@ -97,7 +98,7 @@ templates.forEach(function(template) {
       });
       var input = JSON.parse(template.input);
 
-      precompiled.BEMContext.prototype._flush = function _flush(str) {
+      precompiled.BEMContext.prototype._flush = function _flush() {
         return '';
       };
 
@@ -108,6 +109,42 @@ templates.forEach(function(template) {
     });
   }
 });
+
+function check(nextStats, prevStats) {
+  var optimisticNext = nextStats.mean - nextStats.deviation;
+  var pessimisticNext = nextStats.mean + nextStats.deviation;
+  var optimisticPrev = prevStats.mean - prevStats.deviation;
+  var pessimisticPrev = prevStats.mean + prevStats.deviation;
+  var diff = (nextStats.mean - prevStats.mean) / 1000;
+
+  var nextSamples = nextStats.sample.sort(function(a, b) {
+    return a - b;
+  });
+  var prevSamples = prevStats.sample.sort(function(a, b) {
+    return a - b;
+  });
+
+  console.log('next',
+    'median:', nextSamples[nextSamples.length >> 1],
+    'mean:', nextStats.mean,
+    'deviation:', nextStats.deviation);
+
+  console.log('prev',
+    'median:', prevSamples[prevSamples.length >> 1],
+    'mean:', prevStats.mean,
+    'deviation:', prevStats.deviation);
+
+  console.log('next:', optimisticNext, '..', pessimisticNext);
+  console.log('prev:', optimisticPrev, '..', pessimisticPrev);
+
+  if (optimisticNext > pessimisticPrev) {
+    console.log('Slower than previous version by ' + diff + ' ms');
+  } else if (pessimisticNext < optimisticPrev) {
+    console.log('Faster than previous version by ' + diff + ' ms');
+  } else {
+    console.log('Next is the same as prev.');
+  }
+}
 
 var stat = [];
 
@@ -122,31 +159,9 @@ function checkResults(rme, hz, stats) {
   var prev = stat[i];
   var next = stat[i - 1];
 
-  console.log('next.stats.mean:', next.stats.mean);
-  console.log('next.stats.deviation:', next.stats.deviation);
-  console.log('prev.stats.mean:', prev.stats.mean);
-  console.log('prev.stats.deviation:', prev.stats.deviation);
-  console.log('prev.samples:', prev.stats.sample);
-
-  check(
-    next.stats.mean - next.stats.deviation,
-    next.stats.mean + next.stats.deviation,
-    prev.stats.mean - prev.stats.deviation,
-    prev.stats.mean + prev.stats.deviation,
-    next.stats.mean - prev.stats.mean
-  );
+  check(next.stats, prev.stats);
 
   console.log('\n');
-}
-
-function check(optimisticNext, pessimisticNext, optimisticPrev, pessimisticPrev, diff) {
-  if (optimisticNext > pessimisticPrev) {
-    console.log('Slow than prev version: diff ' + diff + ' sec');
-  } else if (pessimisticNext < optimisticPrev) {
-    console.log('Faster than prev version: diff ' + diff + ' sec');
-  } else {
-    console.log('Next is the same as prev.');
-  }
 }
 
 suite.on('cycle', function(event) {

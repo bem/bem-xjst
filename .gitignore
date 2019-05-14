@@ -5,3 +5,4 @@ npm-debug.log
 /coverage/
 /bench/bem-xjst-*/
 /bench/dat-*/
+/bench/web-data/
