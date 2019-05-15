@@ -3,7 +3,7 @@ var bemhtml = require('../').bemhtml;
 var sinon = require('sinon');
 
 describe('BEMContext: custom error logger', function() {
-  it('should use custom function from oninit', function() {
+  it('should use custom function', function() {
     var templates = bemhtml.compile(function() {
       block('b1').attrs()(function() {
         var attrs = applyNext();
@@ -23,24 +23,5 @@ describe('BEMContext: custom error logger', function() {
     });
 
     sinon.assert.calledOnce(onError);
-  });
-
-  it('should use custom function from oninit', function() {
-    var templates = bemhtml.compile(function() {
-
-      block('b1').attrs()(function() {
-        var attrs = applyNext();
-        attrs.foo = 'bar';
-        return attrs;
-      });
-    }, { production: true });
-
-    templates.BEMContext.prototype.onError = function(context, e) {
-      console.info('>>> Error occurred', context.ctx, e);
-    };
-
-    assert.doesNotThrow(function() {
-      assert.equal(templates.apply({ block: 'b1' }), '');
-    });
   });
 });
