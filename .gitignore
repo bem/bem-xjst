@@ -4,3 +4,6 @@ _book
 npm-debug.log
 /.idea/
 /coverage/
+/bench/bem-xjst-*/
+/bench/dat-*/
+/bench/web-data/

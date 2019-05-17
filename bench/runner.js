@@ -2,15 +2,17 @@
 const execSync = require('child_process').execSync;
 const fs = require('fs');
 const stats = require('./lib/stats');
+
 const argv = require('yargs')
-    .describe('bemjson', 'amount of bemjson files (default 2000, max 2000)')
-    .describe('repeat', 'repeat test (default 100)')
-    .describe('verbose', 'verbose results')
-    .describe('dataPath', 'path where bemjson files')
-    .describe('templatePath', 'path to template file')
-    .help('h')
-    .alias('help', 'h')
-    .argv;
+  .describe('bemjson', 'amount of bemjson files to render (default 100)')
+  .describe('repeat', 'repeat test (default 1)')
+  .describe('dataPath', 'path to bemjson files')
+  .describe('templatePath', 'path to template file')
+  .describe('verbose', 'verbose results')
+  .help('h')
+  .alias('help', 'h')
+  .argv;
+
 /**
  * Поворачивает матрицу чисел на бок
  * Было:
@@ -27,11 +29,10 @@ const argv = require('yargs')
  *   [ 3, 6, 9 ]
  *  ]
  * @returns {Object}
- * @param {Numbers[][]} arr
+ * @param {Number[][]} arr
  */
 const turnMatrix = function(arr) {
   var rows = arr.length;
-  var cols = arr[0].length;
 
   return arr[0].map(function(item, i) {
     var ret = [];
@@ -41,8 +42,8 @@ const turnMatrix = function(arr) {
 };
 
 /**
- * @param {Numbers[]}
- * @return {Numbers[]}
+ * @param {Number[]} arr
+ * @return {Number[]}
  */
 const sort = function(arr) {
   const sortNumbers = function(a, b) { return (a < b) ? -1 : 1; };
@@ -51,7 +52,7 @@ const sort = function(arr) {
 
 /**
  * Вычисляет перцентиль
- * @param {Numbers[]} arr
+ * @param {Number[]} arr
  * @param {Number} percentile (0.5)
  */
 const getPercentile = function(arr, percentile) {
@@ -61,11 +62,11 @@ const getPercentile = function(arr, percentile) {
 
 /**
  * Конвертирует наносекунды в миллисекунды
- * @param {Number}
+ * @param {Number} ns
  * @returns {Number}
  */
 const nsToMs = function(ns) {
-  return ns/1e6;
+  return ns / 1e6;
 };
 
 /**
@@ -86,17 +87,17 @@ const analyseCorrelation = function(n, m) {
 /**
  * Запускает один тест в дочернем процессе
  * @param {String} rev ревизия
- * @returns {Numbers[]}
+ * @returns {Number[]}
  */
 const runTest = function(rev) {
   var cmd = 'node test.js';
   cmd += ' --rev ' + rev;
   cmd += ' --bemjson ' + (argv.bemjson || 100);
-  argv.dataPath && (cmd += ' --dataPath ' + argv.dataPath);
-  argv.templatePath && (cmd += ' --templatePath ' + argv.templatePath);
-  argv.verbose && (cmd += ' --verbose');
-  cmd += ' --outDir ' + outDir;
+  if (argv.dataPath) cmd += ' --dataPath ' + argv.dataPath;
+  if (argv.templatePath) cmd += ' --templatePath ' + argv.templatePath;
+  if (argv.verbose) cmd += ' --verbose';
 
+  console.log(cmd);
   var ret = JSON.parse(execSync(cmd, { encoding: 'utf8' }));
 
   dumpToFile([ rev, argv.bemjson ].join('-'), ret);
@@ -105,17 +106,17 @@ const runTest = function(rev) {
 };
 
 const dumpToFile = function dumpToFile(path, ret) {
-  var path = outDir + '/' + path + '-' + Date.now() + '.dat';
+  path = outDir + '/' + path + '-' + Date.now() + '.dat';
 
   ret = sort(ret);
 
   var h = new stats.Registry({
     "$default": [
       {
-      "left": 5,
-      "right": 30,
-      "precision": 1
-    }
+        left: 1,
+        right: 30,
+        precision: 1
+      }
     ]
   });
 
@@ -156,7 +157,7 @@ const averageHistogram = function(dat) {
  */
 const runMany = function(n, fn, arg) {
   /**
-   * @type {Numbers[][]}
+   * @type {Number[][]}
    */
   const manyRunsResult = [];
 
@@ -176,7 +177,7 @@ const runMany = function(n, fn, arg) {
  */
 const repeat = function(n, fn, arg) {
   /**
-   * @type {Numbers[][]}
+   * @type {Number[][]}
    */
   var res = [];
 
@@ -189,7 +190,8 @@ const repeat = function(n, fn, arg) {
 
 const main = function(rev) {
   var res = argv.repeat > 0 ?
-    runMany(argv.repeat, runTest, rev).map(function(arr) { return getPercentile(arr, 0.95); }) :
+    runMany(argv.repeat, runTest, rev)
+      .map(function(arr) { return getPercentile(arr, 0.95); }) :
     runTest(rev);
 
   return {
@@ -216,8 +218,8 @@ const main = function(rev) {
  */
 const prepareTest = function prepareTest(rev1, rev2) {
   var cmd = './prepare.sh';
-  cmd += ' ' + argv.rev1;
-  cmd += ' ' + argv.rev2;
+  cmd += ' ' + rev1;
+  cmd += ' ' + rev2;
   return execSync(cmd, { stdio: [ 0, 1, 2 ], encoding: 'utf8' });
 };
 
@@ -236,8 +238,8 @@ const buildGraph = function buildGraph(dir) {
 prepareTest(argv.rev1, argv.rev2);
 
 console.log('Test started…');
-console.log(argv);
-console.log(new Date(Date.now()));
+// console.log(argv);
+// console.log(new Date(Date.now()));
 
 var outDir = './dat-' + argv.rev1.slice(0, 5) + '-' + argv.rev2.slice(0, 5);
 fs.mkdirSync(outDir);
