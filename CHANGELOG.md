@@ -1,5 +1,10 @@
 # BEM-XJST Changelog
 
+# 2018-05-17 [v8.9.5](https://github.com/bem/bem-xjst/compare/v8.9.4...v8.9.5), @tadatuta
+
+Performance optimization of `utils.isSimple`.
+BEMHTML: Roll back `Set` optimization in BEMHTML.prototype.renderMix.
+
 # 2018-05-07 [v8.9.4](https://github.com/bem/bem-xjst/compare/v8.9.3...v8.9.4), @tadatuta
 
 Performance: optimization in BEMHTML.prototype.renderMix
