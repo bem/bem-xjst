@@ -2,11 +2,42 @@ var fixtures = require('./fixtures')('bemhtml');
 var test = fixtures.test;
 
 describe('BEMJSON mix', function() {
-  it('should support mix in json', function() {
+  it('should support string mix in json', function() {
+    test(function() {},
+    {
+      block: 'b1',
+      mix: 'b2'
+    },
+    '<div class="b1 b2"></div>');
+  });
+
+  it('should support object mix in json', function() {
     test(function() {},
     {
       block: 'b1',
       mix: { block: 'b2' }
+    },
+    '<div class="b1 b2"></div>');
+  });
+
+  it('should support array with string mix in json', function() {
+    test(function() {},
+    {
+      block: 'b1',
+      mix: [
+        'b2'
+      ]
+    },
+    '<div class="b1 b2"></div>');
+  });
+
+  it('should support array with object mix in json', function() {
+    test(function() {},
+    {
+      block: 'b1',
+      mix: [
+        { block: 'b2' }
+      ]
     },
     '<div class="b1 b2"></div>');
   });
@@ -240,7 +271,7 @@ describe('BEMJSON mix', function() {
   });
 
   describe('nested mixes', function() {
-    it('should support nested mix', function() {
+    it('should support nested mix in json', function() {
       test(function() {},
       {
         block: 'b1',
@@ -258,6 +289,110 @@ describe('BEMJSON mix', function() {
         }
       },
       '<div class="b1 b2__e b3 b3_test_opa b4 b5"></div>');
+    });
+
+    it('should support string mix ' +
+        'with nested string mix in bemhtml', function() {
+      test(function() {
+        block('b2')(
+          addMods()('b3')
+        );
+      }, {
+        block: 'b1',
+        mix: 'b2'
+      }, '<div class="b1 b2 b3"></div>');
+    });
+
+    it('should support string mix ' +
+        'with nested object mix in bemhtml', function() {
+      test(function() {
+        block('b2')(
+          addMods()({ block: 'b3' })
+        );
+      }, {
+        block: 'b1',
+        mix: 'b2'
+      }, '<div class="b1 b2 b3"></div>');
+    });
+
+    it('should support string mix ' +
+        'with nested array of strings mix in bemhtml', function() {
+      test(function() {
+        block('b2')(
+          addMods()([ 'b3' ])
+        );
+      }, {
+        block: 'b1',
+        mix: 'b2'
+      }, '<div class="b1 b2 b3"></div>');
+    });
+
+    it('should support string mix ' +
+        'with nested array of objects mix in bemhtml', function() {
+      test(function() {
+        block('b2')(
+          addMods()([ { block: 'b3' } ])
+        );
+      }, {
+        block: 'b1',
+        mix: 'b2'
+      }, '<div class="b1 b2 b3"></div>');
+    });
+
+    it('should support object mix ' +
+        'with nested string mix in bemhtml', function() {
+      test(function() {
+        block('b2')(
+          addMods()('b3')
+        );
+      }, {
+        block: 'b1',
+        mix: {
+          block: 'b2'
+        }
+      }, '<div class="b1 b2 b3"></div>');
+    });
+
+    it('should support object mix ' +
+        'with nested object mix in bemhtml', function() {
+      test(function() {
+        block('b2')(
+          addMods()({ block: 'b3' })
+        );
+      }, {
+        block: 'b1',
+        mix: {
+          block: 'b2'
+        }
+      }, '<div class="b1 b2 b3"></div>');
+    });
+
+    it('should support object mix ' +
+        'with nested array of strings mix in bemhtml', function() {
+      test(function() {
+        block('b2')(
+          addMods()([ 'b3' ])
+        );
+      }, {
+        block: 'b1',
+        mix: {
+          block: 'b2'
+        }
+      }, '<div class="b1 b2 b3"></div>');
+    });
+
+    it('should support object mix ' +
+        'with nested array of objects mix in bemhtml', function() {
+      test(function() {
+        block('b2')(
+          addMods()([ { block: 'b3' } ])
+        );
+      }, {
+        block: 'b1',
+        mix: {
+          block: 'b2'
+        }
+      }, '<div class="b1 b2 b3"></div>');
     });
 
     it('should support nested mix with js params', function() {
