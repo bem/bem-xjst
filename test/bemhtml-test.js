@@ -229,11 +229,27 @@ describe('BEMHTML engine tests', function() {
       test(function() {},
         { block: 'b', attrs: {
           id: 'without-changes',
-          'data-test': '{"reqid":"42"}'
+          'data-test': '{"reqid":"42"}',
+          'data-simple': '1234'
         } },
         '<div class="b" id="without-changes" ' +
-        'data-test=\'{"reqid":"42"}\'></div>',
+        'data-test=\'{"reqid":"42"}\' ' +
+        'data-simple=\'1234\'></div>',
         { singleQuotesForDataAttrs: true });
+    });
+
+    it('should render simple data-attr value without quotes if option true',
+    function() {
+      test(function() {},
+        { block: 'b', attrs: {
+          id: 'without-changes',
+          'data-test': '{"reqid":"42"}',
+          'data-simple': '1234'
+        } },
+        '<div class=b id=without-changes ' +
+        'data-test=\'{"reqid":"42"}\' ' +
+        'data-simple=1234></div>',
+        { singleQuotesForDataAttrs: true, unquotedAttrs: true });
     });
   });
 });
