@@ -10,7 +10,7 @@ describe('BEMContext this.attrEscape(str)', function() {
       });
     },
     { block: 'button' },
-    '<b id=&quot;a&quot; class=&quot;bem&quot;>a&amp;b&amp;c</b>');
+    '&lt;b id=&quot;a&quot; class=&quot;bem&quot;&gt;a&amp;b&amp;c&lt;/b&gt;');
   });
 
   describe('Type of argument', function() {
