@@ -72,7 +72,7 @@ describe('BEMContext this.xmlEscape()', function() {
 
     it('should return \'\' for Function', function() {
       bemhtml.apply({ block: 'b', val: function() {} })
-        .should.equal('function () {}');
+        .should.equal('function() {}');
     });
   });
 });

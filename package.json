@@ -45,8 +45,7 @@
   "dependencies": {
     "coa": "^1.0.1",
     "enb-source-map": "1.12.1",
-    "inherits": "^2.0.1",
-    "q": "^2.0.3"
+    "inherits": "^2.0.4"
   },
   "devDependencies": {
     "browserify": "^13.0.1",
@@ -58,8 +57,7 @@
     "jshint": "^2.7.0",
     "mocha": "^3.0.2",
     "uglify-js": "^3.0.14",
-    "ym": "^0.1.2",
-    "vow": "0.4.16"
+    "ym": "^0.1.2"
   },
   "author": "Fedor Indutny <fedor@indutny.com>",
   "maintainers": [
@@ -82,6 +80,6 @@
     "README.ru.md"
   ],
   "engines": {
-    "node": ">=0.10"
+    "node": ">=8"
   }
 }

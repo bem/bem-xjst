@@ -1,6 +1,5 @@
 #!/usr/bin/env node
 var fs = require('fs');
-var q = require('q');
 var bem_xjst = require('../');
 
 require('coa').Cmd()
@@ -15,7 +14,7 @@ require('coa').Cmd()
         .flag()
         .act(function(opts) {
             // return message as result of action
-            var package = require('fs').readFileSync(__dirname +
+            var package = fs.readFileSync(__dirname +
                                                      '/../package.json');
             return JSON.parse(package).version;
         })
@@ -42,38 +41,37 @@ require('coa').Cmd()
         .flag()
         .end()
     .act(function(options) {
-      var input = [],
-      deferred = q.defer();
+      return new Promise(function(resolve) {
+        var input = [];
 
-      options.input.on('data', function(chunk) {
-        input.push(chunk);
-      });
-
-      options.input.once('end', function() {
-        finish(input.join(''));
-      });
-
-      options.input.resume();
-
-      function finish(source) {
-        var out = bem_xjst[options.engine].generate(source, {
-            'no-opt': options['no-opt'],
-            from: options.input.path,
-            to: options.output.path,
-            sourceMap: options.sourceMap
+        options.input.on('data', function(chunk) {
+          input.push(chunk);
         });
 
-        options.output.write(out);
+        options.input.once('end', function() {
+          finish(input.join(''));
+        });
 
-        if (options.output === process.stdout) {
-          options.output.write('\n');
-        } else {
-          options.output.end();
+        options.input.resume();
+
+        function finish(source) {
+          var out = bem_xjst[options.engine].generate(source, {
+              'no-opt': options['no-opt'],
+              from: options.input.path,
+              to: options.output.path,
+              sourceMap: options.sourceMap
+          });
+
+          options.output.write(out);
+
+          if (options.output === process.stdout) {
+            options.output.write('\n');
+          } else {
+            options.output.end();
+          }
+
+          resolve();
         }
-
-        deferred.resolve();
-      }
-
-      return deferred.promise;
+      });
     })
     .run();
