@@ -72,7 +72,7 @@ describe('BEMContext this.attrEscape(str)', function() {
 
     it('should return \'\' for Function', function() {
       bemhtml.apply({ block: 'b', val: function() {} })
-        .should.equal('function () {}');
+        .should.equal('function() {}');
     });
   });
 });

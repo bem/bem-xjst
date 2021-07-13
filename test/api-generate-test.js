@@ -2,7 +2,6 @@ var assert = require('assert');
 var bemhtml = require('../').bemhtml;
 var vm = require('vm');
 var EOL = require('os').EOL;
-var vow = require('vow');
 /* jscs:disable */
 // fake commonJS module after browserify
 var FAKE_COMMON_MODULE = 'var require=(function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return a(o,!0);if(i)return i(o,!0);var f=new Error("Cannot find module \'"+o+"\'");throw f.code="MODULE_NOT_FOUND",f}var l=n[o]={exports:{}};t[o][0].call(l.exports,function(e){var n=t[o][1][e];return s(n?n:e)},l,l.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s})({"fake":[function(require,module,exports){ module.exports = { getText: function() { return "Hello templates!"; } }; },{}]},{},[]);';
@@ -255,7 +254,7 @@ describe('API generate', function() {
             bundle, sandbox);
 
           var getLibs = function() {
-            return new vow.Promise(function(resolve) {
+            return new Promise(function(resolve) {
               sandbox.modules.require('BEMHTML', function(bemhtml) {
                 resolve(bemhtml.libs);
               });
@@ -294,7 +293,7 @@ describe('API generate', function() {
             bundle, sandbox);
 
           var getLibs = function () {
-            return new vow.Promise(function (resolve) {
+            return new Promise(function (resolve) {
               sandbox.modules.require('BEMHTML', function (bemhtml) {
                 resolve(bemhtml.libs);
               });
@@ -462,7 +461,7 @@ describe('API generate', function() {
           vm.runInNewContext(fakeModule + EOL + bundle, sandbox);
 
           var getLibs = function() {
-            return new vow.Promise(function(resolve) {
+            return new Promise(function(resolve) {
               sandbox.modules.require('BEMHTML', function(bemhtml) {
                 resolve(bemhtml.libs);
               });
@@ -489,7 +488,7 @@ describe('API generate', function() {
           vm.runInNewContext(fakeModule + EOL + bundle, sandbox);
 
           var getLibs = function() {
-            return new vow.Promise(function(resolve) {
+            return new Promise(function(resolve) {
               sandbox.modules.require('BEMHTML', function(bemhtml) {
                 resolve(bemhtml.compile(function() {
                   block('b').def()(function() {
@@ -522,7 +521,7 @@ describe('API generate', function() {
           vm.runInNewContext(fakeModule + EOL + bundle, sandbox);
 
           var getLibs = function() {
-            return new vow.Promise(function(resolve) {
+            return new Promise(function(resolve) {
               sandbox.modules.require('BEMHTML', function(bemhtml) {
                 resolve(bemhtml.compile(function() {
                   block('b').def()(function() {
@@ -562,7 +561,7 @@ describe('API generate', function() {
           vm.runInNewContext(fakeModule + EOL + bundle, sandbox);
 
           var getLibs = function() {
-            return new vow.Promise(function(resolve) {
+            return new Promise(function(resolve) {
               sandbox.modules.require('BEMHTML', function(bemhtml) {
                 resolve(bemhtml.libs);
               });
@@ -594,7 +593,7 @@ describe('API generate', function() {
           vm.runInNewContext(fakeModule + EOL + bundle, sandbox);
 
           var getLibs = function() {
-            return new vow.Promise(function(resolve) {
+            return new Promise(function(resolve) {
               sandbox.modules.require('BEMHTML', function(bemhtml) {
                 resolve(bemhtml.compile(function() {
                   block('b').def()(function() {
@@ -655,7 +654,7 @@ describe('API generate', function() {
           vm.runInNewContext(fakeModule + EOL + bundle, sandbox);
 
           var getLibs = function() {
-            return new vow.Promise(function(resolve) {
+            return new Promise(function(resolve) {
               sandbox.modules.require('BEMHTML', function(bemhtml) {
                 resolve(bemhtml.compile(function() {
                   block('b').def()(function() {
@@ -691,7 +690,7 @@ describe('API generate', function() {
           vm.runInNewContext(fakeModule + EOL + bundle, sandbox);
 
           var getLibs = function () {
-            return new vow.Promise(function (resolve) {
+            return new Promise(function (resolve) {
               sandbox.modules.require('BEMHTML', function (bemhtml) {
                 resolve(bemhtml.compile(function () {
                   block('b').def()(function () {
@@ -729,7 +728,7 @@ describe('API generate', function() {
           vm.runInNewContext(fakeModule + EOL + bundle, sandbox);
 
           var getLibs = function() {
-            return new vow.Promise(function(resolve) {
+            return new Promise(function(resolve) {
               sandbox.modules.require('BEMHTML', function(bemhtml) {
                 resolve(bemhtml.compile(function() {
                   block('b').def()(function() {
