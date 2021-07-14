@@ -26,10 +26,21 @@ describe('Modes block(blockName)', function() {
     },
     [
       { content: 'foo' },
-      { block: 'b' },
-      { block: 'input', elem: 'control' }
+      { block: 'a' },
+      { block: 'b' }
     ],
-    '<b>foo</b><b class="b"></b><b class="input__control"></b>');
+    '<b>foo</b><b class="a"></b><b class="b"></b>');
+  });
+
+  it('should’t apply block(*) to elems', function() {
+    test(function() {
+      block('*').tag()('b');
+    },
+    [
+      { block: 'a' },
+      { block: 'b', elem: 'e' }
+    ],
+    '<b class="a"></b><div class="b__e"></div>');
   });
 
   it('block(*) should be called before the matched templates', function() {
